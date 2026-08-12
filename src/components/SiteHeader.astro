@@ -1,7 +1,8 @@
 ---
 import { nav, site } from '../data/site';
+import { stripBase, withBase } from '../lib/paths';
 
-const pathname = Astro.url.pathname.replace(/\/$/, '') || '/';
+const pathname = stripBase(Astro.url.pathname);
 
 function isCurrent(href: string) {
   const normalized = href.replace(/\/$/, '') || '/';
@@ -12,8 +13,8 @@ function isCurrent(href: string) {
 
 <header class="site-header">
   <div class="shell site-header__inner">
-    <a class="brand" href="/">
-      <img class="brand__mark" src="/brand/logo-mark-dark.png" alt="" width="57" height="25" />
+    <a class="brand" href={withBase('/')}>
+      <img class="brand__mark" src={withBase('/brand/logo-mark-dark.svg')} alt="" width="57" height="25" />
       <span class="brand__text">{site.studio}</span>
     </a>
     <nav class="nav" aria-label="Primary">
@@ -21,7 +22,7 @@ function isCurrent(href: string) {
         nav.map((item) => (
           <a
             class:list={['nav__link', isCurrent(item.href) && 'nav__link--current']}
-            href={item.href}
+            href={withBase(item.href)}
             aria-current={isCurrent(item.href) ? 'page' : undefined}
           >
             {item.label}

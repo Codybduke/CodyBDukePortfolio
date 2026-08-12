@@ -19,10 +19,14 @@ import {
   STONE_SPIN_RAD,
   STONE_TILT_DEG,
 } from '../data/stone-hull';
+import { withBase } from '../lib/paths';
 
 const TILT_RAD = THREE.MathUtils.degToRad(STONE_TILT_DEG);
 const TAN_HALF_FOV = Math.tan(((STONE_FOV * Math.PI) / 180) / 2);
 const [OFFSET_X, OFFSET_Y] = STONE_OFFSET;
+const STONE_GLB = withBase('/models/stone.glb');
+const STONE_STILL = withBase('/images/stone-smooth.png');
+const LOGO_LOCKUP = withBase('/brand/logo-lockup-light.svg');
 
 /**
  * Centres the stone on the origin and scales it to a unit bounding sphere.
@@ -31,7 +35,7 @@ const [OFFSET_X, OFFSET_Y] = STONE_OFFSET;
  * is only valid because of that.
  */
 function useNormalizedStone() {
-  const { scene } = useGLTF('/models/stone.glb');
+  const { scene } = useGLTF(STONE_GLB);
 
   return useMemo(() => {
     const model = scene.clone(true);
@@ -201,7 +205,7 @@ export default function StoneHero() {
       ) : (
         <img
           className="hero__stone"
-          src="/images/stone-smooth.png"
+          src={STONE_STILL}
           alt=""
           width="528"
           height="528"
@@ -211,7 +215,7 @@ export default function StoneHero() {
 
       <img
         className="hero__mark"
-        src="/brand/logo-lockup-light.svg"
+        src={LOGO_LOCKUP}
         alt=""
         width="177"
         height="103"
@@ -220,4 +224,4 @@ export default function StoneHero() {
   );
 }
 
-useGLTF.preload('/models/stone.glb');
+useGLTF.preload(STONE_GLB);

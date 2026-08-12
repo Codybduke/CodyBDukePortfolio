@@ -2,6 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { cases, getCase } from '../../data/cases';
 import { getRichCase } from '../../data/case-studies';
+import { withBase } from '../../lib/paths';
 
 export function getStaticPaths() {
   return cases.map((item) => ({
@@ -160,7 +161,7 @@ const rich = getRichCase(slug!);
             rich.sibling && (
               <p class="case-sibling">
                 Sibling case:{' '}
-                <a href={rich.sibling.href}>{rich.sibling.label}</a>
+                <a href={withBase(rich.sibling.href)}>{rich.sibling.label}</a>
               </p>
             )
           }
@@ -180,7 +181,7 @@ const rich = getRichCase(slug!);
           </ul>
 
           <p class="case-back">
-            <a href="/work">← All work</a>
+            <a href={withBase('/work')}>← All work</a>
           </p>
         </div>
       </article>
@@ -256,7 +257,7 @@ const rich = getRichCase(slug!);
           </p>
 
           <p style="margin-top: 2rem;">
-            <a href="/work">← All work</a>
+            <a href={withBase('/work')}>← All work</a>
           </p>
         </div>
       </article>

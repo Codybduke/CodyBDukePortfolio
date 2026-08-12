@@ -1,6 +1,7 @@
 import type { RichCaseStudy } from './types';
+import { withBase } from '../../lib/paths';
 
-const img = (file: string) => `/work/move-in-scanner/${file}`;
+const img = (file: string) => withBase(`/work/move-in-scanner/${file}`);
 
 export const moveInScannerCase: RichCaseStudy = {
   slug: 'move-in-scanner',

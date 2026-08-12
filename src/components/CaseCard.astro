@@ -1,5 +1,6 @@
 ---
 import type { CaseStudy } from '../data/cases';
+import { withBase } from '../lib/paths';
 
 interface Props {
   item: CaseStudy;
@@ -8,7 +9,7 @@ interface Props {
 const { item } = Astro.props;
 ---
 
-<a class="case-card" href={`/work/${item.slug}`}>
+<a class="case-card" href={withBase(`/work/${item.slug}`)}>
   <div class="case-card__eyebrow">{item.eyebrow}</div>
   <h3 class="case-card__title">{item.title}</h3>
   <p class="case-card__summary">{item.summary}</p>

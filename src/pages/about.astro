@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { site } from '../data/site';
+import { withBase } from '../lib/paths';
 ---
 
 <BaseLayout
@@ -49,8 +50,8 @@ import { site } from '../data/site';
         a polished stone, not a raw boulder with a coat of paint.
       </p>
       <figure class="stone-pair">
-        <img src="/images/stone-rough.png" alt="Rough veined stone with mark" width="320" height="320" />
-        <img src="/images/stone-smooth.png" alt="Polished veined stone with mark" width="320" height="320" />
+        <img src={withBase('/images/stone-rough.png')} alt="Rough veined stone with mark" width="320" height="320" />
+        <img src={withBase('/images/stone-smooth.png')} alt="Polished veined stone with mark" width="320" height="320" />
         <figcaption>Rough → refined — the same material, less of what doesn’t belong.</figcaption>
       </figure>
 

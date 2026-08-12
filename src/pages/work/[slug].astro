@@ -1,0 +1,265 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { cases, getCase } from '../../data/cases';
+import { getRichCase } from '../../data/case-studies';
+
+export function getStaticPaths() {
+  return cases.map((item) => ({
+    params: { slug: item.slug },
+  }));
+}
+
+const { slug } = Astro.params;
+const item = getCase(slug!);
+
+if (!item) {
+  throw new Error(`Unknown case study: ${slug}`);
+}
+
+const rich = getRichCase(slug!);
+---
+
+<BaseLayout title={item.title} description={item.summary}>
+  {
+    rich ? (
+      <article class="case-study">
+        <header class="case-study__header shell">
+          <p class="section__eyebrow">{item.eyebrow}</p>
+          <h1>{item.title}</h1>
+          <p class="case-study__claim">{rich.openingClaim}</p>
+          <p>
+            <span class:list={['status-pill', item.status === 'ready' && 'status-pill--ready']}>
+              {item.status === 'ready' ? 'Public-length draft' : 'Prototype stub'}
+            </span>
+          </p>
+
+          <div class="meta-bar meta-bar--case">
+            <div>
+              <strong>Role</strong>
+              {item.role}
+            </div>
+            <div>
+              <strong>Timeframe</strong>
+              {item.timeframe}
+            </div>
+            {
+              rich.collaborators && (
+                <div>
+                  <strong>Collaborators</strong>
+                  {rich.collaborators}
+                </div>
+              )
+            }
+            {
+              rich.surface && (
+                <div>
+                  <strong>Surface</strong>
+                  {rich.surface}
+                </div>
+              )
+            }
+          </div>
+        </header>
+
+        {
+          rich.heroFigure && (
+            <figure class="case-figure case-figure--hero">
+              <img
+                src={rich.heroFigure.src}
+                alt={rich.heroFigure.alt}
+                width="2493"
+                height="1696"
+                loading="eager"
+              />
+              <figcaption class="shell">{rich.heroFigure.caption}</figcaption>
+            </figure>
+          )
+        }
+
+        <div class="case-study__body shell">
+          {
+            rich.sections.map((section) => (
+              <section class="case-section" id={section.id}>
+                {section.stage && <p class="case-section__stage">{section.stage}</p>}
+                <h2>{section.title}</h2>
+
+                {section.body?.map((paragraph) => <p>{paragraph}</p>)}
+
+                {section.metrics && (
+                  <div class="case-metrics">
+                    {section.metrics.map((metric) => (
+                      <div class="case-metric">
+                        <p class="case-metric__value">{metric.value}</p>
+                        <p class="case-metric__label">{metric.label}</p>
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                {section.table && (
+                  <div class="case-table-wrap">
+                    <table class="case-table">
+                      <thead>
+                        <tr>
+                          {section.table.headers.map((header) => (
+                            <th scope="col">{header}</th>
+                          ))}
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {section.table.rows.map((row) => (
+                          <tr>
+                            {row.map((cell) => (
+                              <td>{cell}</td>
+                            ))}
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                )}
+
+                {section.callout && <p class="case-callout">{section.callout}</p>}
+
+                {section.bullets && (
+                  <ul class="case-bullets">
+                    {section.bullets.map((bullet) => (
+                      <li>{bullet}</li>
+                    ))}
+                  </ul>
+                )}
+
+                {section.figures && section.figures.length > 0 && (
+                  <div
+                    class:list={[
+                      'case-figure-row',
+                      section.figures.length >= 3 && 'case-figure-row--trio',
+                      section.figures.length === 2 && 'case-figure-row--pair',
+                      section.figures.length === 1 && 'case-figure-row--single',
+                    ]}
+                  >
+                    {section.figures.map((figure) => (
+                      <figure class:list={['case-figure', `case-figure--${figure.layout ?? 'device'}`]}>
+                        <img
+                          src={figure.src}
+                          alt={figure.alt}
+                          width="836"
+                          height="1744"
+                          loading="lazy"
+                        />
+                        <figcaption>{figure.caption}</figcaption>
+                      </figure>
+                    ))}
+                  </div>
+                )}
+              </section>
+            ))
+          }
+
+          {
+            rich.sibling && (
+              <p class="case-sibling">
+                Sibling case:{' '}
+                <a href={rich.sibling.href}>{rich.sibling.label}</a>
+              </p>
+            )
+          }
+
+          {
+            item.builtWith && (
+              <p class="built-with">
+                <strong>Built with</strong> — {item.builtWith}
+              </p>
+            )
+          }
+
+          <ul class="tag-row case-tags">
+            {item.tags.map((tag) => (
+              <li>{tag}</li>
+            ))}
+          </ul>
+
+          <p class="case-back">
+            <a href="/work">← All work</a>
+          </p>
+        </div>
+      </article>
+    ) : (
+      <article class="shell page-hero">
+        <p class="section__eyebrow">{item.eyebrow}</p>
+        <h1>{item.title}</h1>
+        <p>{item.summary}</p>
+        <p>
+          <span class:list={['status-pill', item.status === 'ready' && 'status-pill--ready']}>
+            {item.status === 'ready' ? 'Public-length draft' : 'Prototype stub'}
+          </span>
+        </p>
+
+        <div class="meta-bar">
+          <div>
+            <strong>Role</strong>
+            {item.role}
+          </div>
+          <div>
+            <strong>Timeframe</strong>
+            {item.timeframe}
+          </div>
+        </div>
+
+        <div class="prose">
+          <h2>Problem</h2>
+          <p>{item.problem}</p>
+
+          <h2>Process</h2>
+          <ul>
+            {item.process.map((step) => (
+              <li>{step}</li>
+            ))}
+          </ul>
+
+          <h2>Key decisions</h2>
+          <ul>
+            {item.decisions.map((step) => (
+              <li>{step}</li>
+            ))}
+          </ul>
+
+          <h2>Metrics & evidence</h2>
+          <ul>
+            {item.metrics.map((step) => (
+              <li>{step}</li>
+            ))}
+          </ul>
+
+          <h2>Outcome</h2>
+          <p>{item.outcome}</p>
+
+          <h2>Handoff</h2>
+          <p>{item.handoff}</p>
+
+          {item.builtWith && (
+            <p class="built-with">
+              <strong>Built with</strong> — {item.builtWith}
+            </p>
+          )}
+
+          <h2>Tags</h2>
+          <ul class="tag-row">
+            {item.tags.map((tag) => (
+              <li>{tag}</li>
+            ))}
+          </ul>
+
+          <p class="note" style="margin-top: 2rem;">
+            Screenshots and deeper process detail land next. Full drafts live in the Portfolio prep
+            workspace until sanitization is signed off.
+          </p>
+
+          <p style="margin-top: 2rem;">
+            <a href="/work">← All work</a>
+          </p>
+        </div>
+      </article>
+    )
+  }
+</BaseLayout>

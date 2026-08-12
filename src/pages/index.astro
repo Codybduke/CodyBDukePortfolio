@@ -1,0 +1,55 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import CaseCard from '../components/CaseCard.astro';
+import StoneHero from '../components/StoneHero';
+import { highlights, moreCases } from '../data/cases';
+import { site } from '../data/site';
+---
+
+<BaseLayout>
+  <section class="hero shell">
+    <div class="hero__copy">
+      <h1 class="hero__brand">{site.name}</h1>
+      <p class="hero__headline">{site.headline}</p>
+      <p class="hero__lede">{site.oneLiner}</p>
+      <div class="cta-row">
+        <a class="btn btn--primary" href="#selected-work">See selected work</a>
+        <a class="btn btn--text" href={`mailto:${site.email}`}>Get in touch</a>
+      </div>
+    </div>
+
+    <StoneHero client:load />
+
+    <blockquote class="hero__quote">
+      <p>“{site.quote.text}” – {site.quote.attribution}</p>
+    </blockquote>
+  </section>
+
+  <section class="section shell" id="selected-work" aria-labelledby="selected-heading">
+    <div class="section__head">
+      <div>
+        <p class="section__eyebrow">Selected work</p>
+        <h2 class="section__title" id="selected-heading">Three cases that carry the story</h2>
+      </div>
+      <a class="section__link" href="/work">View all work →</a>
+    </div>
+    <div class="case-grid">
+      {highlights.map((item) => <CaseCard item={item} />)}
+    </div>
+  </section>
+
+  <section class="section shell" aria-labelledby="more-heading">
+    <div class="section__head">
+      <div>
+        <p class="section__eyebrow">View more</p>
+        <h2 class="section__title" id="more-heading">Additional work & earlier craft</h2>
+      </div>
+      <a class="section__link" href={site.behance} target="_blank" rel="noopener noreferrer"
+        >Behance archive →</a
+      >
+    </div>
+    <div class="case-grid case-grid--compact">
+      {moreCases.map((item) => <CaseCard item={item} />)}
+    </div>
+  </section>
+</BaseLayout>

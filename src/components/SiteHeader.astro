@@ -1,0 +1,33 @@
+---
+import { nav, site } from '../data/site';
+
+const pathname = Astro.url.pathname.replace(/\/$/, '') || '/';
+
+function isCurrent(href: string) {
+  const normalized = href.replace(/\/$/, '') || '/';
+  if (normalized === '/') return pathname === '/';
+  return pathname === normalized || pathname.startsWith(`${normalized}/`);
+}
+---
+
+<header class="site-header">
+  <div class="shell site-header__inner">
+    <a class="brand" href="/">
+      <img class="brand__mark" src="/brand/logo-mark-dark.png" alt="" width="57" height="25" />
+      <span class="brand__text">{site.studio}</span>
+    </a>
+    <nav class="nav" aria-label="Primary">
+      {
+        nav.map((item) => (
+          <a
+            class:list={['nav__link', isCurrent(item.href) && 'nav__link--current']}
+            href={item.href}
+            aria-current={isCurrent(item.href) ? 'page' : undefined}
+          >
+            {item.label}
+          </a>
+        ))
+      }
+    </nav>
+  </div>
+</header>

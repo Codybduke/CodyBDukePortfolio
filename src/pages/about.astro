@@ -1,0 +1,103 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { site } from '../data/site';
+---
+
+<BaseLayout
+  title="About"
+  description="Cody Duke — product designer and Product Lead. FamilySearch to Entrata to AI-native product ownership."
+>
+  <div class="shell page-hero">
+    <p class="section__eyebrow">About</p>
+    <h1>Product designer who owns the loop — not just the screens.</h1>
+  </div>
+
+  <div class="shell about-grid">
+    <div class="prose">
+      <p>
+        Just over 10 years in UX. BFA in Graphic Design from BYU-Idaho (2012–2017), then
+        FamilySearch — UX Design Intern (2016), then UX Designer (2017–2019). Since July 2019 I’ve
+        been at Entrata as a Senior Product Designer on complex property-management systems; for
+        about a year that role expanded into Product Lead ownership: research through conception,
+        prototype, handoff, and delivery with an owned development team.
+      </p>
+      <p>
+        At FamilySearch I helped drive measurable product outcomes — including a 101% year-over-year
+        retention lift in 2018 and a 12.4% increase in international reach (24% over goal) — while
+        working through a large volume of discovery feedback (~86k comments). That early habit of
+        tying experience work to engagement and retention carried into Entrata.
+      </p>
+      <p>
+        Roughly a year and a half ago Entrata held a Burn the Boats moment: traditional design and
+        product-management workflows gave way to AI-assisted systems across the company. I built my
+        own operating system in that shift — research synthesis, data pulls, prototyping, documentation,
+        and eng communication — first with Figma Make, then with Cursor — so I could move at Product
+        Lead speed without dropping craft or judgment.
+      </p>
+      <p>
+        I’m looking for Product Design roles where that mix is valued: ambiguous problem spaces,
+        field and production data as decision fuel, AI as leverage, and honest outcomes (or clear
+        measurement plans when results are still maturing).
+      </p>
+
+      <h2>The polished stone</h2>
+      <p>
+        The stone on the home page is the metaphor for how I work. You start with a rough complaint,
+        idea, or problem — jagged, too big, full of the wrong facets. Research and validation knock
+        pieces off. Workflows, wires, and sketches give it a shape. Prototypes take feedback and
+        abrasion. Usability testing polishes further. What ships should feel dense and usable —
+        a polished stone, not a raw boulder with a coat of paint.
+      </p>
+      <figure class="stone-pair">
+        <img src="/images/stone-rough.png" alt="Rough veined stone with mark" width="320" height="320" />
+        <img src="/images/stone-smooth.png" alt="Polished veined stone with mark" width="320" height="320" />
+        <figcaption>Rough → refined — the same material, less of what doesn’t belong.</figcaption>
+      </figure>
+
+      <h2>How I work</h2>
+      <ul>
+        <li>Own the problem end-to-end — framing, research, strategy, design, and eng partnership.</li>
+        <li>Ground UI in site visits, interviews, and production data when it’s available.</li>
+        <li>Make tradeoffs explicit: what shipped, what waited, and which metric we were chasing.</li>
+        <li>Use AI workflows to go faster on synthesis, prototyping, and documentation — without outsourcing the decisions.</li>
+      </ul>
+
+      <h2>Path</h2>
+      <ul>
+        <li><strong>BYU-Idaho (BFA, Graphic Design)</strong> — 2012–2017; craft foundation.</li>
+        <li><strong>FamilySearch</strong> — Intern (2016) → UX Designer (2017–2019); retention, reach, and discovery feedback as proof points.</li>
+        <li><strong>Entrata</strong> — Senior Product Designer (2019–); systems and AI workflow products in property management.</li>
+        <li><strong>Product Lead (~1 yr)</strong> — research → ship with an owned eng team against business goals (scope beyond the LinkedIn title).</li>
+        <li><strong>AI-native practice (~1.5 yrs)</strong> — rebuilt how I design and deliver after Burn the Boats; Cursor skills, rules, and coded prototypes.</li>
+      </ul>
+
+      <h2>What collaborators say</h2>
+      <blockquote class="quote">
+        <p>
+          “Cody is one of the most talented overall designers I’ve worked with. He can take seriously
+          complicated flows and turn them into interfaces people can actually use without thinking
+          twice.”
+        </p>
+        <footer>— Kyle Ashby, Product Designer (Entrata)</footer>
+      </blockquote>
+      <blockquote class="quote">
+        <p>
+          “Cody is passionate about helping uncover the right experience for patrons. He has created
+          some very inspiring experiences that helped drive excellent engagement… [and] very strong
+          patron feedback scores.”
+        </p>
+        <footer>— Cris Rees, Sr. Product Manager (FamilySearch)</footer>
+      </blockquote>
+    </div>
+
+    <aside class="contact-panel" id="contact">
+      <h2>Get in touch</h2>
+      <p>{site.location}</p>
+      <a href={`mailto:${site.email}`}>{site.email}</a>
+      <br />
+      <a href={site.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a>
+      <br />
+      <a href={site.behance} target="_blank" rel="noopener noreferrer">Behance</a>
+    </aside>
+  </div>
+</BaseLayout>

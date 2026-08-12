@@ -1,0 +1,30 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { funItems } from '../data/fun';
+---
+
+<BaseLayout
+  title="Fun"
+  description="Personal Product OS, Cursor skills, and side experiments from Cody Duke."
+>
+  <div class="shell page-hero">
+    <p class="section__eyebrow">Fun stuff</p>
+    <h1>The same ownership muscle — lower stakes.</h1>
+    <p>
+      Case studies carry the hiring story. This page is personality proof: Product OS, Cursor skills
+      and rules, and small prototypes that show how I build the systems behind the work.
+    </p>
+  </div>
+
+  <section class="shell fun-list" aria-label="Fun stuff">
+    {
+      funItems.map((item) => (
+        <article class="fun-item">
+          <div class="fun-item__kind">{item.kind}</div>
+          <h2>{item.title}</h2>
+          <p>{item.blurb}</p>
+        </article>
+      ))
+    }
+  </section>
+</BaseLayout>

@@ -1,0 +1,14 @@
+---
+import { site } from '../data/site';
+---
+
+<footer class="site-footer">
+  <div class="shell site-footer__inner">
+    <p>© {new Date().getFullYear()} {site.name}. Product Design portfolio.</p>
+    <p>
+      <a href={`mailto:${site.email}`}>Email</a>
+      <a href={site.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a>
+      <a href={site.behance} target="_blank" rel="noopener noreferrer">Behance</a>
+    </p>
+  </div>
+</footer>

@@ -1,0 +1,19 @@
+---
+import type { CaseStudy } from '../data/cases';
+
+interface Props {
+  item: CaseStudy;
+}
+
+const { item } = Astro.props;
+---
+
+<a class="case-card" href={`/work/${item.slug}`}>
+  <div class="case-card__eyebrow">{item.eyebrow}</div>
+  <h3 class="case-card__title">{item.title}</h3>
+  <p class="case-card__summary">{item.summary}</p>
+  <ul class="tag-row" aria-label="Tags">
+    {item.tags.slice(0, 3).map((tag) => <li>{tag}</li>)}
+  </ul>
+  <div class="case-card__meta">Read case study →</div>
+</a>

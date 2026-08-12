@@ -1,0 +1,12 @@
+---
+description: Never convert SVG brand/assets to other formats without permission
+alwaysApply: true
+---
+
+# SVG assets
+
+Never convert SVG files into any other file type (PNG, JPG, WebP, PDF, etc.) without explicit user permission.
+
+- Keep SVGs as SVGs in the repo and in the site.
+- If another format seems necessary, ask first and wait for approval before converting.
+- Prefer native SVG exports from Figma over rasterized or recreated substitutes when the user provides them.

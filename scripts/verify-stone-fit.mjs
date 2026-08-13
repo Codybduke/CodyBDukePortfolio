@@ -1,8 +1,8 @@
 /**
- * Proves the hero stone can never be cropped and reports how big it renders.
+ * Proves the hero stones can never be cropped and reports how big they render.
  *
  * Reproduces StoneHero's per-frame camera fit — which is solved from the baked
- * convex hull — then projects all ~193k real vertices through it at every pose.
+ * convex hull — then projects every real vertex through it at every pose.
  * Any |NDC| > 1 would mean a clipped stone. The duplication with StoneHero.tsx
  * is deliberate: an independent implementation is what makes this a check.
  *
@@ -22,65 +22,82 @@ import {
   STONE_FIT_MARGIN,
   STONE_FOV,
   STONE_HULL,
+  STONE_HULL_POLISHED,
   STONE_OFFSET,
+  STONE_OFFSET_POLISHED,
+  STONE_REST_YAW,
   STONE_SPIN_RAD,
   STONE_TILT_DEG,
 } from '../src/data/stone-hull.ts';
 
 const TILT_RAD = THREE.MathUtils.degToRad(STONE_TILT_DEG);
-const [OFF_X, OFF_Y] = STONE_OFFSET;
-
-const hull = [];
-for (let i = 0; i < STONE_HULL.length; i += 3) {
-  hull.push(new THREE.Vector3(STONE_HULL[i], STONE_HULL[i + 1], STONE_HULL[i + 2]));
-}
-
-const mesh = normalize(await readGlbVertices(new URL('../public/models/stone.glb', import.meta.url)));
-
-console.log(
-  `tilt ${STONE_TILT_DEG}deg  spin ${((STONE_SPIN_RAD * 180) / Math.PI).toFixed(0)}deg  ` +
-    `hull ${hull.length} pts  mesh ${mesh.length} verts`,
-);
-console.log('');
-
 const YAW_SAMPLES = 64;
+
+function unpackHull(flat) {
+  const hull = [];
+  for (let i = 0; i < flat.length; i += 3) {
+    hull.push(new THREE.Vector3(flat[i], flat[i + 1], flat[i + 2]));
+  }
+  return hull;
+}
 
 /**
  * Sweeps the full spin at one stage aspect, projecting every mesh vertex.
  * Returns the worst |NDC| seen and the resting silhouette's NDC bounds.
  */
-function sweep(aspect) {
+function sweep(mesh, hull, [offX, offY], aspect) {
   let maxNdc = 0;
   let rest = null;
 
   for (let i = 0; i <= YAW_SAMPLES; i += 1) {
-    const yaw = (i / YAW_SAMPLES) * STONE_SPIN_RAD;
+    const yaw = STONE_REST_YAW + (i / YAW_SAMPLES) * STONE_SPIN_RAD;
     const pose = poseMatrix(yaw, TILT_RAD);
     const posedHull = hull.map((p) => p.clone().applyMatrix4(pose));
     const distance = fitDistance(posedHull, {
       aspect,
       fov: STONE_FOV,
       margin: STONE_FIT_MARGIN,
-      offX: OFF_X,
-      offY: OFF_Y,
+      offX,
+      offY,
     });
 
     const camera = fitCamera(STONE_FOV, aspect, distance);
     const v = new THREE.Vector3();
     for (const p of mesh) {
       v.copy(p).applyMatrix4(pose);
-      v.set(v.x + OFF_X, v.y + OFF_Y, v.z).project(camera);
+      v.set(v.x + offX, v.y + offY, v.z).project(camera);
       maxNdc = Math.max(maxNdc, Math.abs(v.x), Math.abs(v.y));
     }
 
     if (i === 0) {
       const posedMesh = mesh.map((p) => p.clone().applyMatrix4(pose));
-      rest = projectedBounds(posedMesh, camera, OFF_X, OFF_Y);
+      rest = projectedBounds(posedMesh, camera, offX, offY);
     }
   }
 
   return { maxNdc, rest };
 }
+
+const stones = [
+  {
+    label: 'rough',
+    url: new URL('../public/models/stone.glb', import.meta.url),
+    hull: unpackHull(STONE_HULL),
+    offset: STONE_OFFSET,
+  },
+  {
+    label: 'polished',
+    url: new URL('../public/models/stone-polished.glb', import.meta.url),
+    hull: unpackHull(STONE_HULL_POLISHED),
+    offset: STONE_OFFSET_POLISHED,
+  },
+];
+
+console.log(
+  `tilt ${STONE_TILT_DEG}deg  spin ${((STONE_SPIN_RAD * 180) / Math.PI).toFixed(0)}deg  ` +
+    `aspect ${STONE_ASPECT.toFixed(5)}`,
+);
+console.log('');
 
 /*
  * The stage always holds --stone-ratio, so there is only one aspect to prove.
@@ -91,15 +108,19 @@ const aspects = [STONE_ASPECT * 0.99, STONE_ASPECT, STONE_ASPECT * 1.01];
 let worstNdc = 0;
 let restBounds = null;
 
-for (const aspect of aspects) {
-  const { maxNdc, rest } = sweep(aspect);
-  if (aspect === STONE_ASPECT) restBounds = rest;
-  worstNdc = Math.max(worstNdc, maxNdc);
-  console.log(
-    `aspect ${aspect.toFixed(5)}  maxNDC ${maxNdc.toFixed(4)}  ${maxNdc <= 1 ? 'fits' : 'CROPPED'}`,
-  );
+for (const stone of stones) {
+  const mesh = normalize(await readGlbVertices(stone.url));
+  console.log(`${stone.label}: hull ${stone.hull.length} pts  mesh ${mesh.length} verts`);
+  for (const aspect of aspects) {
+    const { maxNdc, rest } = sweep(mesh, stone.hull, stone.offset, aspect);
+    if (stone.label === 'rough' && aspect === STONE_ASPECT) restBounds = rest;
+    worstNdc = Math.max(worstNdc, maxNdc);
+    console.log(
+      `  aspect ${aspect.toFixed(5)}  maxNDC ${maxNdc.toFixed(4)}  ${maxNdc <= 1 ? 'fits' : 'CROPPED'}`,
+    );
+  }
+  console.log('');
 }
-console.log('');
 
 /*
  * Size report only — these mirror the clamps in src/styles/global.css. They do

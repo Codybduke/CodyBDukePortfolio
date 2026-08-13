@@ -55,6 +55,41 @@ export const cases: CaseStudy[] = [
     status: 'ready',
   },
   {
+    slug: 'familysearch-discovery',
+    title: 'FamilySearch Personalized Discovery',
+    eyebrow: 'Consumer · Retention',
+    summary:
+      'FamilySearch could acquire beginners at stadium scale and could not keep them. I led product design for a repeatable discovery loop — Pioneer, Ancestor Calendar, and WWI Draft — that started from a person already in the tree. The 2018 program those campaigns sat inside lifted returning-user retention 101% year over year.',
+    role: 'Product designer (led personalized discovery campaigns)',
+    timeframe: '2017 – 2019',
+    highlight: true,
+    tags: ['Retention', 'Personalization', 'Consumer'],
+    problem:
+      'New accounts arrived in droves and did not come back. Beginners hired FamilySearch to feel a connection to someone who came before them, then met a toolbox built for hobbyists. Generic “come search” campaigns asked them to do the hard part first.',
+    process: [
+      'Used beginner retention research and discovery comments (~86k) to treat signup volume as a leak, not a win.',
+      'Planned Pioneer, Calendar, and WWI with PMs and campaign managers as one loop: named ancestor → relationship in a sentence → one story or record.',
+      'Shipped Pioneer as the fullest card, Calendar as the repeating birthday/anniversary habit, WWI Draft as the third hook on the same IA.',
+    ],
+    decisions: [
+      'Start from a person the tree can already name. If relationship cannot be said in a sentence, do not send the campaign.',
+      'One next action (photos, story, or the record) instead of teaching search in the first session.',
+      'Three campaign instances, one product loop — so the third campaign was cheaper than the first.',
+    ],
+    metrics: [
+      '101% year-over-year returning-user retention lift in 2018 (program-level; I led PD on the campaign loop).',
+      '12.4% increase in international reach (24% over goal).',
+      '~86k discovery comments steered which hooks to personalize next.',
+    ],
+    outcome:
+      'A discovery system that made an ancestor real before it asked anyone to become a researcher. Retention and reach moved at the program level those campaigns were built to serve.',
+    handoff:
+      'Email plus in-product discovery surfaces — home cards, ancestor stories, relationship, and notifications — for FamilySearch product, campaign, and records partners.',
+    builtWith:
+      'Experience planning with PMs and campaign managers; paper flows into in-product UI on FamilySearch.org.',
+    status: 'ready',
+  },
+  {
     slug: 'csv-move-in-agent',
     title: 'CSV-to-Move-In Agent',
     eyebrow: 'AI workflow · Trust UX',
@@ -94,35 +129,35 @@ export const cases: CaseStudy[] = [
     title: 'Mobile Strategy + Resident Lookup',
     eyebrow: 'Strategy · IA · Mobile',
     summary:
-      'Research synthesis into an action-first Command Center and a Resident Lookup wedge so field staff can answer lease and ledger questions without walking back to a desk.',
+      'Desktop OXP is a desk product. Gong-scale call research, beta transcripts, and a competitive scan led to an action-first Command Center and a search-first Resident Lookup wedge, prototyped in Expo and stress-tested in a four-persona usability simulation.',
     role: 'Product Lead / product designer (strategy + IA + prototype)',
-    timeframe: 'Spring 2026',
-    highlight: true,
+    timeframe: 'Apr – May 2026',
+    highlight: false,
     tags: ['Research synthesis', 'Mobile IA', 'Usability'],
     problem:
-      'Desktop OXP is not the field job. Staff need “what do I do next?” and fast resident context — not a KPI wall — when conversations start in a breezeway.',
+      'Staff walking a property or traveling between sites need the next action and fast resident context. Desktop OXP is a KPI-and-module product. The field-to-desk round-trip is the waste.',
     process: [
-      'Synthesized ~4,600 Gong calls, 30+ feedback transcripts, and a competitive scan into three product bets with explicit confidence labels.',
-      'Protoyped Command Center + Residents hub in Expo to make the strategy testable.',
-      'Ran a four-persona usability simulation and logged blockers for the next iteration.',
+      'Synthesized about 4,600 Gong calls, 30-plus feedback transcripts, and a five-vendor scan into three bets with explicit confidence labels.',
+      'Prototyped Command Center and Residents in Expo so partners could walk the IA.',
+      'Ran a four-persona usability simulation (32 walkthroughs) and logged plate search, property scope, and picker traps as blockers.',
     ],
     decisions: [
-      'Action-first home (Daily Briefing + Quick Actions) over a KPI dashboard.',
-      'Regional manager as hinge persona — both mandates adoption and uses the app.',
+      'Action-first home (Daily Briefing + Quick Actions) instead of a KPI dashboard.',
+      'Regional manager as the hinge persona: they mandate adoption and they use the app.',
       'Resident Lookup as the daily wedge before heavier analytics.',
     ],
     metrics: [
-      'Evidence base: ~4,600 Gong calls filtered for mobile/field themes; 30+ processed feedback transcripts.',
-      'Usability sim (four personas) validated glanceable profile headers and tile previews.',
-      'Surfaced concrete blockers: vehicle-plate search, property-scope mistakes, multi-property picker traps.',
+      '~4,600 Gong calls filtered for mobile and field themes; 30-plus processed feedback transcripts.',
+      'Usability sim: all four personas completed a charge dispute; plate-only lookup hesitated or failed.',
+      'Blockers logged: vehicle-plate search, wrong-property empty results, All Properties multi-select trap.',
     ],
     outcome:
-      'A coherent mobile IA story: mobile as distribution for the AI workforce, with Resident Lookup proving daily value first.',
+      'A coherent mobile IA story and a walkable lookup flow for partners, not a shrunk desktop OXP. Pilot actuals still TBD.',
     handoff:
-      'Strategy memo + Expo prototype surfaces (Command Center, Residents hub, drill-ins) for product partners and eng sequencing.',
+      'Strategy memo with confidence labels and kill criteria, Expo Command Center + Residents, usability findings, and a SwiftUI lookup module.',
     builtWith:
-      'Research synthesis + Expo prototype — strategy made tangible for partners and usability testing.',
-    status: 'draft',
+      'Research synthesis plus Expo to make the strategy testable; a dedicated lookup prototype for the usability sim.',
+    status: 'ready',
   },
   {
     slug: 'agent-activity-audit',

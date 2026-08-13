@@ -11,7 +11,8 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "stone:compress": "node scripts/compress-stone.mjs",
+    "stone:compress": "node scripts/compress-stone.mjs && node scripts/split-stone-chunks.mjs",
+    "stone:chunks": "node scripts/split-stone-chunks.mjs",
     "stone:hull": "node scripts/generate-stone-hull.mjs",
     "stone:verify": "node scripts/verify-stone-fit.mjs"
   },

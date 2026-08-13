@@ -27,4 +27,4 @@ pnpm-debug.log*
 .vscode/
 
 # large source assets (keep optimized public/models/)
-assets/stone.source.glb
+assets/*.source.glb

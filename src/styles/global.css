@@ -149,11 +149,6 @@ p:last-child {
 .brand {
   display: inline-flex;
   align-items: center;
-  gap: 0.55rem;
-  font-family: var(--font-ui);
-  font-size: 0.92rem;
-  font-weight: 650;
-  letter-spacing: -0.015em;
   text-decoration: none;
   color: var(--ink);
 }
@@ -162,15 +157,11 @@ p:last-child {
   color: var(--ink);
 }
 
-.brand__mark {
-  width: 2.45rem;
-  height: auto;
+.brand__lockup {
+  display: block;
+  height: 1.25rem;
+  width: auto;
   flex-shrink: 0;
-  image-rendering: auto;
-}
-
-.brand__text {
-  white-space: nowrap;
 }
 
 .nav {
@@ -390,6 +381,12 @@ p:last-child {
   aspect-ratio: var(--stone-ratio);
   margin-inline: auto;
   animation: fade-in 700ms ease 80ms both;
+  user-select: none;
+}
+
+.hero__stage:focus-visible {
+  outline: 2px solid var(--stone);
+  outline-offset: 6px;
 }
 
 .hero__canvas {
@@ -398,6 +395,11 @@ p:last-child {
   width: 100% !important;
   height: 100% !important;
   z-index: 1;
+  cursor: inherit !important;
+  touch-action: pan-y;
+}
+
+.hero__stage--dragging .hero__canvas {
   touch-action: none;
 }
 
@@ -407,7 +409,7 @@ p:last-child {
   top: 50%;
   z-index: 3;
   /* Sized off the viewport, not the stage, so growing the stone leaves it alone */
-  width: clamp(6rem, 12.3vw, 14.8rem);
+  width: clamp(5.1rem, 10.455vw, 12.58rem);
   height: auto;
   translate: -50% -50%;
   pointer-events: none;

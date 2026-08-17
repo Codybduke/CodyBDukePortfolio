@@ -162,24 +162,24 @@ export const cases: CaseStudy[] = [
   {
     slug: 'mobile-strategy-resident-lookup',
     title: 'Mobile Strategy + Resident Lookup',
-    eyebrow: 'Strategy · IA · Mobile',
+    eyebrow: 'Strategy · Information architecture · Mobile',
     summary:
-      'Desktop OXP is a desk product. Gong-scale call research, beta transcripts, and a competitive scan led to an action-first Command Center and a search-first Resident Lookup wedge, prototyped in Expo and stress-tested in a four-persona usability simulation.',
-    role: 'Product Lead / product designer (strategy + IA + prototype)',
+      'Entrata had never shipped a mobile app for property managers. Resident lookup is the everyday job on desktop, and the number one thing staff already try to do on a phone. We built a quick search and a light profile: enough to answer questions in the field, without the desktop work that does not belong on a phone.',
+    role: 'Product Lead / product designer (strategy + information architecture + prototype)',
     timeframe: 'Apr – May 2026',
     highlight: true,
-    tags: ['Research synthesis', 'Mobile IA', 'Usability'],
+    tags: ['Research synthesis', 'Information architecture', 'Mobile'],
     problem:
-      'Staff walking a property or traveling between sites need the next action and fast resident context. Desktop OXP is a KPI-and-module product. The field-to-desk round-trip is the waste.',
+      'Property managers get resident questions on a walk and have no good way to look that person up. Desktop Entrata is the daily tool. The phone path was the web app, a note for later, or a call to the office.',
     process: [
-      'Synthesized about 4,600 Gong calls, 30-plus feedback transcripts, and a five-vendor scan into three bets with explicit confidence labels.',
-      'Prototyped Command Center and Residents in Expo so partners could walk the IA.',
-      'Ran a four-persona usability simulation (32 walkthroughs) and logged plate search, property scope, and picker traps as blockers.',
+      'Asked staff what they already try to do on a phone. Looking up residents was always first.',
+      'Prototyped Command Center and Residents in Expo so partners could walk the information architecture.',
+      'Scoped a light resident profile for the field: enough to answer questions and make small adjustments, without desktop work like a financial move-out.',
     ],
     decisions: [
       'Action-first home (Daily Briefing + Quick Actions) instead of a KPI dashboard.',
-      'Regional manager as the hinge persona: they mandate adoption and they use the app.',
-      'Resident Lookup as the daily wedge before heavier analytics.',
+      'Property managers as the primary users, with regional managers in the mix.',
+      'Resident Lookup as the daily wedge: quick search plus a light profile, not a desktop clone.',
     ],
     metrics: [
       '~4,600 Gong calls filtered for mobile and field themes; 30-plus processed feedback transcripts.',
@@ -187,7 +187,7 @@ export const cases: CaseStudy[] = [
       'Blockers logged: vehicle-plate search, wrong-property empty results, All Properties multi-select trap.',
     ],
     outcome:
-      'A coherent mobile IA story and a walkable lookup flow for partners, not a shrunk desktop OXP. Pilot actuals still TBD.',
+      'A coherent mobile information architecture story and a walkable lookup flow for partners, not a shrunk desktop profile. Pilot actuals still TBD.',
     handoff:
       'Strategy memo with confidence labels and kill criteria, Expo Command Center + Residents, usability findings, and a SwiftUI lookup module.',
     builtWith:

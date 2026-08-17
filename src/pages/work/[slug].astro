@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import PrototypeEmbed from '../../components/PrototypeEmbed.astro';
 import { getCase, publicCases } from '../../data/cases';
 import { getRichCase } from '../../data/case-studies';
 import { withBase } from '../../lib/paths';
@@ -134,6 +135,8 @@ const rich = getRichCase(slug!);
                     ))}
                   </ul>
                 )}
+
+                {section.embed && <PrototypeEmbed embed={section.embed} />}
 
                 {section.figures && section.figures.length > 0 && (
                   <div

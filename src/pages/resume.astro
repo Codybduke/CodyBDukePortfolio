@@ -1,9 +1,6 @@
 ---
 import { site } from '../data/site';
 import { withBase } from '../lib/paths';
-
-const portfolioUrl = 'https://codybduke.github.io/CodyBDukePortfolio/';
-const linkedinShort = 'linkedin.com/in/cody-duke-aa8114127';
 ---
 
 <!doctype html>
@@ -38,13 +35,13 @@ const linkedinShort = 'linkedin.com/in/cody-duke-aa8114127';
         <div>
           <h1>Cody Duke</h1>
           <p class="resume__role">Product Designer</p>
-          <a class="resume__phone" href="tel:+15013395093">(501) 339-5093</a>
+          <p class="resume__location">Utah-based, open to remote</p>
         </div>
         <address>
+          <a href="tel:+15013395093">(501) 339-5093</a>
           <a href={`mailto:${site.email}`}>{site.email}</a>
-          <a href={portfolioUrl}>{portfolioUrl.replace('https://', '').replace(/\/$/, '')}</a>
-          <a href={site.linkedin}>{linkedinShort}</a>
-          <span>Pleasant Grove, UT · Open to remote</span>
+          <a href={withBase('/')}>Portfolio</a>
+          <a href={site.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a>
         </address>
       </header>
 
@@ -56,36 +53,36 @@ const linkedinShort = 'linkedin.com/in/cody-duke-aa8114127';
               <em>How I think about product design:</em>
             </p>
             <p>
-              I design products people come back to — not screens that merely ship. I work from
-              evidence: field research, production data, and call research. Visuals matter when they
-              serve a job. I can own look and feel as the only designer, and I can lead through a
-              team — framing the problem and partnering with engineering either way.
+              I design products people come back to. I work from field research, production data,
+              and call research. Visual craft is part of the product. I frame the problem and
+              partner with engineering, as the only designer or through a team.
             </p>
           </section>
 
           <section>
             <h2>Skills</h2>
-            <p>
-              I run the loop from research through delivery:{' '}
-              <strong>retention and habit loops</strong>,{' '}
-              <strong>field and call research</strong>,{' '}
-              <strong>production data</strong>,{' '}
-              <strong>systems UX</strong>,{' '}
-              <strong>visual craft</strong> (typography, identity), and{' '}
-              <strong>AI-assisted prototyping</strong> — without outsourcing the decisions.
-            </p>
-            <p class="resume__software-label">Software I’m fluent in</p>
-            <p class="resume__software">Figma, Cursor, SQL, Expo, SwiftUI, FigJam</p>
-            <p class="resume__note">
-              * Tools are leverage. I pick what the problem needs.
-            </p>
+            <ul class="resume__skills">
+              <li>Retention and habit loops</li>
+              <li>Field and call research</li>
+              <li>Production data</li>
+              <li>Systems UX</li>
+              <li>Visual craft</li>
+              <li>AI-assisted prototyping</li>
+              <li>Figma</li>
+              <li>Cursor</li>
+              <li>SQL</li>
+              <li>Expo</li>
+              <li>SwiftUI</li>
+              <li>FigJam</li>
+            </ul>
           </section>
 
           <section>
             <h2>Education</h2>
             <p class="resume__school">
               <strong>BFA, Graphic Design</strong><br />
-              Brigham Young University–Idaho
+              Brigham Young University–Idaho<br />
+              <span class="resume__school-date">2017</span>
             </p>
           </section>
         </aside>
@@ -100,33 +97,34 @@ const linkedinShort = 'linkedin.com/in/cody-duke-aa8114127';
                 <p class="job__dates">July 2019 – 2026</p>
               </header>
               <p class="job__title">Senior Product Designer · Product Lead (~1 year)</p>
-              <p>
-                Property-management software used by apartment staff and residents. Dedicated
-                designer for Greystar, one of the largest U.S. multifamily operators. Product Lead
-                with an owned engineering team.
-              </p>
               <ul>
                 <li>
-                  Translated core Resident Portal workflows into the Homebody resident app and
-                  simplified them for a mobile-first, self-serve experience. After launch, Homebody
-                  sat at 4.4/5 on iOS from 600+ resident reviews.
+                  Dedicated designer for Greystar, one of the largest U.S. multifamily operators.
+                </li>
+                <li>Product Lead with an owned engineering team.</li>
+                <li>
+                  Led a team that designed and built an AI flow to read income documents and
+                  autofill affordable-housing certification, so a long, high-pressure application
+                  became an upload. Hundreds of teams entered. We won Most Likely to Land a New
+                  Logo.
                 </li>
                 <li>
-                  Redesigned how staff create rental promotions so one offer can include multiple
-                  gifts or credits. Usability testing kept the flow inside the setup staff already
-                  knew. After launch, that choice — which did not exist before — was in use across
-                  dozens of clients.
+                  Simplified core workflows for Homebody, a resident-facing self-serve mobile app.
+                  After launch, 4.4/5 on iOS from 600+ reviews in the first 6 months.
                 </li>
                 <li>
-                  Designed a mobile move-in flow so staff can check residents in at the table even
-                  without reliable Wi-Fi — instead of marking a spreadsheet and re-entering everyone
-                  the next day. Site visits and production data set the scope. Handed to the iOS
-                  team as SwiftUI. Not yet in production.
+                  Redesigned a complex enterprise setup system to add flexibility without adding
+                  complexity.
                 </li>
                 <li>
-                  Designed a field mobile experience around looking up a resident and taking the
-                  next action, based on customer interviews and sales-call recordings. The bet:
-                  people keep an app they use every day, not one leadership mandates they download.
+                  Designed a mobile workflow that turned a two-part data-entry process into a
+                  real-time check-in, cutting the work of moving someone in by more than half.
+                  Handed to the iOS team as SwiftUI.
+                </li>
+                <li>
+                  Designed a field mobile experience that put daily on-site information on the
+                  phone, so staff could answer in the moment instead of taking a note and finishing
+                  it at a desk.
                 </li>
               </ul>
             </article>
@@ -139,20 +137,20 @@ const linkedinShort = 'linkedin.com/in/cody-duke-aa8114127';
               <p class="job__title">UX Designer</p>
               <ul>
                 <li>
-                  Led product design for personalized discovery experiences (Pioneer, Ancestor
-                  Calendar, WWI Draft, and 26 campaigns in total) that showed beginners a specific
-                  ancestor and one next step — instead of sending them to a search box.
+                  Led product design of 26 personalized discovery experiences that served as an
+                  entry point and a reason to come back.
                 </li>
                 <li>
-                  Versus the previous year: <strong>95% more members retained</strong> and
-                  <strong>107% more other patrons retained</strong>.
-                  <strong>1.1 million</strong> people outside the US engaged.
-                  <strong>86,000</strong> comments, <strong>90% positive</strong>. Calendar used
-                  birthdays already in the tree as a reason to come back the next month.
+                  Those campaigns retained 95% more members and 107% more other users than the
+                  previous year, reached 1.1 million people outside the US, and earned 90% positive
+                  feedback from 86,000 comments.
                 </li>
                 <li>
-                  Set campaign goals with product managers, and oversaw third-party design so each
-                  campaign reused the same product loop instead of becoming a one-off marketing site.
+                  Oversaw third-party design so each campaign used the same tried-and-true loop.
+                </li>
+                <li>
+                  Refined how the product team worked so we moved faster, did more thorough work,
+                  and ran into fewer surprises.
                 </li>
               </ul>
             </article>
@@ -264,14 +262,13 @@ const linkedinShort = 'linkedin.com/in/cody-duke-aa8114127';
     color: var(--resume-muted);
   }
 
-  .resume__phone {
-    display: inline-block;
-    margin-top: 0.35rem;
+  .resume__location {
+    margin: 0.22rem 0 0;
     font-family: var(--font-ui);
-    font-size: 0.82rem;
-    font-weight: 600;
-    letter-spacing: 0.02em;
-    color: var(--resume-ink);
+    font-size: 0.68rem;
+    font-weight: 400;
+    line-height: 1.55;
+    color: var(--resume-muted);
   }
 
   address {
@@ -284,9 +281,11 @@ const linkedinShort = 'linkedin.com/in/cody-duke-aa8114127';
     color: var(--resume-muted);
   }
 
-  address a,
-  address span {
+  address a {
     display: block;
+    text-decoration: underline;
+    text-underline-offset: 0.16em;
+    text-decoration-color: rgba(28, 28, 26, 0.35);
   }
 
   .resume__body {
@@ -346,18 +345,22 @@ const linkedinShort = 'linkedin.com/in/cody-duke-aa8114127';
     font-weight: 600;
   }
 
-  .resume__software-label {
-    margin: 0.55rem 0 0.18rem !important;
-    font-family: var(--font-ui);
-    font-size: 0.68rem !important;
-    font-weight: 600;
+  .resume__skills {
+    margin: 0;
+    padding: 0;
+    list-style: none;
   }
 
-  .resume__software {
-    margin: 0 0 0.35rem !important;
+  .resume__skills li {
     font-family: var(--font-ui);
-    font-size: 0.72rem !important;
-    line-height: 1.4 !important;
+    font-size: 0.78rem;
+    font-weight: 500;
+    line-height: 1.35;
+    margin: 0 0 0.28rem;
+  }
+
+  .resume__skills li:last-child {
+    margin-bottom: 0;
   }
 
   .job ul {
@@ -376,16 +379,13 @@ const linkedinShort = 'linkedin.com/in/cody-duke-aa8114127';
     margin-bottom: 0;
   }
 
-  .resume__note {
-    font-family: var(--font-ui);
-    font-size: 0.62rem !important;
-    line-height: 1.4 !important;
-    color: var(--resume-muted);
-  }
-
   .resume__school {
     font-size: 0.74rem !important;
     line-height: 1.4 !important;
+  }
+
+  .resume__school-date {
+    color: var(--resume-muted);
   }
 
   .job__head {

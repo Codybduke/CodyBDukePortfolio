@@ -5,6 +5,9 @@ dist/
 
 # dependencies
 node_modules/
+# Expo copies Inter into this path; the prototype will not boot without it
+!public/prototypes/oxp-mobile/assets/node_modules/
+!public/prototypes/oxp-mobile/assets/node_modules/**
 
 # logs
 npm-debug.log*

@@ -9,11 +9,10 @@ export const site = {
   headline: 'Product design with ownership from research to ship',
   email: 'codybduke@gmail.com',
   linkedin: 'https://www.linkedin.com/in/cody-duke-aa8114127/',
-  behance: 'https://www.behance.net/codyduke',
   location: 'Open to Product Design roles',
   quote: {
-    text: 'Man cannot remake himself without suffering, for he is both the marble and the sculptor.',
-    attribution: 'Alexis Carrel',
+    text: 'A river cuts through rock, not because of its power, but because of its persistence.',
+    attribution: 'James N. Watkins',
   },
 };
 

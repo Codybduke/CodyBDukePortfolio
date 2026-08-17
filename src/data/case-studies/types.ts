@@ -17,6 +17,13 @@ export type CaseTable = {
   rows: string[][];
 };
 
+export type CaseEmbed = {
+  src: string;
+  title: string;
+  caption: string;
+  hint?: string;
+};
+
 export type CaseSection = {
   id: string;
   /** Quiet stage crumb — Rough / Evidence / Decisions / Making / Polished */
@@ -29,6 +36,8 @@ export type CaseSection = {
   figures?: CaseFigure[];
   /** Optional callout after body */
   callout?: string;
+  /** Walkable coded prototype, rendered in a device-sized iframe */
+  embed?: CaseEmbed;
 };
 
 export type RichCaseStudy = {

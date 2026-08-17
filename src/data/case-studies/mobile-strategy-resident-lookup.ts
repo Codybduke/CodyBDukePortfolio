@@ -6,10 +6,10 @@ const img = (file: string) => withBase(`/work/mobile-strategy-resident-lookup/${
 export const mobileStrategyResidentLookupCase: RichCaseStudy = {
   slug: 'mobile-strategy-resident-lookup',
   openingClaim:
-    'Desktop OXP is built for a desk. Property staff spend their days walking units, traveling between sites, and answering questions in a breezeway. I synthesized about 4,600 Gong calls, more than 30 customer feedback transcripts, and a five-vendor competitive scan into three product bets: an action-first Command Center, the regional manager as the hinge persona, and Resident Lookup as the daily wedge. We prototyped those bets in Expo, then ran a four-persona usability simulation that confirmed glanceable profiles and named the blockers still in the way: plate search, property-scope mistakes, and a multi-property picker trap.',
+    'Entrata had never shipped a mobile app for property managers. Facilities had a phone app. Everyone else had desktop Entrata, or the same product squeezed onto a phone browser. Resident lookup is a core piece of Entrata, not an OXP workflow. Anytime a resident has a question, staff pull that person up on desktop, or they try the same profile on a phone, which is a terrible experience. We asked property managers what they already try to do on a mobile device. Looking up residents was always first. On a walk they wrote it down, called the office, or fought the web app. I designed a quick search and a light profile: enough to answer the question and make small adjustments, without bringing over desktop work like a financial move-out that needs a desk and time to get the details right.',
   collaborators:
-    'OXP product partners, Customer Workflows, customer feedback program, four staff personas in a usability simulation',
-  surface: 'Expo prototype of Entrata’s OXP staff iOS app (Command Center + Residents) plus a SwiftUI lookup module',
+    'OXP product partners, Customer Workflows, customer feedback program',
+  surface: 'Expo prototype of Entrata’s staff iOS app (Command Center + Residents) plus a SwiftUI lookup module',
   heroFigure: {
     src: img('00-hero-three-up.png'),
     alt: 'Three phone screens from the OXP Expo prototype: Command Center home, resident search results for Marcus Johnson, and his profile hub.',
@@ -21,12 +21,12 @@ export const mobileStrategyResidentLookupCase: RichCaseStudy = {
     {
       id: 'problem',
       stage: 'Rough',
-      title: 'The job is not at a desk',
+      title: 'They were already looking people up',
       body: [
-        'Property staff lose time to the round-trip between the field and a desktop. A community manager finds a problem on a walk, goes back to the office, logs in, and re-enters details from memory. Customer estimates put that loop at about 8 to 12 minutes per work order. Regional managers spend most of the week traveling. Approvals, ledger checks, and resident questions wait until they are back at a screen.',
-        'Desktop OXP is not that job. Staff on their feet need “what do I do next?” and fast resident context, not a KPI wall, when a conversation starts in a breezeway. Competitive pressure made the gap concrete. Operators coming off other systems remembered looking people up on a phone. Entrata’s own tablet product had been deployed and then ignored. A mandate gets the download. A daily job gets retention.',
-        'The product OXP sells is an AI workforce: agents, playbooks, and escalations. Mobile is how that workforce earns a place in daily work. Without a field surface, the agents stay on a desktop nobody opens between units.',
-        'The question was not whether to ship a mobile app. It was which IA earns a second open, and which wedge proves it first, before we had any first-party usage data of our own.',
+        'Entrata had a facilities mobile app. It did not have a staff app for property managers. The OXP app was the first time the company put Entrata in a native phone experience for that audience. There is plenty in that app that belongs to OXP. Resident lookup is not one of those things. It is a core piece of Entrata that people use every day.',
+        'A question from a resident means pulling that person up. On desktop that is routine. On a phone it meant the web version of Entrata, which is a terrible experience, or a workaround: write it down and look it up later, attempt it on the phone anyway, or call someone who is still at the office.',
+        'We asked staff what they already try to do on a mobile device. Looking up residents was always first. They get the question while they are walking the property. The job is already happening. The product just was not there.',
+        'The question was not whether to ship a mobile app. It was which information architecture earns a second open, and which wedge proves it first. A light profile had to be enough to answer the question and make small adjustments. Major desktop work, like a financial move-out, stayed off the phone. That is desk work. You want time, focus, and the details in front of you.',
       ],
       metrics: [
         {
@@ -65,7 +65,7 @@ export const mobileStrategyResidentLookupCase: RichCaseStudy = {
           ],
           [
             'Competitive scan (5 vendors)',
-            'The market is fragmented single-function apps. Cloning desktop IA would not win. Platform-owner workflows (escalations, playbooks, workforce) are the moat; a KPI wall is not.',
+            'The market is fragmented single-function apps. Cloning desktop information architecture would not win. Platform-owner workflows (escalations, playbooks, workforce) are the moat; a KPI wall is not.',
           ],
           [
             'Usability sim (4 personas, 32 walkthroughs)',
@@ -196,6 +196,20 @@ export const mobileStrategyResidentLookupCase: RichCaseStudy = {
       ],
     },
     {
+      id: 'prototype',
+      stage: 'Making',
+      title: 'Walk the lookup',
+      body: [
+        'This is the Expo prototype we used with partners. The people tab lands on Residents, not a directory. Search a name, open the hub, then Financials. A plate still returns nothing. That was the point of putting a walkable build in front of people.',
+      ],
+      embed: {
+        src: withBase('/prototypes/oxp-mobile/'),
+        title: 'Interactive OXP resident lookup prototype',
+        caption: 'Start on Home, then the people tab. Search Marcus, open the profile, tap Financials.',
+        hint: 'A plate like EWX-4429 still returns nothing. That was a ship-stopper in the sim.',
+      },
+    },
+    {
       id: 'decisions',
       stage: 'Decisions',
       title: 'What we chose instead',
@@ -220,7 +234,7 @@ export const mobileStrategyResidentLookupCase: RichCaseStudy = {
           ],
           [
             'Hub plus drill-in sheets',
-            'Act (message, work order, note) without leaving the person. Align with desktop concepts, do not clone desktop IA.',
+            'Act (message, work order, note) without leaving the person. Align with desktop concepts, do not clone desktop information architecture.',
           ],
           [
             'Read-only ledger and household',
@@ -252,7 +266,7 @@ export const mobileStrategyResidentLookupCase: RichCaseStudy = {
       stage: 'Polished',
       title: 'Where it stands',
       body: [
-        'What we left behind was a coherent mobile IA story and a lookup flow staff could actually try, not a shrunk desktop OXP. The work shaped roadmap sequencing and prototype direction. It is not a measured GA retention curve.',
+        'What we left behind was a coherent mobile information architecture story and a lookup flow staff could actually try, not a shrunk desktop. The work shaped roadmap sequencing and prototype direction. It is not a measured GA retention curve.',
         'Initiative targets were set as learning goals for a CSM-activated cohort, with explicit kill criteria. Until first-party usage lands, these are goals, not results.',
       ],
       table: {
@@ -284,6 +298,5 @@ export const mobileStrategyResidentLookupCase: RichCaseStudy = {
     'Wrong-property empty results with a widen CTA',
     'All Properties → multi-select trap',
     'Daily Briefing 2.x next to Original',
-    '60–90s lookup walkthrough (search → hub → financials)',
   ],
 };

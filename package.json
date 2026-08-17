@@ -14,7 +14,8 @@
     "stone:compress": "node scripts/compress-stone.mjs && node scripts/split-stone-chunks.mjs",
     "stone:chunks": "node scripts/split-stone-chunks.mjs",
     "stone:hull": "node scripts/generate-stone-hull.mjs",
-    "stone:verify": "node scripts/verify-stone-fit.mjs"
+    "stone:verify": "node scripts/verify-stone-fit.mjs",
+    "prototype:oxp": "node scripts/export-oxp-prototype.mjs"
   },
   "dependencies": {
     "@astrojs/react": "^6.0.2",

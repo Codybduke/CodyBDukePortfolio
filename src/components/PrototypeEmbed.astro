@@ -1,0 +1,24 @@
+---
+import type { CaseEmbed } from '../data/case-studies/types';
+
+type Props = {
+  embed: CaseEmbed;
+};
+
+const { embed } = Astro.props;
+const join = embed.src.includes('?') ? '&' : '?';
+const src = `${embed.src}${join}embed=1`;
+---
+
+<figure class="case-embed">
+  <div class="case-embed__frame">
+    <iframe src={src} title={embed.title} loading="lazy" allow="fullscreen"></iframe>
+  </div>
+  <figcaption>
+    <p>{embed.caption}</p>
+    {embed.hint && <p class="case-embed__hint">{embed.hint}</p>}
+    <p>
+      <a href={src} target="_blank" rel="noopener noreferrer">Open in a new tab</a>
+    </p>
+  </figcaption>
+</figure>

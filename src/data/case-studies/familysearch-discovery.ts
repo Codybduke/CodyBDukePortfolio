@@ -212,9 +212,9 @@ export const familysearchDiscoveryCase: RichCaseStudy = {
     },
   ],
   nextCaptures: [
-    'Pioneer three-up: email hook, ancestor card, relationship — no contact block on the board',
-    'Calendar three-up: home card, ancestor list with dates, birthday notification copy',
-    'WWI Draft card as the third hook (record → person, not a new IA)',
-    'Sketchbook-to-phone crop of Pioneer (email / pioneer page / carousel) with phone number and old email removed',
+    'Production screens from FamilySearch Inspire — not the Behance mock board',
+    'Pioneer: named ancestor card plus relationship',
+    'Calendar: home card or notification with a real birthday hook',
+    'WWI Draft: the signed card as the third hook',
   ],
 };

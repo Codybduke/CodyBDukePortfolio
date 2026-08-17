@@ -4,7 +4,14 @@ import { moveInScannerCase } from './move-in-scanner';
 import { pricingSpecialsCase } from './pricing-specials';
 import type { RichCaseStudy } from './types';
 
-export type { RichCaseStudy, CaseSection, CaseFigure, CaseMetric, CaseTable } from './types';
+export type {
+  RichCaseStudy,
+  CaseSection,
+  CaseFigure,
+  CaseMetric,
+  CaseTable,
+  CaseEmbed,
+} from './types';
 
 const richCases: Record<string, RichCaseStudy> = {
   [moveInScannerCase.slug]: moveInScannerCase,

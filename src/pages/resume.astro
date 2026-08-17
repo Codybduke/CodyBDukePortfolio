@@ -1,0 +1,481 @@
+---
+import { site } from '../data/site';
+import { withBase } from '../lib/paths';
+
+const portfolioUrl = 'https://codybduke.github.io/CodyBDukePortfolio/';
+const linkedinShort = 'linkedin.com/in/cody-duke-aa8114127';
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta
+      name="description"
+      content="Cody Duke — Product Designer resume. Retention loops, evidence, and AI-assisted delivery."
+    />
+    <title>Cody Duke — Product Designer Resume</title>
+    <link rel="icon" type="image/svg+xml" href={withBase('/favicon.svg')} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://api.fontshare.com" crossorigin />
+    <link href="https://api.fontshare.com/v2/css?f[]=clash-grotesk@500,600&display=swap" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Figtree:wght@500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <p class="resume-chrome">
+      <a href={withBase('/')}>← Portfolio</a>
+      <button type="button" onclick="window.print()">Print / Save PDF</button>
+    </p>
+
+    <article class="resume">
+      <header class="resume__header">
+        <div>
+          <h1>Cody Duke</h1>
+          <p class="resume__role">Product Designer</p>
+          <a class="resume__phone" href="tel:+15013395093">(501) 339-5093</a>
+        </div>
+        <address>
+          <a href={`mailto:${site.email}`}>{site.email}</a>
+          <a href={portfolioUrl}>{portfolioUrl.replace('https://', '').replace(/\/$/, '')}</a>
+          <a href={site.linkedin}>{linkedinShort}</a>
+          <span>Pleasant Grove, UT · Open to remote</span>
+        </address>
+      </header>
+
+      <div class="resume__body">
+        <aside class="resume__rail">
+          <section>
+            <h2>Profile</h2>
+            <p class="resume__lede">
+              <em>How I think about product design:</em>
+            </p>
+            <p>
+              I design products people come back to — not screens that merely ship. I work from
+              evidence: field research, production data, and call research. Visuals matter when they
+              serve a job. I can own look and feel as the only designer, and I can lead through a
+              team — framing the problem and partnering with engineering either way.
+            </p>
+          </section>
+
+          <section>
+            <h2>Skills</h2>
+            <p>
+              I run the loop from research through delivery:{' '}
+              <strong>retention and habit loops</strong>,{' '}
+              <strong>field and call research</strong>,{' '}
+              <strong>production data</strong>,{' '}
+              <strong>systems UX</strong>,{' '}
+              <strong>visual craft</strong> (typography, identity), and{' '}
+              <strong>AI-assisted prototyping</strong> — without outsourcing the decisions.
+            </p>
+            <p class="resume__software-label">Software I’m fluent in</p>
+            <p class="resume__software">Figma, Cursor, SQL, Expo, SwiftUI, FigJam</p>
+            <p class="resume__note">
+              * Tools are leverage. I pick what the problem needs.
+            </p>
+          </section>
+
+          <section>
+            <h2>Education</h2>
+            <p class="resume__school">
+              <strong>BFA, Graphic Design</strong><br />
+              Brigham Young University–Idaho
+            </p>
+          </section>
+        </aside>
+
+        <div class="resume__main">
+          <section>
+            <h2>Work Experience</h2>
+
+            <article class="job">
+              <header class="job__head">
+                <h3>Entrata</h3>
+                <p class="job__dates">July 2019 – 2026</p>
+              </header>
+              <p class="job__title">Senior Product Designer · Product Lead (~1 year)</p>
+              <p>
+                Property-management software used by apartment staff. For about a year I ran as
+                Product Lead: research through prototype, handoff, and delivery with an owned
+                engineering team.
+              </p>
+              <ul>
+                <li>
+                  Designed a mobile move-in flow so staff can check residents in at the table,
+                  one person at a time, even without reliable Wi-Fi — instead of marking a
+                  spreadsheet and spending the next day (and overtime) re-entering everyone into
+                  the system. Site visits and production data set the scope; estimated same-day
+                  completion vs. a multi-day catch-up. Handed to the iOS team as SwiftUI. Not yet
+                  in production.
+                </li>
+                <li>
+                  Redesigned how staff create rental promotions so one offer can include multiple
+                  gifts or credits for the resident to choose from. Before, each incentive required
+                  its own promotion. Usability testing kept the new flow inside the setup staff
+                  already knew. After launch, that choice — which did not exist before — was in
+                  use across dozens of clients.
+                </li>
+                <li>
+                  Designed a field mobile experience around looking up a resident and taking the
+                  next action, based on customer interviews and sales-call recordings. The bet:
+                  people keep an app they use every day, not one leadership mandates they download.
+                </li>
+                <li>
+                  Use AI to synthesize research, pull data, and prototype in code so I can explore
+                  more options, faster. I still make the product calls.
+                </li>
+              </ul>
+            </article>
+
+            <article class="job">
+              <header class="job__head">
+                <h3>FamilySearch</h3>
+                <p class="job__dates">2017 – 2019</p>
+              </header>
+              <p class="job__title">UX Designer</p>
+              <ul>
+                <li>
+                  Led product design for personalized discovery experiences (Pioneer, Ancestor
+                  Calendar, WWI Draft, and 26 campaigns in total) that showed beginners a specific
+                  ancestor and one next step — instead of sending them to a search box.
+                </li>
+                <li>
+                  Versus the previous year: <strong>95% more members retained</strong> and
+                  <strong>107% more other patrons retained</strong>.
+                  <strong>1.1 million</strong> people outside the US engaged.
+                  <strong>86,000</strong> comments, <strong>90% positive</strong>. Calendar used
+                  birthdays already in the tree as a reason to come back the next month.
+                </li>
+                <li>
+                  Set campaign goals with product managers, and oversaw third-party design so each
+                  campaign reused the same product loop instead of becoming a one-off marketing site.
+                </li>
+              </ul>
+            </article>
+          </section>
+        </div>
+      </div>
+    </article>
+  </body>
+</html>
+
+<style>
+  :root {
+    --resume-ink: #1c1c1a;
+    --resume-muted: #5c5c56;
+    --resume-line: rgba(28, 28, 26, 0.18);
+    --resume-paper: #ffffff;
+    --resume-field: #fbfbf1;
+    --font-display: 'Clash Grotesk', 'Figtree', 'Helvetica Neue', sans-serif;
+    --font-ui: 'Figtree', 'Helvetica Neue', sans-serif;
+    --font-body: 'Source Serif 4', Georgia, 'Times New Roman', serif;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  html,
+  body {
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    background: var(--resume-field);
+    color: var(--resume-ink);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  a:hover {
+    text-decoration: underline;
+    text-underline-offset: 0.14em;
+  }
+
+  .resume-chrome {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 8.5in;
+    margin: 1.25rem auto 0.75rem;
+    padding: 0 0.5rem;
+    font-family: var(--font-ui);
+    font-size: 0.8125rem;
+    font-weight: 600;
+  }
+
+  .resume-chrome button {
+    font: inherit;
+    font-weight: 600;
+    color: var(--resume-ink);
+    background: transparent;
+    border: 1px solid var(--resume-line);
+    border-radius: 999px;
+    padding: 0.4rem 0.85rem;
+    cursor: pointer;
+  }
+
+  .resume {
+    width: 8.5in;
+    min-height: 11in;
+    margin: 0 auto 2.5rem;
+    padding: 0.52in 0.58in 0.5in;
+    background: var(--resume-paper);
+    color: var(--resume-ink);
+    box-shadow: 0 18px 40px rgba(28, 28, 26, 0.08);
+  }
+
+  .resume__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1.5rem;
+    padding-bottom: 0.28in;
+  }
+
+  h1 {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: 2.15rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    line-height: 0.95;
+    text-transform: uppercase;
+  }
+
+  .resume__role {
+    margin: 0.28rem 0 0;
+    font-family: var(--font-ui);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--resume-muted);
+  }
+
+  .resume__phone {
+    display: inline-block;
+    margin-top: 0.35rem;
+    font-family: var(--font-ui);
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: var(--resume-ink);
+  }
+
+  address {
+    margin: 0;
+    font-style: normal;
+    font-family: var(--font-ui);
+    font-size: 0.68rem;
+    line-height: 1.55;
+    text-align: right;
+    color: var(--resume-muted);
+  }
+
+  address a,
+  address span {
+    display: block;
+  }
+
+  .resume__body {
+    display: grid;
+    grid-template-columns: 2.35in 1fr;
+    align-items: start;
+  }
+
+  .resume__rail {
+    padding: 0 0.38in 0 0;
+  }
+
+  .resume__main {
+    padding: 0 0 0 0.42in;
+    border-left: 1px solid var(--resume-line);
+  }
+
+  h2 {
+    margin: 0 0 0.65rem;
+    padding-top: 0.14rem;
+    border-top: 1px solid var(--resume-line);
+    font-family: var(--font-ui);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  .resume__rail section + section,
+  .resume__main .job + .job {
+    margin-top: 0.38in;
+  }
+
+  .resume__rail p,
+  .job p {
+    margin: 0 0 0.48rem;
+    font-size: 0.84rem;
+    line-height: 1.45;
+  }
+
+  .resume__rail p:last-child,
+  .job p:last-child {
+    margin-bottom: 0;
+  }
+
+  .resume__lede {
+    margin-bottom: 0.35rem !important;
+  }
+
+  .resume__lede em {
+    font-family: var(--font-body);
+    font-size: 0.84rem;
+    font-weight: 600;
+  }
+
+  strong {
+    font-weight: 600;
+  }
+
+  .resume__software-label {
+    margin: 0.55rem 0 0.18rem !important;
+    font-family: var(--font-ui);
+    font-size: 0.68rem !important;
+    font-weight: 600;
+  }
+
+  .resume__software {
+    margin: 0 0 0.35rem !important;
+    font-family: var(--font-ui);
+    font-size: 0.72rem !important;
+    line-height: 1.4 !important;
+  }
+
+  .job ul {
+    margin: 0.2rem 0 0;
+    padding: 0 0 0 0.95rem;
+  }
+
+  .job li {
+    font-family: var(--font-body);
+    font-size: 0.84rem;
+    line-height: 1.45;
+    margin: 0 0 0.42rem;
+  }
+
+  .job li:last-child {
+    margin-bottom: 0;
+  }
+
+  .resume__note {
+    font-family: var(--font-ui);
+    font-size: 0.62rem !important;
+    line-height: 1.4 !important;
+    color: var(--resume-muted);
+  }
+
+  .resume__school {
+    font-size: 0.74rem !important;
+    line-height: 1.4 !important;
+  }
+
+  .job__head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 0.75rem;
+  }
+
+  .job h3 {
+    margin: 0;
+    font-family: var(--font-ui);
+    font-size: 0.92rem;
+    font-weight: 700;
+    letter-spacing: 0;
+    text-transform: none;
+  }
+
+  .job__dates {
+    margin: 0 !important;
+    font-family: var(--font-ui);
+    font-size: 0.68rem !important;
+    font-weight: 500;
+    color: var(--resume-muted);
+    white-space: nowrap;
+  }
+
+  .job__title {
+    margin: 0.12rem 0 0.5rem !important;
+    font-family: var(--font-ui);
+    font-size: 0.72rem !important;
+    color: var(--resume-muted);
+  }
+
+  @media print {
+    @page {
+      size: letter;
+      margin: 0;
+    }
+
+    html,
+    body {
+      background: white;
+    }
+
+    .resume-chrome {
+      display: none;
+    }
+
+    .resume {
+      margin: 0;
+      box-shadow: none;
+      min-height: 11in;
+    }
+  }
+
+  @media screen and (max-width: 900px) {
+    body {
+      background: var(--resume-paper);
+    }
+
+    .resume {
+      width: auto;
+      min-height: 0;
+      margin: 0;
+      padding: 1.5rem 1.25rem 2.5rem;
+      box-shadow: none;
+    }
+
+    .resume__header,
+    .resume__body,
+    .job__head {
+      display: block;
+    }
+
+    .resume__header address {
+      text-align: left;
+      margin-top: 1rem;
+    }
+
+    .resume__rail,
+    .resume__main {
+      padding: 1.25rem 0 0;
+      border: 0;
+    }
+
+    .resume__main {
+      border-top: 1px solid var(--resume-line);
+    }
+  }
+</style>

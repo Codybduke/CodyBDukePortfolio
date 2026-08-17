@@ -8,10 +8,17 @@ import SiteFooter from '../components/SiteFooter.astro';
 interface Props {
   title?: string;
   description?: string;
+  noindex?: boolean;
 }
 
-const { title = site.title, description = site.description } = Astro.props;
+const { title = site.title, description = site.description, noindex = false } = Astro.props;
 const pageTitle = title === site.title ? title : `${title} — ${site.name}`;
+const canonical = Astro.site
+  ? new URL(Astro.url.pathname, Astro.site).href
+  : Astro.url.href;
+const ogImage = Astro.site
+  ? new URL(withBase('/work/mobile-strategy-resident-lookup/00-hero-three-up.png'), Astro.site).href
+  : withBase('/work/mobile-strategy-resident-lookup/00-hero-three-up.png');
 ---
 
 <!doctype html>
@@ -21,6 +28,17 @@ const pageTitle = title === site.title ? title : `${title} — ${site.name}`;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
     <meta name="generator" content={Astro.generator} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+    <link rel="canonical" href={canonical} />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
     <link rel="icon" type="image/svg+xml" href={withBase('/favicon.svg')} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

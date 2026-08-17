@@ -1,11 +1,11 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { cases, getCase } from '../../data/cases';
+import { getCase, publicCases } from '../../data/cases';
 import { getRichCase } from '../../data/case-studies';
 import { withBase } from '../../lib/paths';
 
 export function getStaticPaths() {
-  return cases.map((item) => ({
+  return publicCases.map((item) => ({
     params: { slug: item.slug },
   }));
 }
@@ -28,11 +28,6 @@ const rich = getRichCase(slug!);
           <p class="section__eyebrow">{item.eyebrow}</p>
           <h1>{item.title}</h1>
           <p class="case-study__claim">{rich.openingClaim}</p>
-          <p>
-            <span class:list={['status-pill', item.status === 'ready' && 'status-pill--ready']}>
-              {item.status === 'ready' ? 'Public-length draft' : 'Prototype stub'}
-            </span>
-          </p>
 
           <div class="meta-bar meta-bar--case">
             <div>
@@ -56,6 +51,16 @@ const rich = getRichCase(slug!);
                 <div>
                   <strong>Surface</strong>
                   {rich.surface}
+                </div>
+              )
+            }
+            {
+              rich.live && (
+                <div>
+                  <strong>Still live</strong>
+                  <a href={rich.live.href} target="_blank" rel="noopener noreferrer">
+                    {rich.live.label}
+                  </a>
                 </div>
               )
             }
@@ -137,6 +142,8 @@ const rich = getRichCase(slug!);
                       section.figures.length >= 3 && 'case-figure-row--trio',
                       section.figures.length === 2 && 'case-figure-row--pair',
                       section.figures.length === 1 && 'case-figure-row--single',
+                      section.figures.some((figure) => figure.layout === 'wide') &&
+                        'case-figure-row--wide',
                     ]}
                   >
                     {section.figures.map((figure) => (
@@ -158,7 +165,19 @@ const rich = getRichCase(slug!);
           }
 
           {
-            rich.sibling && (
+            rich.live && (
+              <p class="case-live">
+                {rich.live.note ? `${rich.live.note} ` : 'Still live: '}
+                <a href={rich.live.href} target="_blank" rel="noopener noreferrer">
+                  {rich.live.label}
+                </a>
+              </p>
+            )
+          }
+
+          {
+            rich.sibling &&
+              getCase(rich.sibling.href.replace(/\/work\//, '').replace(/^\//, '')) && (
               <p class="case-sibling">
                 Sibling case:{' '}
                 <a href={withBase(rich.sibling.href)}>{rich.sibling.label}</a>
@@ -190,11 +209,6 @@ const rich = getRichCase(slug!);
         <p class="section__eyebrow">{item.eyebrow}</p>
         <h1>{item.title}</h1>
         <p>{item.summary}</p>
-        <p>
-          <span class:list={['status-pill', item.status === 'ready' && 'status-pill--ready']}>
-            {item.status === 'ready' ? 'Public-length draft' : 'Prototype stub'}
-          </span>
-        </p>
 
         <div class="meta-bar">
           <div>

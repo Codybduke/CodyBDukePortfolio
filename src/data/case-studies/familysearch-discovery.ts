@@ -3,11 +3,16 @@ import type { RichCaseStudy } from './types';
 export const familysearchDiscoveryCase: RichCaseStudy = {
   slug: 'familysearch-discovery',
   openingClaim:
-    'FamilySearch could fill a stadium with new accounts every week. Almost none of those people came back. Beginners hired the product to feel a connection to someone who came before them, then landed in a toolbox built for hobbyists. I led product design for personalized discovery campaigns from 2017 to 2019: Pioneer, Ancestor Calendar, and WWI Draft. Each one started from a fact already in the tree — a name, a birthday, a draft card — and dropped the person into a product surface that made that ancestor real. The discovery program was part of the 2018 retention work. Returning-user retention lifted 101% year over year. International reach rose 12.4%, 24% over goal. We steered the next campaign from on the order of 86,000 discovery comments, not from a brand calendar.',
+    'FamilySearch could fill a stadium with new accounts every week. Almost none of those people came back. Beginners hired the product to feel a connection to someone who came before them, then landed in a toolbox built for hobbyists. I led product design for personalized discovery campaigns from 2017 to 2019: Pioneer, Ancestor Calendar, and WWI Draft among 26 campaigns sent on the same loop. Each one started from a fact already in the tree — a name, a birthday, a draft card — and dropped the person into a product surface that made that ancestor real. Versus the previous year, we retained 95% more members and 107% more other patrons. 1.1 million patrons outside the US engaged in a campaign. 86,000 feedback comments, 90% of them positive, steered what to personalize next — not a brand calendar.',
   collaborators:
     'FamilySearch product and campaign managers, discovery and research partners, content and records teams (including Cris Rees, Sr. Product Manager)',
   surface:
     'Email plus in-product discovery on FamilySearch.org — home cards, ancestor story surfaces, relationship, and notifications',
+  live: {
+    href: 'https://www.familysearch.org/en/inspire',
+    label: 'FamilySearch Inspire',
+    note: 'FamilySearch is still running several of the campaigns I designed. Anyone can open them at',
+  },
   sections: [
     {
       id: 'problem',
@@ -28,8 +33,8 @@ export const familysearchDiscoveryCase: RichCaseStudy = {
           label: 'Still returning at 12 months',
         },
         {
-          value: '~86k',
-          label: 'Discovery comments used to steer what to personalize next',
+          value: '26',
+          label: 'Personalized discovery campaigns sent on the loop',
         },
       ],
       callout:
@@ -55,7 +60,7 @@ export const familysearchDiscoveryCase: RichCaseStudy = {
             'Designed for connection to a person, not for teaching research skills in the first session.',
           ],
           [
-            '~86k discovery comments',
+            '86K feedback comments (90% positive)',
             'Which hooks people answered (photos, dates, military records, pioneer stories) drove the next campaign, not a seasonal theme list.',
           ],
           [
@@ -70,7 +75,7 @@ export const familysearchDiscoveryCase: RichCaseStudy = {
       stage: 'Decisions',
       title: 'One loop, three campaigns',
       body: [
-        'I treated Pioneer, Calendar, and WWI as instances of the same product, not as three marketing sites. Each campaign swapped the hook. The loop stayed still.',
+        'I treated Pioneer, Calendar, and WWI as instances of the same product, not as three marketing sites. We sent 26 campaigns on that loop. Each one swapped the hook. The loop stayed still.',
         'Email or a home card named a specific ancestor and why they mattered this week. The product surface showed relationship in plain language — “your 2nd great grandfather,” not a pedigree chart — then one path into photos, stories, or the record. Coming back was supposed to feel like checking on a person, not logging into software.',
         'The trade-off was real. A single evergreen onboarding flow would have been cleaner to ship. It would also have stayed generic. Campaigns let us ride moments people already understand — a birthday, a pioneer story, a war record — without pretending every beginner wanted the same first session.',
       ],
@@ -162,26 +167,39 @@ export const familysearchDiscoveryCase: RichCaseStudy = {
       stage: 'Polished',
       title: 'What moved',
       body: [
-        'I led product design for these campaign surfaces. I did not own retention as a solo metric. The 2018 program those campaigns sat inside is where the numbers live, and that is how I would talk about them in an interview.',
-        'Returning-user retention lifted 101% year over year in 2018. International reach increased 12.4%, which was 24% over goal. Discovery comments on the order of 86,000 were the qualitative engine for what to personalize next — which is why Calendar and WWI could follow Pioneer without becoming three unrelated microsites.',
+        'I led product design for these campaign surfaces. The numbers below are from the campaigns themselves, versus the previous year, not a collapsed “program lift” I would not be able to defend in an interview.',
+        'Versus the previous year we retained 95% more members and 107% more other patrons. 1.1 million patrons outside the US engaged in a campaign. Across 26 campaigns we received 86,000 feedback comments, 90% of them positive — which is why Calendar and WWI could follow Pioneer without becoming three unrelated microsites.',
         'Cris Rees, the senior product manager I worked with, put the bar in collaborator language: experiences people actually used, engagement that showed up in the numbers, and strong patron feedback scores. That is the outcome I would still want this work judged on.',
+        'FamilySearch is still running several of the campaigns I designed. They are public — anyone can open them on FamilySearch Inspire.',
       ],
       metrics: [
         {
-          value: '101%',
-          label: 'Year-over-year returning-user retention lift, 2018 (program)',
+          value: '95%',
+          label: 'More members retained than the previous year',
         },
         {
-          value: '12.4%',
-          label: 'Increase in international reach (24% over goal)',
+          value: '107%',
+          label: 'More other patrons retained than the previous year',
         },
         {
-          value: '~86k',
-          label: 'Discovery comments that steered later campaigns',
+          value: '1.1M',
+          label: 'Patrons outside the US who engaged in a campaign',
+        },
+        {
+          value: '26',
+          label: 'Campaigns sent',
+        },
+        {
+          value: '86K',
+          label: 'Feedback comments received',
+        },
+        {
+          value: '90%',
+          label: 'Positive feedback',
         },
       ],
       callout:
-        'These are program outcomes I helped drive as the product designer on the campaign loop, not a claim that a single email caused a 101% lift.',
+        'These are campaign actuals versus the previous year, not a claim that a single email caused the retention change.',
     },
     {
       id: 'reflection',

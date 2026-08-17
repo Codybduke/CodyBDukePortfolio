@@ -36,6 +36,8 @@ export type RichCaseStudy = {
   openingClaim: string;
   collaborators?: string;
   surface?: string;
+  /** Public product URL if the work is still live and anyone can open it */
+  live?: { href: string; label: string; note?: string };
   heroFigure?: CaseFigure;
   sections: CaseSection[];
   sibling?: { href: string; label: string };

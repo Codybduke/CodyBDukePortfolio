@@ -12,7 +12,7 @@ import { NodeIO } from '@gltf-transform/core';
 import { ALL_EXTENSIONS } from '@gltf-transform/extensions';
 import { meshopt, simplify, textureCompress } from '@gltf-transform/functions';
 import { MeshoptEncoder, MeshoptSimplifier } from 'meshoptimizer';
-import { statSync } from 'node:fs';
+import { existsSync, statSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import sharp from 'sharp';
 
@@ -36,6 +36,16 @@ const jobs = [
     label: 'polished',
     source: fileURLToPath(new URL('../assets/stone-polished.source.glb', import.meta.url)),
     target: fileURLToPath(new URL('../public/models/stone-polished.glb', import.meta.url)),
+  },
+  {
+    label: 'rough-b',
+    source: fileURLToPath(new URL('../assets/stone-b.source.glb', import.meta.url)),
+    target: fileURLToPath(new URL('../public/models/stone-b.glb', import.meta.url)),
+  },
+  {
+    label: 'polished-b',
+    source: fileURLToPath(new URL('../assets/stone-polished-b.source.glb', import.meta.url)),
+    target: fileURLToPath(new URL('../public/models/stone-polished-b.glb', import.meta.url)),
   },
 ];
 
@@ -62,7 +72,15 @@ const io = new NodeIO().registerExtensions(ALL_EXTENSIONS).registerDependencies(
   'meshopt.encoder': MeshoptEncoder,
 });
 
+const filter = process.argv[2];
+
 for (const { label, source, target } of jobs) {
+  if (filter && !label.includes(filter)) continue;
+  if (!existsSync(source)) {
+    console.log(`${label}: skip (no source)`);
+    continue;
+  }
+
   const document = await io.read(source);
   const before = meshStats(document);
 

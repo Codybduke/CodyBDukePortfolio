@@ -22,7 +22,7 @@ import { highlights, moreCases } from '../../data/cases';
     <div class="section__head">
       <h2 class="section__title" id="highlights-heading">Highlights</h2>
     </div>
-    <div class="case-grid">
+    <div class="case-grid case-grid--compact">
       {highlights.map((item) => <CaseCard item={item} />)}
     </div>
   </section>
@@ -31,7 +31,7 @@ import { highlights, moreCases } from '../../data/cases';
     <div class="section__head">
       <h2 class="section__title" id="more-work-heading">More work</h2>
     </div>
-    <div class="case-grid case-grid--compact">
+    <div class="case-grid">
       {moreCases.map((item) => <CaseCard item={item} />)}
     </div>
   </section>

@@ -1,3 +1,19 @@
+export type CaseCover = {
+  src: string;
+  alt: string;
+  /** Hover preview (mp4). Poster stays in `src`. */
+  video?: string;
+  /** Reversed copy of `video`, played on pointer leave. */
+  videoReverse?: string;
+  /** CSS object-position for the tile crop */
+  position?: string;
+  /** Extra zoom on the crop. 1 = none. */
+  scale?: number;
+};
+
+/** Cut-face mineral field for tiles and later case bands */
+export type CaseField = 'brass' | 'obsidian' | 'terracotta' | 'labradorite';
+
 export type CaseStudy = {
   slug: string;
   title: string;
@@ -7,6 +23,8 @@ export type CaseStudy = {
   timeframe: string;
   highlight: boolean;
   tags: string[];
+  field?: CaseField;
+  cover?: CaseCover;
   problem: string;
   process: string[];
   decisions: string[];
@@ -23,23 +41,30 @@ export const cases: CaseStudy[] = [
     title: 'OXP Mobile Move-In Scanner',
     eyebrow: 'Mobile · Offline-first',
     summary:
-      'Staff checked people in on a spreadsheet at the table and entered Entrata later. Site visits, production SQL, and Industry Group interview notes led to a search-first, offline mobile flow, handed off as a SwiftUI module to the OXP mobile team.',
+      'Student move-in day is long, and most of the Entrata work still happens later. A search-first, offline mobile flow lets staff take a name and ID at the table, see if the checklist is ready, confirm in seconds, and turn leftover optional items into a follow-up task instead of a void.',
     role: 'Product Lead (PM + UX + prototype handoff)',
     timeframe: 'Mar – May 2026',
-    highlight: false,
+    highlight: true,
     tags: ['Field research', 'SQL', 'SwiftUI', 'Offline'],
+    field: 'labradorite',
+    cover: {
+      src: '/work/move-in-scanner/cover.webp',
+      alt: 'Three iPhone screens: Upcoming Move-ins roster, Riley Foster summary, and Confirm Move-in.',
+      video: '/work/move-in-scanner/cover.mp4',
+      videoReverse: '/work/move-in-scanner/cover-reverse.mp4',
+    },
     problem:
-      'At peak turn, staff move in 100–500+ residents a day from a table with unreliable Wi-Fi. They mark people on a spreadsheet, hand over a packet and keys, then spend overtime re-keying move-ins into Entrata later.',
+      'At peak student turn, staff move in 100–500+ residents from a breezeway, the office, or a drive-through. Offline they mark a spreadsheet and lose checklist visibility. Online they fight desktop Entrata on a phone. Either way the resident leaves with keys and Entrata catches up later.',
     process: [
       'Three site visits showed printed rolls, laptop sheets, and packets instead of Entrata at the table.',
-      'Industry Group interview notes (~20 operators) pushed Search over QR, optional items to escalation, and offline in MVP; PRD rewritten in 48 hours.',
+      'Industry Group interview notes (~20 operators) pushed Search over QR, optional items to a follow-up task, and offline in MVP; PRD rewritten in 48 hours.',
       'Ten SQL queries sized unused Bulk Move-In and kept checklist vs renewal claims directional.',
-      'Split day-of mobile from the CSV agent so neither waited on the other’s rollout.',
+      'Split day-of mobile from Bulk Move-in Smart Upload so neither waited on the other’s rollout.',
     ],
     decisions: [
       'Search first after interviews described the line as “Smith, 315,” not a QR scan.',
-      'Offline moved into MVP after Industry Group feedback made breezeway Wi-Fi the adoption constraint.',
-      'Optional checklist items create an internal escalation instead of blocking the line.',
+      'Offline moved into MVP after Industry Group feedback: 30-day cached roster, queued confirms, home collapsed to Move-In.',
+      'Optional checklist items create an internal follow-up task instead of disappearing after confirm.',
     ],
     metrics: [
       '~21% of student move-ins at a large operator processed in Entrata in real time on move-in day (production audit).',
@@ -47,7 +72,7 @@ export const cases: CaseStudy[] = [
       'Near-zero adoption of Bulk Move-In in peak months, even at the largest student operator in the set.',
     ],
     outcome:
-      'Scoped table-side flow with offline and escalation rules for the OXP mobile team to implement, not a shrunk desktop Bulk Move-In. Pilot actuals still TBD.',
+      'Scoped table-side flow with offline cache and follow-up tasks for the OXP mobile team to implement, not a shrunk desktop Bulk Move-In. Pilot actuals still TBD.',
     handoff:
       'SwiftUI package and demo target for the OXP shell. The in-house mobile team walked the module, found five defects in about 30 minutes, and made small changes to fit the app.',
     builtWith:
@@ -64,6 +89,13 @@ export const cases: CaseStudy[] = [
     timeframe: '2017 – 2019',
     highlight: true,
     tags: ['Retention', 'Personalization', 'Consumer'],
+    field: 'brass',
+    cover: {
+      src: '/work/familysearch-discovery/cover.webp',
+      alt: 'FamilySearch Pioneer card for William Davis Robinson, 2nd cousin five times removed, with View Photos and Stories.',
+      video: '/work/familysearch-discovery/cover.mp4',
+      videoReverse: '/work/familysearch-discovery/cover-reverse.mp4',
+    },
     problem:
       'New accounts arrived in droves and did not come back. Beginners hired FamilySearch to feel a connection to someone who came before them, then met a toolbox built for hobbyists. Generic “come search” campaigns asked them to do the hard part first.',
     process: [
@@ -99,6 +131,13 @@ export const cases: CaseStudy[] = [
     timeframe: '2022 (design); shipped through 2024',
     highlight: true,
     tags: ['Setup', 'Systems', 'Pricing'],
+    field: 'terracotta',
+    cover: {
+      src: '/work/pricing-specials/cover.webp',
+      alt: 'Add Special create flow: Details, Recipients, and Incentives steps, with gifts and a concession on one special.',
+      video: '/work/pricing-specials/cover.mp4',
+      videoReverse: '/work/pricing-specials/cover-reverse.mp4',
+    },
     problem:
       'Staff created one special with one incentive — gift or credit. Multiple offers meant multiple specials, which residents could not use as a real choice. Create was an all-at-once screen that forked for student, conventional, and space options.',
     process: [
@@ -126,10 +165,10 @@ export const cases: CaseStudy[] = [
   },
   {
     slug: 'csv-move-in-agent',
-    title: 'CSV-to-Move-In Agent',
-    eyebrow: 'AI workflow · Trust UX',
+    title: 'Bulk Move-in Smart Upload',
+    eyebrow: 'Desktop · AI workflow',
     summary:
-      'An AI agent that turns a move-in spreadsheet into processed residents — mapping, matching, and exception handling so next-day overtime becomes a single upload.',
+      'An AI agent that turns a move-in spreadsheet into processed residents — mapping, matching, and exception handling so next-day overtime becomes a single upload. Sibling to table-side Move-In: this is the next-day bridge, not the breezeway.',
     role: 'Product Lead (hybrid UX/PM) — owned eng team',
     timeframe: 'Q2 2026',
     highlight: false,
@@ -157,7 +196,7 @@ export const cases: CaseStudy[] = [
       'PRD/spec + prototype flows for mapping, match preview, and exception resolution — shipped with an owned eng team against June turn timing.',
     builtWith:
       'Product Lead loop with eng: prototype flows, exception IA, and outcome targets baked into the handoff.',
-    status: 'draft',
+    status: 'ready',
   },
   {
     slug: 'mobile-strategy-resident-lookup',
@@ -169,6 +208,14 @@ export const cases: CaseStudy[] = [
     timeframe: 'Apr – May 2026',
     highlight: true,
     tags: ['Research synthesis', 'Information architecture', 'Mobile'],
+    field: 'obsidian',
+    cover: {
+      src: '/work/mobile-strategy-resident-lookup/cover.webp',
+      alt: 'Three iPhone screens: Command Center home, resident search for Marcus Johnson, and his profile hub.',
+      video: '/work/mobile-strategy-resident-lookup/cover.mp4',
+      videoReverse: '/work/mobile-strategy-resident-lookup/cover-reverse.mp4',
+      position: 'center center',
+    },
     problem:
       'Property managers get resident questions on a walk and have no good way to look that person up. Desktop Entrata is the daily tool. The phone path was the web app, a note for later, or a call to the office.',
     process: [
@@ -281,6 +328,7 @@ const highlightOrder = [
   'familysearch-discovery',
   'mobile-strategy-resident-lookup',
   'pricing-specials',
+  'move-in-scanner',
 ] as const;
 
 export const highlights = highlightOrder

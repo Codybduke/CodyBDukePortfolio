@@ -21,6 +21,12 @@
   --stone: #161616;
   --danger-soft: #8a6b4a;
 
+  /* Cut-face mineral fields — case tiles, later title bands */
+  --field-brass: #c4a056;
+  --field-obsidian: #1c1b18;
+  --field-terracotta: #b46848;
+  --field-labradorite: #3e5358;
+
   --font-display: 'Clash Grotesk', 'Figtree', 'Helvetica Neue', sans-serif;
   --font-body: 'Source Serif 4', Georgia, 'Times New Roman', serif;
   --font-ui: 'Figtree', 'Helvetica Neue', sans-serif;
@@ -548,7 +554,7 @@ p:last-child {
 
 .case-grid {
   display: grid;
-  gap: var(--space-5);
+  gap: var(--space-6) var(--space-5);
 }
 
 @media (min-width: 720px) {
@@ -565,52 +571,121 @@ p:last-child {
   display: flex;
   flex-direction: column;
   gap: var(--space-3);
-  padding: var(--space-5);
-  background: color-mix(in srgb, var(--bg) 70%, white);
+  min-height: 100%;
+  padding: 0;
+  text-decoration: none;
+  color: inherit;
+}
+
+.case-card__media {
+  display: block;
+  aspect-ratio: 3 / 2;
+  overflow: hidden;
   border: 1px solid var(--line);
   border-radius: var(--radius);
-  text-decoration: none;
-  transition:
-    border-color 200ms ease,
-    transform 200ms ease,
-    background 200ms ease,
-    box-shadow 200ms ease;
-  min-height: 100%;
+  background: var(--cover-field, var(--bg-stone));
+  padding: clamp(0.75rem, 5.5%, 1.35rem);
+  transition: border-color 200ms ease;
+}
+
+.case-card__media--mineral {
+  border-color: color-mix(in srgb, var(--cover-field) 72%, var(--stone));
+}
+
+.case-card__media--video {
+  padding: 0;
+  position: relative;
+}
+
+.case-card__media--video .case-card__stage {
+  position: absolute;
+  inset: 0;
+}
+
+.case-card__stage {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.case-card__media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: var(--cover-pos, center);
+  transform: scale(var(--cover-scale, 1));
+  transform-origin: var(--cover-pos, center);
+  transition: transform 400ms ease;
+}
+
+.case-card__media--video img,
+.case-card__media--video video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transform: none;
+}
+
+.case-card__media video {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.case-card.is-playing .case-card__media video.is-active {
+  opacity: 1;
+  visibility: visible;
 }
 
 .case-card:hover {
-  transform: translateY(-3px);
-  border-color: color-mix(in srgb, var(--stone) 28%, var(--line));
-  background: #fff;
-  box-shadow: 0 12px 40px rgba(28, 28, 26, 0.06);
   color: var(--ink);
 }
 
-.case-card__eyebrow {
+.case-card:hover .case-card__media {
+  border-color: color-mix(in srgb, var(--stone) 28%, var(--line));
+}
+
+.case-card:hover .case-card__media--mineral {
+  border-color: color-mix(in srgb, var(--cover-field) 55%, var(--stone));
+}
+
+.case-card:hover:not(:has(video)) .case-card__media img {
+  transform: scale(calc(var(--cover-scale, 1) * 1.03));
+}
+
+.case-card__title {
+  font-size: 1.2rem;
+  margin: 0;
+  line-height: 1.25;
+}
+
+.case-card__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
   font-family: var(--font-ui);
-  font-size: 0.78rem;
+  font-size: 0.72rem;
   font-weight: 600;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--ink-faint);
 }
 
-.case-card__title {
-  font-size: 1.25rem;
-  margin: 0;
-}
-
-.case-card__summary {
-  color: var(--ink-muted);
-  font-size: 0.98rem;
-  flex: 1;
-}
-
-.case-card__meta {
-  font-family: var(--font-ui);
-  font-size: 0.82rem;
-  color: var(--ink);
-  margin-top: var(--space-2);
+.case-card__tags li:not(:last-child)::after {
+  content: '|';
+  margin: 0 0.45em;
+  font-weight: 400;
+  color: var(--line);
 }
 
 .tag-row {
@@ -1126,6 +1201,22 @@ p:last-child {
   border: 1px solid var(--line);
 }
 
+.case-embed--lab {
+  position: relative;
+  left: 50%;
+  width: var(--shell-w);
+  max-width: var(--shell-w);
+  transform: translateX(-50%);
+}
+
+.case-embed--lab .case-embed__frame {
+  width: 100%;
+  height: min(58rem, calc(100vh - 7rem));
+  min-height: 36rem;
+  aspect-ratio: auto;
+  overflow: hidden;
+}
+
 .case-embed iframe {
   position: absolute;
   inset: 0;
@@ -1222,5 +1313,9 @@ p:last-child {
   .case-card:hover,
   .btn:hover {
     transform: none;
+  }
+
+  .case-card:hover:not(:has(video)) .case-card__media img {
+    transform: scale(var(--cover-scale, 1));
   }
 }

@@ -20,13 +20,32 @@ import {
   STONE_SPIN_RAD,
   STONE_TILT_DEG,
 } from '../data/stone-hull';
+import { STONE_HULL_B, STONE_OFFSET_B } from '../data/stone-hull-b';
 import { withBase } from '../lib/paths';
 
 const TILT_RAD = THREE.MathUtils.degToRad(STONE_TILT_DEG);
 const TAN_HALF_FOV = Math.tan(((STONE_FOV * Math.PI) / 180) / 2);
 const STONE_GLB = withBase('/models/stone.glb');
 const STONE_POLISHED_GLB = withBase('/models/stone-polished.glb');
+const STONE_B_GLB = withBase('/models/stone-b.glb');
+const STONE_POLISHED_B_GLB = withBase('/models/stone-polished-b.glb');
 const STONE_CHUNKS_GLB = withBase('/models/stone-chunks.glb');
+const STONE_SETS = {
+  a: {
+    rough: STONE_B_GLB,
+    polished: STONE_POLISHED_B_GLB,
+    hull: STONE_HULL_B,
+    offset: STONE_OFFSET_B,
+  },
+  b: {
+    rough: STONE_GLB,
+    polished: STONE_POLISHED_GLB,
+    hull: STONE_HULL,
+    offset: STONE_OFFSET,
+  },
+} as const;
+type StoneSet = keyof typeof STONE_SETS;
+const DOUBLE_TAP_MS = 420;
 const STONE_STILL = withBase('/images/stone-smooth.png');
 const LOGO_LOCKUP = withBase('/brand/logo-lockup-light.svg');
 const HAMMER_CURSOR = `url("${withBase('/brand/hammer.svg')}") 4 8, pointer`;
@@ -142,6 +161,10 @@ type StoneProps = {
   shakeNonce: number;
   burstMode: BurstMode;
   burstNonce: number;
+  roughUrl: string;
+  polishedUrl: string;
+  hullFlat: readonly number[];
+  offset: readonly [number, number];
   /** Read during the frame loop, so scrolling never triggers a React render. */
   scrollProgress: RefObject<number>;
   onChip: () => void;
@@ -498,6 +521,10 @@ function StoneRig({
   shakeNonce,
   burstMode,
   burstNonce,
+  roughUrl,
+  polishedUrl,
+  hullFlat,
+  offset,
   scrollProgress,
   onChip,
   onHoverChange,
@@ -537,8 +564,8 @@ function StoneRig({
   const gl = useThree((s) => s.gl);
   const size = useThree((s) => s.size);
 
-  const hull = useMemo(() => unpackHull(STONE_HULL), []);
-  const [offsetX, offsetY] = STONE_OFFSET;
+  const hull = useMemo(() => unpackHull(hullFlat), [hullFlat]);
+  const [offsetX, offsetY] = offset;
 
   const scratch = useMemo(
     () => ({
@@ -778,7 +805,7 @@ function StoneRig({
               <group ref={scaleGroup}>
                 <Suspense fallback={null}>
                   <StoneMesh
-                    url={STONE_GLB}
+                    url={roughUrl}
                     opacity={roughOpacity}
                     envBoost={noBoost}
                     renderOrder={0}
@@ -788,7 +815,7 @@ function StoneRig({
                 </Suspense>
                 <Suspense fallback={null}>
                   <StoneMesh
-                    url={STONE_POLISHED_GLB}
+                    url={polishedUrl}
                     opacity={gemOpacity}
                     envBoost={gemBoost}
                     renderOrder={1}
@@ -823,6 +850,8 @@ export default function StoneHero() {
   const [burstNonce, setBurstNonce] = useState(0);
   const [hovering, setHovering] = useState(false);
   const [dragging, setDragging] = useState(false);
+  const [stoneSet, setStoneSet] = useState<StoneSet>('a');
+  const stones = STONE_SETS[stoneSet];
 
   useEffect(() => {
     const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -844,7 +873,7 @@ export default function StoneHero() {
     window.addEventListener('scroll', onScroll, { passive: true });
 
     const preload = window.setTimeout(() => {
-      void Promise.resolve(useGLTF.preload(STONE_POLISHED_GLB));
+      void Promise.resolve(useGLTF.preload(STONE_SETS.a.polished));
       void Promise.resolve(useGLTF.preload(STONE_CHUNKS_GLB));
     }, 400);
 
@@ -854,6 +883,50 @@ export default function StoneHero() {
       window.clearTimeout(preload);
       for (const id of timers.current) window.clearTimeout(id);
     };
+  }, []);
+
+  useEffect(() => {
+    let lastKey = '';
+    let lastAt = 0;
+
+    const typingInField = (target: EventTarget | null) => {
+      if (!(target instanceof HTMLElement)) return false;
+      const tag = target.tagName;
+      return tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT' || target.isContentEditable;
+    };
+
+    const onSwapKeys = (event: KeyboardEvent) => {
+      if (event.metaKey || event.ctrlKey || event.altKey || event.repeat) return;
+      if (typingInField(event.target)) return;
+
+      const key = event.key.toLowerCase();
+      if (key !== 'a' && key !== 'b') {
+        lastKey = '';
+        return;
+      }
+
+      if (key === 'b') {
+        void Promise.resolve(useGLTF.preload(STONE_SETS.b.rough));
+        void Promise.resolve(useGLTF.preload(STONE_SETS.b.polished));
+      }
+
+      const now = performance.now();
+      const doubled = key === lastKey && now - lastAt < DOUBLE_TAP_MS;
+      lastKey = key;
+      lastAt = now;
+      if (!doubled) return;
+
+      event.preventDefault();
+      lastKey = '';
+      const next: StoneSet = key === 'b' ? 'b' : 'a';
+      setStoneSet((prev) => (prev === next ? prev : next));
+      setGem(false);
+      setChips(0);
+      setHovering(false);
+    };
+
+    window.addEventListener('keydown', onSwapKeys);
+    return () => window.removeEventListener('keydown', onSwapKeys);
   }, []);
 
   const chip = useCallback(() => {
@@ -875,7 +948,7 @@ export default function StoneHero() {
       return;
     }
 
-    void Promise.resolve(useGLTF.preload(STONE_POLISHED_GLB));
+    void Promise.resolve(useGLTF.preload(stones.polished));
     setChips((count) => {
       const next = count + 1;
       if (next >= CHIPS_TO_POLISH) {
@@ -900,7 +973,7 @@ export default function StoneHero() {
       }
       return next;
     });
-  }, [gem]);
+  }, [gem, stones.polished]);
 
   const onKeyDown = (event: { key: string; preventDefault: () => void }) => {
     if (event.key === 'Enter' || event.key === ' ') {
@@ -949,11 +1022,16 @@ export default function StoneHero() {
           <directionalLight position={[-2.5, -1.2, -2]} intensity={0.35} />
           <Suspense fallback={null}>
             <StoneRig
+              key={stoneSet}
               gem={gem}
               shakeKind={shakeKind}
               shakeNonce={shakeNonce}
               burstMode={burstMode}
               burstNonce={burstNonce}
+              roughUrl={stones.rough}
+              polishedUrl={stones.polished}
+              hullFlat={stones.hull}
+              offset={stones.offset}
               scrollProgress={scrollProgress}
               onChip={chip}
               onHoverChange={setHovering}
@@ -984,4 +1062,4 @@ export default function StoneHero() {
   );
 }
 
-useGLTF.preload(STONE_GLB);
+useGLTF.preload(STONE_SETS.a.rough);

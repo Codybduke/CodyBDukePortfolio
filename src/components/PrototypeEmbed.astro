@@ -7,10 +7,13 @@ type Props = {
 
 const { embed } = Astro.props;
 const join = embed.src.includes('?') ? '&' : '?';
-const src = `${embed.src}${join}embed=1`;
+/** Same demo matrix as the case-study screenshots; lab chrome stays visible. */
+const lab =
+  'lab=1&version=full&eli=enabled&briefing=v2&device=ios&size=mobile&phoneSim=on&network=online&brand=preview';
+const src = `${embed.src}${join}${lab}`;
 ---
 
-<figure class="case-embed">
+<figure class="case-embed case-embed--lab">
   <div class="case-embed__frame">
     <iframe src={src} title={embed.title} loading="lazy" allow="fullscreen"></iframe>
   </div>

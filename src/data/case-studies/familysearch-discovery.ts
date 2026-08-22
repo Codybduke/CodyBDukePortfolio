@@ -1,4 +1,7 @@
 import type { RichCaseStudy } from './types';
+import { withBase } from '../../lib/paths';
+
+const img = (file: string) => withBase(`/work/familysearch-discovery/${file}`);
 
 export const familysearchDiscoveryCase: RichCaseStudy = {
   slug: 'familysearch-discovery',
@@ -7,11 +10,18 @@ export const familysearchDiscoveryCase: RichCaseStudy = {
   collaborators:
     'FamilySearch product and campaign managers, discovery and research partners, content and records teams (including Cris Rees, Sr. Product Manager)',
   surface:
-    'Email plus in-product discovery on FamilySearch.org — home cards, ancestor story surfaces, relationship, and notifications',
+    'Email plus in-product discovery on FamilySearch.org — ancestor cards, relationship, and notifications. Production still runs on FamilySearch Inspire.',
   live: {
     href: 'https://www.familysearch.org/en/inspire',
     label: 'FamilySearch Inspire',
-    note: 'FamilySearch is still running several of the campaigns I designed. Anyone can open them at',
+    note: 'FamilySearch is still running Pioneer and calendar discovery. Anyone can open them at',
+  },
+  heroFigure: {
+    src: img('01-pioneer-desktop.png'),
+    alt: 'FamilySearch Inspire: Discover William, your pioneer relative — named ancestor, relationship, and View Photos and Stories.',
+    caption:
+      'Production, 2026. William Davis Robinson, 2nd cousin five times removed. Person on screen, relationship in a sentence, one next action. The loop we designed is still the product.',
+    layout: 'hero',
   },
   sections: [
     {
@@ -106,7 +116,7 @@ export const familysearchDiscoveryCase: RichCaseStudy = {
       body: [
         'Pioneer was the fullest version of the loop. The email did not ask people to go research pioneers. It named a person on their line and invited them to see how they were connected.',
         'The in-product surface was an ancestor card, not a search results page. Name, dates, a photograph when we had one, relationship, and two verbs that matched the job: view photos and stories, or view relationship. I sketched the email, the pioneer page, and an info-card carousel on paper with campaign and product partners before we committed UI, so the argument was the sequence, not the chrome.',
-        'That sequence is the one I would still defend. Get the person on screen. Make the relationship obvious. Then, and only then, offer the archive.',
+        'That sequence is the one I would still defend. Get the person on screen. Make the relationship obvious. Then, and only then, offer the archive. FamilySearch is still running this surface. The chrome moved. The sequence did not.',
       ],
     },
     {
@@ -116,7 +126,16 @@ export const familysearchDiscoveryCase: RichCaseStudy = {
       body: [
         'Pioneer could win a session. Calendar was built to win a habit. Birthdays and anniversaries are already how families remember people. The tree had those dates. We were not using them.',
         'The home card was a celebration prompt, not a feature announcement: celebrate the lives of your ancestors, then a list of people with dates and a view-relationship path. Notifications spoke like a relative, not like a product. “February 18th is the birthday of Henry Thomas Duke, your 2nd great grandfather. He would have been 157 years old.” The next tap was more about Henry, not more about FamilySearch.',
-        'That copy is the product. If the message could have been sent to anyone, we had failed personalization.',
+        'That copy is the product. If the message could have been sent to anyone, we had failed personalization. The 2017–2019 send was email and Messenger. Production today uses FamilySearch notifications and a “celebrating the life of…” card — same habit, in-product.',
+      ],
+      figures: [
+        {
+          src: img('03-calendar-desktop.png'),
+          alt: 'FamilySearch calendar discovery: celebrating the life of my 2nd great-grandfather, with an August list of ancestor dates and notification subscribe state.',
+          caption:
+            'Production calendar. James Parker Willbanks, born 143 years ago. View Memories, View Relationship, then a month of people — the repeating motion.',
+          layout: 'wide',
+        },
       ],
     },
     {
@@ -126,6 +145,7 @@ export const familysearchDiscoveryCase: RichCaseStudy = {
       body: [
         'WWI Draft used the same loop on a different record type. A draft card is a stubborn object: a signature, a date, a place. For a beginner, that is often the first time an ancestor stops being a row in a tree.',
         'We did not invent a new IA for military records. We swapped the hook and reused relationship, story, and a single next action. That was the point of leading campaigns as a product system. The third campaign had to be cheaper than the first, or we were running a studio, not a retention surface.',
+        'FamilySearch has since sunset the WWI draft campaign. What is still live on Inspire is Pioneer plus the calendar / “celebrating the life” surface — and, from what I can tell, a military campaign in the same template. I do not have a clean production crop of WWI or military, so I am not faking one. The two live surfaces are enough to show the loop survived.',
       ],
     },
     {
@@ -170,7 +190,7 @@ export const familysearchDiscoveryCase: RichCaseStudy = {
         'I led product design for these campaign surfaces. The numbers below are from the campaigns themselves, versus the previous year, not a collapsed “program lift” I would not be able to defend in an interview.',
         'Versus the previous year we retained 95% more members and 107% more other patrons. 1.1 million patrons outside the US engaged in a campaign. Across 26 campaigns we received 86,000 feedback comments, 90% of them positive — which is why Calendar and WWI could follow Pioneer without becoming three unrelated microsites.',
         'Cris Rees, the senior product manager I worked with, put the bar in collaborator language: experiences people actually used, engagement that showed up in the numbers, and strong patron feedback scores. That is the outcome I would still want this work judged on.',
-        'FamilySearch is still running several of the campaigns I designed. They are public — anyone can open them on FamilySearch Inspire.',
+        'FamilySearch is still running Pioneer and calendar discovery on Inspire. Anyone can open them. The WWI draft campaign is gone; I am not substituting a 2017 Behance frame for a production screen I cannot get.',
       ],
       metrics: [
         {
@@ -212,9 +232,6 @@ export const familysearchDiscoveryCase: RichCaseStudy = {
     },
   ],
   nextCaptures: [
-    'Production screens from FamilySearch Inspire — not the Behance mock board',
-    'Pioneer: named ancestor card plus relationship',
-    'Calendar: home card or notification with a real birthday hook',
-    'WWI Draft: the signed card as the third hook',
+    'Optional: production crop of the military campaign if it is the WWI replacement — named person + record, not a cover slide',
   ],
 };

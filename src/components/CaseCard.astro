@@ -7,14 +7,64 @@ interface Props {
 }
 
 const { item } = Astro.props;
+const cover = item.cover;
+const tags = item.tags.slice(0, 3);
+const mediaStyle = [
+  item.field ? `--cover-field: var(--field-${item.field})` : '',
+  cover?.position ? `--cover-pos: ${cover.position}` : '',
+  cover?.scale ? `--cover-scale: ${cover.scale}` : '',
+]
+  .filter(Boolean)
+  .join('; ');
 ---
 
 <a class="case-card" href={withBase(`/work/${item.slug}`)}>
-  <div class="case-card__eyebrow">{item.eyebrow}</div>
+  <div
+    class:list={[
+      'case-card__media',
+      !cover && 'case-card__media--empty',
+      item.field && 'case-card__media--mineral',
+      cover?.video && 'case-card__media--video',
+    ]}
+    style={mediaStyle || undefined}
+  >
+    <div class="case-card__stage">
+      {
+        cover && (
+          <img src={withBase(cover.src)} alt={cover.alt} loading="lazy" />
+        )
+      }
+      {
+        cover?.video && (
+          <video
+            data-dir="forward"
+            src={withBase(cover.video)}
+            poster={withBase(cover.src)}
+            muted
+            playsinline
+            preload="auto"
+            aria-hidden="true"
+          />
+        )
+      }
+      {
+        cover?.videoReverse && (
+          <video
+            data-dir="reverse"
+            src={withBase(cover.videoReverse)}
+            muted
+            playsinline
+            preload="auto"
+            aria-hidden="true"
+          />
+        )
+      }
+    </div>
+  </div>
   <h3 class="case-card__title">{item.title}</h3>
-  <p class="case-card__summary">{item.summary}</p>
-  <ul class="tag-row" aria-label="Tags">
-    {item.tags.slice(0, 3).map((tag) => <li>{tag}</li>)}
+  <ul class="case-card__tags" aria-label="Tags">
+    {tags.map((tag) => (
+      <li>{tag}</li>
+    ))}
   </ul>
-  <div class="case-card__meta">Read case study →</div>
 </a>

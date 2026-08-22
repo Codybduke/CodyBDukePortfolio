@@ -1,0 +1,291 @@
+---
+import { site } from '../data/site';
+import { withBase } from '../lib/paths';
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta
+      name="description"
+      content="Cody Duke cover letter for Product Designer at Tiny Health."
+    />
+    <title>Cody Duke, Product Designer Cover Letter</title>
+    <link rel="icon" type="image/svg+xml" href={withBase('/favicon.svg')} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://api.fontshare.com" crossorigin />
+    <link href="https://api.fontshare.com/v2/css?f[]=clash-grotesk@500,600&display=swap" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Figtree:wght@500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <p class="letter-chrome">
+      <a href={withBase('/')}>← Portfolio</a>
+      <button type="button" onclick="window.print()">Print / Save PDF</button>
+    </p>
+
+    <article class="letter">
+      <header class="letter__header">
+        <div>
+          <h1>Cody Duke</h1>
+          <p class="letter__role">Product Designer</p>
+          <p class="letter__location">Orem, Utah, open to remote</p>
+        </div>
+        <address>
+          <a href="tel:+15013395093">(501) 339-5093</a>
+          <a href={`mailto:${site.email}`}>{site.email}</a>
+          <a href={withBase('/')}>Portfolio</a>
+          <a href={site.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        </address>
+      </header>
+
+      <p class="letter__meta">August 18, 2026</p>
+      <p class="letter__meta">Tiny Health hiring team</p>
+      <p class="letter__meta">Product Designer</p>
+
+      <div class="letter__body">
+        <p>
+          I am applying for the Product Designer role at Tiny Health. Your product has to make
+          complex science feel trustworthy enough that a family will act on it. That is the design
+          work I want to do, and the work I have been doing.
+        </p>
+        <p>
+          At FamilySearch, beginners arrived hoping to feel a connection to their family and met a
+          toolbox built for hobbyists. I led product design for 26 personalized discovery
+          experiences. Each one started from a person already in the tree (a name, a birthday, or a
+          record) and offered one next action instead of a search lesson. Retention rose 95% for
+          members and 107% for other users versus the prior year. A Tiny Health report has the same
+          job. The value is not 120,000 microbes on a page. It is an expert highlight and an action
+          plan a parent can actually follow.
+        </p>
+        <p>
+          At Entrata I spent seven years on that same problem with production data, field research,
+          and engineering partners. That included Homebody, a resident-facing mobile app that
+          reached 4.4 out of 5 on iOS from more than 600 reviews in its first six months; setup
+          systems that had to stay accurate without getting harder to use; and AI flows that turned
+          long paperwork into an upload. For about a year I was Product Lead with an owned
+          engineering team, taking work from research through ship. I care more about whether people
+          come back and act than whether the interface looks finished.
+        </p>
+        <p>
+          I live in Orem, Utah, so the 9am to 6pm CST overlap window fits my day. I have not
+          designed in DTC health. I have designed for families at scale, shipped consumer mobile,
+          and sat with experts until the science, or the system, could be said in a sentence a real
+          person would use.
+        </p>
+        <p>I would welcome the chance to walk you through the work.</p>
+        <p class="letter__signoff">
+          Sincerely,<br />
+          Cody Duke
+        </p>
+      </div>
+    </article>
+  </body>
+</html>
+
+<style>
+  :root {
+    --resume-ink: #1c1c1a;
+    --resume-muted: #5c5c56;
+    --resume-line: rgba(28, 28, 26, 0.18);
+    --resume-paper: #ffffff;
+    --resume-field: #fbfbf1;
+    --font-display: 'Clash Grotesk', 'Figtree', 'Helvetica Neue', sans-serif;
+    --font-ui: 'Figtree', 'Helvetica Neue', sans-serif;
+    --font-body: 'Source Serif 4', Georgia, 'Times New Roman', serif;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  html,
+  body {
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    background: var(--resume-field);
+    color: var(--resume-ink);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  a:hover {
+    text-decoration: underline;
+    text-underline-offset: 0.14em;
+  }
+
+  .letter-chrome {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 8.5in;
+    margin: 1.25rem auto 0.75rem;
+    padding: 0 0.5rem;
+    font-family: var(--font-ui);
+    font-size: 0.8125rem;
+    font-weight: 600;
+  }
+
+  .letter-chrome button {
+    font: inherit;
+    font-weight: 600;
+    color: var(--resume-ink);
+    background: transparent;
+    border: 1px solid var(--resume-line);
+    border-radius: 999px;
+    padding: 0.4rem 0.85rem;
+    cursor: pointer;
+  }
+
+  .letter {
+    width: 8.5in;
+    min-height: 11in;
+    margin: 0 auto 2.5rem;
+    padding: 0.48in 0.58in 0.42in;
+    background: var(--resume-paper);
+    color: var(--resume-ink);
+    box-shadow: 0 18px 40px rgba(28, 28, 26, 0.08);
+  }
+
+  .letter__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1.5rem;
+    padding-bottom: 0.24in;
+    border-bottom: 1px solid var(--resume-line);
+  }
+
+  h1 {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: 2.15rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    line-height: 0.95;
+    text-transform: uppercase;
+  }
+
+  .letter__role {
+    margin: 0.28rem 0 0;
+    font-family: var(--font-ui);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--resume-muted);
+  }
+
+  .letter__location {
+    margin: 0.22rem 0 0;
+    font-family: var(--font-ui);
+    font-size: 0.68rem;
+    font-weight: 400;
+    line-height: 1.55;
+    color: var(--resume-muted);
+  }
+
+  address {
+    margin: 0;
+    font-style: normal;
+    font-family: var(--font-ui);
+    font-size: 0.68rem;
+    line-height: 1.55;
+    text-align: right;
+    color: var(--resume-muted);
+  }
+
+  address a {
+    display: block;
+    text-decoration: underline;
+    text-underline-offset: 0.16em;
+    text-decoration-color: rgba(28, 28, 26, 0.35);
+  }
+
+  .letter__meta {
+    margin: 0.18in 0 0;
+    font-family: var(--font-ui);
+    font-size: 0.78rem;
+    font-weight: 500;
+    line-height: 1.45;
+    color: var(--resume-muted);
+  }
+
+  .letter__meta + .letter__meta {
+    margin-top: 0.08rem;
+  }
+
+  .letter__body {
+    margin-top: 0.28in;
+  }
+
+  .letter__body p {
+    margin: 0 0 0.85rem;
+    font-size: 0.95rem;
+    line-height: 1.48;
+  }
+
+  .letter__signoff {
+    margin-top: 1.15rem !important;
+  }
+
+  @media print {
+    @page {
+      size: letter;
+      margin: 0;
+    }
+
+    html,
+    body {
+      background: white;
+    }
+
+    .letter-chrome {
+      display: none;
+    }
+
+    .letter {
+      margin: 0;
+      box-shadow: none;
+      min-height: 11in;
+    }
+  }
+
+  @media screen and (max-width: 900px) {
+    body {
+      background: var(--resume-paper);
+    }
+
+    .letter {
+      width: auto;
+      min-height: 0;
+      margin: 0;
+      padding: 1.5rem 1.25rem 2.5rem;
+      box-shadow: none;
+    }
+
+    .letter__header {
+      display: block;
+    }
+
+    .letter__header address {
+      text-align: left;
+      margin-top: 1rem;
+    }
+  }
+</style>

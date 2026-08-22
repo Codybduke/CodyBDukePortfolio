@@ -6,7 +6,7 @@ const img = (file: string) => withBase(`/work/move-in-scanner/${file}`);
 export const moveInScannerCase: RichCaseStudy = {
   slug: 'move-in-scanner',
   openingClaim:
-    'On student move-in day, most property staff never opened Entrata at the table. They checked people in on a spreadsheet, handed over a packet and keys, and entered the real move-ins later, often the next day. I used site visits, production SQL, and notes from an Industry Group interview with about 20 operators to design a mobile flow for that table: search, review the checklist, verify ID, and move in. We handed the OXP mobile team a SwiftUI module they could run inside the existing app, then worked with them as they reviewed the code and made small changes to fit the shell.',
+    'Student move-in day is long, loud, and unfinished. A hundred to five hundred residents show up at a breezeway table, the office, or a drive-through. Staff take a name and an ID, then either hunt the person in desktop Entrata on a phone, or mark a spreadsheet and do the real move-ins later. The resident leaves with keys. Entrata does not. I designed a search-first, offline mobile flow for that line: find them, see if the checklist is ready, confirm photo ID, tap confirm, next person. Optional leftovers become a follow-up task instead of disappearing. We handed the OXP mobile team a SwiftUI module they could run in the existing app.',
   collaborators:
     'Customer Workflows eng, OXP mobile team, ~20 student-housing operators (Industry Group interviews), Entrata data team',
   surface: 'SwiftUI module for Entrata’s OXP staff iOS app (Swift Package + demo target)',
@@ -14,20 +14,19 @@ export const moveInScannerCase: RichCaseStudy = {
     src: img('00-hero-three-up.png'),
     alt: 'Three phone screens from the OXP Expo prototype: Upcoming Move-ins roster, Riley Foster summary, and Confirm Move-in.',
     caption:
-      'Roster, summary, and confirm from the Expo OXP prototype we used before rewriting the flow in SwiftUI.',
+      'Roster, ready summary, and confirm — the table path, from the Expo prototype we used before rewriting it in SwiftUI.',
     layout: 'hero',
   },
   sections: [
     {
       id: 'problem',
       stage: 'Rough',
-      title: 'Move-in happened twice',
+      title: 'The day was long. The work was still incomplete.',
       body: [
-        'During peak student turn, a property might move in anywhere from about 100 to 500+ residents in a day. Staff set up at a folding table, often in a breezeway, with a laptop or iPad and sometimes just paper. Wi-Fi was unreliable where they stood, and personal phones usually were not allowed on company devices.',
-        'The pattern we kept seeing was simple. Someone arrives. Staff mark them moved in on an offline spreadsheet, hand them a physical move-in packet with documents and keys, and keep the line moving. The goal at the table is a good in-person experience. Entrata comes later.',
-        'Later often meant the next day: a full stretch of overtime re-keying every resident into the desktop product. That asynchronous gap was the core problem. Residents already felt moved in. The system of record did not.',
-        'A less common but still painful path showed up when staff did have Wi-Fi on company iPads, especially at drive-through move-ins that started in COVID and stuck around because they were efficient. Even then, using Entrata’s desktop web UI on a tablet to find each person and complete move-in was slow and awkward. Mobile was meant to cut that path down as well, but most sites never got reliable connectivity at the table in the first place.',
-        'A May–Aug 2025 audit at a large student operator made the scale visible. Bulk Move-In barely showed up in peak months, even at the largest operator in the set. More training on the desktop tool was not going to change a workflow built around staying offline until the line was gone.',
+        'Peak student turn is a full-day operation. Properties move in anywhere from about 100 to 500+ residents. Staff set up in a breezeway, pull people through the office, or run a drive-through that stuck around after COVID because it kept the line moving. Wi-Fi is unreliable where they stand. The next few days are hectic too, because most of the system-of-record work still has not happened.',
+        'Two workarounds showed up over and over. Offline, staff find the student on a spreadsheet, mark them moved in, hand over keys and a packet, and have almost no live view of the move-in checklist. Online, they try Entrata on a laptop, an iPad, or a phone. The web product is not built for that surface. It asks them to review a full profile — extra steps that student turn does not have time for, because readiness was supposed to be handled in advance.',
+        'In a student scenario the checklist is the preparedness signal. By the time someone is in line, staff should be able to see ready or not ready in a glance, then either move them in or send them to a different line. The old table did not give them that. Residents felt moved in. Entrata did not.',
+        'A May–Aug 2025 audit at a large student operator made the scale visible. Only about one in five student move-ins hit Entrata in real time on the day. About a third had zero activity in the window and got caught up overnight. Bulk Move-In barely showed up in peak months. More training on desktop was not going to change a day built around staying offline until the line was gone.',
       ],
       metrics: [
         {
@@ -50,7 +49,7 @@ export const moveInScannerCase: RichCaseStudy = {
       title: 'What we got wrong first',
       body: [
         'Early specs assumed QR would lead and that optional checklist items could wait for a later pass. Site visits at three properties pointed somewhere else: printed rolls, laptop sheets, and physical packets. At one site, roughly one in three residents hit a resell or exception path we had not modeled.',
-        'Notes from an Industry Group interview with about 20 operators forced the bigger resets. Search over QR. Optional items should not block the line; they become an internal escalation. Offline belongs in MVP. I rewrote the PRD within 48 hours of that feedback.',
+        'Notes from an Industry Group interview with about 20 operators forced the bigger resets. Search over QR. Optional items should not block the line; they become an internal follow-up. Offline belongs in MVP. I rewrote the PRD within 48 hours of that feedback.',
         'SQL work across 10 queries sized how unused Bulk Move-In really was, and looked at checklist completion versus renewals. That second link stayed directional and bias-controlled. I would not treat it as a causal claim.',
       ],
       table: {
@@ -80,16 +79,15 @@ export const moveInScannerCase: RichCaseStudy = {
     {
       id: 'strategy',
       stage: 'Decisions',
-      title: 'We cut the mega-initiative',
+      title: 'Two clocks on the same failure',
       body: [
-        'Treating “automated student move-in” as one program would have stalled everything on mobile rollout. We split the work.',
-        'The CSV agent covered next-day spreadsheet to Entrata, which had the clearest near-term ROI. Homebody owned resident readiness and QR. This app only covers staff at the table on move-in day. Readiness AI stayed upstream with thinner artifacts.',
-        'The trade-off was real: two products to explain and two success metrics to own. It was still worth it, because day-of mobile and next-day CSV could ship on different clocks instead of blocking each other.',
+        'Bulk Move-in Smart Upload and mobile move-in are not the same product with extra steps. They recover the same gap on different clocks. The upload accepts the workaround: keep the spreadsheet or the photo of the paper, then process everyone the next day. This app is the day itself: name and ID at the table, even with no Wi-Fi.',
+        'Treating “automated student move-in” as one program would have stalled both. We split them. Homebody kept resident readiness and QR. This module only covers staff at the table. The trade-off was two products to explain. It was still worth it, because neither had to wait on the other’s rollout.',
       ],
       table: {
         headers: ['Workstream', 'Job'],
         rows: [
-          ['CSV-to-Move-In Agent', 'Next day: spreadsheet to Entrata'],
+          ['Bulk Move-in Smart Upload', 'Next day: spreadsheet to Entrata'],
           ['Homebody Move-In Readiness', 'Resident ready / not ready + QR'],
           ['OXP Move-In Day Execution', 'Staff at the table (this case)'],
           ['Resident Readiness AI', 'Pre-turn nudges (thinner artifacts)'],
@@ -101,13 +99,13 @@ export const moveInScannerCase: RichCaseStudy = {
       stage: 'Making',
       title: 'Where staff start',
       body: [
-        'Move-In sits on Command Center as a Quick Action next to packages and work orders, on the same home staff already open in the field. We talked about burying it under lease admin to match desktop IA. That would have failed the breezeway job, so we kept it on the home surface.',
+        'Move-In sits on Command Center as a Quick Action, on the same home staff already open in the field. We talked about burying it under lease admin to match desktop IA. That would have failed the breezeway job, so we kept it on the home surface.',
       ],
       figures: [
         {
           src: img('04-home-move-in-quick-action.png'),
           alt: 'OXP Command Center home with Move-In listed among Quick Actions.',
-          caption: 'Command Center to Move-In, from the Expo prototype.',
+          caption: 'Home to Move-In. The table path starts from the same screen as packages and work orders.',
           layout: 'device',
         },
       ],
@@ -115,35 +113,72 @@ export const moveInScannerCase: RichCaseStudy = {
     {
       id: 'flow',
       stage: 'Making',
-      title: 'The table path',
+      title: 'Name, checklist, confirm, next',
       body: [
-        'The path is meant to match how the table already runs: open the roster, search or tap someone who is already Ready, check required versus optional items, verify ID, then confirm.',
-        'QR is still available as a secondary path. It gets more useful once Homebody readiness is live and a property wants a hard express-lane gate. Until then, operator interviews described the line as “Smith, 315,” not “hold still for the camera.”',
-        'The screens below are from the Expo prototype. We later rebuilt the same paths in SwiftUI for handoff to the OXP mobile team.',
+        'The path is meant to match how the line already runs. Open upcoming move-ins. Type a name. Open the resident. The checklist shows required versus optional, complete versus still open. If the required items are done, they can move in. Confirm photo ID, glance at move-in details, tap confirm. A short success message, then the roster is ready for the next student.',
+        'That used to take several minutes in desktop Entrata, or it did not happen until overtime. Here it is seconds. Student turn does not need a full profile review at the table. Preparedness already lives on the checklist. Ready or not ready is the decision.',
+        'QR is still a secondary path for later, once resident-side readiness is live. Operator interviews described the line as “Smith, 315,” not “hold still for the camera.” The screens below are from the Expo prototype. We later rebuilt the same paths in SwiftUI.',
       ],
       figures: [
         {
           src: img('01-roster.png'),
           alt: 'Upcoming Move-ins roster with search, date filter, and Ready / Optional / Required / Blocked badges.',
           caption:
-            'Roster with search as the primary control. Badges mirror how staff already stage express versus cleanup.',
+            'Upcoming move-ins, cached for the next 30 days, so the roster is already on the device when staff walk outside.',
+          layout: 'device',
+        },
+        {
+          src: img('05-search-name.png'),
+          alt: 'Search results for Foster showing Riley Foster on the upcoming move-ins roster.',
+          caption: 'Type the name they just heard. Search is the primary control, not a scan.',
           layout: 'device',
         },
         {
           src: img('02-summary.png'),
           alt: 'Riley Foster resident summary showing complete checklist and Ready badge with Move in CTA.',
           caption:
-            'Summary with required versus optional on the checklist. Ready gets visual weight so express residents are easy to spot.',
+            'Required versus optional on the checklist. If required is done, Move in is available. Ready is the express signal.',
           layout: 'device',
         },
+      ],
+    },
+    {
+      id: 'confirm',
+      stage: 'Making',
+      title: 'Photo ID, then the next person',
+      body: [
+        'Confirm stays short on purpose. Check that the government ID matches, glance at property, unit, date, and Future to Current, then tap confirm. A success message lands on the roster so the next student can start immediately.',
+      ],
+      figures: [
         {
           src: img('03-confirm.png'),
           alt: 'Confirm Move-in screen with Verify ID callout and Confirm Move-in button.',
           caption:
-            'Confirm keeps the ID check above the button, and writes Future to Current so the lease flip is obvious.',
+            'Photo ID sits above the button. Move-in details stay short — property, unit, date, Future to Current — then confirm.',
+          layout: 'device',
+        },
+        {
+          src: img('12-success-toast.png'),
+          alt: 'Upcoming Move-ins roster with a success toast that the move-in was confirmed.',
+          caption: 'Short confirmation, then the roster is ready for the next person in line.',
           layout: 'device',
         },
       ],
+    },
+    {
+      id: 'prototype',
+      stage: 'Making',
+      title: 'Walk the table path',
+      body: [
+        'This is the Expo prototype we used before rewriting the flow in SwiftUI. Open Move-In from Quick Actions, search a name, then walk a Ready resident through confirm. Optional items still let you move in. Required items stop the line.',
+      ],
+      embed: {
+        src: withBase('/prototypes/oxp-mobile/'),
+        title: 'Interactive OXP Move-In Scanner prototype',
+        caption:
+          'Start on Home. Open Move-In from Quick Actions, search Foster, then confirm Riley Foster.',
+        hint: 'Use the settings beside the phone. Toggle Network to Offline to see home collapse to Move-In, then keep moving people in from the cache.',
+      },
     },
     {
       id: 'search',
@@ -165,22 +200,24 @@ export const moveInScannerCase: RichCaseStudy = {
     {
       id: 'escalation',
       stage: 'Decisions',
-      title: 'Optional open isn’t a stop',
+      title: 'Optional leftovers used to disappear',
       body: [
         'The first draft treated incomplete checklist items as blockers. Industry Group feedback pushed back hard. Optional follow-ups cannot hold the line when a couple hundred people are outside.',
-        'The compromise: move-in stays available, and a second action creates an OXP escalation assigned to the staff member who finished the table. No resident SMS. No portal task. Some properties run zero optional items and need a way to hide that path; that property-level toggle is still open.',
+        'If required items are done and a couple of optional items are still open, staff can still move the resident in. They can also create an escalation — a task on their own list — so someone comes back to those items after the rush. No resident SMS. No portal assignment. The line keeps moving.',
+        'Before this, optional items that were still open at confirm went into a void. Once the person was moved in, there was no reliable way to know whether those non-required items ever got done. The task is the tracking system that was missing, not extra policy on move-in day.',
       ],
       figures: [
         {
           src: img('06-summary-optional-open.png'),
           alt: 'Morgan Diaz summary with optional items open notice and dual CTAs: Move in, and Move in and create escalation.',
-          caption: 'Optional items still open, but Move in stays available. Escalation is the named follow-up.',
+          caption:
+            'Required is complete, optional is not. Move in stays available. Create escalation if you want the reminder.',
           layout: 'device',
         },
         {
           src: img('07-confirm-escalation.png'),
           alt: 'Confirm screen for move-in with create escalation action.',
-          caption: 'Confirm and create escalation, as an internal staff queue item only.',
+          caption: 'Confirm and create escalation — an internal task, not a resident-facing to-do.',
           layout: 'device',
         },
       ],
@@ -190,14 +227,14 @@ export const moveInScannerCase: RichCaseStudy = {
       stage: 'Decisions',
       title: 'Required still means stop',
       body: [
-        'Required items are different. There is no override in MVP. Staff send the resident to a resolution station, which matches how operators already route exceptions when one person on site can clear them.',
+        'Required items are different. There is no override in MVP. Staff send the resident to a resolution station, or tell them to come back when the item is done, which matches how operators already route exceptions when one person on site can clear them.',
         'Hard blockers such as unit not ready or balance due use the same stop. We debated a manager PIN override and left it out. It would be too easy to burn on a busy Saturday, and interviews said properties already have a permissioned person for that job offline.',
       ],
       figures: [
         {
           src: img('08-summary-required-blocked.png'),
           alt: 'Jamie Baker summary showing required checklist items still need attention with Move in unavailable.',
-          caption: 'Required items still open, so Move in is unavailable.',
+          caption: 'Required items still open, so Move in is unavailable. Pull them off the express line.',
           layout: 'device',
         },
         {
@@ -211,22 +248,28 @@ export const moveInScannerCase: RichCaseStudy = {
     {
       id: 'offline',
       stage: 'Decisions',
-      title: 'Offline had to be in the first cut',
+      title: 'Offline had to be the day, not a later milestone',
       body: [
-        'I originally had offline on a later milestone. Industry Group feedback corrected that quickly: breezeway Wi-Fi fails often, and staff are on company iPads, not personal phones.',
-        'For MVP we scoped a cached roster, queued confirms, and a small Offline chip instead of a full-width banner. Staff still need a place to confirm they are Offline ready before walking out to the table, which lives in the More card cache states. That part of the PRD changed the same weekend we absorbed the Industry Group notes.',
+        'I originally had offline on a later cut. Industry Group feedback corrected that: breezeway Wi-Fi fails often, and staff are on company iPads, not personal phones. The roster for the next 30 days of move-ins is cached on the device before they walk outside.',
+        'When the network is down, Command Center drops to Move-In and a short offline note. Everything else can wait. The roster still searches. Confirms still queue. A small Offline chip stays visible so nobody wonders whether they are writing to Entrata live or to the cache.',
       ],
       figures: [
         {
+          src: img('13-home-offline.png'),
+          alt: 'Command Center home while offline, showing an offline message and Move-In as the only Quick Action.',
+          caption: 'Offline home: the message, then Move-In. The rest of Command Center is not the job at the table.',
+          layout: 'device',
+        },
+        {
           src: img('10-roster-offline.png'),
           alt: 'Upcoming Move-ins roster showing Offline status chip instead of Synced.',
-          caption: 'Offline chip on the roster while work continues against the cache.',
+          caption: 'Same roster, Offline chip, still searchable against the cache.',
           layout: 'device',
         },
         {
           src: img('11-summary-offline.png'),
           alt: 'Resident summary with Offline status chip while reviewing checklist.',
-          caption: 'Same chip on the summary so offline state stays visible without taking over the screen.',
+          caption: 'Checklist and confirm still work. Writes wait for a network.',
           layout: 'device',
         },
       ],
@@ -251,11 +294,11 @@ export const moveInScannerCase: RichCaseStudy = {
             'If only confirm knew the difference, the roster would lie.',
           ],
           [
-            'Escalation, not resident nudge',
-            'Optional follow-up stays internal. Portal or SMS noise was a non-starter in interviews.',
+            'Escalation task, not a void',
+            'Optional leftovers used to disappear after move-in. The task is how staff come back to them.',
           ],
           [
-            'Offline in MVP with a quiet status chip',
+            'Offline in MVP, 30-day cache, quiet chip',
             'Banner designs looked safer in mocks and would have been ignored outdoors.',
           ],
           [
@@ -263,8 +306,8 @@ export const moveInScannerCase: RichCaseStudy = {
             'Express line needs the green path to win a glance. Error-first UI slowed the wrong people.',
           ],
           [
-            'Confirm actions stack when labels wrap',
-            'Side-by-side looked fine on phone mocks; tablet plus the long escalation label broke it.',
+            'Skip the full profile at the table',
+            'Desktop Entrata asked for a review student turn does not have time for. Checklist is the readiness signal.',
           ],
         ],
       },
@@ -278,8 +321,8 @@ export const moveInScannerCase: RichCaseStudy = {
         'That order cost us a rewrite, but it meant the mobile team could walk every path in a runnable module. Their review found five real defects in about half an hour: alert copy, the count pill, property filter, and cache and sync indicators. They made small changes to fit the app, and the fixes went back the same day.',
       ],
       bullets: [
-        'Escalation rules written down: optional items allow move-in plus create escalation; required items block and redirect.',
-        'Offline behavior: cached roster, queued writes, and a status chip instead of a blocking modal.',
+        'Escalation rules written down: optional items allow move-in plus create a follow-up task; required items block and redirect.',
+        'Offline behavior: 30-day cached roster, queued writes, home collapsed to Move-In, and a status chip instead of a blocking modal.',
         'Left out of MVP on purpose: resident-facing optional nudges, expired-QR demos, and a manager PIN override.',
       ],
     },
@@ -288,8 +331,8 @@ export const moveInScannerCase: RichCaseStudy = {
       stage: 'Polished',
       title: 'Where it stands',
       body: [
-        'What we left behind was a scoped table-side flow with offline and escalation rules the OXP mobile team could implement, not a shrunk desktop Bulk Move-In screen.',
-        'Initiative targets are shared with the CSV agent and Homebody readiness. Pilot actuals are not in yet. Until they are, these are goals, not results.',
+        'What we left behind was a scoped table-side flow with offline and follow-up rules the OXP mobile team could implement, not a shrunk desktop Bulk Move-In screen, and not a next-day CSV upload wearing a phone chrome.',
+        'Initiative targets are shared with Bulk Move-in Smart Upload and Homebody readiness. Pilot actuals are not in yet. Until they are, these are goals, not results.',
       ],
       table: {
         headers: ['Metric', 'Target (unmeasured)'],
@@ -315,7 +358,7 @@ export const moveInScannerCase: RichCaseStudy = {
   ],
   sibling: {
     href: '/work/csv-move-in-agent',
-    label: 'CSV-to-Move-In Agent (next-day spreadsheet bridge)',
+    label: 'Bulk Move-in Smart Upload (next-day spreadsheet bridge)',
   },
   nextCaptures: [
     'More card: Caching to Offline ready to Syncing N',

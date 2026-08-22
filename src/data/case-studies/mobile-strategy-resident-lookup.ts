@@ -111,13 +111,13 @@ export const mobileStrategyResidentLookupCase: RichCaseStudy = {
       figures: [
         {
           src: img('01-command-center.png'),
-          alt: 'OXP Command Center home with Daily Briefing summarizing overdue tasks, a stalled playbook, and open escalations.',
+          alt: 'OXP Command Center home with Daily Briefing 2.0: a Do Next escalation for Daniel Park, plus escalated threads, schedule, and approvals.',
           caption: 'Daily Briefing as the home anchor. Scope and next work, not a chart wall.',
           layout: 'device',
         },
         {
           src: img('02-quick-actions.png'),
-          alt: 'Command Center Quick Actions grid with Packages, New Message, Move-In, Work Order, and related field verbs.',
+          alt: 'Command Center Quick Actions grid with Packages, Properties, Move-In, Work Order, and related field verbs.',
           caption:
             'Quick Actions as primary verbs. The snapshot sits below, so charts wait until after the field jobs.',
           layout: 'device',
@@ -206,7 +206,7 @@ export const mobileStrategyResidentLookupCase: RichCaseStudy = {
         src: withBase('/prototypes/oxp-mobile/'),
         title: 'Interactive OXP resident lookup prototype',
         caption: 'Start on Home, then the people tab. Search Marcus, open the profile, tap Financials.',
-        hint: 'A plate like EWX-4429 still returns nothing. That was a ship-stopper in the sim.',
+        hint: 'Use the settings beside the phone — Version, Eli+, Daily Briefing, Device, Size, Phone Sim, Network, and Brand preview. A plate like EWX-4429 still returns nothing. That was a ship-stopper in the sim.',
       },
     },
     {

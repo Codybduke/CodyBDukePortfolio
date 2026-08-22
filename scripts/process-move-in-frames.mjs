@@ -20,6 +20,7 @@ const DEVICE_FILES = [
   '02-summary.png',
   '03-confirm.png',
   '04-home-move-in-quick-action.png',
+  '05-search-name.png',
   '05-search-unit-roommates.png',
   '06-summary-optional-open.png',
   '07-confirm-escalation.png',
@@ -27,6 +28,8 @@ const DEVICE_FILES = [
   '09-summary-hard-blocked.png',
   '10-roster-offline.png',
   '11-summary-offline.png',
+  '12-success-toast.png',
+  '13-home-offline.png',
 ];
 
 async function maskRoundedDevice(filePath) {

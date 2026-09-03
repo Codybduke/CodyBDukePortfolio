@@ -1,0 +1,38 @@
+---
+import ProtoGate from '../../components/caliber/ProtoGate';
+import { withBase } from '../../lib/paths';
+import '../../styles/caliber.css';
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta
+      name="description"
+      content="Prototype: how a front-line manager reads one skill on named deals inside Caliber Skill Intelligence."
+    />
+    <title>Skill on Deals — Caliber Skill Intelligence prototype</title>
+    <link rel="icon" type="image/svg+xml" href={withBase('/favicon.svg')} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <ProtoGate client:load />
+  </body>
+</html>
+
+<style is:global>
+  html,
+  body {
+    margin: 0;
+    padding: 0;
+    background: #242426;
+  }
+</style>

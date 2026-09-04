@@ -4,6 +4,7 @@
  * Search, bell and Admin are still stand-ins — those files were not in the drop.
  */
 import type { SVGProps } from 'react';
+import { withBase } from '../../lib/paths';
 
 type P = SVGProps<SVGSVGElement> & { size?: number };
 
@@ -202,7 +203,7 @@ export function CaliberLogo({ height = 28 }: { height?: number }) {
   return (
     <img
       className="cal-brand__logo"
-      src={`${import.meta.env.BASE_URL}caliber/logo.svg`}
+      src={withBase('/caliber/logo.svg')}
       alt="Caliber"
       width={width}
       height={height}

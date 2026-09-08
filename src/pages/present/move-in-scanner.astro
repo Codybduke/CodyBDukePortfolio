@@ -1,0 +1,268 @@
+---
+import MoveInDeck from '../../components/presentations/MoveInDeck';
+import { withBase } from '../../lib/paths';
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="description" content="Interactive walkthrough of the OXP Move-In Scanner case." />
+    <title>Move-In Scanner — Walkthrough</title>
+    <link rel="icon" type="image/svg+xml" href={withBase('/favicon.svg')} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://api.fontshare.com" crossorigin />
+    <link href="https://api.fontshare.com/v2/css?f[]=clash-grotesk@500,600&display=swap" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Figtree:wght@500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <MoveInDeck client:load protoSrc={withBase('/prototypes/oxp-mobile/')} />
+  </body>
+</html>
+
+<style is:global>
+  :root {
+    --bg: #fbfbf1;
+    --bg-elevated: #f3f3e8;
+    --ink: #1c1c1a;
+    --ink-muted: #5c5c56;
+    --ink-faint: #8a8a82;
+    --line: rgba(28, 28, 26, 0.12);
+    --font-display: 'Clash Grotesk', 'Figtree', 'Helvetica Neue', sans-serif;
+    --font-body: 'Source Serif 4', Georgia, 'Times New Roman', serif;
+    --font-ui: 'Figtree', 'Helvetica Neue', sans-serif;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  html,
+  body {
+    margin: 0;
+    height: 100%;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .deck {
+    display: grid;
+    grid-template-columns: minmax(22rem, 32vw) 1fr;
+    height: 100vh;
+    height: 100dvh;
+  }
+
+  .deck__copy {
+    display: flex;
+    flex-direction: column;
+    padding: 1.75rem 1.6rem 1.25rem;
+    border-right: 1px solid var(--line);
+    overflow: auto;
+    background: var(--bg);
+  }
+
+  .deck__eyebrow {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    margin: 0 0 0.85rem;
+    font-family: var(--font-ui);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+  }
+
+  .deck__count {
+    letter-spacing: 0.08em;
+    color: var(--ink-faint);
+  }
+
+  .deck__kicker {
+    margin: 0 0 0.55rem;
+    font-family: var(--font-ui);
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--ink-muted);
+  }
+
+  .deck h1 {
+    margin: 0 0 0.9rem;
+    font-family: var(--font-display);
+    font-size: clamp(1.55rem, 2.2vw, 2.15rem);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    line-height: 1.12;
+  }
+
+  .deck__body {
+    margin: 0 0 1rem;
+    font-size: 1.02rem;
+    line-height: 1.5;
+  }
+
+  .deck__metrics {
+    display: grid;
+    gap: 0.75rem;
+    margin: 0 0 1.1rem;
+  }
+
+  .deck__metric {
+    padding: 0.7rem 0.8rem;
+    background: var(--bg-elevated);
+    border: 1px solid var(--line);
+  }
+
+  .deck__metric-value {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: 1.55rem;
+    font-weight: 600;
+    line-height: 1;
+  }
+
+  .deck__metric-label {
+    margin: 0.4rem 0 0;
+    font-family: var(--font-ui);
+    font-size: 0.78rem;
+    line-height: 1.35;
+    color: var(--ink-muted);
+  }
+
+  .deck__bullets {
+    margin: 0 0 1.1rem;
+    padding-left: 1.1rem;
+    font-size: 0.98rem;
+    line-height: 1.45;
+  }
+
+  .deck__bullets li + li {
+    margin-top: 0.45rem;
+  }
+
+  .deck__cue {
+    margin: auto 0 1.15rem;
+    padding: 0.7rem 0.8rem;
+    font-family: var(--font-ui);
+    font-size: 0.84rem;
+    line-height: 1.4;
+    color: var(--ink-muted);
+    background: var(--bg-elevated);
+    border-left: 2px solid var(--ink);
+  }
+
+  .deck__nav {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    margin-top: auto;
+    padding-top: 0.75rem;
+  }
+
+  .deck__nav button,
+  .deck__scenes button {
+    font-family: var(--font-ui);
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--ink);
+    background: transparent;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 0.38rem 0.8rem;
+    cursor: pointer;
+  }
+
+  .deck__nav button:disabled {
+    opacity: 0.35;
+    cursor: default;
+  }
+
+  .deck__nav button:hover:not(:disabled),
+  .deck__scenes button:hover,
+  .deck__scenes button.is-active {
+    background: var(--ink);
+    color: var(--bg);
+    border-color: var(--ink);
+  }
+
+  .deck__keys {
+    margin: 0 0 0 auto;
+    font-family: var(--font-ui);
+    font-size: 0.72rem;
+    color: var(--ink-faint);
+  }
+
+  .deck__stage {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    background: #e7ecef;
+  }
+
+  .deck__scenes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    padding: 0.7rem 0.85rem;
+    background: var(--bg);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .deck__frame {
+    position: relative;
+    flex: 1;
+    min-height: 0;
+  }
+
+  .deck__frame iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    background: #e7ecef;
+  }
+
+  .deck__driving {
+    position: absolute;
+    left: 0.85rem;
+    bottom: 0.85rem;
+    margin: 0;
+    font-family: var(--font-ui);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    background: rgba(251, 251, 241, 0.88);
+    border: 1px solid var(--line);
+    padding: 0.28rem 0.55rem;
+    pointer-events: none;
+  }
+
+  @media (max-width: 960px) {
+    .deck {
+      grid-template-columns: 1fr;
+      grid-template-rows: minmax(38vh, auto) 1fr;
+    }
+
+    .deck__copy {
+      border-right: 0;
+      border-bottom: 1px solid var(--line);
+      max-height: 46vh;
+    }
+
+    .deck h1 {
+      font-size: 1.45rem;
+    }
+  }
+</style>

@@ -29,6 +29,13 @@ const rich = getRichCase(slug!);
           <p class="section__eyebrow">{item.eyebrow}</p>
           <h1>{item.title}</h1>
           <p class="case-study__claim">{rich.openingClaim}</p>
+          {
+            slug === 'move-in-scanner' && (
+              <p class="case-study__claim" style="margin-top: 0.75rem;">
+                <a href={withBase('/present/move-in-scanner/')}>Open live walkthrough →</a>
+              </p>
+            )
+          }
 
           <div class="meta-bar meta-bar--case">
             <div>

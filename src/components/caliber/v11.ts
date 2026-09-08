@@ -75,6 +75,17 @@ export function forecastAgreedTipV11(f: Forecast, agreedOn: string): string {
   return `Agreed ${agreedOn}. If this score goes up about ${f.points} points, we have seen about ${fmtMoney(f.dollars)} more close.`;
 }
 
+export function forecastTipTeamV11(f: Forecast): string {
+  const skill = skillById(f.skillId);
+  if (!f.exposedDeals) {
+    return `No open deal on this team sits behind a below-Proficient ${skill.short} call.`;
+  }
+  if (!f.material) {
+    return `Only ${fmtMoney(f.exposed)} of this team’s open book sits behind below-Proficient ${skill.short} calls.`;
+  }
+  return `If the team score goes up about ${f.points} points, we have seen about ${fmtMoney(f.dollars)} more close. That is against ${fmtMoney(f.exposed)} sitting behind weak ${skill.short} calls.`;
+}
+
 export function forecastPlanTipV11(f: Forecast, weeks: number, practicePerWeek: number): string {
   const skill = skillById(f.skillId);
   if (!f.material) {

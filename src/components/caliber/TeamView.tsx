@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 import { Amount, Button, Card, Legend, Tabs, Tag, Toggle, Tooltip } from './ui';
-import { HeatmapHead, HeatmapRow, OsrBar, SplitBar } from './charts';
+import { Gauge, HeatmapHead, HeatmapRow, OsrBar, SplitBar } from './charts';
+import { ForecastPair } from './ForecastPair';
 import { IconChevronRight, IconChevronUp } from './icons';
 import {
   BUCKET_META,
@@ -17,9 +18,9 @@ import {
   tierTone,
   type Bucket,
 } from '../../data/caliber/skill-intelligence';
-import { forecastFor, forecastTip, type Forecast } from '../../data/caliber/forecast';
+import { forecastFor, forecastForTeam, forecastTip, type Forecast } from '../../data/caliber/forecast';
 import type { ProtoVersion } from './types';
-import { v11BucketLabel } from './v11';
+import { forecastTipTeamV11, v11BucketLabel } from './v11';
 
 const OPPORTUNITY_HELP =
   'What a realistic gain on this skill has been worth on this rep’s open book. Across customers we have seen books like this close about that much more. It is an association, not a projection.';
@@ -66,6 +67,7 @@ export function TeamView({ tab, onTab, compare, onCompare, onOpenRep, version = 
   const stalledTotal = SUMMARIES.reduce((s, r) => s + r.stalledCount, 0);
   const weakStalled = TEAM.split['weak-stalled'];
   const strongStalled = TEAM.split['strong-stalled'];
+  const teamForecast = useMemo(() => forecastForTeam(TEAM.osr, DEFAULT_SKILL), []);
 
   return (
     <>
@@ -96,7 +98,48 @@ export function TeamView({ tab, onTab, compare, onCompare, onOpenRep, version = 
         <SkillTab compare={compare} onCompare={onCompare} onOpenRep={onOpenRep} version={version} />
       ) : (
         <div className="cal-stack cal-gap-20" style={{ marginTop: 24 }}>
-          <Card title={`${SKILL} on open deals`}>
+          <Card title={v11 ? undefined : `${SKILL} on open deals`}>
+            {v11 ? (
+              <div className="cal-team-deals-head">
+                <div className="cal-team-deals-head__main">
+                  <h3 className="cal-card__title" style={{ marginBottom: 0 }}>{SKILL} on open deals</h3>
+                  <div className="cal-row cal-wrap cal-gap-32" style={{ alignItems: 'flex-start' }}>
+                    <Stat label="Open deals" value={String(TEAM.openDeals)} sub={fmtMoney(TEAM.openAmount)} />
+                    <Stat
+                      label="Scored"
+                      value={`${TEAM.scoredDeals}`}
+                      sub={`${Math.round(TEAM_COVERAGE * 100)}% coverage`}
+                      help={COVERAGE_HELP}
+                    />
+                    <Stat label={`Stalled ${STALL_DAYS}+ days`} value={String(stalledTotal)} />
+                    <Stat
+                      label="Stalled after a weak call"
+                      value={String(weakStalled.count)}
+                      amount={fmtMoney(weakStalled.amount)}
+                      sub="below Proficient"
+                      tone="var(--cal-bucket-weak-stalled)"
+                    />
+                    <Stat
+                      label="Stalled after a strong call"
+                      value={String(strongStalled.count)}
+                      amount={fmtMoney(strongStalled.amount)}
+                      sub="Proficient or better"
+                      tone="var(--cal-bucket-strong-stalled)"
+                    />
+                  </div>
+                </div>
+                <div className="cal-team-osr">
+                  <Gauge value={TEAM.osr} size={132} />
+                  <ForecastPair
+                    forecast={teamForecast}
+                    firstName="the team"
+                    eyebrow="If this score moves"
+                    side="bottom"
+                    tip={forecastTipTeamV11(teamForecast)}
+                  />
+                </div>
+              </div>
+            ) : (
             <div className="cal-row cal-wrap cal-gap-32" style={{ marginBottom: 20, alignItems: 'flex-start' }}>
               <Stat label="Open deals" value={String(TEAM.openDeals)} sub={fmtMoney(TEAM.openAmount)} />
               <Stat
@@ -121,6 +164,7 @@ export function TeamView({ tab, onTab, compare, onCompare, onOpenRep, version = 
                 tone="var(--cal-bucket-strong-stalled)"
               />
             </div>
+            )}
 
             <div style={{ marginBottom: 14 }}>
               <Legend

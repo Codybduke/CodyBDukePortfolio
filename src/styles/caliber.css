@@ -1295,6 +1295,35 @@
   font-weight: 600;
 }
 
+/* Team Deals: ring + opportunity stacked so they sit beside the title and stats. */
+.cal-team-deals-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px 32px;
+  margin-bottom: 20px;
+}
+
+.cal-team-deals-head__main {
+  display: grid;
+  gap: 16px;
+  min-width: 0;
+  flex: 1;
+}
+
+.cal-team-osr {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  flex: none;
+}
+
+.cal-team-osr .cal-forecast {
+  justify-items: center;
+  text-align: center;
+}
+
 /* What the rep is going to do, as lines a manager can glance at. */
 .cal-plan {
   display: grid;

@@ -1,0 +1,25 @@
+---
+description: New initiative docs start with a TLDR
+globs: Initiatives/**/*.md
+alwaysApply: false
+---
+
+# Initiative docs need a TLDR
+
+When creating a new markdown file under `Initiatives/`, put a **TLDR** section immediately after the title and any one-line subtitle.
+
+- 3–6 short sentences. The conclusion, not a table of contents.
+- Plain language. No unexplained shorthand.
+- A reader who only reads the TLDR should know the decision and why it matters.
+
+```markdown
+# How we show (and do not show) causation
+
+Working model for skills → deals → revenue.
+
+## TLDR
+
+We can put deal value next to skill scores. That shows they go together, not that skill caused the money.
+```
+
+Do not skip the TLDR on READMEs, discovery notes, PRDs, or process docs created from now on. Do not retrofit old files unless asked.

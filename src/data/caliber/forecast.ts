@@ -13,6 +13,7 @@
  *     Proficient). Only the conversion from points to dollars is a placeholder.
  */
 import {
+  DEALS_BY_SKILL,
   PROFICIENT_MIN,
   dealsForRep,
   fmtMoney,
@@ -79,6 +80,32 @@ function dollarsFor(exposed: number, points: number, skillId: SkillId): number {
   if (raw >= 100_000) return Math.round(raw / 10_000) * 10_000;
   if (raw >= 10_000) return Math.round(raw / 5_000) * 5_000;
   return Math.round(raw / 1_000) * 1_000;
+}
+
+/** Same exposure, across every open deal on the team for this skill. */
+export function exposureForTeam(skillId: SkillId): { amount: number; deals: number } {
+  const weak = DEALS_BY_SKILL[skillId].filter(
+    (d) => d.latestScore !== null && d.latestScore < PROFICIENT_MIN,
+  );
+  return {
+    amount: weak.reduce((sum, d) => sum + (d.amount ?? 0), 0),
+    deals: weak.length,
+  };
+}
+
+/** If the whole team moved this score, about this much more money. */
+export function forecastForTeam(osr: number, skillId: SkillId): Forecast {
+  const { amount, deals } = exposureForTeam(skillId);
+  const points = realisticPoints(osr);
+  const dollars = dollarsFor(amount, points, skillId);
+  return {
+    skillId,
+    exposed: amount,
+    exposedDeals: deals,
+    points,
+    dollars,
+    material: deals > 0 && dollars >= 5_000,
+  };
 }
 
 /** The headline forecast: what a realistic gain on this skill has been worth. */

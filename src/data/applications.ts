@@ -47,7 +47,7 @@ export const contact = {
 
 const generalResume: ResumeContent = {
   role: 'Product Designer',
-  location: 'Orem, Utah, open to remote',
+  location: 'Pleasant Grove, Utah, open to remote',
   profileLede: 'How I think about product design:',
   profile:
     'I design products people come back to. I work from field research, production data, and call research. Visual craft is part of the product. I frame the problem and partner with engineering, as the only designer or through a team.',
@@ -101,7 +101,7 @@ const generalResume: ResumeContent = {
 
 const tinyHealthResume: ResumeContent = {
   role: 'Product Designer',
-  location: 'Orem, Utah, open to remote',
+  location: 'Pleasant Grove, Utah, open to remote',
   profileLede: 'How I think about product design:',
   profile:
     'I design products people come back to. I turn complex, high-stakes information into a clear next step, working from research and production data through interaction design, visual craft, and engineering delivery. Web and mobile. As the only designer or through a team.',
@@ -155,7 +155,7 @@ const tinyHealthResume: ResumeContent = {
 
 const caliberResume: ResumeContent = {
   role: 'Product Designer',
-  location: 'Orem, Utah, open to remote',
+  location: 'Pleasant Grove, Utah, open to remote',
   profileLede: 'How I think about product design:',
   profile:
     'I design products people come back to, not screens that merely ship. I work from evidence: field research, production data, and call research. Visuals matter when they serve a job. I can own look and feel as the only designer, and I can lead through a team, framing the problem and partnering with engineering either way.',
@@ -209,7 +209,7 @@ const caliberResume: ResumeContent = {
 
 const canopyResume: ResumeContent = {
   role: 'Senior Product Designer',
-  location: 'Orem, Utah, Draper hybrid',
+  location: 'Pleasant Grove, Utah',
   profileLede: 'How I work on a product team:',
   profile:
     'I embed with product and engineering to turn complex professional workflows into a clear next step. I research with customers, prototype to test the interaction, and stay through handoff. Figma when the canvas is faster, code when the behavior is the question. AI in my process, and AI in the product, so people can direct it, trust it, and stay in control.',
@@ -264,7 +264,7 @@ const canopyResume: ResumeContent = {
 
 const ashbyResume: ResumeContent = {
   role: 'Product Designer',
-  location: 'Orem, Utah, remote',
+  location: 'Pleasant Grove, Utah, remote',
   profileLede: 'How I work on a product team:',
   profile:
     'I take ambiguous product work and turn it into a spec engineering can ship. Some problems I own end to end: framing, IA, interaction, and delivery with an engineering team and no separate PM. Some need a consult, a reused pattern, and a written standard. I use research and production data when they change the bet, and craft when the usability problem is already obvious.',
@@ -317,7 +317,7 @@ const ashbyResume: ResumeContent = {
 
 const generalLetter: CoverLetterContent = {
   role: 'Product Designer',
-  location: 'Orem, Utah, open to remote',
+  location: 'Pleasant Grove, Utah, open to remote',
   date: 'August 28, 2026',
   recipient: 'Hiring team',
   position: 'Product Designer',
@@ -325,14 +325,14 @@ const generalLetter: CoverLetterContent = {
     'I am applying for a Product Designer role. I design products people come back to. I work from field research, production data, and call research, and I stay with engineering through ship.',
     'At FamilySearch, beginners arrived hoping to feel a connection to their family and met a toolbox built for hobbyists. I led product design for 26 personalized discovery experiences. Each one started from a person already in the tree and offered one next action instead of a search lesson. Retention rose 95% for members and 107% for other users versus the prior year.',
     'At Entrata I spent seven years on that same problem with production data, field research, and engineering partners. That included Homebody, a resident-facing mobile app that reached 4.4 out of 5 on iOS from more than 600 reviews in its first six months; setup systems that had to stay accurate without getting harder to use; and AI flows that turned long paperwork into an upload. For about a year I was Product Lead with an owned engineering team, taking work from research through ship.',
-    'I live in Orem, Utah, and I am open to remote. I can own look and feel as the only designer, and I can lead through a team. I would welcome the chance to walk you through the work.',
+    'I live in Pleasant Grove, Utah, and I am open to remote. I can own look and feel as the only designer, and I can lead through a team. I would welcome the chance to walk you through the work.',
   ],
   signoff: 'Sincerely,',
 };
 
 const ashbyLetter: CoverLetterContent = {
   role: 'Product Designer',
-  location: 'Orem, Utah, remote',
+  location: 'Pleasant Grove, Utah, remote',
   date: 'August 28, 2026',
   recipient: 'Chris, Head of Product Design',
   position: 'Product Designer',
@@ -340,7 +340,7 @@ const ashbyLetter: CoverLetterContent = {
     'I am applying for the Product Designer role at Ashby. You are not hiring someone to wait for a brief, draw wireframes, and pass mocks to engineering. You want a designer who can own a problem, write the spec, consult when a pattern already exists, and raise the quality of decisions across the product team. That is the work I have been doing.',
     'At Entrata I spent seven years on desktop SaaS used by staff coordinating thousands of daily tasks. For about a year I was Product Lead with an owned engineering team. I framed the work, wrote the spec, and stayed through ship. I was also the dedicated designer for Greystar. Some of that work was owning a feature end to end. Some of it was sitting with engineers on layout, flows, and what could reuse existing components instead of waiting on a mock.',
     'When we redesigned how staff create rental promotions, usability testing showed they already used the existing Pricing pattern as the map. We extended that system instead of shipping a sleek one-off. After launch, 8,290 specials used the new targeting rules. At FamilySearch I set a discovery loop as a standard (named ancestor, relationship in a sentence, one next action) and oversaw third-party design so 26 campaigns did not become 26 one-offs. Retention rose 95% for members and 107% for other users versus the prior year.',
-    'I have not designed recruiting software. I have designed for professionals who are underwater in coordination work, and I am used to having my decisions challenged by engineering and product. I live in Orem, Utah, and I work remotely.',
+    'I have not designed recruiting software. I have designed for professionals who are underwater in coordination work, and I am used to having my decisions challenged by engineering and product. I live in Pleasant Grove, Utah, and I work remotely.',
     'I would welcome the chance to walk you through the work.',
   ],
   signoff: 'Sincerely,',
@@ -348,7 +348,7 @@ const ashbyLetter: CoverLetterContent = {
 
 const canopyLetter: CoverLetterContent = {
   role: 'Senior Product Designer',
-  location: 'Orem, Utah, Draper hybrid',
+  location: 'Pleasant Grove, Utah',
   date: 'August 28, 2026',
   recipient: 'Canopy hiring team',
   position: 'Senior UX Designer',
@@ -356,14 +356,14 @@ const canopyLetter: CoverLetterContent = {
     'I am applying for the Senior UX Designer role at Canopy. You are building practice management software so accounting firms can spend time on clients instead of the work that buries them. I have not designed for accountants. I have spent seven years on the same kind of problem: complex B2B workflows for professionals who already have a system, and who will not adopt a prettier one if it asks them to relearn their day.',
     'At Canopy, designers embed with product and engineering, research with customers, and stay through handoff. That is how I already work. For about a year at Entrata I was Product Lead with an owned engineering team, from research through ship. I use Figma when the canvas is faster and code when the behavior is the question. I use AI in my own process for synthesis, prototyping, and documentation, and I have designed AI in the product so staff can direct it, trust it, and stay in control.',
     'That included an income-document flow that turned affordable-housing certification into an upload, and a bulk-upload workflow with visible mapping confidence, match buckets, and exception review before anything executed. I also redesigned a complex setup system inside the existing design system after usability testing showed staff already used that pattern as the map. After launch, 8,290 specials used the new targeting rules. At FamilySearch I guided third-party designers on a shared loop so volume did not become 26 one-offs.',
-    'I live in Orem, so the Draper hybrid schedule (Monday, Wednesday, and Friday in office) fits. I would welcome the chance to walk you through the work.',
+    'I live in Pleasant Grove, Utah. I would welcome the chance to walk you through the work.',
   ],
   signoff: 'Sincerely,',
 };
 
 const tinyHealthLetter: CoverLetterContent = {
   role: 'Product Designer',
-  location: 'Orem, Utah, open to remote',
+  location: 'Pleasant Grove, Utah, open to remote',
   date: 'August 18, 2026',
   recipient: 'Tiny Health hiring team',
   position: 'Product Designer',
@@ -371,7 +371,7 @@ const tinyHealthLetter: CoverLetterContent = {
     'I am applying for the Product Designer role at Tiny Health. Your product has to make complex science feel trustworthy enough that a family will act on it. That is the design work I want to do, and the work I have been doing.',
     'At FamilySearch, beginners arrived hoping to feel a connection to their family and met a toolbox built for hobbyists. I led product design for 26 personalized discovery experiences. Each one started from a person already in the tree (a name, a birthday, or a record) and offered one next action instead of a search lesson. Retention rose 95% for members and 107% for other users versus the prior year. A Tiny Health report has the same job. The value is not 120,000 microbes on a page. It is an expert highlight and an action plan a parent can actually follow.',
     'At Entrata I spent seven years on that same problem with production data, field research, and engineering partners. That included Homebody, a resident-facing mobile app that reached 4.4 out of 5 on iOS from more than 600 reviews in its first six months; setup systems that had to stay accurate without getting harder to use; and AI flows that turned long paperwork into an upload. For about a year I was Product Lead with an owned engineering team, taking work from research through ship. I care more about whether people come back and act than whether the interface looks finished.',
-    'I live in Orem, Utah, so the 9am to 6pm CST overlap window fits my day. I have not designed in DTC health. I have designed for families at scale, shipped consumer mobile, and sat with experts until the science, or the system, could be said in a sentence a real person would use.',
+    'I live in Pleasant Grove, Utah, so the 9am to 6pm CST overlap window fits my day. I have not designed in DTC health. I have designed for families at scale, shipped consumer mobile, and sat with experts until the science, or the system, could be said in a sentence a real person would use.',
     'I would welcome the chance to walk you through the work.',
   ],
   signoff: 'Sincerely,',
@@ -379,7 +379,7 @@ const tinyHealthLetter: CoverLetterContent = {
 
 const caliberLetter: CoverLetterContent = {
   role: 'Product Designer',
-  location: 'Orem, Utah, open to remote',
+  location: 'Pleasant Grove, Utah, open to remote',
   date: 'August 28, 2026',
   recipient: 'Caliber hiring team',
   position: 'Product Designer',
@@ -387,7 +387,7 @@ const caliberLetter: CoverLetterContent = {
     'I am applying for the Product Designer role at Caliber. Josh Holman recommended I reach out. Your product has to change what salespeople actually do after a set of calls, not sit as another training library they ignore. That is a retention problem, and it is the design work I want to do.',
     'At FamilySearch, beginners arrived hoping to feel a connection to their family and met a toolbox built for hobbyists. I led product design for 26 personalized discovery experiences. Each one started from a person already in the tree and offered one next action instead of a search lesson. Retention rose 95% for members and 107% for other users versus the prior year. Calendar used birthdays already in the tree as a reason to come back the next month. A skill gap found in Gong recordings has the same job: one next practice, not a catalog.',
     'At Entrata I spent seven years working from evidence: field research, production data, and call recordings. I designed a field mobile experience around looking up a resident and taking the next action because people keep an app they use every day, not one leadership mandates they download. For about a year I was Product Lead with an owned engineering team. I can own look and feel as the only designer, and I can lead through a team.',
-    'I have not designed sales training or AI role play. I have designed for people who will abandon a product that does not earn the next session, and I have used Gong recordings as research, not as decoration. I live in Orem, Utah, and I am open to remote.',
+    'I have not designed sales training or AI role play. I have designed for people who will abandon a product that does not earn the next session, and I have used Gong recordings as research, not as decoration. I live in Pleasant Grove, Utah, and I am open to remote.',
     'I would welcome the chance to walk you through the work.',
   ],
   signoff: 'Sincerely,',

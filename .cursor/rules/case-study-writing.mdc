@@ -1,0 +1,53 @@
+---
+description: Human, professional prose for case studies, site copy, and docs. Overrides clipped shorthand.
+globs: src/data/**/*.ts,src/pages/**/*.astro,Initiatives/**/*.md,docs/**/*.md
+alwaysApply: true
+---
+
+# Case study and portfolio writing
+
+Write like a professional designer explaining work to a hiring manager who has not lived the project. Complete sentences. Warm, not cute. Specific, not long.
+
+This rule outranks the default “be concise” habit when the output is case copy, page copy, or a document the user will read. Concise means one idea per paragraph, not deleted verbs, articles, or context.
+
+## Voice
+
+- Full sentences with a subject and a verb. If it would look like a ticket title or a code comment, rewrite it.
+- 2–4 sentences per block. One idea per paragraph. Not a fragment, not an essay.
+- First person (`I` / `we`) is fine. Do not hide behind “the team executed research.”
+- Open with the human situation, then the work. The reader needs the world before the process.
+- Connect cause to choice: “Because users still thought there was only one ancestor, we…”
+- If a term, metric, or tool is not obvious, say what it is in the next clause.
+- US English. Professional-warm. Light personality is good; speech-to-text rambling is not.
+- Captions are sentences, not labels.
+
+## Headers
+
+A title or section header must make sense alone. A skimmer who reads only the header should know what the section is about.
+
+- Prefer a claim, tension, or outcome: “Handing over a phone felt like handing over a diary.”
+- A generic label (`Overview`, `Research`, `Impact`) is only acceptable if the first sentence immediately says what was researched or what changed.
+- Do not use internal taxonomy, metaphor crumbs, or shorthand as the heading (`Rough`, `Evidence`, `Qual`, `Handoff`).
+- Role / year / team can be a short facts strip. Story sections cannot.
+
+## Do not write like this
+
+- Fragments: “Card sort. One ancestor at a time. Shipped July 24.”
+- Slash-stacks: “research + production data + usability”
+- Headers that only make sense if you already know the project
+- Process outlines that never tell the story (`Role`, `Impact`, `Problems`, `Hypothesis` as the only headings)
+- Padding: restating the same point three ways, or a page of explanation for one decision
+
+## Write like this
+
+> The Pioneers were a group of tenacious individuals who left everything they knew to follow what they believed and settle the west.
+
+> Approximately one out of four users has unintentionally revealed information they wished to keep private while lending their phones to friends and family.
+
+> Based on user feedback we decided that we needed to do a better job helping our users feel like we were giving them interesting ancestors to discover instead of a list of tasks to complete.
+
+> Identifying the business-critical moments
+
+> Lock Private space inconspicuously with one press
+
+References for tone (do not clone structure blindly): Morten Winther parking case, Dousan Miao Private Space, Cody’s FamilySearch Behance case studies. Sean Halpin’s AI case is a visual reference, not a heading reference. Do not treat the live portfolio as a copy model.

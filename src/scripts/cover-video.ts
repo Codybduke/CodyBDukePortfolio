@@ -10,6 +10,9 @@ const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 const states = new WeakMap<HTMLElement, CoverState>();
 let activeCard: HTMLElement | null = null;
 
+/** Pause this far before the end so the player never fires `ended` and rewinds to frame 0. */
+const END_GAP = 0.034;
+
 function durationOf(video: HTMLVideoElement) {
   return Number.isFinite(video.duration) && video.duration > 0 ? video.duration : 0;
 }
@@ -23,6 +26,16 @@ function pinToStart(video: HTMLVideoElement) {
       /* ignore */
     }
   }
+}
+
+function playedAmount(state: CoverState) {
+  const duration = durationOf(state.forward);
+  const current = state.forward.currentTime;
+  const remembered = state.lastForwardTime;
+  if (state.forward.ended) return duration || remembered;
+  // A finished clip can report currentTime 0 after it rewinds. Trust the further position.
+  if (current < 0.04 && remembered > current) return remembered;
+  return Math.max(current, remembered);
 }
 
 function getState(card: HTMLElement): CoverState | null {
@@ -54,16 +67,54 @@ function getState(card: HTMLElement): CoverState | null {
     pinToStart(video);
   };
 
+  const onPresented = (video: HTMLVideoElement) => {
+    if (video === forward && !video.paused) state.lastForwardTime = video.currentTime;
+    const duration = durationOf(video);
+    if (!duration || video.paused || duration - video.currentTime > END_GAP) return;
+
+    if (video === forward && state.hovering) {
+      video.pause();
+      state.lastForwardTime = Math.max(state.lastForwardTime, video.currentTime);
+      return;
+    }
+
+    // Reverse frame 0 is the hovered pose. Letting the clip end rewinds to that
+    // frame, then the poster snaps back. Pause and hand off while still on the rest pose.
+    if (video === reverse && !state.hovering && video.classList.contains('is-active')) {
+      video.pause();
+      resetToPoster(card, state);
+    }
+  };
+
+  const watch = (video: HTMLVideoElement) => {
+    const step = () => {
+      onPresented(video);
+      if (!video.paused && typeof video.requestVideoFrameCallback === 'function') {
+        video.requestVideoFrameCallback(step);
+      }
+    };
+    video.addEventListener('play', () => {
+      if (typeof video.requestVideoFrameCallback === 'function') video.requestVideoFrameCallback(step);
+    });
+    video.addEventListener('timeupdate', () => onPresented(video));
+  };
+
+  watch(forward);
+  if (reverse) watch(reverse);
+
   forward.addEventListener('loadeddata', () => pinIfResting(forward));
   reverse?.addEventListener('loadeddata', () => pinIfResting(reverse));
 
-  forward.addEventListener('timeupdate', () => {
-    if (!forward.paused) state.lastForwardTime = forward.currentTime;
-  });
   forward.addEventListener('ended', () => {
     const duration = durationOf(forward);
-    state.lastForwardTime = duration;
-    if (duration) forward.currentTime = Math.max(duration - 0.001, 0);
+    state.lastForwardTime = duration || state.lastForwardTime;
+    if (!state.hovering || !duration || forward.currentTime >= 0.05) return;
+    // The player already rewound to the first frame. Put the finished pose back.
+    try {
+      forward.currentTime = Math.max(duration - END_GAP, 0);
+    } catch {
+      /* ignore */
+    }
   });
   reverse?.addEventListener('ended', () => {
     if (state.hovering) return;
@@ -84,11 +135,21 @@ function setActive(card: HTMLElement, state: CoverState, which: 'forward' | 'rev
 
 function resetToPoster(card: HTMLElement, state: CoverState) {
   state.gen += 1;
+  const gen = state.gen;
   state.hovering = false;
   state.lastForwardTime = 0;
-  pinToStart(state.forward);
-  if (state.reverse) pinToStart(state.reverse);
+  // Hide before seeking. Reverse time 0 is the hovered pose, and seeking there
+  // while the video is still up flashes that pose, then the poster.
   setActive(card, state, null);
+  const forward = state.forward;
+  const reverse = state.reverse;
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      if (gen !== state.gen) return;
+      pinToStart(forward);
+      if (reverse) pinToStart(reverse);
+    });
+  });
 }
 
 function playWhenReady(video: HTMLVideoElement, state: CoverState) {
@@ -105,35 +166,30 @@ function playWhenReady(video: HTMLVideoElement, state: CoverState) {
   }
 }
 
-function seekAndPlay(video: HTMLVideoElement, time: number, state: CoverState) {
+function seekTo(video: HTMLVideoElement, time: number, state: CoverState, done: () => void) {
   const gen = state.gen;
-  video.muted = true;
   const duration = durationOf(video);
   const target = duration ? Math.min(Math.max(time, 0), Math.max(duration - 0.001, 0)) : 0;
-
-  const play = () => {
+  const finish = () => {
     if (gen !== state.gen) return;
-    playWhenReady(video, state);
+    done();
   };
 
-  if (!duration || Math.abs(video.currentTime - target) < 0.03) {
-    play();
+  if (!duration || Math.abs(video.currentTime - target) < 0.02) {
+    finish();
     return;
   }
 
-  video.addEventListener(
-    'seeked',
-    () => {
-      if (gen !== state.gen) return;
-      play();
-    },
-    { once: true },
-  );
+  video.addEventListener('seeked', finish, { once: true });
   try {
     video.currentTime = target;
   } catch {
-    play();
+    finish();
   }
+}
+
+function seekAndPlay(video: HTMLVideoElement, time: number, state: CoverState) {
+  seekTo(video, time, state, () => playWhenReady(video, state));
 }
 
 function enter(card: HTMLElement) {
@@ -146,7 +202,6 @@ function enter(card: HTMLElement) {
   state.gen += 1;
   state.hovering = true;
   state.reverse?.pause();
-  setActive(card, state, 'forward');
 
   const duration = durationOf(state.forward);
   const atEnd =
@@ -154,20 +209,31 @@ function enter(card: HTMLElement) {
     (state.forward.ended || (duration > 0 && state.lastForwardTime >= duration - 0.04));
 
   if (atEnd && !fromReverse) {
-    if (duration) state.forward.currentTime = duration - 0.001;
+    setActive(card, state, 'forward');
+    if (duration && state.forward.currentTime < 0.05) {
+      try {
+        state.forward.currentTime = Math.max(duration - END_GAP, 0);
+      } catch {
+        /* ignore */
+      }
+    }
     return;
   }
 
   if (fromReverse && state.reverse) {
     const reverseDuration = durationOf(state.reverse);
     const mirrored = reverseDuration ? Math.max(reverseDuration - state.reverse.currentTime, 0) : 0;
-    seekAndPlay(state.forward, mirrored, state);
+    const gen = state.gen;
+    seekTo(state.forward, mirrored, state, () => {
+      if (gen !== state.gen || !state.hovering) return;
+      setActive(card, state, 'forward');
+      playWhenReady(state.forward, state);
+    });
     return;
   }
 
-  if (state.forward.currentTime > 0.04 && !fromReverse) {
-    pinToStart(state.forward);
-  }
+  setActive(card, state, 'forward');
+  if (state.forward.currentTime > 0.04) pinToStart(state.forward);
   playWhenReady(state.forward, state);
 }
 
@@ -185,16 +251,22 @@ function leave(card: HTMLElement) {
   state.forward.pause();
   const forwardDuration = durationOf(state.forward);
   const reverseDuration = durationOf(state.reverse);
-  const t = state.forward.ended ? forwardDuration : state.lastForwardTime || state.forward.currentTime;
+  const t = playedAmount(state);
 
   if (t < 0.04) {
     resetToPoster(card, state);
     return;
   }
 
-  setActive(card, state, 'reverse');
   const mirrored = forwardDuration && reverseDuration ? Math.max(reverseDuration - t, 0) : 0;
-  seekAndPlay(state.reverse, mirrored, state);
+  const reverse = state.reverse;
+  const gen = state.gen;
+  // Keep the forward frame up until reverse is parked on the matching frame.
+  seekTo(reverse, mirrored, state, () => {
+    if (gen !== state.gen || state.hovering) return;
+    setActive(card, state, 'reverse');
+    playWhenReady(reverse, state);
+  });
 }
 
 function cardFromTarget(target: EventTarget | null) {

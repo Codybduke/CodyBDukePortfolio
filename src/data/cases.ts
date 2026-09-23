@@ -39,9 +39,9 @@ export const cases: CaseStudy[] = [
   {
     slug: 'move-in-scanner',
     title: 'OXP Mobile Move-In Scanner',
-    eyebrow: 'Mobile · Offline-first',
+    eyebrow: 'Staff iOS, offline on move-in day',
     summary:
-      'Student move-in day is long, and most of the Entrata work still happens later. A search-first, offline mobile flow lets staff take a name and ID at the table, see if the checklist is ready, confirm in seconds, and turn leftover optional items into a follow-up task instead of a void.',
+      'On student move-in day, staff hand over keys while Entrata often still has no record of the move-in. I designed a search-first, offline mobile flow so they can find the person, see if the checklist is ready, confirm a photo ID, and turn leftover optional items into a follow-up task instead of a void.',
     role: 'Product Lead (PM + UX + prototype handoff)',
     timeframe: 'Mar – May 2026',
     highlight: true,
@@ -54,29 +54,29 @@ export const cases: CaseStudy[] = [
       videoReverse: '/work/move-in-scanner/cover-reverse.mp4',
     },
     problem:
-      'At peak student turn, staff move in 100–500+ residents from a breezeway, the office, or a drive-through. Offline they mark a spreadsheet and lose checklist visibility. Online they fight desktop Entrata on a phone. Either way the resident leaves with keys and Entrata catches up later.',
+      'At peak student turn, staff move in 100 to 500 or more residents from a breezeway, the office, or a drive-through. Offline they mark a spreadsheet and lose sight of the checklist. Online they fight desktop Entrata on a phone. Either way the resident leaves with keys and Entrata catches up later.',
     process: [
       'Three site visits showed printed rolls, laptop sheets, and packets instead of Entrata at the table.',
-      'Industry Group interview notes (~20 operators) pushed Search over QR, optional items to a follow-up task, and offline in MVP; PRD rewritten in 48 hours.',
-      'Ten SQL queries sized unused Bulk Move-In and kept checklist vs renewal claims directional.',
-      'Split day-of mobile from Bulk Move-in Smart Upload so neither waited on the other’s rollout.',
+      'Interviews with about 20 operators pushed search over QR, optional items into a follow-up task, and offline into the first release. I rewrote the requirements in 48 hours.',
+      'Ten SQL queries sized unused Bulk Move-In and kept checklist-versus-renewal claims directional, not causal.',
+      'We split day-of mobile from Bulk Move-in Smart Upload so neither waited on the other’s rollout.',
     ],
     decisions: [
-      'Search first after interviews described the line as “Smith, 315,” not a QR scan.',
-      'Offline moved into MVP after Industry Group feedback: 30-day cached roster, queued confirms, home collapsed to Move-In.',
+      'Search first, after interviews described the line as “Smith, 315,” not a QR scan.',
+      'Offline moved into the first release: a 30-day cached roster, queued confirms, and a home screen that collapses to Move-In.',
       'Optional checklist items create an internal follow-up task instead of disappearing after confirm.',
     ],
     metrics: [
-      '~21% of student move-ins at a large operator processed in Entrata in real time on move-in day (production audit).',
-      '~36% had zero Entrata activity in the move-in window (caught up overnight).',
-      'Near-zero adoption of Bulk Move-In in peak months, even at the largest student operator in the set.',
+      'About 21% of student move-ins at a large operator were processed in Entrata in real time on move-in day.',
+      'About 36% had zero Entrata activity in the move-in window and were caught up overnight.',
+      'Near-zero use of desktop Bulk Move-In in peak months, even at the largest student operator in the set.',
     ],
     outcome:
-      'Scoped table-side flow with offline cache and follow-up tasks for the OXP mobile team to implement, not a shrunk desktop Bulk Move-In. Pilot actuals still TBD.',
+      'A scoped table-side flow with offline cache and follow-up tasks for the OXP mobile team to implement, not a shrunk desktop Bulk Move-In. Pilot actuals are not in yet.',
     handoff:
-      'SwiftUI package and demo target for the OXP shell. The in-house mobile team walked the module, found five defects in about 30 minutes, and made small changes to fit the app.',
+      'A SwiftUI package and demo target for the OXP app. The in-house mobile team walked the module, found five defects in about 30 minutes, and made small changes to fit the app.',
     builtWith:
-      'Field research and SQL; Expo to thrash states, then SwiftUI for handoff to the OXP mobile team.',
+      'Field research and SQL. Expo to argue about states, then SwiftUI for handoff to the OXP mobile team.',
     status: 'ready',
   },
   {

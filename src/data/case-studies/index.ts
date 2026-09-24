@@ -1,3 +1,4 @@
+import { caliberSkillCase } from './caliber-skill';
 import { csvMoveInAgentCase } from './csv-move-in-agent';
 import { familysearchDiscoveryCase } from './familysearch-discovery';
 import { mobileStrategyResidentLookupCase } from './mobile-strategy-resident-lookup';
@@ -20,6 +21,7 @@ const richCases: Record<string, RichCaseStudy> = {
   [familysearchDiscoveryCase.slug]: familysearchDiscoveryCase,
   [pricingSpecialsCase.slug]: pricingSpecialsCase,
   [mobileStrategyResidentLookupCase.slug]: mobileStrategyResidentLookupCase,
+  [caliberSkillCase.slug]: caliberSkillCase,
 };
 
 export function getRichCase(slug: string): RichCaseStudy | undefined {

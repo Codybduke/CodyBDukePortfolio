@@ -22,6 +22,8 @@ export type CaseEmbed = {
   title: string;
   caption: string;
   hint?: string;
+  /** Query string without `?`. When set, replaces the default phone-lab parameters. */
+  query?: string;
 };
 
 export type CaseSection = {

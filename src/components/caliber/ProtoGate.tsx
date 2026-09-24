@@ -21,7 +21,8 @@ export default function ProtoGate() {
   const [wrong, setWrong] = useState(false);
 
   useEffect(() => {
-    setOk(sessionStorage.getItem(KEY) === '1');
+    const embedded = new URLSearchParams(window.location.search).get('play') === '1';
+    setOk(embedded || sessionStorage.getItem(KEY) === '1');
     setReady(true);
   }, []);
 

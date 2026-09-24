@@ -7,10 +7,11 @@ type Props = {
 
 const { embed } = Astro.props;
 const join = embed.src.includes('?') ? '&' : '?';
-/** Same demo matrix as the case-study screenshots; lab chrome stays visible. */
-const lab =
+/** Phone lab is the Move-In default. A case can pass its own query instead. */
+const query =
+  embed.query ??
   'lab=1&version=full&eli=enabled&briefing=v2&device=ios&size=mobile&phoneSim=on&network=online&brand=preview';
-const src = `${embed.src}${join}${lab}`;
+const src = `${embed.src}${join}${query}`;
 ---
 
 <figure class="case-embed case-embed--lab">

@@ -164,6 +164,47 @@ export const cases: CaseStudy[] = [
     status: 'ready',
   },
   {
+    slug: 'caliber-skill-on-deals',
+    title: 'Ten hours on what a skill is worth',
+    eyebrow: 'Design exercise · Caliber',
+    summary:
+      'A front-line manager can already see that a rep is Developing. He cannot tell a bad-fit book from a weak skill, or which skill is worth the next hour. In about ten hours I defined that connection and prototyped it inside Caliber Skill Intelligence.',
+    role: 'Product designer, working sample',
+    timeframe: 'Aug 29 – Sep 3, 2026 · about 10 hours',
+    highlight: false,
+    tags: ['Design exercise', 'Coaching', 'Prototype'],
+    field: 'obsidian',
+    cover: {
+      src: '/work/caliber-skill-on-deals/cover.png',
+      alt: 'Caliber Skill Intelligence Deals tab, with open deals sorted by call score and a team gain of about $65K.',
+      position: 'center top',
+    },
+    problem:
+      'Ellis has one hour before a one-on-one or a team meeting. Skill Intelligence shows Tara is Developing at discovery and then stops. Priority action is empty. He cannot tell whether she booked the wrong companies or cannot run the skill, and he cannot say what that skill is worth.',
+    process: [
+      'Read the packet, the current product, and three customer conversations before drawing a screen.',
+      'Joined the latest scored call to the deal, to whether it moved, and to the amount. Left the formula with Caliber.',
+      'Built a coded prototype, then cut version 1.1 after Britton’s walkthrough and my own critique of the extra sentences.',
+    ],
+    decisions: [
+      'One manager surface, on named deals, instead of a new revenue dashboard.',
+      'Four groups plus an unscored bucket, so the view does not characterize a call it never saw.',
+      'Forecast as a number pair beside the score. The explanation sits behind an info icon.',
+    ],
+    metrics: [
+      'About ten hours, a few hours a day, from August 29 to September 3.',
+      'Tara: 8 open deals, about $349K, stalled after a below-Proficient discovery call.',
+      'Closing had more money behind it than her weakest skill. The hour and the low score were different answers.',
+    ],
+    outcome:
+      'A walkable manager view that puts skill, the deal, and an honest dollar association on one surface. Founder feedback: the money and the hour landed. The quadrant and the color bar still needed a sentence said out loud.',
+    handoff:
+      'A written model, a time-and-tools log, and a coded prototype with version 1 and 1.1 so the cuts stay visible.',
+    builtWith:
+      'The packet and customer conversations. FigJam and Figma for the quadrant. A coded prototype in Skill Intelligence’s chrome. AI organized the reading and applied revision passes. I kept the point of view.',
+    status: 'ready',
+  },
+  {
     slug: 'csv-move-in-agent',
     title: 'Bulk Move-in Smart Upload',
     eyebrow: 'Desktop · AI workflow',

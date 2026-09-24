@@ -1,3 +1,4 @@
+import { csvMoveInAgentCase } from './csv-move-in-agent';
 import { familysearchDiscoveryCase } from './familysearch-discovery';
 import { mobileStrategyResidentLookupCase } from './mobile-strategy-resident-lookup';
 import { moveInScannerCase } from './move-in-scanner';
@@ -15,6 +16,7 @@ export type {
 
 const richCases: Record<string, RichCaseStudy> = {
   [moveInScannerCase.slug]: moveInScannerCase,
+  [csvMoveInAgentCase.slug]: csvMoveInAgentCase,
   [familysearchDiscoveryCase.slug]: familysearchDiscoveryCase,
   [pricingSpecialsCase.slug]: pricingSpecialsCase,
   [mobileStrategyResidentLookupCase.slug]: mobileStrategyResidentLookupCase,

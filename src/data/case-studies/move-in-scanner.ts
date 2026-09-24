@@ -76,15 +76,39 @@ export const moveInScannerCase: RichCaseStudy = {
     },
     {
       id: 'strategy',
-      title: 'The next-day upload and the table app are not the same product',
+      title: 'The first answer was an overnight upload. The line was still the problem.',
       body: [
-        'Bulk Move-in Smart Upload and this mobile flow recover the same gap on different clocks. The upload accepts the workaround: keep the spreadsheet or the photo of the paper, then process everyone the next day. This app is the day itself — name and ID at the table, even with no Wi-Fi.',
-        'Treating “automated student move-in” as one program would have stalled both. We split them. Homebody, a separate resident-facing effort, kept readiness and QR on the student side. This module only covers staff at the table. The trade-off was two products to explain. It was still worth it, because neither had to wait on the other’s rollout.',
+        'The pain we could measure first was the morning after. Staff had already marked people moved in on a spreadsheet. Then they sat down and typed every name into Entrata. For a 300-resident property that was about eight hours of overtime in the busiest week of the year. So I designed an agent that would take that file, match each row to a lease, and show the work before anything was written.',
+        'The walkable prototype treats the spreadsheet as the source of truth. It does not ask staff to map columns by hand. What they have to check is the match. Rows land in three buckets: people who will be moved in, people who will be moved in with a follow-up task, and rows the agent will skip unless a person steps in. When two residents share a name, staff pick the lease. Confidence sits on that choice, not on a mapping grid.',
+        'Site visits and operator interviews moved the bet. The failure was happening while the resident was still in line. A faster catch-up still left Entrata wrong during the day. We shifted the focus to this table app. The upload stayed for teams that keep the paper or the spreadsheet and process it the next morning. Treating both as one program would have stalled the line. Splitting them meant neither had to wait.',
+      ],
+      figures: [
+        {
+          src: withBase('/work/csv-move-in-agent/01-preflight.png'),
+          alt: 'Bulk Move-In review after an upload: 277 will be moved in, 30 have follow-up tasks, and 23 unresolved rows, with J. Smith in A-102 listed as an ambiguous name match.',
+          caption:
+            'Nothing is written yet. The agent has already sorted the file. Staff can see who will move in, who needs a follow-up, and which rows it will skip.',
+          layout: 'wide',
+        },
+        {
+          src: withBase('/work/csv-move-in-agent/02-follow-up.png'),
+          alt: 'The With Follow-Up Tasks bucket listing matched residents who are missing items such as pet screening or vehicle registration, each marked that a task will be created.',
+          caption:
+            'A missing checklist item does not block the move-in. The agent will still process the resident and create a follow-up for pet screening or vehicle registration.',
+          layout: 'wide',
+        },
+        {
+          src: withBase('/work/csv-move-in-agent/03-resolve.png'),
+          alt: 'Resolve dialog for J. Smith in A-102, offering James Smith in Bed A or Jennifer Smith in Bed B, both at high confidence, before confirm.',
+          caption:
+            'J. Smith in A-102 could be James or Jennifer. Both matches are high confidence. Staff pick the lease, skip the row, or turn it into a follow-up before anything commits.',
+          layout: 'wide',
+        },
       ],
       table: {
         headers: ['Workstream', 'What it is for'],
         rows: [
-          ['Bulk Move-in Smart Upload', 'The next day: turn a spreadsheet into Entrata records.'],
+          ['Bulk Move-in Smart Upload', 'The first answer, and the next-day bridge: turn a spreadsheet into Entrata records.'],
           ['Homebody Move-In Readiness', 'Help the resident get ready, including a QR code they can show.'],
           ['OXP Move-In Day Execution', 'Staff at the table. This case.'],
           ['Resident Readiness AI', 'Nudges before turn. Thinner artifacts, not this product.'],
@@ -327,7 +351,7 @@ export const moveInScannerCase: RichCaseStudy = {
       id: 'outcome',
       title: 'Pilot results are not in yet. These are the goals.',
       body: [
-        'What we left behind was a scoped table-side flow with offline and follow-up rules the OXP mobile team could implement. It is not a shrunk desktop Bulk Move-In screen, and it is not a next-day spreadsheet upload wearing phone chrome.',
+        'What we left behind was a scoped table-side flow with offline and follow-up rules the OXP mobile team could implement. It is not a shrunk desktop Bulk Move-In screen, and it is not the overnight upload wearing phone chrome.',
         'Initiative targets are shared with Bulk Move-in Smart Upload and Homebody readiness. Pilot actuals are not in yet. Until they are, these are goals, not results.',
       ],
       table: {
@@ -354,7 +378,7 @@ export const moveInScannerCase: RichCaseStudy = {
   ],
   sibling: {
     href: '/work/csv-move-in-agent',
-    label: 'Bulk Move-in Smart Upload, the next-day spreadsheet bridge',
+    label: 'The spreadsheet upload was the first answer',
   },
   nextCaptures: [
     'More card: Caching to Offline ready to Syncing N',

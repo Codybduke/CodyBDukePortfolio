@@ -59,7 +59,7 @@ export const cases: CaseStudy[] = [
       'Three site visits showed printed rolls, laptop sheets, and packets instead of Entrata at the table.',
       'Interviews with about 20 operators pushed search over QR, optional items into a follow-up task, and offline into the first release. I rewrote the requirements in 48 hours.',
       'Ten SQL queries sized unused Bulk Move-In and kept checklist-versus-renewal claims directional, not causal.',
-      'We split day-of mobile from Bulk Move-in Smart Upload so neither waited on the other’s rollout.',
+      'The first answer was an overnight upload. Field work moved the bet to the table, and we split the two so neither waited.',
     ],
     decisions: [
       'Search first, after interviews described the line as “Smith, 315,” not a QR scan.',
@@ -168,34 +168,40 @@ export const cases: CaseStudy[] = [
     title: 'Bulk Move-in Smart Upload',
     eyebrow: 'Desktop · AI workflow',
     summary:
-      'An AI agent that turns a move-in spreadsheet into processed residents — mapping, matching, and exception handling so next-day overtime becomes a single upload. Sibling to table-side Move-In: this is the next-day bridge, not the breezeway.',
+      'The first answer to student turn was an overnight upload. An agent matches the spreadsheet to leases and shows three buckets before anything is written. Field work later moved the main bet to a phone in the line. This stayed the next-day bridge.',
     role: 'Product Lead (hybrid UX/PM) — owned eng team',
     timeframe: 'Q2 2026',
     highlight: false,
     tags: ['AI agents', 'Trust UX', 'Business outcomes'],
+    field: 'terracotta',
+    cover: {
+      src: '/work/csv-move-in-agent/01-preflight.png',
+      alt: 'Bulk Move-In review after an upload, with ready, follow-up, and unresolved buckets.',
+      position: 'center top',
+    },
     problem:
-      'After move-in day, staff re-key every resident from an offline spreadsheet into Entrata. For a 300-unit property that meant 8+ hours of overtime during the busiest week of the year.',
+      'After move-in day, staff re-key every resident from an offline spreadsheet into Entrata. For a 300-resident property that was about eight hours of overtime in the busiest week of the year.',
     process: [
-      'Framed the business job: bridge offline table behavior to Entrata without forcing staff to change move-in day habits.',
-      'Designed upload → map → match preview → process → exceptions so staff see the agent’s work before anything executes.',
-      'Partnered with an owned eng team on a design-to-ship cycle aimed at June student turn.',
+      'Started from the morning-after job: keep the spreadsheet, recover Entrata, do not force the table to change first.',
+      'Designed upload, match preview, and exception review so staff see the agent’s work before anything is written.',
+      'After field work on the line, kept this as the next-day bridge and shifted the main bet to the table app.',
     ],
     decisions: [
-      'Trust UX first: mapping confidence and match buckets are visible before execution — eligible, exceptions, unmatched.',
-      'Accept format variation across properties; AI maps columns instead of forcing a rigid template.',
-      'Keep as a sibling to Move-In Scanner (next-day vs day-of), not one mega-initiative that blocks both.',
+      'Treat the spreadsheet as the source of truth. Confidence sits on the resident match, not on a mapping grid.',
+      'Three buckets before launch: will move in, will move in with a follow-up, or skip until a person steps in.',
+      'Split from the table app so a faster overnight job did not stall the day-of product.',
     ],
     metrics: [
-      'Goal: 300+ resident property completes processing in under 1 hour (vs. 8+ hours manual).',
-      'Goal: 70%+ of uploaded residents processed without manual intervention.',
+      'Goal: a 300-resident property finishes in under 1 hour, from about 8 hours of re-key.',
+      'Goal: 70%+ of uploaded residents processed without a person stepping in.',
       'Goal: 90%+ of exceptions include a clear suggested resolution.',
     ],
     outcome:
-      'An AI workflow product aimed at eliminating the post-turn processing bottleneck while keeping humans in control of exceptions.',
+      'A walkable overnight agent that shows its work. The table-side case is the product we took further. Pilot actuals are not in yet.',
     handoff:
-      'PRD/spec + prototype flows for mapping, match preview, and exception resolution — shipped with an owned eng team against June turn timing.',
+      'Prototype flows for upload, match preview, and exception resolution, plus a spec for an owned engineering team.',
     builtWith:
-      'Product Lead loop with eng: prototype flows, exception IA, and outcome targets baked into the handoff.',
+      'Product Lead loop with engineering: a walkable desktop prototype, exception buckets, and outcome targets marked as goals.',
     status: 'ready',
   },
   {

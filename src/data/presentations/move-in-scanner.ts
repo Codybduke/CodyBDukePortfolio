@@ -89,7 +89,7 @@ export const slides: Slide[] = [
       'Three site visits: printed rolls, laptop sheets, packets — spreadsheet was the working product',
       '~20 operators: search over QR, optional items escalate, offline in MVP',
       'SQL sized unused Bulk Move-In. More desktop training was not the fix',
-      'PRD rewrite in 48 hours. Split this from the next-day spreadsheet upload so neither waited',
+      'PRD rewrite in 48 hours. The first answer was the overnight upload. We split so neither waited',
     ],
     scene: 'roster',
   },

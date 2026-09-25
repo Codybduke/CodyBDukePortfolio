@@ -1,4 +1,4 @@
-export type CaseFigureLayout = 'hero' | 'device' | 'pair' | 'trio' | 'wide';
+export type CaseFigureLayout = 'hero' | 'device' | 'pair' | 'trio' | 'wide' | 'center';
 
 export type CaseFigure = {
   src: string;
@@ -28,7 +28,7 @@ export type CaseEmbed = {
 
 export type CaseSection = {
   id: string;
-  /** Quiet stage crumb — Rough / Evidence / Decisions / Making / Polished */
+  /** Parent shown once per group: Problem, Process, Solution, What's next. Results when the case shipped with measured outcomes. */
   stage?: string;
   title: string;
   body?: string[];

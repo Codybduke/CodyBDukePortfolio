@@ -6,51 +6,50 @@ const img = (file: string) => withBase(`/work/caliber-skill-on-deals/${file}`);
 export const caliberSkillCase: RichCaseStudy = {
   slug: 'caliber-skill-on-deals',
   openingClaim:
-    'Ellis manages about eight reps and has one hour before a one-on-one or a team meeting. Skill Intelligence can already tell him Tara is Developing at Value Based Discovery. It cannot tell him whether she booked the wrong companies or cannot run the skill, and it cannot tell him which skill is worth that hour. This was a design exercise, not a shipped product. The brief was a focused day. I used about ten hours, a few hours at a time, from August 29 to September 3, 2026.',
+    'A front-line manager can see a skill score. He cannot see which deals that score is failing, whether the stall is the skill or the companies, or which skill is worth the next hour. Caliber asked for that connection because they sell skill as a way to move revenue, and the product still cannot show it. This was a design exercise, not a shipped product. The brief was a focused day. I used about ten hours, a few hours at a time, from August 29 to September 3, 2026.',
   collaborators: 'Reviewed with Britton Broderick during the working sample',
-  surface: "Caliber Skill Intelligence, on the manager\'s book of open deals",
+  surface: 'Caliber Skill Intelligence, on the manager\'s book of open deals',
   heroFigure: {
     src: img('08-version-11-team.png'),
     alt: 'Skill Intelligence Deals tab for a mid-market team. Open deals are grouped by the latest call score and whether the deal moved, with a team score of 53 and about $65K beside a four-point gain.',
     caption:
-      'The meeting view. Ellis can see who has money sitting behind a weak call, and what a realistic gain on this skill has gone with across similar books.',
+      'The meeting view after the work. Ellis can see who has money sitting behind a weak call, and what a realistic gain on this skill has gone with across similar books.',
     layout: 'hero',
   },
   sections: [
     {
-      id: 'the-score',
-      title: 'A 65 does not tell him what to say on Monday',
+      id: 'background',
+      stage: 'Problem',
+      title: 'What Caliber already measures',
       body: [
-        'Caliber teaches revenue skill: courses, AI role-play, and Skill Intelligence. The dashboard\'s one number is an Overall Skill Rating, from 0 to 100, rolled up from scored live calls and practice. In the product they handed me, Value Based Discovery sat at 65, which the scale calls Proficient. The team heatmap showed who was up and who was down.',
-        'The Skill Report could name strengths and growth areas, then stopped. Priority action was empty. "No actions have been identified." Ellis already had a workaround. He pasted transcripts into a language model, did not trust the score, and went back to listening to calls himself.',
-        'I started in the packet, the current product, and three customer conversations, before I drew a screen. The score was real. The job it was supposed to do was missing.',
+        'Caliber trains sales teams. They sell expert-led courses, AI practice calls that let a seller rehearse a conversation, and a dashboard called Skill Intelligence. A customer is a company that wants its sellers to get better at the conversations that create pipeline and close it.',
+        'A skill is a named selling behavior, scored from real calls and from practice against a checklist. Value Based Discovery is the example already on their screens. It means the seller finds the buyer\'s problem and what it costs them if nothing changes, instead of jumping to a product pitch.',
+        'The dashboard\'s one number is an Overall Skill Rating, from 0 to 100, rolled up from those scored calls over a time window. Under 20 is Novice. 20 to 39 is Developing. 40 to 69 is Proficient. 70 to 89 is Strong. 90 to 100 is Expert. In the product they handed me, the team sat at 65 on Value Based Discovery. That is Proficient. A later screen shows Tara at 34, which is Developing.',
       ],
-      figures: [
-        {
-          src: img('01-current-dashboard.png'),
-          alt: 'Caliber Skill Intelligence dashboard. Value Based Discovery overall is 65, Proficient, above a team heatmap for the last 30 days.',
-          caption:
-            'What a manager could already open. One skill, one score, and a heatmap of who moved since last period.',
-          layout: 'wide',
-        },
-        {
-          src: img('02-empty-priority.png'),
-          alt: 'Skill Report for Value Based Discovery. The team is outperforming 75 percent of the organization, with strengths and growth areas listed, and Priority action empty.',
-          caption:
-            'The report can diagnose. Priority action for the team still says no actions have been identified.',
-          layout: 'wide',
-        },
+      metrics: [
+        { value: '0-19', label: 'Novice' },
+        { value: '20-39', label: 'Developing. Tara is here at 34.' },
+        { value: '40-69', label: 'Proficient. The team sat here at 65.' },
       ],
-      callout:
-        'A manager who can see that a number is bad, and cannot see why, does not have a coaching tool. He has another report to distrust.',
     },
     {
-      id: 'the-hour',
-      title: 'The exercise was one day. The job was one hour.',
+      id: 'why-caliber',
+      stage: 'Problem',
+      title: 'Why this gap matters to the business',
       body: [
-        'Ellis\'s question about Tara was specific. She creates a lot of deals and does not have pipeline coverage. Close dates slip. He cannot tell a bad-fit book from weak discovery, urgency, or multi-threading. His director asks what he is coaching and how he is measuring it. Eight different plans, one per rep, is more than he can run. He said they are mostly missing the same basics.',
-        'Two problems had to be solved together. Which skill is worth the next hour, and why. The why is the money sitting on the deals behind that skill. A score by itself does not answer either question. A dollar column by itself does not either.',
-        'I kept the sample on one surface: the front-line manager, inside Skill Intelligence, on named deals. Enablement and the revenue leader still need the story. They get it when the manager can defend the hour.',
+        'Caliber asked for this sample because they sell revenue skill. If a score never sits on a named deal, the product is a course catalog plus role-play. Their marketing already says Skill Intelligence quantifies revenue upside. The product cannot. That gap is also how they renew. A customer success conversation needs a story the buyer can take to a director, and the current dashboard does not give them one.',
+      ],
+      callout:
+        'The business problem is not a prettier heatmap. It is making skill visible on the deals that money sits on, so a coaching hour and a renewal story have the same honest join.',
+    },
+    {
+      id: 'the-problem',
+      stage: 'Problem',
+      title: 'What the manager cannot see',
+      body: [
+        'Ellis manages about eight mid-market reps. He opens Skill Intelligence with one hour before a one-on-one or a team meeting. He can already see that Tara is Developing at Value Based Discovery. He cannot tell whether she booked the wrong companies or cannot run the skill, and he cannot say which skill is worth that hour.',
+        'Tara creates a lot of deals and does not have pipeline coverage. Close dates slip. His director asks what he is coaching and how he is measuring it. Eight different plans, one per rep, is more than he can run. He said they are mostly missing the same basics. His workaround is to paste transcripts into a language model, distrust the score, and go back to listening to calls himself.',
+        'Two questions had to be answered together. Which skill is worth the next hour, and why. The why is the money sitting on the deals behind that skill.',
       ],
       metrics: [
         { value: '10 hrs', label: 'The whole sample, a few hours a day across six days' },
@@ -59,12 +58,54 @@ export const caliberSkillCase: RichCaseStudy = {
       ],
     },
     {
-      id: 'the-model',
-      title: 'Show the money beside the call. Leave the formula alone.',
+      id: 'before',
+      stage: 'Problem',
+      title: 'The current screens stop at a number',
       body: [
-        'My first pass treated deal value, win and loss, and stage movement as missing. They are not missing. Skill Intelligence already knows the score and a lightweight deal. It is aware of amount and outcome, and it does not use them yet. Joining them shows that skill and revenue go together. It does not prove the score caused the money.',
+        'This is the Skill Intelligence a manager could already open. Filters pick a role, a skill, a team, and a time window. The page then shows one Overall Skill Rating and a heatmap of who moved since last period. There are no named deals, no amounts, and no next step.',
+        'The Skill Report can name strengths and growth areas, then it stops. Priority action is empty. "No actions have been identified." Diagnosis without a plan is another report to distrust.',
+      ],
+      figures: [
+        {
+          src: img('01-current-dashboard.png'),
+          alt: 'Caliber Skill Intelligence dashboard. Value Based Discovery overall is 65, Proficient, above a team heatmap for the last 30 days.',
+          caption:
+            'Before. A score and a heatmap. The page does not show which deals sit behind the 65, what those deals are worth, or what to coach next.',
+          layout: 'wide',
+        },
+        {
+          src: img('02-empty-priority.png'),
+          alt: 'Skill Report for Value Based Discovery. The team is outperforming 75 percent of the organization, with strengths and growth areas listed, and Priority action empty.',
+          caption:
+            'Before. The report can list strengths and growth areas. Priority action for the team still says no actions have been identified.',
+          layout: 'center',
+        },
+      ],
+      callout:
+        'A manager who can see that a number is bad, and cannot see why, does not have a coaching tool.',
+    },
+    {
+      id: 'research',
+      stage: 'Process',
+      title: 'Research',
+      body: [
+        'I started in the packet, the current product, and three customer conversations, before I drew a screen.',
+        'On September 1, Britton Broderick walked the product with me. He confirmed the manager as the first user, and that the screen should show the monetary value of a skill.',
+      ],
+      bullets: [
+        'Ellis, a front-line manager, can see that Tara is Developing and still cannot tell a bad-fit book from a weak skill, or which skill is worth his one hour.',
+        'Reid, in enablement, cannot tell whether training spend moved performance, so the default stays one-size-fits-all.',
+        'Jordan, a revenue leader, already overlaid skill on results by hand and saw a correlation. He still cannot say where the pipeline leaks, or trust coverage numbers that feel like a wet thumb.',
+      ],
+    },
+    {
+      id: 'the-model',
+      stage: 'Process',
+      title: 'What the screen can claim',
+      body: [
+        'My first pass treated deal value, win and loss, and stage movement as missing. They are not missing. Skill Intelligence already knows the score and a lightweight deal. It is aware of amount and outcome, and it does not use them yet. Joining them shows that skill and revenue go together. It does not prove the score caused the money. Caliber already has a formula for that value. The screen presents the number. It does not invent one.',
         'The unit is a live scored call, the deal it sits on, whether that deal moved, and what it is worth. Every open deal lands in one of four groups: the latest call on this skill was proficient or not, and the deal stalled or moved. Deals with no scored call stay out. The view refuses to characterize a book it cannot see.',
-        'On September 1, Britton confirmed the manager and the four groups. He also tightened the brief. A user should be able to see the monetary value of a skill. He asked me to make that tie-in explicit, and not to invent the mathematical model. Caliber owns the formula. The screen presents it.',
+        'I kept the sample on one surface: the front-line manager, inside Skill Intelligence, on named deals. Enablement and the revenue leader still need the story. They get it when the manager can defend the hour.',
       ],
       table: {
         headers: ['The screen can say', 'The screen should hold back'],
@@ -88,7 +129,8 @@ export const caliberSkillCase: RichCaseStudy = {
     },
     {
       id: 'first-pass',
-      title: 'Version 1 could answer the question, if he was willing to read',
+      stage: 'Process',
+      title: 'The first version',
       body: [
         'I built the manager flow as a coded prototype instead of a slide of frames. The idea is a classification of a whole book. Static screens cannot show deals regrouping when you change the person or the skill. The chrome, type, and color came from the shipping product, sampled from the packet screenshots when the component library export ran out of calls.',
         'The first version put the four groups on the page, with dollars, and a forecast in three places: beside the score, on the empty Priority action, and inside the focus. It also explained each of those numbers in a paragraph. Under the groups, another paragraph restated the chart and then told Ellis this was the question he came in with.',
@@ -112,21 +154,61 @@ export const caliberSkillCase: RichCaseStudy = {
       ],
     },
     {
-      id: 'quadrant',
-      title: 'The same four facts had to read as one chart',
+      id: 'early-figma',
+      stage: 'Process',
+      title: 'Wireframes and ideation',
       body: [
-        'I drew the groups in Figma before I asked for them to be rebuilt. Proficient or better on top. Stalled on the left, moved on the right, so the best outcome is the top right. The cell a manager should feel first is the bottom left: weak call, deal stuck, and the dollars on it. For Tara that is 8 deals and about $349K.',
-        'Color stays on a rail in each cell, the way the product already marks a score. Filling the whole cell is reserved for the group you are looking at. I tried which cell should carry that fill. The skill-gap cell is the one that answers Ellis. The others stay quiet until he asks.',
-        'Version 1.1 is that chart, plus the cuts from my own critique. The forecast collapsed to a pair next to the gauge, +9 pts to about $70K, with the explanation behind the info icon. The paragraph under the chart became a small status: skill problem. Coverage is a fraction of scored deals, so a missing call does not look like a bad score.',
+        'The first sketches put money next to the score in the most literal way. Each seller got a line for call scores, a line for wins, and a line for revenue, so a rise in skill and a rise in money would show up on the same chart.',
+        'The four groups were harder. A filled quadrant read as four information cards with dots in them, not as a chart. I redrew those groups as horizontal bars, and I tried a spider chart, to see if another shape would make the skill gap obvious.',
+        'I also moved the large blocks of the page around. Score, breakdown, bars, and the deal list changed order until the scan matched the hour: what is wrong, then which deals, then what to do.',
+        'The frame I kept is the later graph. Gray is the hover. The filled cell is the one Ellis has selected. Proficient or better stays on top, stalled stays on the left, and the skill-gap cell is the one that has to be obvious. For Tara that is 8 deals and about $349K.',
       ],
       figures: [
+        {
+          src: img('09-line-graph.png'),
+          alt: 'Early Skill Overview wireframe. Call scores, wins, and revenue are three yellow line charts for the team, with the same three stats repeated on John, Sarah, Kevin, and James.',
+          caption:
+            'An early line chart. Call scores, wins, and revenue sit on the same shape so skill and money look like they move together.',
+          layout: 'wide',
+        },
+        {
+          src: img('10-quadrant-cards.png'),
+          alt: 'Early quadrant wireframe. Four large tinted rectangles meet at a crosshair, with a few dots in each, above person cards for John, Sarah, Kevin, and James.',
+          caption:
+            'An early quadrant. The four groups are filled blocks, and they read as cards more than as a graph.',
+          layout: 'wide',
+        },
+        {
+          src: img('11-bar-chart.png'),
+          alt: 'Horizontal bar study for Value Based Discovery. Four colored bars count stalled and progressing deals after weak and strong calls, with a thinner stacked bar underneath.',
+          caption:
+            'The same four groups as bars. Stalled after a weak call is the long bar, and the thin bar underneath is the mix.',
+          layout: 'wide',
+        },
+        {
+          src: img('12-layout-orders.jpg'),
+          alt: 'Three Figma layouts of Tara Whitfield side by side, reordering the score, the breakdown, the bars, and the deal list. The right-hand frame replaces the chart with four dollar cells.',
+          caption:
+            'Three orders of the same page. The right-hand frame tries a different quadrant, with dollars in each cell instead of one chart.',
+          layout: 'wide',
+        },
         {
           src: img('05-figma-quadrant.png'),
           alt: 'Figma study of the quadrant. The below-proficient, stalled cell is filled brown: 8 deals, $349K, consistent with a skill gap.',
           caption:
-            'The Figma pass. I was deciding which cell gets the fill. The skill-gap cell is the one that has to be obvious.',
+            'The graph I kept. Gray is the hover. The filled cell is the selection, and it is the skill gap.',
           layout: 'wide',
         },
+      ],
+    },
+    {
+      id: 'quadrant',
+      stage: 'Solution',
+      title: 'The quadrant chart',
+      body: [
+        'Version 1.1 is that chart, plus the cuts from my own critique. The forecast collapsed to a pair next to the gauge, +9 pts to about $70K, with the explanation behind the info icon. The paragraph under the chart became a small status: skill problem. Coverage is a fraction of scored deals, so a missing call does not look like a bad score.',
+      ],
+      figures: [
         {
           src: img('06-version-11-tara.png'),
           alt: 'Version 1.1 of Tara Whitfield. The quadrant marks 8 deals and $349K as a skill problem, and the score of 34 sits beside plus 9 points and about $70K.',
@@ -140,10 +222,11 @@ export const caliberSkillCase: RichCaseStudy = {
     },
     {
       id: 'the-plan',
-      title: 'Once he picks the skill, the empty action has to become a plan',
+      stage: 'Solution',
+      title: 'Creating a plan',
       body: [
         'Priority action was the hole in the current product. After the diagnosis, Ellis needs a dated focus he can describe to his director: what she will practice, how often, which live deals are watched, and what a plan like that has gone with.',
-        'Changing the sub-skill, the window, or the practice cadence changes the pair on the modal. Six weeks on her lowest sub-skill, twice a week, sits next to about 12 points and about $95K. The numbers are a placeholder so the idea can be reviewed. The sentence shape is the product decision. Caliber replaces the math.',
+        'Changing the sub-skill, the window, or the practice cadence changes the pair on the modal. Six weeks on her lowest sub-skill, twice a week, sits next to about 12 points and about $95K. The numbers are a placeholder so the idea can be reviewed. Caliber already has the formula, and it replaces the math.',
         'Deals to watch start checked when they stalled after a weak call. He can see the recommendation. He does not have to rebuild the list from memory.',
       ],
       figures: [
@@ -152,7 +235,7 @@ export const caliberSkillCase: RichCaseStudy = {
           alt: 'Set a 6-week focus for Tara Whitfield. Negative Consequence Development is marked lowest, practice is twice a week, and the plan sits beside plus 12 points and about $95K.',
           caption:
             'The focus. One sub-skill, a window, a practice cadence, and the deals the next live calls will be scored against.',
-          layout: 'wide',
+          layout: 'center',
         },
       ],
       table: {
@@ -160,7 +243,7 @@ export const caliberSkillCase: RichCaseStudy = {
         rows: [
           [
             'Britton: the four groups are right, and the missing piece is money.',
-            'Amounts stay on. Dollars sit next to the counts. The forecast is presentation, not a model I invented.',
+            'Amounts stay on. Dollars sit next to the counts. The forecast presents the formula Caliber already has.',
           ],
           [
             'He described a rep they were about to train on discovery, when closing was the higher-leverage hour.',
@@ -179,7 +262,8 @@ export const caliberSkillCase: RichCaseStudy = {
     },
     {
       id: 'play',
-      title: 'The book only makes sense if you can move through it',
+      stage: 'Solution',
+      title: 'Try it in the prototype',
       body: [
         'Tara is the skill problem. Priya\'s stalls show up after stronger calls, so the same chart points at the book instead of the skill. Nate is the fairness case: a newer rep running a better process than the scoreboard suggests. Simone has too thin a sample to characterize. Devon has no scored call on an open deal, and the page says so.',
         'Use it the way Ellis would. Start on the team, open Tara, and change the skill. Set a focus if you want to see the plan. The bar along the bottom is mine, so you can move between version 1.0 and 1.1 and between those people. It is not part of the product.',
@@ -189,15 +273,50 @@ export const caliberSkillCase: RichCaseStudy = {
         query: 'play=1&v=1.1',
         title: 'Caliber Skill on Deals prototype',
         caption:
-          'Version 1.1 is open on the team. Scroll inside the frame. The bottom bar switches version and person.',
-        hint: 'Open Tara for the skill problem, Priya when the stalls are not the skill, and Devon when there is no scored call to judge.',
+          'Version 1.1 is open on the team. Scroll inside the frame, use the bottom bar to switch version and person, and open Tara for the skill problem, Priya when the stalls are not the skill, or Devon when there is no scored call to judge.',
+      },
+    },
+    {
+      id: 'success',
+      stage: "What's next",
+      title: 'How we would know it worked',
+      body: [
+        'The sample did not produce these numbers. They are the measures I would put on a shipped version, so a later pass can tell whether the hour is actually getting easier and whether Caliber can defend the product.',
+        'A manager should leave the page able to name the skill and the deals for the next hour without opening a call. After a one-on-one, Priority action should no longer be empty: a sub-skill, a practice cadence, and watched deals are set. When another skill has more money behind it than the weakest score, managers should open that skill too.',
+        'Over six weeks, practice should be completed and the live score on that skill should move. Watched deals should be scored again. Stalled dollars behind weak calls should stay visible as a share of the book, so fit and skill stay separate. Caliber should be able to put that association in a renewal or enablement review. The screen still does not claim the score caused the revenue.',
+      ],
+      table: {
+        headers: ['What we would watch', 'What would not count as success'],
+        rows: [
+          [
+            'After a visit, the manager can name the skill and the deals for the next hour without listening to a call.',
+            'He still has to open transcripts to decide what to coach.',
+          ],
+          [
+            'Priority action is filled after a one-on-one: one sub-skill, a cadence, and watched deals.',
+            'The Skill Report still ends on "No actions have been identified."',
+          ],
+          [
+            'Managers switch off the weakest skill when another skill has more money behind it.',
+            'Everyone is coached on the lowest score by default.',
+          ],
+          [
+            'Over six weeks, practice is completed, the live score moves, and watched deals are scored again.',
+            'Overall Skill Rating goes up with no watched deals and no practice evidence.',
+          ],
+          [
+            'Stalled dollars behind weak calls are a visible share of the open book.',
+            'A dollar claim that this plan will produce that money for one person.',
+          ],
+        ],
       },
     },
     {
       id: 'the-room',
-      title: 'In the room, the color bar still needed a sentence',
+      stage: "What's next",
+      title: 'What is still needed',
       body: [
-        'I walked this with the founders after the sample was in. The hour, the money, and the refusal to invent a formula landed. The quadrant and the colored bar in the team table did not, at least not cold. Someone meeting that chart for the first time had to be told what the axes were, out loud, before the fill meant "skill" or "the book."',
+        'I walked this with the founders after the sample was in. The hour and the money landed. The quadrant and the colored bar in the team table did not, at least not cold. Someone meeting that chart for the first time had to be told what the axes were, out loud, before the fill meant "skill" or "the book."',
         'I would say the sentence the chart is for, before I point at a cell. Eight of Tara\'s scored open deals, about $349K, stalled after a weak discovery call. That is the coaching hour, unless another skill has more behind it. The bar in the table is the same four groups, drawn small, and it should not be the first time he learns the legend.',
         'I stopped at version 1.1. Another pass would put that sentence on the team row, and would treat the quadrant as something a director can read without a tour. The point of the sample was to find the problem and put an honest first answer on the product they already have.',
       ],

@@ -1,0 +1,19 @@
+---
+description: Shared column, hero and prototype breakout, wrapping tables, and the screenshot lightbox for rich case studies.
+globs: src/data/case-studies/**,src/pages/work/**,src/styles/global.css,src/components/PrototypeEmbed.astro
+alwaysApply: false
+---
+
+# Case study layout
+
+Body, callouts, captions, and in-article screenshots share one left-aligned column: `min(var(--shell-w), 48rem)`. Do not add a tighter inner max-width on paragraphs, captions, callouts, or metric labels.
+
+Only the hero (`.case-figure--hero`) and the embedded prototype (`.case-embed--lab`) may break out to `--shell-w`. Their captions stay on the 48rem column.
+
+Captions are left-aligned. An image may be centered in its frame.
+
+Tables use `table-layout: fixed` and equal wrapping columns (`width: 50%`, `white-space: normal`). Sideways scroll on `.case-table-wrap` is a small-screen fallback, not the desktop layout.
+
+In-article screenshots open the existing lightbox. The hero and the prototype do not. The lightbox is the image only: near full width (`calc(100vw - 6.5rem)`), height from the ratio, a dark scrim, a drop shadow, and a plain × outside the image. No caption, and no button chrome around the ×.
+
+Export screenshots wide enough that the lightbox does not enlarge them. A 1024px-wide file looks soft when opened on a desktop window.

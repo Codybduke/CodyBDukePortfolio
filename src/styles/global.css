@@ -938,6 +938,8 @@ p:last-child {
 }
 
 .case-study__header {
+  width: min(var(--shell-w), 48rem);
+  max-width: min(var(--shell-w), 48rem);
   padding: var(--space-8) 0 var(--space-5);
 }
 
@@ -948,7 +950,6 @@ p:last-child {
 }
 
 .case-study__claim {
-  max-width: 42rem;
   color: var(--ink-muted);
   font-size: 1.12rem;
   line-height: 1.55;
@@ -973,24 +974,24 @@ p:last-child {
   margin-bottom: var(--space-8);
 }
 
-.case-section__stage {
-  font-family: var(--font-ui);
-  font-size: 0.72rem;
-  font-weight: 650;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--ink-faint);
-  margin: 0 0 var(--space-2);
+.case-section > .case-parent {
+  font-size: clamp(2rem, 3.2vw, 2.5rem);
+  margin-top: var(--space-8);
+  margin-bottom: var(--space-6);
 }
 
-.case-section h2 {
+.case-section:first-of-type > .case-parent {
+  margin-top: 0;
+}
+
+.case-section h2,
+.case-section h3 {
   font-size: clamp(1.45rem, 2.4vw, 1.75rem);
   margin-bottom: var(--space-4);
 }
 
 .case-section > p {
   color: var(--ink-muted);
-  max-width: 40rem;
 }
 
 .case-metrics {
@@ -1025,7 +1026,6 @@ p:last-child {
   line-height: 1.4;
   color: var(--ink-muted);
   margin: 0;
-  max-width: 16rem;
 }
 
 .case-table-wrap {
@@ -1037,6 +1037,7 @@ p:last-child {
 
 .case-table {
   width: 100%;
+  table-layout: fixed;
   border-collapse: collapse;
   font-family: var(--font-ui);
   font-size: 0.9rem;
@@ -1048,6 +1049,7 @@ p:last-child {
   vertical-align: top;
   padding: 0.85rem 1rem;
   border-bottom: 1px solid var(--line);
+  white-space: normal;
 }
 
 .case-table th {
@@ -1062,8 +1064,6 @@ p:last-child {
 .case-table td:first-child {
   font-weight: 600;
   color: var(--ink);
-  white-space: nowrap;
-  width: 32%;
 }
 
 .case-table td:last-child {
@@ -1081,7 +1081,6 @@ p:last-child {
   background: var(--bg-elevated);
   color: var(--ink-muted);
   font-size: 1.02rem;
-  max-width: 40rem;
 }
 
 .case-bullets {
@@ -1098,20 +1097,82 @@ p:last-child {
   margin: 0;
 }
 
+.case-zoom {
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  cursor: zoom-in;
+  text-align: inherit;
+}
+
+.case-zoom:focus-visible {
+  outline: 2px solid var(--stone);
+  outline-offset: 3px;
+}
+
+dialog.case-lightbox:modal {
+  position: fixed;
+  width: calc(100vw - 6.5rem);
+  max-width: calc(100vw - 6.5rem);
+  height: fit-content;
+  max-height: none;
+  margin: auto;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  overflow: visible;
+  box-shadow: none;
+}
+
+.case-lightbox::backdrop {
+  background: rgba(0, 0, 0, 0.86);
+}
+
+.case-lightbox img {
+  display: block;
+  width: 100%;
+  height: auto;
+  box-shadow: 0 22px 50px rgba(0, 0, 0, 0.55);
+}
+
+.case-lightbox__close {
+  position: fixed;
+  top: 1.15rem;
+  right: 1.35rem;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: #fff;
+  font-family: var(--font-ui);
+  font-size: 2rem;
+  font-weight: 400;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.case-lightbox__close:focus-visible {
+  outline: 2px solid var(--stone);
+  outline-offset: 3px;
+}
+
 .case-figure figcaption {
   font-family: var(--font-ui);
   font-size: 0.84rem;
   line-height: 1.45;
   color: var(--ink-faint);
   margin-top: var(--space-3);
-  max-width: 36rem;
+  text-align: left;
 }
 
 .case-figure--hero {
-  margin: var(--space-6) 0 var(--space-7);
+  margin: var(--space-6) auto var(--space-7);
   padding: 0;
   width: var(--shell-w);
-  margin-inline: auto;
+  max-width: var(--shell-w);
 }
 
 .case-figure--hero img {
@@ -1121,8 +1182,11 @@ p:last-child {
 }
 
 .case-figure--hero figcaption {
+  width: min(var(--shell-w), 48rem);
+  max-width: min(var(--shell-w), 48rem);
+  margin-inline: auto;
   margin-top: var(--space-3);
-  max-width: 42rem;
+  text-align: left;
 }
 
 .case-figure--device {
@@ -1145,6 +1209,22 @@ p:last-child {
   display: block;
 }
 
+.case-figure--center {
+  width: 100%;
+}
+
+.case-figure--center figcaption {
+  text-align: left;
+}
+
+.case-figure--center img {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  margin-inline: auto;
+}
+
 .case-figure-row {
   display: grid;
   gap: var(--space-6);
@@ -1159,6 +1239,14 @@ p:last-child {
 .case-figure-row--wide {
   max-width: none;
   justify-items: stretch;
+}
+
+.case-figure-row--center {
+  justify-items: center;
+}
+
+.case-figure-row--center .case-figure--center {
+  max-width: 48rem;
 }
 
 .case-figure-row--wide.case-figure-row--pair,
@@ -1227,8 +1315,11 @@ p:last-child {
 }
 
 .case-embed figcaption {
+  width: min(var(--shell-w), 48rem);
+  max-width: min(var(--shell-w), 48rem);
+  margin-inline: auto;
   margin-top: var(--space-3);
-  max-width: 36rem;
+  text-align: left;
 }
 
 .case-embed figcaption p {

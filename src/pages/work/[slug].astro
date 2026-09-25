@@ -85,17 +85,22 @@ const rich = getRichCase(slug!);
                 height="1696"
                 loading="eager"
               />
-              <figcaption class="shell">{rich.heroFigure.caption}</figcaption>
+              <figcaption>{rich.heroFigure.caption}</figcaption>
             </figure>
           )
         }
 
         <div class="case-study__body shell">
           {
-            rich.sections.map((section) => (
+            (() => {
+              let previousStage = '';
+              return rich.sections.map((section) => {
+                const showParent = Boolean(section.stage && section.stage !== previousStage);
+                if (section.stage) previousStage = section.stage;
+                return (
               <section class="case-section" id={section.id}>
-                {section.stage && <p class="case-section__stage">{section.stage}</p>}
-                <h2>{section.title}</h2>
+                {showParent && <h2 class="case-parent">{section.stage}</h2>}
+                {section.stage ? <h3>{section.title}</h3> : <h2>{section.title}</h2>}
 
                 {section.body?.map((paragraph) => <p>{paragraph}</p>)}
 
@@ -151,27 +156,42 @@ const rich = getRichCase(slug!);
                       'case-figure-row',
                       section.figures.length >= 3 && 'case-figure-row--trio',
                       section.figures.length === 2 && 'case-figure-row--pair',
-                      section.figures.length === 1 && 'case-figure-row--single',
+                      section.figures.length === 1 &&
+                        !section.figures.some((figure) => figure.layout === 'center') &&
+                        'case-figure-row--single',
                       section.figures.some((figure) => figure.layout === 'wide') &&
                         'case-figure-row--wide',
+                      section.figures.some((figure) => figure.layout === 'center') &&
+                        'case-figure-row--center',
                     ]}
                   >
                     {section.figures.map((figure) => (
                       <figure class:list={['case-figure', `case-figure--${figure.layout ?? 'device'}`]}>
-                        <img
-                          src={figure.src}
-                          alt={figure.alt}
-                          width="836"
-                          height="1744"
-                          loading="lazy"
-                        />
+                        <button
+                          type="button"
+                          class="case-zoom"
+                          aria-label={`View larger: ${figure.caption}`}
+                          data-zoom-src={figure.src}
+                          data-zoom-alt={figure.alt}
+                          data-zoom-caption={figure.caption}
+                        >
+                          <img
+                            src={figure.src}
+                            alt={figure.alt}
+                            width="836"
+                            height="1744"
+                            loading="lazy"
+                          />
+                        </button>
                         <figcaption>{figure.caption}</figcaption>
                       </figure>
                     ))}
                   </div>
                 )}
               </section>
-            ))
+                );
+              });
+            })()
           }
 
           {
@@ -213,7 +233,40 @@ const rich = getRichCase(slug!);
             <a href={withBase('/work')}>← All work</a>
           </p>
         </div>
+
+        <script>
+          const dialog = document.querySelector('.case-lightbox');
+          if (dialog instanceof HTMLDialogElement) {
+            const image = dialog.querySelector('img');
+            const close = dialog.querySelector('[data-lightbox-close]');
+
+            document.querySelectorAll('.case-zoom').forEach((button) => {
+              if (!(button instanceof HTMLButtonElement)) return;
+              button.addEventListener('click', () => {
+                if (!(image instanceof HTMLImageElement)) return;
+                image.src = button.dataset.zoomSrc ?? '';
+                image.alt = button.dataset.zoomAlt ?? '';
+                dialog.showModal();
+              });
+            });
+
+            close?.addEventListener('click', () => dialog.close());
+            dialog.addEventListener('click', (event) => {
+              if (event.target === dialog) dialog.close();
+            });
+            dialog.addEventListener('close', () => {
+              if (image instanceof HTMLImageElement) image.removeAttribute('src');
+            });
+          }
+        </script>
       </article>
+
+      <dialog class="case-lightbox">
+        <button type="button" class="case-lightbox__close" data-lightbox-close aria-label="Close">
+          ×
+        </button>
+        <img alt="" />
+      </dialog>
     ) : (
       <article class="shell page-hero">
         <p class="section__eyebrow">{item.eyebrow}</p>

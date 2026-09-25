@@ -41,7 +41,7 @@ export const cases: CaseStudy[] = [
     title: 'OXP Mobile Move-In Scanner',
     eyebrow: 'Staff iOS, offline on move-in day',
     summary:
-      'On student move-in day, staff hand over keys while Entrata often still has no record of the move-in. I designed a search-first, offline mobile flow so they can find the person, see if the checklist is ready, confirm a photo ID, and turn leftover optional items into a follow-up task instead of a void.',
+      'Student housing was a majority of Entrata’s clients, and move-in day is when that segment either uses the system of record or replaces it with a spreadsheet. I designed a search-first, offline mobile flow so staff can find the person, see if the checklist is ready, confirm a photo ID, and turn leftover optional items into a follow-up.',
     role: 'Product Lead (PM + UX + prototype handoff)',
     timeframe: 'Mar – May 2026',
     highlight: true,
@@ -168,7 +168,7 @@ export const cases: CaseStudy[] = [
     title: 'Ten hours on what a skill is worth',
     eyebrow: 'Design exercise · Caliber',
     summary:
-      'A front-line manager can already see that a rep is Developing. He cannot tell a bad-fit book from a weak skill, or which skill is worth the next hour. In about ten hours I defined that connection and prototyped it inside Caliber Skill Intelligence.',
+      'A front-line manager can see a skill score. He cannot see which deals that score is failing, whether the stall is the skill or the companies, or which skill is worth the next hour. Caliber asked for that connection because they sell skill as a way to move revenue, and the product still cannot show it.',
     role: 'Product designer, working sample',
     timeframe: 'Aug 29 – Sep 3, 2026 · about 10 hours',
     highlight: false,
@@ -180,7 +180,7 @@ export const cases: CaseStudy[] = [
       position: 'center top',
     },
     problem:
-      'Ellis has one hour before a one-on-one or a team meeting. Skill Intelligence shows Tara is Developing at discovery and then stops. Priority action is empty. He cannot tell whether she booked the wrong companies or cannot run the skill, and he cannot say what that skill is worth.',
+      'A manager can see a skill score and cannot see which deals it is failing, whether the stall is the skill or the companies, or which skill is worth the next hour. Caliber sells that score as a way to move revenue, and Skill Intelligence still cannot show the join.',
     process: [
       'Read the packet, the current product, and three customer conversations before drawing a screen.',
       'Joined the latest scored call to the deal, to whether it moved, and to the amount. Left the formula with Caliber.',
@@ -209,7 +209,7 @@ export const cases: CaseStudy[] = [
     title: 'Bulk Move-in Smart Upload',
     eyebrow: 'Desktop · AI workflow',
     summary:
-      'The first answer to student turn was an overnight upload. An agent matches the spreadsheet to leases and shows three buckets before anything is written. Field work later moved the main bet to a phone in the line. This stayed the next-day bridge.',
+      'Student housing was a majority of Entrata’s clients, and the morning after move-in those properties were still a spreadsheet. An agent matches the file to leases and shows three buckets before anything is written. Field work later moved the main bet to a phone in the line. This stayed the next-day bridge.',
     role: 'Product Lead (hybrid UX/PM) — owned eng team',
     timeframe: 'Q2 2026',
     highlight: false,

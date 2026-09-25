@@ -26,8 +26,8 @@ export const familysearchDiscoveryCase: RichCaseStudy = {
   sections: [
     {
       id: 'problem',
-      stage: 'Rough',
-      title: 'They signed up. They did not stay.',
+      stage: 'Problem',
+      title: 'Beginners signed up and did not come back',
       body: [
         'FamilySearch is a shared wiki tree. The pitch is that you can find your people and add what you know. Acquisition was not the constraint. People who thought they might find a missing name created an account in droves. FamilySearch research on beginners put the leak in plain numbers: on the order of 15% returned the following month, and fewer than 3% were still coming back at twelve months. Messaging work around the same period sized new signups at tens of thousands a week, with about 3% returning inside three months.',
         'The product those people met was built for someone who already knew how to research. Records, sourcing, and tree tools are powerful once you have a method. They are a wall if you showed up hoping to feel something about a grandparent and instead got a search box.',
@@ -52,8 +52,8 @@ export const familysearchDiscoveryCase: RichCaseStudy = {
     },
     {
       id: 'evidence',
-      stage: 'Evidence',
-      title: 'The hook was already in the tree',
+      stage: 'Process',
+      title: 'What was already on the tree',
       body: [
         'Discovery comments and beginner research kept repeating the same shape. People did not need another generic “explore your family history” email. They needed a reason that was theirs: a birthday, a pioneer who walked west, a draft card with a signature. Those facts were often already sitting on the tree or in historical records. The product was not using them as a door.',
         'Experience planning with product and campaign managers made the constraint explicit. Marketing could not invent a story the tree did not support. Engineering could not personalize at campaign volume if every send was a one-off landing page. The design job was a repeatable loop: pick a true hook from data we already had, show the relationship so it feels like family, then give one next action that is a story or a record — not a search lesson.',
@@ -82,8 +82,8 @@ export const familysearchDiscoveryCase: RichCaseStudy = {
     },
     {
       id: 'strategy',
-      stage: 'Decisions',
-      title: 'One loop, three campaigns',
+      stage: 'Process',
+      title: 'One loop for three campaigns',
       body: [
         'I treated Pioneer, Calendar, and WWI as instances of the same product, not as three marketing sites. We sent 26 campaigns on that loop. Each one swapped the hook. The loop stayed still.',
         'Email or a home card named a specific ancestor and why they mattered this week. The product surface showed relationship in plain language — “your 2nd great grandfather,” not a pedigree chart — then one path into photos, stories, or the record. Coming back was supposed to feel like checking on a person, not logging into software.',
@@ -111,7 +111,7 @@ export const familysearchDiscoveryCase: RichCaseStudy = {
     },
     {
       id: 'pioneer',
-      stage: 'Making',
+      stage: 'Solution',
       title: 'Pioneer: one ancestor, fully in view',
       body: [
         'Pioneer was the fullest version of the loop. The email did not ask people to go research pioneers. It named a person on their line and invited them to see how they were connected.',
@@ -121,7 +121,7 @@ export const familysearchDiscoveryCase: RichCaseStudy = {
     },
     {
       id: 'calendar',
-      stage: 'Making',
+      stage: 'Solution',
       title: 'Calendar: a reason to come back next month',
       body: [
         'Pioneer could win a session. Calendar was built to win a habit. Birthdays and anniversaries are already how families remember people. The tree had those dates. We were not using them.',
@@ -140,8 +140,8 @@ export const familysearchDiscoveryCase: RichCaseStudy = {
     },
     {
       id: 'wwi',
-      stage: 'Making',
-      title: 'WWI Draft: proof it was a system',
+      stage: 'Solution',
+      title: 'WWI Draft: the same loop on a different record',
       body: [
         'WWI Draft used the same loop on a different record type. A draft card is a stubborn object: a signature, a date, a place. For a beginner, that is often the first time an ancestor stops being a row in a tree.',
         'We did not invent a new IA for military records. We swapped the hook and reused relationship, story, and a single next action. That was the point of leading campaigns as a product system. The third campaign had to be cheaper than the first, or we were running a studio, not a retention surface.',
@@ -150,8 +150,8 @@ export const familysearchDiscoveryCase: RichCaseStudy = {
     },
     {
       id: 'decisions',
-      stage: 'Decisions',
-      title: 'What we chose instead',
+      stage: 'Solution',
+      title: 'The choices that held',
       table: {
         headers: ['Choice', 'Why / what we dropped'],
         rows: [
@@ -184,8 +184,8 @@ export const familysearchDiscoveryCase: RichCaseStudy = {
     },
     {
       id: 'outcome',
-      stage: 'Polished',
-      title: 'What moved',
+      stage: 'Results',
+      title: 'Retention versus the previous year',
       body: [
         'I led product design for these campaign surfaces. The numbers below are from the campaigns themselves, versus the previous year, not a collapsed “program lift” I would not be able to defend in an interview.',
         'Versus the previous year we retained 95% more members and 107% more other patrons. 1.1 million patrons outside the US engaged in a campaign. Across 26 campaigns we received 86,000 feedback comments, 90% of them positive — which is why Calendar and WWI could follow Pioneer without becoming three unrelated microsites.',
@@ -223,7 +223,8 @@ export const familysearchDiscoveryCase: RichCaseStudy = {
     },
     {
       id: 'reflection',
-      title: 'What I’d change',
+      stage: 'Results',
+      title: 'What I would change',
       bullets: [
         'Put Calendar’s repeating hook in the first campaign, not the second. Pioneer proved the card. Calendar proved the habit. Habit was the actual retention job.',
         'Instrument the loop as product analytics from day one: send → open the ancestor → view relationship → return in 30 days. Campaign reporting and product reporting were too easy to keep in separate rooms.',

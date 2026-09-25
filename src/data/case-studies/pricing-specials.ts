@@ -20,8 +20,8 @@ export const pricingSpecialsCase: RichCaseStudy = {
   sections: [
     {
       id: 'problem',
-      stage: 'Rough',
-      title: 'One special, one incentive',
+      stage: 'Problem',
+      title: 'A special could hold one incentive',
       body: [
         'Specials are how properties lease and retain: a month free, a gift card, a reduced rate. In Pricing, creating one meant choosing a single incentive type. Gift or credit. If a property wanted a resident to pick from more than one, staff made multiple specials and hoped the downstream path made sense. It did not. The setup person was confused. The resident path was worse.',
         'The hard part was not the marketing copy. It was the grid of properties those specials had to live on. Student housing especially: lease terms, move-in windows, space options or not. Conventional properties had a different creation path. The existing screen asked staff to do all of that at once.',
@@ -46,8 +46,8 @@ export const pricingSpecialsCase: RichCaseStudy = {
     },
     {
       id: 'evidence',
-      stage: 'Evidence',
-      title: 'The old screen was ugly. It was also the map.',
+      stage: 'Process',
+      title: 'Why the old Pricing screen stayed the map',
       body: [
         'I started by cutting. The philosophy was to remove so much that collaboration and critique would have to put about 20% back. That is how I knew we had actually reduced noise instead of rearranging it. A three-step wizard replaced the all-at-once create screen. Each step held less. The special itself could hold more: a list of incentives, then rules for lease terms, move-in dates, space options, applicant types, promo codes, manual-only, and whether prospects and renewals shared it.',
         'The piece I pushed hardest to leave out was pricing per lease term and per space option. A space option is a student-housing fact: a room with two beds can be sold as private, shared, or as two rooms — and each of those can carry a different concession. I could set a $50 monthly discount, then a grid of different amounts for summer vs fall, private vs shared. About 1% of people priced at that grain. Those people sat on a significant set of clients. Pulling the grid would have broken how they already used Pricing the moment we added multi-incentive specials. I lost that argument to PM and engineering. I still think the default create path should not have been built around that 1%. I also had to design the grid well once it was in.',
@@ -84,8 +84,8 @@ export const pricingSpecialsCase: RichCaseStudy = {
     },
     {
       id: 'strategy',
-      stage: 'Decisions',
-      title: 'Setup is the product other teams inherit',
+      stage: 'Process',
+      title: 'What setup had to be for other teams',
       body: [
         'I owned staff create. That was the first design on the initiative, and it became the contract. Resident accept, incentive select, and prospect-portal display were assisted and then taken by other product teams — they had to follow how setup named incentives, stacked them, and restricted them. If setup was a mess, every downstream surface would be a mess.',
         'The targeting model is what made multi-select safe to offer. A resident can only choose from a list the property can honor: this lease term, this move-in window, this space option, this applicant type, sometimes a promo code, sometimes staff-only. Without those restrictions, a list of incentives is a promise accounting cannot keep.',
@@ -127,8 +127,8 @@ export const pricingSpecialsCase: RichCaseStudy = {
     },
     {
       id: 'simple',
-      stage: 'Making',
-      title: 'Most of the time it stays three steps',
+      stage: 'Solution',
+      title: 'The three default steps',
       body: [
         'Details, Recipients, Incentives. Name it, say who it is for, add the list. Floor-plan and space-option pickers stay collapsed as “all” or “selected.” Toggles for date caps sit off until someone needs them. That is the default path — quieter than the old mega-form, still in Pricing’s chrome, still dummy data.',
         'Complexity is available. It is not in your face. If they never price by space option and lease term, they never see the grid. If they do, the UI gets denser on purpose. That was the trade: still simpler than original create, honest about the 1% path we lost the fight to keep out of the default.',
@@ -137,29 +137,29 @@ export const pricingSpecialsCase: RichCaseStudy = {
         {
           src: img('02-details.png'),
           alt: 'Add Special modal on step Special Details: name, descriptions, and a few toggles.',
-          caption: 'Step 1 — Special Details. The required work is a name. The rest can wait.',
+          caption: 'On Special Details, the required work is a name, and the rest can wait.',
           layout: 'wide',
         },
         {
           src: img('03-recipients.png'),
           alt: 'Add Special modal on step Recipients, with Prospects and Renewals checked and Selected Floor Plans active.',
           caption:
-            'Step 2 — Recipients. Prospects and renewals, not current residents. Targeting stays in dropdowns until it has to expand.',
+            'On Recipients, prospects and renewals are the audience, and targeting stays in dropdowns until it has to expand.',
           layout: 'wide',
         },
         {
           src: img('04-incentives.png'),
           alt: 'Add Special modal on step Incentives, with two gifts and one concession summarizing three space options.',
           caption:
-            'Step 3 — Incentives. Two gifts and a concession on one special. The concession row is still a summary: 3 space options, $50 monthly. Price by Lease Term is a door, not the room.',
+            'On Incentives, two gifts and a concession sit on one special, and Price by Lease Term is a door rather than the room.',
           layout: 'wide',
         },
       ],
     },
     {
       id: 'making',
-      stage: 'Making',
-      title: 'The rabbit hole is optional, and it is stacked',
+      stage: 'Solution',
+      title: 'Lease terms and space options',
       body: [
         'This is the shape we ended up having to support. A special could be for prospects and renewals but not current residents; limited by date range and renewal start; assigned to selected properties, and then to selected floor plans, unit types, or even specific units. On that special, three incentives: two gifts with different values, and one concession. That concession could itself be a stack — a one-time $100 plus $50 a month — and those amounts could differ for a shared room versus a private room, and again for summer term versus fall. That is one special. That is why setup could not be a pretty three-field form.',
         'When someone opens the concession, the summary becomes a row per space option: private room, private unit, shared room. Price by Lease Term then opens a second dialog on top of Add Special — Lease Terms Rates — so spring vs fall can differ without dumping that table into the already-full create modal. A lot of UX writing says never stack dialogs. It depends. Under this design library, with create already a modal, a new page would have dropped the special context. A second small modal kept the grid in the same session. I would still defend that here. I would not make it a house rule.',
@@ -172,21 +172,21 @@ export const pricingSpecialsCase: RichCaseStudy = {
           src: img('05-space-options.png'),
           alt: 'Concession incentive expanded to Private Room, Private Unit, and Shared Room rows, each with Price by Lease Term.',
           caption:
-            'The 1% path in the create modal. Amounts per space option. Still not lease terms — that is the next door.',
+            'Amounts per space option are the path about 1% of setups use, and lease terms are the next door.',
           layout: 'wide',
         },
         {
           src: img('06-lease-term-rates.png'),
           alt: 'Lease Terms Rates dialog stacked on Add Special, with a row per spring lease term for amount, tax, and total.',
           caption:
-            'Modal on modal. Spring terms at $50 monthly, still inside create. The anti-pattern was the least-bad way to keep context under library constraints.',
+            'A second dialog stacks on Add Special so spring terms can differ without leaving the special.',
           layout: 'wide',
         },
       ],
     },
     {
       id: 'inherit',
-      stage: 'Making',
+      stage: 'Solution',
       title: 'What other teams inherited',
       body: [
         'I did not own the resident-profile surface. I helped. Other product teams designed this version. It is here because it is the same object: Gift (2) on one row, Concession plus Gift on another — the setup model showing up where staff actually apply a special.',
@@ -204,8 +204,8 @@ export const pricingSpecialsCase: RichCaseStudy = {
     },
     {
       id: 'outcome',
-      stage: 'Polished',
-      title: 'What moved after the rough launch',
+      stage: 'Results',
+      title: 'Adoption after the rough launch',
       body: [
         'The first release was rough. I would not lead with that, and I would not hide it. After R1 2024, incoming bugs dropped sharply. Applicant types had to be re-implemented. A differential rebuild made a large difference for customers. That is the engineering story that made the setup usable in production.',
         'The snapshot that closed the channel: 10,204 active specials across 337 clients. That is how much of the client base was relying on specials for leasing and retention — the platform, not a claim that I caused 337 logos. Inside that base, the capabilities I designed setup for actually got used.',
@@ -234,7 +234,8 @@ export const pricingSpecialsCase: RichCaseStudy = {
     },
     {
       id: 'reflection',
-      title: 'What I’d change',
+      stage: 'Results',
+      title: 'What I would change',
       bullets: [
         'Instrument setup itself: time-to-create, error on publish, which branch (student / conventional / space options) actually got used. Channel diagnostics counted live specials. They did not tell us if the wizard was faster than the old mega-form.',
         'Keep a before screenshot in the design file on purpose. The all-at-once create screen is the argument. I am still hunting it in the recovered file.',

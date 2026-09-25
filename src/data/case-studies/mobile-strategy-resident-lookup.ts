@@ -14,14 +14,14 @@ export const mobileStrategyResidentLookupCase: RichCaseStudy = {
     src: img('00-hero-three-up.png'),
     alt: 'Three phone screens from the OXP Expo prototype: Command Center home, resident search results for Marcus Johnson, and his profile hub.',
     caption:
-      'Command Center, search, and profile from the Expo prototype we used to make the strategy testable.',
+      'Command Center, search, and profile come from the Expo prototype we used to make the strategy testable.',
     layout: 'hero',
   },
   sections: [
     {
       id: 'problem',
-      stage: 'Rough',
-      title: 'They were already looking people up',
+      stage: 'Problem',
+      title: 'Staff were already looking people up',
       body: [
         'Entrata had a facilities mobile app. It did not have a staff app for property managers. The OXP app was the first time the company put Entrata in a native phone experience for that audience. There is plenty in that app that belongs to OXP. Resident lookup is not one of those things. It is a core piece of Entrata that people use every day.',
         'A question from a resident means pulling that person up. On desktop that is routine. On a phone it meant the web version of Entrata, which is a terrible experience, or a workaround: write it down and look it up later, attempt it on the phone anyway, or call someone who is still at the office.',
@@ -45,8 +45,8 @@ export const mobileStrategyResidentLookupCase: RichCaseStudy = {
     },
     {
       id: 'evidence',
-      stage: 'Evidence',
-      title: 'What we got wrong first',
+      stage: 'Process',
+      title: 'What the research corrected',
       body: [
         'Early home concepts leaned toward a performance dashboard. That matched how desktop OXP talks about the business, and it would have failed the person standing in a parking lot. Gong and beta notes kept repeating next action, not portfolio charts.',
         'We also treated Resident Lookup as a directory you browse. Field conversations start from a name, a unit, or a car. Search had to lead. Even then, the first search fields were name, unit, and email. Fire-lane and parking scenarios stall without a plate, and the usability simulation made that impossible to ignore.',
@@ -78,8 +78,8 @@ export const mobileStrategyResidentLookupCase: RichCaseStudy = {
     },
     {
       id: 'strategy',
-      stage: 'Decisions',
-      title: 'Three bets, not a desktop port',
+      stage: 'Process',
+      title: 'Three bets for the first ship',
       body: [
         'Treating mobile as “OXP, but smaller” would have shipped a KPI wall and a nav tree nobody could use outdoors. We cut that framing and kept three bets.',
         'The regional manager is the hinge. They mandate adoption and they use the app themselves. If the app is great for them, they push it. If they mandate a hollow app, their credibility takes the hit with ours. That mechanism was inferred, not measured, and the memo said so.',
@@ -102,8 +102,8 @@ export const mobileStrategyResidentLookupCase: RichCaseStudy = {
     },
     {
       id: 'home',
-      stage: 'Making',
-      title: 'What do I do next?',
+      stage: 'Solution',
+      title: 'Daily Briefing and Quick Actions',
       body: [
         'Daily Briefing sits at the top of home so role and scope are visible without hunting nav. Quick Actions are the verbs: packages, message, move-in, work order, add lead. We talked about burying those under desktop-shaped modules. That would have failed the field job, so they stay on the first surface.',
         'When connectivity drops, Quick Actions collapse toward the work that can still run offline. Move-In is the extreme version of that rule. The rest of this case is the everyday version: look someone up and answer the question in front of you.',
@@ -112,22 +112,22 @@ export const mobileStrategyResidentLookupCase: RichCaseStudy = {
         {
           src: img('01-command-center.png'),
           alt: 'OXP Command Center home with Daily Briefing 2.0: a Do Next escalation for Daniel Park, plus escalated threads, schedule, and approvals.',
-          caption: 'Daily Briefing as the home anchor. Scope and next work, not a chart wall.',
+          caption: 'Daily Briefing is the home anchor, so scope and the next piece of work show up before any chart.',
           layout: 'device',
         },
         {
           src: img('02-quick-actions.png'),
           alt: 'Command Center Quick Actions grid with Packages, Properties, Move-In, Work Order, and related field verbs.',
           caption:
-            'Quick Actions as primary verbs. The snapshot sits below, so charts wait until after the field jobs.',
+            'Quick Actions are the primary verbs, and the snapshot sits below so charts wait until after the field jobs.',
           layout: 'device',
         },
       ],
     },
     {
       id: 'lookup',
-      stage: 'Making',
-      title: 'Lookup, not a directory',
+      stage: 'Solution',
+      title: 'Search, then the profile',
       body: [
         'The Residents tab stays quiet until you search. Recent people are a shortcut, not a rent roll to scroll. That matches how a conversation starts: a name at the door, a unit on a package, a question about a balance.',
         'The path is search, open the hub, then drill in only if the header is not enough. Message, work order, and note stay available without leaving the person. Ledger and household stay read-only in this cut. Field utility without premature write surfaces.',
@@ -136,7 +136,7 @@ export const mobileStrategyResidentLookupCase: RichCaseStudy = {
         {
           src: img('03-residents-idle.png'),
           alt: 'Residents tab with search field and recent searches, not a full directory list.',
-          caption: 'Search first. The directory stays quiet until there is a query.',
+          caption: 'Search leads, and the directory stays quiet until there is a query.',
           layout: 'device',
         },
         {
@@ -149,15 +149,15 @@ export const mobileStrategyResidentLookupCase: RichCaseStudy = {
           src: img('06-profile-hub.png'),
           alt: 'Marcus Johnson resident profile hub with contact actions, lease snapshot, balance due, and drill-in rows.',
           caption:
-            'Hub with balance, status, and lease snapshot on first glance. Contact, call, and work order stay on the person.',
+            'The hub shows balance, status, and the lease snapshot on first glance, and contact, call, and work order stay on the person.',
           layout: 'device',
         },
       ],
     },
     {
       id: 'financials',
-      stage: 'Making',
-      title: 'The breezeway dispute',
+      stage: 'Solution',
+      title: 'The charge dispute at the door',
       body: [
         'The charge-dispute path is why lookup had to ship before analytics. Someone is standing there asking about a late fee. Staff need the balance, the last charge, and enough ledger detail to talk, not a full AR workstation.',
         'The usability simulation walked that scenario with four personas. All four completed it. Glanceable headers did the work. What still hurt was a running balance on each ledger line, which desktop AR users expect, and getting to the person at all when the only clue is a car.',
@@ -167,15 +167,15 @@ export const mobileStrategyResidentLookupCase: RichCaseStudy = {
           src: img('07-financials.png'),
           alt: 'Financials drill-in for Marcus Johnson with summary cards, ledger tabs, and recent charges including a late fee.',
           caption:
-            'Financials as a conversation aid. Enough to dispute a charge on site. Not a desktop ledger clone.',
+            'Financials is a conversation aid, enough to dispute a charge on site without cloning the desktop ledger.',
           layout: 'device',
         },
       ],
     },
     {
       id: 'plate',
-      stage: 'Decisions',
-      title: 'The line is sometimes a license plate',
+      stage: 'Solution',
+      title: 'Search cannot start from a license plate',
       body: [
         'Search fields said name, unit, or email. Parking and fire-lane work starts from a car. In the simulation, that path hesitated or failed for every persona. Gong had already described looking people up in the field. We still shipped a search box that could not see a plate.',
         'The vehicle is on the profile. The plate is in Vehicles & Pets. None of that helps if you cannot get to the person from the parking lot. Plate search is still on the fix list. So is the empty-results pattern when property scope is wrong: a quiet chip that says you are searching one community, with no way to widen, looks like “no resident.”',
@@ -184,7 +184,7 @@ export const mobileStrategyResidentLookupCase: RichCaseStudy = {
         {
           src: img('04-search-plate-miss.png'),
           alt: 'Residents search for a license plate returning no results.',
-          caption: 'Plate query, empty list. The parking-lot job dies here.',
+          caption: 'A plate query returns an empty list, so the parking-lot job dies here.',
           layout: 'device',
         },
         {
@@ -197,22 +197,22 @@ export const mobileStrategyResidentLookupCase: RichCaseStudy = {
     },
     {
       id: 'prototype',
-      stage: 'Making',
-      title: 'Walk the lookup',
+      stage: 'Solution',
+      title: 'Try it in the prototype',
       body: [
         'This is the Expo prototype we used with partners. The people tab lands on Residents, not a directory. Search a name, open the hub, then Financials. A plate still returns nothing. That was the point of putting a walkable build in front of people.',
       ],
       embed: {
         src: withBase('/prototypes/oxp-mobile/'),
         title: 'Interactive OXP resident lookup prototype',
-        caption: 'Start on Home, then the people tab. Search Marcus, open the profile, tap Financials.',
-        hint: 'Use the settings beside the phone — Version, Eli+, Daily Briefing, Device, Size, Phone Sim, Network, and Brand preview. A plate like EWX-4429 still returns nothing. That was a ship-stopper in the sim.',
+        caption:
+          'Start on Home, open the people tab, search Marcus, open the profile, and tap Financials; a plate like EWX-4429 still returns nothing.',
       },
     },
     {
       id: 'decisions',
-      stage: 'Decisions',
-      title: 'What we chose instead',
+      stage: 'Solution',
+      title: 'The choices that held',
       table: {
         headers: ['Choice', 'Why / what we dropped'],
         rows: [
@@ -249,7 +249,7 @@ export const mobileStrategyResidentLookupCase: RichCaseStudy = {
     },
     {
       id: 'handoff',
-      stage: 'Polished',
+      stage: 'Solution',
       title: 'What partners got',
       body: [
         'The strategy memo named the bets, the confidence on each claim, and the kill criteria for the first 90 days after GA. That was the artifact for product partners: mobile as distribution for the AI workforce, with owned engagement metrics sitting beside shared agent-touched outcomes so a surface problem and an agent-layer problem stay distinguishable.',
@@ -263,8 +263,8 @@ export const mobileStrategyResidentLookupCase: RichCaseStudy = {
     },
     {
       id: 'outcome',
-      stage: 'Polished',
-      title: 'Where it stands',
+      stage: "What's next",
+      title: 'Targets we have not measured yet',
       body: [
         'What we left behind was a coherent mobile information architecture story and a lookup flow staff could actually try, not a shrunk desktop. The work shaped roadmap sequencing and prototype direction. It is not a measured GA retention curve.',
         'Initiative targets were set as learning goals for a CSM-activated cohort, with explicit kill criteria. Until first-party usage lands, these are goals, not results.',
@@ -282,7 +282,8 @@ export const mobileStrategyResidentLookupCase: RichCaseStudy = {
     },
     {
       id: 'reflection',
-      title: 'What I’d change',
+      stage: "What's next",
+      title: 'What I would change',
       bullets: [
         'Put plate search in the first lookup cut. Waiting for the simulation to prove a Gong theme we already had wasted a cycle.',
         'Treat wrong-property empty states as a blocker, not polish. A quiet scope chip without a widen action looks like a missing resident.',

@@ -372,10 +372,10 @@ export const cases: CaseStudy[] = [
 export const publicCases = cases.filter((c) => c.status === 'ready');
 
 const highlightOrder = [
-  'familysearch-discovery',
-  'mobile-strategy-resident-lookup',
-  'pricing-specials',
   'move-in-scanner',
+  'pricing-specials',
+  'mobile-strategy-resident-lookup',
+  'familysearch-discovery',
 ] as const;
 
 export const highlights = highlightOrder

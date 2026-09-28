@@ -315,6 +315,143 @@ const ashbyResume: ResumeContent = {
   ],
 };
 
+const poplResume: ResumeContent = {
+  role: 'Senior Product Designer',
+  location: 'Pleasant Grove, Utah, remote',
+  profileLede: 'How I work on a product team:',
+  profile:
+    'I design the moment someone captures work in the field, and the desk product that has to trust it later. A phone gets a search and a next step. A web dashboard keeps the rules, the setup, and the catch-up. I extend the design system people already know, and I can say why to engineering.',
+  skills: [
+    'Web and mobile product design',
+    'Complex B2B workflows',
+    'Design systems',
+    'Figma',
+    'Customer interviews and call review',
+    'Usability testing',
+    'Design process and QA',
+    'Information architecture',
+    'Visual craft',
+    'Engineering partnership',
+    'SwiftUI handoff',
+    'End-to-end ownership',
+  ],
+  education: {
+    degree: 'BFA, Graphic Design',
+    school: 'Brigham Young University–Idaho',
+    year: '2017',
+  },
+  jobs: [
+    {
+      company: 'Entrata',
+      dates: 'July 2019 – 2026',
+      title: 'Senior Product Designer · Product Lead (~1 year)',
+      summary:
+        'B2B property-management software for staff and residents, on the desktop and in the field. Dedicated designer for Greystar. Product Lead for about a year with an owned engineering team: I framed the work, wrote the spec, and shipped.',
+      bullets: [
+        'Designed field mobile and the desktop system of record as two products. On the phone, staff look up a person and take the next action. On the desktop, they set up rules and catch up later. Customer interviews and a review of Gong calls set that split.',
+        'Designed a table-side move-in flow after three site visits and interviews with about 20 operators: search first, offline in the first release, leftover items as a follow-up task. Handed to the iOS team as SwiftUI. They walked the module and found five defects in about 30 minutes.',
+        'Redesigned a mature desktop setup flow so one rental offer could carry multiple targeted incentives, inside the Pricing pattern staff already used. Usability testing kept the work on that system. After launch, 8,290 specials used the new lease-term rules, and 162 specials on 38 clients used multi-select that did not exist before.',
+        'Designed an upload flow that matches a spreadsheet to leases, shows three buckets, and waits for a person before anything is written, so an automated catch-up stays something staff can trust.',
+        'Simplified Homebody, a resident-facing mobile app. After launch, 4.4/5 on iOS from 600+ reviews in the first six months.',
+      ],
+    },
+    {
+      company: 'FamilySearch',
+      dates: '2017 – 2019',
+      title: 'UX Designer',
+      bullets: [
+        'Led product design of 26 personalized discovery campaigns on one loop: a named person, the relationship in a sentence, one next action. Retention rose 95% for members and 107% for other users versus the prior year, with 90% positive feedback from 86,000 comments.',
+        'Oversaw third-party design so each campaign used that loop and the same visual system.',
+        'Refined how the product team worked so we moved faster, did more thorough work, and ran into fewer surprises.',
+      ],
+    },
+  ],
+};
+
+const engineResume: ResumeContent = {
+  role: 'Senior Product Designer',
+  location: 'Pleasant Grove, Utah, remote',
+  profileLede: 'How I work on a product team:',
+  profile:
+    'I embed with product and engineering to turn complex professional workflows into a clear next step. I research with customers, prototype to test the interaction, and stay through handoff. Figma when the canvas is faster, code when the behavior is the question. AI in my process, and AI in the product, so people can direct it, trust it, and stay in control.',
+  skills: [
+    'Search, compare, and choose',
+    'Patterns that scale past design',
+    'End-to-end product design',
+    'Prototypes in code',
+    'AI as a daily tool',
+    'Cursor',
+    'Design systems',
+    'Stakeholder partnership',
+    'Design reviews',
+    'Figma',
+    'Production data',
+    'SwiftUI handoff',
+  ],
+  education: {
+    degree: 'BFA, Graphic Design',
+    school: 'Brigham Young University–Idaho',
+    year: '2017',
+  },
+  jobs: [
+    {
+      company: 'Entrata',
+      dates: 'July 2019 – 2026',
+      title: 'Senior Product Designer (7 years) · Product Lead (~1 year)',
+      summary:
+        'B2B property-management software for staff and residents. Dedicated designer for Greystar. Product Lead for about a year with an owned engineering team: I framed the work with product and engineering, wrote the spec, and shipped.',
+      bullets: [
+        'Designed a table-side move-in flow as search, readiness, and confirm, after three site visits and interviews with about 20 operators. The old job was a spreadsheet marked in the line and re-entered the next day. Handed to the iOS team as SwiftUI. They walked the module and found five defects in about 30 minutes.',
+        'Set the information architecture for Entrata’s first property-manager app around looking up a person and taking the next action, from customer interviews and sales-call recordings.',
+        'Redesigned a mature setup flow so one rental offer could carry multiple targeted incentives, inside the Pricing pattern staff already used. Usability testing kept the work on that system, so other teams inherited the contract. After launch, 8,290 specials used the new lease-term rules, and 162 specials on 38 clients used multi-select that did not exist before.',
+        'Led a team that designed an AI flow to read income documents and autofill affordable-housing certification, so a long application became an upload. Hundreds of teams entered. We won Most Likely to Land a New Logo.',
+      ],
+    },
+    {
+      company: 'FamilySearch',
+      dates: '2017 – 2019',
+      title: 'UX Designer',
+      bullets: [
+        'Led product design of 26 discovery campaigns on one loop: a specific person already on the tree, the relationship in a sentence, one next action. Retention rose 95% for members and 107% for other users versus the prior year, with 90% positive feedback from 86,000 comments, and 1.1 million people outside the US engaged.',
+        'Set that loop as the standard and oversaw third-party design so later campaigns shipped on the pattern.',
+        'Refined how the product team gathered feedback and made decisions, so we moved faster and ran into fewer surprises.',
+      ],
+    },
+  ],
+};
+
+const engineLetter: CoverLetterContent = {
+  role: 'Senior Product Designer',
+  location: 'Pleasant Grove, Utah, remote',
+  date: 'September 26, 2026',
+  recipient: 'Engine hiring team',
+  position: 'Senior Product Designer, Flights',
+  paragraphs: [
+    'I am applying for the Senior Product Designer, Flights role at Engine. A traveler has a city, a day, and a budget, and then a wall of fares. The design job is the moment they compare and commit, and the pattern that lets product and engineering ship the next change without waiting on a new design. I have not designed flight search. I have spent seven years on that turn.',
+    'At Entrata, staff stood in a move-in line while the real product lived on a desktop they could not use there. Three site visits and interviews with about twenty operators changed the design to search, readiness, and confirm. I handed it to the iOS team as SwiftUI. They walked the module and found five defects in about thirty minutes, before it was in the build. I also set the information architecture for Entrata’s first property-manager app around looking up a person and taking the next action, after customer interviews and a review of sales-call recordings. For about a year I was Product Lead with an owned engineering team. I framed the work with product and engineering, wrote the spec, and stayed through ship.',
+    'When I redesigned how staff create rental promotions, usability testing showed they already used the existing Pricing pattern as the map. We extended that system, and other teams inherited the contract. After launch, 8,290 specials used the new lease-term rules, and multi-select incentives shipped as a behavior that had not existed before. At FamilySearch I led 26 discovery campaigns on one loop and oversaw outside design so the volume stayed one product. Retention rose 95% for members and 107% for other users versus the prior year. I also tightened how that team reviewed work, so we moved faster and ran into fewer surprises.',
+    'Cursor is how I prototype, write the spec, and show a behavior. I have also put AI inside the product: an income-document flow that turned a long certification into an upload. Hundreds of teams entered that work, and we won Most Likely to Land a New Logo. I live in Pleasant Grove, Utah, and I work remotely in the US.',
+    'I would welcome the chance to walk you through the work.',
+  ],
+  signoff: 'Sincerely,',
+};
+
+const poplLetter: CoverLetterContent = {
+  role: 'Senior Product Designer',
+  location: 'Pleasant Grove, Utah, remote',
+  date: 'September 26, 2026',
+  recipient: 'Ryan Alvarez-Cohen, Chief Product Officer',
+  position: 'Senior Product Designer',
+  paragraphs: [
+    'I am applying for the Senior Product Designer role at Popl. A rep on a show floor has a few seconds between conversations. The badge scan has to be fast on a phone, and it has to land in the dashboard as a lead the revenue team can actually work. I have spent seven years on that split: capture in the moment, and a system of record that stays powerful without getting harder to use.',
+    'At Entrata, apartment staff stood in a move-in line while the real product lived on a desktop they could not use there. Three site visits and interviews with about twenty operators changed the design. Search came first, offline shipped in the first release, and leftover checklist items became a follow-up instead of a second data-entry shift. I handed it to the iOS team as SwiftUI. They walked the module and found five defects in about thirty minutes, before it was in the build. I also set the information architecture for Entrata’s first property-manager app around looking up a person and taking the next action, after customer interviews and a review of Gong calls. Homebody, the resident app, reached 4.4 out of 5 on iOS from more than 600 reviews in its first six months.',
+    'You will inherit a feature-rich product, and the work is to unify it. When I redesigned how staff create rental promotions, usability testing showed they already used the existing Pricing pattern as the map. We extended that system. After launch, 8,290 specials used the new lease-term rules, and multi-select incentives shipped as a behavior that had not existed before. At FamilySearch I led 26 discovery campaigns on one loop and oversaw outside design so the volume stayed one product. Retention rose 95% for members and 107% for other users versus the prior year. I also tightened how that team worked so we moved faster and ran into fewer surprises.',
+    'For about a year I was Product Lead with an owned engineering team. I framed the work, wrote the spec, and made the tradeoff in the room. Event lead capture and a Salesforce sync are new domains for me. The workflow is familiar: a person in the field records something that has to land correctly later, and the desk product has to show its work. I have a BFA in graphic design, so a marketing surface gets the same care as the product. I live in Pleasant Grove, Utah, and I work remotely.',
+    'I would welcome the chance to walk you through the work.',
+  ],
+  signoff: 'Sincerely,',
+};
+
 const generalLetter: CoverLetterContent = {
   role: 'Product Designer',
   location: 'Pleasant Grove, Utah, open to remote',
@@ -399,6 +536,18 @@ export const applications: Application[] = [
     label: 'General',
     resume: generalResume,
     coverLetter: generalLetter,
+  },
+  {
+    id: 'engine',
+    label: 'Engine',
+    resume: engineResume,
+    coverLetter: engineLetter,
+  },
+  {
+    id: 'popl',
+    label: 'Popl',
+    resume: poplResume,
+    coverLetter: poplLetter,
   },
   {
     id: 'ashby',

@@ -38,5 +38,8 @@ import { withBase } from '../lib/paths';
     <div class="case-grid case-grid--compact">
       {highlights.map((item) => <CaseCard item={item} />)}
     </div>
+    <p class="section__close">
+      <a class="section__link" href={withBase('/work')}>View all work →</a>
+    </p>
   </section>
 </BaseLayout>

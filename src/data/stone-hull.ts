@@ -8,7 +8,7 @@ export const STONE_TILT_DEG = -28;
 export const STONE_REST_YAW = 3.141592653589793;
 
 /** How far the stone spins about Y across a full page scroll, in radians. */
-export const STONE_SPIN_RAD = 3.6128315516282616;
+export const STONE_SPIN_RAD = 7.225663103256523;
 
 /** Camera field of view the framing was solved for. */
 export const STONE_FOV = 34;

@@ -30,7 +30,7 @@ import {
 const TILT_DEG = -28;
 const TILT_RAD = THREE.MathUtils.degToRad(TILT_DEG);
 const REST_YAW = Math.PI;
-const SPIN_RAD = Math.PI * 1.15;
+const SPIN_RAD = Math.PI * 2.3;
 const FOV = 34;
 const MARGIN = 1.02;
 const TAN_V = Math.tan(((FOV * Math.PI) / 180) / 2);

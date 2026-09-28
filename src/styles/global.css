@@ -382,7 +382,9 @@ p:last-child {
 .hero__stage {
   position: relative;
   z-index: 1;
-  /* Single column below 900px: fill the width, but never exceed the height */
+  /* Single column below 900px: stone first, then the name, then the quote */
+  order: -1;
+  /* Fill the width, but never exceed the height */
   width: min(100%, calc(var(--stone-h) * var(--stone-ratio) * var(--stone-scale)));
   aspect-ratio: var(--stone-ratio);
   margin-inline: auto;
@@ -475,6 +477,7 @@ p:last-child {
   .hero__stage {
     grid-area: 2 / 2;
     align-self: center;
+    order: 0;
     width: var(--stone-w);
     height: calc(var(--stone-w) / var(--stone-ratio));
     aspect-ratio: auto;
@@ -515,6 +518,10 @@ p:last-child {
   padding: var(--space-8) 0;
 }
 
+.section--work {
+  padding-top: var(--space-2);
+}
+
 .section__head {
   display: flex;
   flex-wrap: wrap;
@@ -550,6 +557,13 @@ p:last-child {
 
 .section__link:hover {
   border-bottom-color: var(--ink);
+}
+
+.section__close {
+  margin: var(--space-8) 0 0;
+  padding-top: var(--space-6);
+  border-top: 1px solid var(--line);
+  text-align: center;
 }
 
 .case-grid {

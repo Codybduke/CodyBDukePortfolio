@@ -23,9 +23,8 @@ export const pricingSpecialsCase: RichCaseStudy = {
       stage: 'Problem',
       title: 'A special could hold one incentive',
       body: [
-        'Specials are how properties lease and retain: a month free, a gift card, a reduced rate. In Pricing, creating one meant choosing a single incentive type. Gift or credit. If a property wanted a resident to pick from more than one, staff made multiple specials and hoped the downstream path made sense. It did not. The setup person was confused. The resident path was worse.',
+        'In Pricing, creating a special meant choosing a single incentive type. Gift or credit. If a property wanted a resident to pick from more than one, staff made multiple specials and hoped the downstream path made sense. It did not. The setup person was confused. The resident path was worse.',
         'The hard part was not the marketing copy. It was the grid of properties those specials had to live on. Student housing especially: lease terms, move-in windows, space options or not. Conventional properties had a different creation path. The existing screen asked staff to do all of that at once.',
-        'The job was to increase what a special could do without asking an entrenched Pricing user to learn a new product. Capability up. Complexity down — or at least not up.',
       ],
       metrics: [
         {
@@ -43,6 +42,18 @@ export const pricingSpecialsCase: RichCaseStudy = {
       ],
       callout:
         'Multiple specials were not a workaround for multiple incentives. They were a different product, and residents could not use them that way.',
+    },
+    {
+      id: 'business',
+      stage: 'Problem',
+      title: 'Operators who knew Yardi expected a choice',
+      body: [
+        'Yardi’s RentCafe could already offer this kind of choice. It uses the guest card to present a set of options during the online application, so a resident picks among incentives instead of taking a single posted offer. Entrata Pricing could not do that. A special held one incentive, a gift or a credit.',
+        'Staff were already trying to get there. Two specials was the workaround, and it confused the person setting it up and the resident who had to use it. Operators who had run the offer in Yardi asked for the same setup in Entrata, and Pricing could not do it.',
+        'That gap was a retention problem. The promotion those operators used to lease and renew lived in the product they had left. One special that could hold a list of incentives was how Entrata kept that offer, and that client, inside Pricing.',
+      ],
+      callout:
+        'Former Yardi operators wanted a resident to choose among incentives. Until Pricing could do that, the offer was a reason to go back.',
     },
     {
       id: 'evidence',

@@ -12,26 +12,14 @@ import { highlights, moreCases } from '../../data/cases';
     <p class="section__eyebrow">Work</p>
     <h1>Case studies</h1>
     <p>
-      Highlighted work first, then supporting cases and earlier craft. Each writeup emphasizes
-      decisions, metrics, and handoff — framed for Product Design roles that want ownership from
-      research through delivery.
+      Each writeup emphasizes decisions, metrics, and handoff — framed for Product Design roles
+      that want ownership from research through delivery.
     </p>
   </div>
 
-  <section class="section shell" aria-labelledby="highlights-heading">
-    <div class="section__head">
-      <h2 class="section__title" id="highlights-heading">Highlights</h2>
-    </div>
+  <section class="section section--work shell" aria-label="Case studies">
     <div class="case-grid case-grid--compact">
       {highlights.map((item) => <CaseCard item={item} />)}
-    </div>
-  </section>
-
-  <section class="section shell" aria-labelledby="more-work-heading">
-    <div class="section__head">
-      <h2 class="section__title" id="more-work-heading">More work</h2>
-    </div>
-    <div class="case-grid">
       {moreCases.map((item) => <CaseCard item={item} />)}
     </div>
   </section>

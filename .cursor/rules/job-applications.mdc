@@ -1,0 +1,26 @@
+---
+description: Keep job-application PDFs and notes in Job Applications/.
+alwaysApply: true
+---
+
+# Job Applications
+
+All application files live under `Job Applications/` at the repo root.
+
+Layout:
+
+- `Job Applications/companies/{Company}/` — one folder per company
+- `Job Applications/General Application Info/` — reusable form answers (`reference.md`), not a company
+- `Job Applications/_template/Job.md`, `INDEX.md`, `_archive/`
+
+`General Application Info` is not listed in `INDEX.md`.
+
+Each company folder under `companies/` uses these names:
+
+- `Cody Duke Product Design Resume.pdf`
+- `Cody Duke Product Design Cover Letter.pdf`
+- `Job.md`
+
+Interview notes, offer notes, follow-ups, and research go in that same company folder. Use `Interviews.md` and `Offer.md` when those exist. Do not start a new root folder for a company that already has one.
+
+New applications get `Job Applications/companies/{Company}/`, the two PDFs, and a `Job.md` copied from `_template/Job.md`. Update `INDEX.md`.

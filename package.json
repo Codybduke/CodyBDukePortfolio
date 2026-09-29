@@ -9,6 +9,7 @@
     "dev": "astro dev",
     "prebuild": "npm run stone:verify",
     "build": "astro build",
+    "postbuild": "node --experimental-strip-types scripts/export-resume-pdfs.mjs",
     "preview": "astro preview",
     "astro": "astro",
     "stone:compress": "node scripts/compress-stone.mjs && node scripts/split-stone-chunks.mjs",

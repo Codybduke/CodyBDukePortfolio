@@ -10,6 +10,8 @@ import {
   type DocKind,
   type ResumeContent,
 } from '../../data/applications';
+import { withBase } from '../../lib/paths';
+import { resumePdfDownloadName, resumePdfPath } from '../../lib/resumePdf';
 
 type Props = {
   email: string;
@@ -67,6 +69,8 @@ export default function ResumeKit({
   const [doc, setDoc] = useState<DocKind>(initialDoc);
   const [menuOpen, setMenuOpen] = useState(false);
   const [hydrated, setHydrated] = useState(false);
+  const [titled, setTitled] = useState(false);
+  const [pdfStatus, setPdfStatus] = useState<'idle' | 'preparing' | 'error'>('idle');
 
   const application = getApplication(companyId);
   const view: DocKind = doc === 'letter' && application.coverLetter ? 'letter' : 'resume';
@@ -84,7 +88,31 @@ export default function ResumeKit({
     if (!hydrated) return;
     writeUrl(companyId, view, { companyId: initialCompanyId, doc: initialDoc });
     document.title = pageTitle(application, view);
+    setTitled(true);
   }, [hydrated, companyId, view, application, initialCompanyId, initialDoc]);
+
+  async function downloadPdf() {
+    setPdfStatus('preparing');
+    try {
+      const response = await fetch(withBase(resumePdfPath(application.id, view)), {
+        cache: import.meta.env.DEV ? 'no-store' : 'default',
+      });
+      if (!response.ok) throw new Error(`PDF request failed (${response.status})`);
+      const blob = await response.blob();
+      if (!blob.size) throw new Error('Empty PDF');
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = resumePdfDownloadName(application, view);
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      window.setTimeout(() => URL.revokeObjectURL(url), 1500);
+      setPdfStatus('idle');
+    } catch {
+      setPdfStatus('error');
+    }
+  }
 
   const toggleMenu = useCallback(() => {
     setMenuOpen((open) => !open);
@@ -136,12 +164,22 @@ export default function ResumeKit({
 
   return (
     <>
-      <p className="doc-chrome">
+      <p className="doc-chrome" data-ready={titled ? 'true' : 'false'}>
         <a href={portfolioHref}>← Portfolio</a>
-        <button type="button" onClick={() => window.print()}>
-          Print / Save PDF
+        <button
+          type="button"
+          onClick={downloadPdf}
+          disabled={pdfStatus === 'preparing'}
+          aria-busy={pdfStatus === 'preparing'}
+        >
+          {pdfStatus === 'preparing' ? 'Preparing PDF…' : 'Download PDF'}
         </button>
       </p>
+      {pdfStatus === 'error' ? (
+        <p className="doc-chrome__status" role="alert">
+          The PDF didn't download. Try again.
+        </p>
+      ) : null}
 
       {view === 'letter' && application.coverLetter ? (
         <CoverLetterView
@@ -231,6 +269,12 @@ export default function ResumeKit({
   );
 }
 
+/** PDF print resolves relative links against localhost. Contact links need the public site. */
+function publishedPortfolioHref(href: string) {
+  if (/^https?:\/\//i.test(href)) return href;
+  return new URL(href, 'https://codybduke.github.io/').href;
+}
+
 function ContactBlock({
   email,
   linkedin,
@@ -254,10 +298,8 @@ function ContactBlock({
       <address>
         <a href={contact.phoneHref}>{contact.phoneDisplay}</a>
         <a href={`mailto:${email}`}>{email}</a>
-        <a href={portfolioHref}>Portfolio</a>
-        <a href={linkedin} target="_blank" rel="noopener noreferrer">
-          LinkedIn
-        </a>
+        <a href={publishedPortfolioHref(portfolioHref)}>Portfolio</a>
+        <a href={linkedin}>LinkedIn</a>
       </address>
     </header>
   );
@@ -287,10 +329,14 @@ function ResumeView({
       <div className="resume__body">
         <aside className="resume__rail">
           <section>
-            <h2>Profile</h2>
-            <p className="resume__lede">
-              <em>{resume.profileLede}</em>
-            </p>
+            <h2 className={resume.profileHeading ? 'resume__profile-heading' : undefined}>
+              {resume.profileHeading ?? 'Profile'}
+            </h2>
+            {resume.profileLede ? (
+              <p className="resume__lede">
+                <em>{resume.profileLede}</em>
+              </p>
+            ) : null}
             <p>{resume.profile}</p>
           </section>
 

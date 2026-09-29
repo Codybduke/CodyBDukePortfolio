@@ -11,7 +11,9 @@ export type Job = {
 export type ResumeContent = {
   role: string;
   location: string;
-  profileLede: string;
+  /** Replaces the default "Profile" heading when set. */
+  profileHeading?: string;
+  profileLede?: string;
   profile: string;
   skills: string[];
   education: {
@@ -47,12 +49,14 @@ export const contact = {
 
 const generalResume: ResumeContent = {
   role: 'Product Designer',
-  location: 'Pleasant Grove, Utah, open to remote',
-  profileLede: 'How I think about product design:',
+  location: 'Utah-based, open to remote',
+  profileHeading: 'Senior Product Designer\nwith 10 years experience',
   profile:
-    'I design products people come back to. I work from field research, production data, and call research. Visual craft is part of the product. I frame the problem and partner with engineering, as the only designer or through a team.',
+    'I design from production data, customer feedback, and the outcome the business has to hit. I research and refine until that outcome is measurable and the work is good enough to ship. I partner with engineering while the problem is still being framed.',
   skills: [
+    'Team player',
     'Retention and habit loops',
+    'UX research and testing',
     'Field and call research',
     'Production data',
     'Systems UX',
@@ -60,9 +64,7 @@ const generalResume: ResumeContent = {
     'AI-assisted prototyping',
     'Figma',
     'Cursor',
-    'SQL',
     'Expo',
-    'SwiftUI',
     'FigJam',
   ],
   education: {
@@ -74,15 +76,14 @@ const generalResume: ResumeContent = {
     {
       company: 'Entrata',
       dates: 'July 2019 – 2026',
-      title: 'Senior Product Designer · Product Lead (~1 year)',
+      title: 'Senior Product Designer · Product Manager / Designer hybrid',
       bullets: [
-        'Dedicated designer for Greystar, one of the largest U.S. multifamily operators.',
-        'Product Lead with an owned engineering team.',
-        'Led a team that designed and built an AI flow to read income documents and autofill affordable-housing certification, so a long, high-pressure application became an upload. Hundreds of teams entered. We won Most Likely to Land a New Logo.',
-        'Simplified core workflows for Homebody, a resident-facing self-serve mobile app. After launch, 4.4/5 on iOS from 600+ reviews in the first 6 months.',
-        'Redesigned a complex enterprise setup system to add flexibility without adding complexity. After launch, 8,290 specials used the new targeting rules.',
-        'Designed a mobile workflow that turned a two-part data-entry process into a real-time check-in, cutting the work of moving someone in by more than half. Handed to the iOS team as SwiftUI.',
-        'Designed a field mobile experience that put daily on-site information on the phone, so staff could answer in the moment instead of taking a note and finishing it at a desk.',
+        'I was the sole designer for projects related to the company’s largest client.',
+        'I was the product manager and designer who led a remote team of six engineers.',
+        'I led the team and created the designs for a hackathon-winning AI workflow that reads income documents and autofills affordable-housing certifications.',
+        'I simplified core workflows for Homebody, a resident-facing self-serve mobile app. After launch, it reached 4.4 out of 5 stars on iOS from 600+ reviews in the first 6 months.',
+        'I redesigned a complex enterprise setup system to add flexibility without adding complexity. Within the first couple of months, more than 8,000 offers used my new targeting rules.',
+        'I cut the work in half by designing a zero-to-one mobile experience for move-in workflows, so staff could move a resident in, in real time, instead of re-entering the record later.',
       ],
     },
     {
@@ -90,10 +91,10 @@ const generalResume: ResumeContent = {
       dates: '2017 – 2019',
       title: 'UX Designer',
       bullets: [
-        'Led product design of 26 personalized discovery experiences that served as an entry point and a reason to come back.',
+        'I led product design of 26 personalized discovery experiences that served as an entry point and a reason to come back.',
         'Those campaigns retained 95% more members and 107% more other users than the previous year, reached 1.1 million people outside the US, and earned 90% positive feedback from 86,000 comments.',
-        'Oversaw third-party design so each campaign used the same tried-and-true loop.',
-        'Refined how the product team worked so we moved faster, did more thorough work, and ran into fewer surprises.',
+        'I oversaw third-party design so each campaign used the same tried-and-true loop.',
+        'I refined how the product team worked so we moved faster, did more thorough work, and ran into fewer surprises.',
       ],
     },
   ],
@@ -420,6 +421,143 @@ const engineResume: ResumeContent = {
   ],
 };
 
+const rulaResume: ResumeContent = {
+  role: 'Senior Product Designer',
+  location: 'Pleasant Grove, Utah, remote',
+  profileLede: 'How I work on a product team:',
+  profile:
+    'I design the tools a practice uses between the moments that matter. I take a multi-step operations workflow, find where people leave the system, and put a reviewed next step back in the day. I research with the people who run the work, prototype in Figma or in code, and stay with product and engineering through delivery. When AI belongs in the product, the person can see the result, correct it, and stay accountable.',
+  skills: [
+    'Multi-step workflow design',
+    'Operations and practice software',
+    'AI experiences with human review',
+    'End-to-end ownership',
+    'Figma (flows, prototype, systems)',
+    'Research with operators',
+    'Written workflow alignment',
+    'Design systems',
+    'Product and engineering partnership',
+    'Production data',
+    'Prototypes in code',
+    'Cursor · SwiftUI',
+  ],
+  education: {
+    degree: 'BFA, Graphic Design',
+    school: 'Brigham Young University–Idaho',
+    year: '2017',
+  },
+  jobs: [
+    {
+      company: 'Entrata',
+      dates: 'July 2019 – 2026',
+      title: 'Senior Product Designer (7 years) · Product Lead (~1 year)',
+      summary:
+        'B2B property-management software for staff who run a property. Dedicated designer for Greystar. Product Lead for about a year with an owned engineering team: I framed the work, wrote the spec, and shipped.',
+      bullets: [
+        'Designed a table-side move-in flow as search, readiness, and confirm, after three site visits, interviews with about 20 operators, and a production audit that found about 36% of move-ins at a large student operator had no product activity that day. Handed to the iOS team as SwiftUI. They walked the module and found five defects in about 30 minutes.',
+        'Designed an upload that matches a spreadsheet to leases, sorts rows into three buckets, and waits for a person before anything is written, so an automated catch-up stays something staff can trust.',
+        'Led a team that designed an AI flow to read income documents and autofill affordable-housing certification, so a long, regulated application became an upload a person could still review. Hundreds of teams entered. We won Most Likely to Land a New Logo.',
+        'Redesigned a mature setup flow so one offer could carry multiple targeted incentives, inside the Pricing pattern staff already used. Usability testing kept the work on that system. After launch, 8,290 specials used the new lease-term rules, and 162 specials on 38 clients used multi-select that did not exist before.',
+        'Set the information architecture for Entrata’s first property-manager app around looking up a person and taking the next action, from customer interviews and sales-call recordings.',
+      ],
+    },
+    {
+      company: 'FamilySearch',
+      dates: '2017 – 2019',
+      title: 'UX Designer',
+      bullets: [
+        'Led product design of 26 discovery campaigns on one documented loop: a named person, the relationship in a sentence, one next action. I oversaw third-party design so later campaigns shipped on that pattern.',
+        'Retention rose 95% for members and 107% for other users versus the prior year, with 90% positive feedback from 86,000 comments, and 1.1 million people outside the US engaged.',
+      ],
+    },
+  ],
+};
+
+const slateResume: ResumeContent = {
+  role: 'Senior Product Designer',
+  location: 'Pleasant Grove, Utah, remote',
+  profileLede: 'How I work on a product team:',
+  profile:
+    'I design the path from first interest to a product someone keeps. A phone gets the everyday job. A web flow holds the choices, and those choices stay one system as they multiply. I set the pattern other people can ship on, and I prototype in code when the behavior is the question.',
+  skills: [
+    'Multi-surface product design',
+    'Mobile patterns and SwiftUI handoff',
+    'Web configuration flows',
+    'Design systems and standards',
+    'Onboarding, activation, and retention',
+    'AI features with a human check',
+    'AI-assisted prototyping',
+    'Figma (components, prototype, handoff)',
+    'Critique and team standards',
+    'Field research and production data',
+    'Engineering partnership',
+    'Cursor · Expo · SwiftUI',
+  ],
+  education: {
+    degree: 'BFA, Graphic Design',
+    school: 'Brigham Young University–Idaho',
+    year: '2017',
+  },
+  jobs: [
+    {
+      company: 'Entrata',
+      dates: 'July 2019 – 2026',
+      title: 'Senior Product Designer (7 years) · Product Lead (~1 year)',
+      summary:
+        'Property-management software for staff and residents, on the desktop and on the phone. Dedicated designer for Greystar. Product Lead for about a year with an owned engineering team: I framed the work, wrote the spec, and shipped.',
+      bullets: [
+        'Designed a table-side move-in flow as search, readiness, and confirm, after three site visits and interviews with about 20 operators. The first release worked when the Wi-Fi was down. Handed to the iOS team as SwiftUI. They walked the module and found five defects in about 30 minutes.',
+        'Set the information architecture for Entrata’s first property-manager app around looking up a person and taking the next action, from customer interviews and sales-call recordings. Desktop work that needed a desk stayed off the phone.',
+        'Simplified Homebody, a resident-facing mobile app. After launch, 4.4/5 on iOS from 600+ reviews in the first 6 months.',
+        'Redesigned a mature setup flow so one rental offer could carry multiple targeted incentives, inside the Pricing pattern staff already used. Usability testing kept the work on that system, and other teams inherited the contract. After launch, 8,290 specials used the new lease-term rules, and 162 specials on 38 clients used multi-select that did not exist before.',
+        'Designed an upload that matches a spreadsheet to leases, sorts rows into three confidence buckets, and waits for a person before anything is written.',
+      ],
+    },
+    {
+      company: 'FamilySearch',
+      dates: '2017 – 2019',
+      title: 'UX Designer',
+      bullets: [
+        'Led product design of 26 discovery campaigns on one loop: a named person, the relationship in a sentence, one next action. Each campaign was an entry point and a reason to come back.',
+        'Retention rose 95% for members and 107% for other users versus the prior year, with 90% positive feedback from 86,000 comments, and 1.1 million people outside the US engaged.',
+        'Oversaw third-party design so later campaigns shipped on that loop and the same visual system, and tightened how the team reviewed work so we moved faster with fewer surprises.',
+      ],
+    },
+  ],
+};
+
+const slateLetter: CoverLetterContent = {
+  role: 'Senior Product Designer',
+  location: 'Pleasant Grove, Utah, remote',
+  date: 'September 29, 2026',
+  recipient: 'Slate hiring team',
+  position: 'Staff Designer',
+  paragraphs: [
+    'I am applying for the Staff Designer role at Slate. I have loved cars since I was a kid, and the vehicle I still want is the one you are building: something a person can afford, then make their own. The digital job is that same promise. Someone discovers a Slate, configures the truck or SUV they actually need, and keeps living with it after the keys are in their hand.',
+    'At Entrata I spent seven years on a phone and a desktop system of record. Staff stood in a move-in line while the product lived on a computer they could not use there. Three site visits and interviews with about twenty operators changed the design to search, readiness, and confirm, including when the Wi-Fi was down. I handed it to the iOS team as SwiftUI, and they found five defects in about thirty minutes before it was in the build. Homebody, the resident app, reached 4.4 out of 5 on iOS from more than 600 reviews in its first six months.',
+    'The closer match to a configurator is how staff build a rental offer. A special used to hold one incentive, and two offers meant two specials. Usability testing showed people already used the Pricing pattern as the map, so we extended that system. Other teams inherited the contract. After launch, 8,290 specials used the new lease-term rules, and 162 specials on 38 clients used a multi-select path that had not existed before.',
+    'At FamilySearch I led 26 discovery campaigns on one loop: a named person, the relationship in a sentence, one next action. I oversaw outside design so the volume stayed one product. Retention rose 95% for members and 107% for other users versus the prior year. I also design AI so a person can see the result and stay in charge. An upload matches a spreadsheet to leases, sorts the rows into three confidence buckets, and writes nothing until someone confirms.',
+    'For about a year I was Product Lead with an owned engineering team. I framed the work, wrote the spec, and stayed through delivery. Vehicle configuration is a new domain for me. The workflow is familiar: a person choosing what they need, and a system that stays coherent as the options multiply. I live in Pleasant Grove, Utah, and I work remotely in the United States. I would welcome the chance to walk you through the work.',
+  ],
+  signoff: 'Sincerely,',
+};
+
+const rulaLetter: CoverLetterContent = {
+  role: 'Senior Product Designer',
+  location: 'Pleasant Grove, Utah, remote',
+  date: 'September 28, 2026',
+  recipient: 'Rula hiring team',
+  position: 'Senior Product Designer, Provider Team',
+  paragraphs: [
+    'I am applying for the Senior Product Designer role on Rula’s Provider Team. A therapist’s hour belongs with the patient, and the tools around that hour decide how much of it survives. I design the administrative workflow so the professional can finish it, trust it, and get back to the person in front of them.',
+    'At Entrata I spent seven years on property-management software for the people who run a building. Staff stood in a move-in line while that system lived on a desktop they could not use there. Three site visits and interviews with about twenty operators changed the design to search, readiness, and confirm, including when the Wi-Fi was down. I handed it to the iOS team as SwiftUI, and they found five defects in about thirty minutes before it was in the build.',
+    'I have also designed AI where the record has to be right. An upload agent matches a spreadsheet to leases, sorts the rows into three buckets, and writes nothing until a person confirms. A separate flow reads income documents and fills an affordable-housing certification, so a long regulated application becomes an upload a person can still review. Hundreds of teams entered that work, and we won Most Likely to Land a New Logo.',
+    'When I redesigned how staff create rental promotions, usability testing showed they already used the existing Pricing pattern as the map. We extended that system, and other teams inherited the contract. After launch, 8,290 specials used the new lease-term rules, and 162 specials on 38 clients used a multi-select path that had not existed before.',
+    'For about a year I was Product Lead with an owned engineering team. I framed ambiguous work with product and engineering, wrote the workflow down, and stayed through delivery. I live in Pleasant Grove, Utah, and I work remotely in the United States. I would welcome the chance to walk you through the work.',
+  ],
+  signoff: 'Sincerely,',
+};
+
 const engineLetter: CoverLetterContent = {
   role: 'Senior Product Designer',
   location: 'Pleasant Grove, Utah, remote',
@@ -530,12 +668,171 @@ const caliberLetter: CoverLetterContent = {
   signoff: 'Sincerely,',
 };
 
+const bambooHrResume: ResumeContent = {
+  role: 'Product Designer',
+  location: 'Pleasant Grove, Utah',
+  profileLede: 'How I work on a product team:',
+  profile:
+    'I design inside the system people already use. I research with the people doing the work, test the interaction, and finish a visual UI that follows the design system. I use AI in my own process, and I design AI so a person can direct it, trust it, and stay in control.',
+  skills: [
+    'Interaction design and visual UI',
+    'Design systems',
+    'User research and usability testing',
+    'Information architecture',
+    'Prototyping',
+    'Desktop SaaS / complex B2B',
+    'AI product experiences',
+    'AI-assisted research and prototyping',
+    'Figma (flows, prototype, handoff)',
+    'Engineering partnership',
+    'Web and mobile',
+  ],
+  education: {
+    degree: 'BFA, Graphic Design',
+    school: 'Brigham Young University–Idaho',
+    year: '2017',
+  },
+  jobs: [
+    {
+      company: 'Entrata',
+      dates: 'July 2019 – 2026',
+      title: 'Senior Product Designer · Product Lead (~1 year)',
+      summary:
+        'B2B property-management software used by apartment staff and residents.',
+      bullets: [
+        'Redesigned a complex setup system so one offer could carry multiple targeted incentives, inside the existing design system, after usability testing showed staff already used that pattern as the map. After launch, 8,290 specials used the new targeting rules.',
+        'Led a team that designed an AI flow to read income documents and autofill affordable-housing certification, so a long application became an upload a person could still review. Hundreds of teams entered. We won Most Likely to Land a New Logo.',
+        'Designed a bulk-upload workflow with visible mapping confidence, match buckets, and exception review so staff could direct, trust, and correct the model before anything executed.',
+        'Dedicated designer for Greystar. Worked from site visits, customer interviews, and sales-call recordings, then sat with engineering on layout, flows, and what could reuse existing components.',
+        'Product Lead for about 1 year with an owned engineering team, from research through ship.',
+        'Simplified Homebody, a resident-facing mobile app. After launch, 4.4/5 on iOS from 600+ reviews in the first 6 months.',
+      ],
+    },
+    {
+      company: 'FamilySearch',
+      dates: '2017 – 2019',
+      title: 'UX Designer',
+      bullets: [
+        'Led product design of 26 personalized discovery experiences on one loop: a named person, the relationship in a sentence, one next action. Retention rose 95% for members and 107% for other users versus the prior year.',
+        'Set that loop as a standard and guided third-party design so the volume stayed one product, with the same visual system.',
+      ],
+    },
+  ],
+};
+
+const bambooHrLetter: CoverLetterContent = {
+  role: 'Product Designer',
+  location: 'Pleasant Grove, Utah',
+  date: 'September 29, 2026',
+  recipient: 'BambooHR hiring team',
+  position: 'Product Designer',
+  paragraphs: [
+    'I am applying for the Product Designer role at BambooHR. HR software has to get out of the way of people doing the actual work. The design job is a flow they can finish inside a system they already know, a visual UI that follows that system, and a clear line for where AI should act and where a person still decides.',
+    'At Entrata I spent seven years on that kind of software, for the people who run a building. When we redesigned how staff create rental promotions, usability testing showed they already used the existing Pricing pattern as the map. We extended that system instead of shipping a one-off. After launch, 8,290 specials used the new targeting rules.',
+    'I have also designed AI where the record has to be right. An income-document flow turned a long affordable-housing certification into an upload a person could still review. Hundreds of teams entered that work, and we won Most Likely to Land a New Logo. A separate upload shows mapping confidence and waits for a person before anything is written. I use AI in my own process for synthesis, prototyping, and the spec.',
+    'I have not designed HR software. I have designed for professionals who are underwater in coordination work, and I am used to working inside a design system with product and engineering. I live in Pleasant Grove, so a Utah hybrid week is a drive I can make. I would welcome the chance to walk you through the work.',
+  ],
+  signoff: 'Sincerely,',
+};
+
+const outsmartResume: ResumeContent = {
+  role: 'Principal Product Designer',
+  location: 'Pleasant Grove, Utah',
+  profileLede: 'How I think about product design:',
+  profile:
+    'I design products people come back to. I lead the work from the problem through a polished interface. I raise the quality of the people around me. Visual craft is part of the product. I use AI to prototype. I have put AI in the product where a person still decides.',
+  skills: [
+    'Consumer product design',
+    'Retention and habit loops',
+    'Visual craft',
+    'Interaction design',
+    'Design systems',
+    'End-to-end product ownership',
+    'Coaching and critique',
+    'Team player',
+    'AI-assisted prototyping',
+    'Figma (prototype, handoff)',
+    'Engineering partnership',
+    'Web and mobile',
+  ],
+  education: {
+    degree: 'BFA, Graphic Design',
+    school: 'Brigham Young University–Idaho',
+    year: '2017',
+  },
+  jobs: [
+    {
+      company: 'Entrata',
+      dates: 'July 2019 – 2026',
+      title: 'Senior Product Designer · Product Lead (~1 year)',
+      summary:
+        'Property-management software used by apartment staff and residents.',
+      bullets: [
+        'Product Lead for about 1 year with an owned engineering team, from the problem through ship.',
+        'Simplified Homebody, a resident-facing mobile app. After launch, 4.4/5 on iOS from 600+ reviews in the first 6 months.',
+        'Redesigned a complex setup system so one offer could carry multiple targeted incentives, inside the existing design system, after usability testing showed staff already used that pattern as the map. After launch, 8,290 specials used the new targeting rules.',
+        'Led a team that designed an AI flow to read income documents and autofill a long certification, so the application became an upload a person could still review. Hundreds of teams entered. We won Most Likely to Land a New Logo.',
+        'Designed a field mobile experience around looking up a person and taking the next action, so the app earned daily use instead of a mandate to download it.',
+      ],
+    },
+    {
+      company: 'FamilySearch',
+      dates: '2017 – 2019',
+      title: 'UX Designer',
+      bullets: [
+        'Led product design of 26 personalized discovery experiences. Each one started from a named person and one next action, so a beginner had a reason to come back. Retention rose 95% for members and 107% for other users versus the prior year, with 90% positive feedback from 86,000 comments.',
+        'Set that loop as the standard and guided outside designers so the volume stayed one product, with the same visual system.',
+        'Tightened how the product team worked so we moved faster, did more thorough work, and ran into fewer surprises.',
+      ],
+    },
+  ],
+};
+
+const outsmartLetter: CoverLetterContent = {
+  role: 'Principal Product Designer',
+  location: 'Pleasant Grove, Utah',
+  date: 'September 29, 2026',
+  recipient: 'Outsmart hiring team',
+  position: 'Principal Product Designer',
+  paragraphs: [
+    'I am applying for the Principal Product Designer role at Outsmart. A student who is done with lectures and debt still has to come back tomorrow. The design job is a next step that is obvious, an interface that looks cared for, and a system that can grow without becoming a pile of one-off screens.',
+    'At FamilySearch, beginners arrived hoping to feel a connection and met a toolbox built for hobbyists. I led product design for 26 personalized discovery experiences. Each one started from a person already in the tree and offered one next action. Retention rose 95% for members and 107% for other users versus the prior year. I set that loop as the standard and guided outside designers so the volume stayed one product.',
+    'At Entrata I spent seven years on that same ownership. For about a year I was Product Lead with an engineering team, from the problem through ship. When we redesigned how staff create rental promotions, we extended the Pricing pattern people already used. After launch, 8,290 specials used the new targeting rules. Homebody, the resident app, reached 4.4 out of 5 on iOS from more than 600 reviews in its first six months. I use AI to prototype, and I have designed AI in the product so a person can still review the result.',
+    'I have not managed a team of product designers, and I have not designed a college. I have led design, guided other designers on a shared system, and shipped consumer work people came back to. I live in Pleasant Grove, so the Lehi office is a drive I can make. I would welcome the chance to walk you through the work.',
+  ],
+  signoff: 'Sincerely,',
+};
+
 export const applications: Application[] = [
   {
     id: 'general',
     label: 'General',
     resume: generalResume,
     coverLetter: generalLetter,
+  },
+  {
+    id: 'bamboo-hr',
+    label: 'BambooHR',
+    resume: bambooHrResume,
+    coverLetter: bambooHrLetter,
+  },
+  {
+    id: 'outsmart',
+    label: 'Outsmart',
+    resume: outsmartResume,
+    coverLetter: outsmartLetter,
+  },
+  {
+    id: 'slate',
+    label: 'Slate',
+    resume: slateResume,
+    coverLetter: slateLetter,
+  },
+  {
+    id: 'rula',
+    label: 'Rula',
+    resume: rulaResume,
+    coverLetter: rulaLetter,
   },
   {
     id: 'engine',

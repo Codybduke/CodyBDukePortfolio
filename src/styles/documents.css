@@ -133,6 +133,9 @@ h1 {
 }
 
 .doc-header__role {
+  display: flex;
+  align-items: baseline;
+  gap: 0.55rem;
   margin: 0.28rem 0 0;
   font-family: var(--font-ui);
   font-size: 0.72rem;
@@ -140,6 +143,12 @@ h1 {
   letter-spacing: 0.22em;
   text-transform: uppercase;
   color: var(--resume-muted);
+}
+
+.doc-header__tenure {
+  letter-spacing: 0;
+  text-transform: none;
+  font-weight: 400;
 }
 
 .doc-header__location {

@@ -48,7 +48,12 @@ type StoneSet = keyof typeof STONE_SETS;
 const DOUBLE_TAP_MS = 420;
 const STONE_STILL = withBase('/images/stone-smooth.png');
 const LOGO_LOCKUP = withBase('/brand/logo-lockup-light.svg');
-const HAMMER_CURSOR = `url("${withBase('/brand/hammer.svg')}") 4 8, pointer`;
+const HAMMER_READY_SRC = withBase('/brand/rock-hammer-minus-30.svg');
+const HAMMER_STRIKE_SRC = withBase('/brand/rock-hammer-plus-30.svg');
+const HAMMER_READY_HOT = { x: 27, y: 18 };
+const HAMMER_STRIKE_HOT = { x: 26, y: 2 };
+/** A fast click can end before the next paint. Hold the strike pose long enough to see it. */
+const HAMMER_STRIKE_HOLD_MS = 80;
 const CHIPS_TO_POLISH = 3;
 const SHAKE_CHIP_MS = 420;
 const SHAKE_STRIKE_MS = 780;
@@ -170,6 +175,7 @@ type StoneProps = {
   onChip: () => void;
   onHoverChange: (hovering: boolean) => void;
   onDragChange: (dragging: boolean) => void;
+  onPressChange: (pressed: boolean) => void;
 };
 
 function StoneMesh({
@@ -529,6 +535,7 @@ function StoneRig({
   onChip,
   onHoverChange,
   onDragChange,
+  onPressChange,
 }: StoneProps) {
   const spin = useRef<THREE.Group>(null);
   const pitch = useRef<THREE.Group>(null);
@@ -557,8 +564,10 @@ function StoneRig({
   }>({ pointerId: -1, lastX: 0, lastY: 0, moved: false, hit: false, onMove: null, onUp: null });
   const onChipRef = useRef(onChip);
   const onDragChangeRef = useRef(onDragChange);
+  const onPressChangeRef = useRef(onPressChange);
   onChipRef.current = onChip;
   onDragChangeRef.current = onDragChange;
+  onPressChangeRef.current = onPressChange;
 
   const camera = useThree((s) => s.camera) as THREE.PerspectiveCamera;
   const gl = useThree((s) => s.gl);
@@ -679,6 +688,7 @@ function StoneRig({
       drag.current.lastY = event.clientY;
       drag.current.moved = false;
       drag.current.hit = hitsStone(event.clientX, event.clientY);
+      if (drag.current.hit) onPressChangeRef.current(true);
 
       const onMove = (move: PointerEvent) => {
         if (move.pointerId !== drag.current.pointerId) return;
@@ -689,6 +699,7 @@ function StoneRig({
           if (dx * dx + dy * dy < DRAG_THRESHOLD_PX * DRAG_THRESHOLD_PX) return;
           if (move.pointerType === 'touch' && Math.abs(dy) > Math.abs(dx) * 1.15) {
             stopDragListeners();
+            onPressChangeRef.current(false);
             return;
           }
           drag.current.moved = true;
@@ -719,6 +730,7 @@ function StoneRig({
         const wasDrag = drag.current.moved;
         dragging.current = false;
         onDragChangeRef.current(false);
+        onPressChangeRef.current(false);
         try {
           if (el.hasPointerCapture(up.pointerId)) el.releasePointerCapture(up.pointerId);
         } catch {
@@ -850,8 +862,65 @@ export default function StoneHero() {
   const [burstNonce, setBurstNonce] = useState(0);
   const [hovering, setHovering] = useState(false);
   const [dragging, setDragging] = useState(false);
+  const [pressing, setPressing] = useState(false);
   const [stoneSet, setStoneSet] = useState<StoneSet>('a');
   const stones = STONE_SETS[stoneSet];
+  const hoveringRef = useRef(false);
+  const draggingRef = useRef(false);
+  const pressingRef = useRef(false);
+  const pointerRef = useRef({ x: 0, y: 0 });
+  const readyHammerRef = useRef<HTMLImageElement>(null);
+  const strikeHammerRef = useRef<HTMLImageElement>(null);
+  const strikeToken = useRef(0);
+  const strikeTimer = useRef(0);
+  const pressStartedAt = useRef(0);
+
+  const syncHammer = () => {
+    const ready = readyHammerRef.current;
+    const strike = strikeHammerRef.current;
+    if (!ready || !strike) return;
+    const { x, y } = pointerRef.current;
+    ready.style.transform = `translate3d(${x - HAMMER_READY_HOT.x}px, ${y - HAMMER_READY_HOT.y}px, 0)`;
+    strike.style.transform = `translate3d(${x - HAMMER_STRIKE_HOT.x}px, ${y - HAMMER_STRIKE_HOT.y}px, 0)`;
+    const show = show3d && (hoveringRef.current || pressingRef.current) && !draggingRef.current;
+    ready.classList.toggle('is-shown', show && !pressingRef.current);
+    strike.classList.toggle('is-shown', show && pressingRef.current);
+  };
+  const syncHammerRef = useRef(syncHammer);
+  syncHammerRef.current = syncHammer;
+
+  const onHoverChange = (next: boolean) => {
+    hoveringRef.current = next;
+    setHovering(next);
+    syncHammer();
+  };
+
+  const onDragChange = (next: boolean) => {
+    draggingRef.current = next;
+    setDragging(next);
+    syncHammer();
+  };
+
+  const onPressChange = (next: boolean) => {
+    if (next) {
+      window.clearTimeout(strikeTimer.current);
+      strikeToken.current += 1;
+      pressStartedAt.current = performance.now();
+      pressingRef.current = true;
+      setPressing(true);
+      syncHammer();
+      return;
+    }
+
+    const token = strikeToken.current;
+    const wait = Math.max(0, HAMMER_STRIKE_HOLD_MS - (performance.now() - pressStartedAt.current));
+    strikeTimer.current = window.setTimeout(() => {
+      if (strikeToken.current !== token) return;
+      pressingRef.current = false;
+      setPressing(false);
+      syncHammerRef.current();
+    }, wait);
+  };
 
   useEffect(() => {
     const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -877,10 +946,24 @@ export default function StoneHero() {
       void Promise.resolve(useGLTF.preload(STONE_CHUNKS_GLB));
     }, 400);
 
+    for (const src of [HAMMER_READY_SRC, HAMMER_STRIKE_SRC]) {
+      const image = new Image();
+      image.src = src;
+    }
+
+    const onPointerMove = (event: PointerEvent) => {
+      pointerRef.current.x = event.clientX;
+      pointerRef.current.y = event.clientY;
+      syncHammerRef.current();
+    };
+    window.addEventListener('pointermove', onPointerMove);
+
     return () => {
       mq.removeEventListener('change', syncMotion);
       window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('pointermove', onPointerMove);
       window.clearTimeout(preload);
+      window.clearTimeout(strikeTimer.current);
       for (const id of timers.current) window.clearTimeout(id);
     };
   }, []);
@@ -1007,7 +1090,9 @@ export default function StoneHero() {
             }
           : undefined
       }
-      style={dragging ? { cursor: 'grabbing' } : hovering ? { cursor: HAMMER_CURSOR } : undefined}
+      style={{
+        cursor: dragging ? 'grabbing' : show3d && (hovering || pressing) ? 'none' : undefined,
+      }}
     >
       {show3d ? (
         <Canvas
@@ -1034,8 +1119,9 @@ export default function StoneHero() {
               offset={stones.offset}
               scrollProgress={scrollProgress}
               onChip={chip}
-              onHoverChange={setHovering}
-              onDragChange={setDragging}
+              onHoverChange={onHoverChange}
+              onDragChange={onDragChange}
+              onPressChange={onPressChange}
             />
             <Environment preset="studio" />
           </Suspense>
@@ -1057,6 +1143,24 @@ export default function StoneHero() {
         alt=""
         width="175"
         height="74"
+      />
+      <img
+        ref={readyHammerRef}
+        className="hero__hammer"
+        src={HAMMER_READY_SRC}
+        alt=""
+        width={27}
+        height={30}
+        draggable={false}
+      />
+      <img
+        ref={strikeHammerRef}
+        className="hero__hammer"
+        src={HAMMER_STRIKE_SRC}
+        alt=""
+        width={26}
+        height={27}
+        draggable={false}
       />
     </div>
   );

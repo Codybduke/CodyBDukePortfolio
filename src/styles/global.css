@@ -411,6 +411,20 @@ p:last-child {
   touch-action: none;
 }
 
+.hero__hammer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 80;
+  display: none;
+  pointer-events: none;
+  user-select: none;
+}
+
+.hero__hammer.is-shown {
+  display: block;
+}
+
 .hero__mark {
   position: absolute;
   left: 50%;

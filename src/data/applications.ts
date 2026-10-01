@@ -10,6 +10,8 @@ export type Job = {
 
 export type ResumeContent = {
   role: string;
+  /** Sits between the role and the location in the header. */
+  tenure?: string;
   location: string;
   /** Replaces the default "Profile" heading when set. */
   profileHeading?: string;
@@ -790,6 +792,7 @@ const outsmartResume: ResumeContent = {
 
 const generalResume: ResumeContent = {
   role: 'Senior Product Designer',
+  tenure: '10 years',
   location: 'Utah-based, open to remote',
   profile:
     'I partner with engineering, product managers, and users to frame problems, then I design from production data, customer feedback, and the outcome the business has to hit. I research and refine until that outcome is measurable and the work is good enough to ship.',

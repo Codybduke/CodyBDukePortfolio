@@ -17,8 +17,8 @@ const canonical = Astro.site
   ? new URL(Astro.url.pathname, Astro.site).href
   : Astro.url.href;
 const ogImage = Astro.site
-  ? new URL(withBase('/og.png'), Astro.site).href
-  : withBase('/og.png');
+  ? new URL(withBase('/og.jpg'), Astro.site).href
+  : withBase('/og.jpg');
 ---
 
 <!doctype html>
@@ -35,14 +35,15 @@ const ogImage = Astro.site
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={ogImage} />
-    <meta property="og:image:alt" content="A dark stone with the Cody Duke Design logo" />
+    <meta property="og:image:alt" content="Cody Duke, Senior Product Designer" />
+    <meta property="og:image:type" content="image/jpeg" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={pageTitle} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
-    <meta name="twitter:image:alt" content="A dark stone with the Cody Duke Design logo" />
+    <meta name="twitter:image:alt" content="Cody Duke, Senior Product Designer" />
     <link rel="icon" type="image/svg+xml" href={withBase('/favicon.svg')} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

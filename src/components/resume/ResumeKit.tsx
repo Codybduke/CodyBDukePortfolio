@@ -280,12 +280,14 @@ function ContactBlock({
   linkedin,
   portfolioHref,
   role,
+  tenure,
   location,
 }: {
   email: string;
   linkedin: string;
   portfolioHref: string;
   role: string;
+  tenure?: string;
   location: string;
 }) {
   return (
@@ -299,7 +301,10 @@ function ContactBlock({
           />
           <h1>{contact.name}</h1>
         </div>
-        <p className="doc-header__role">{role}</p>
+        <p className="doc-header__role">
+          {tenure ? <span className="doc-header__tenure">{tenure}</span> : null}
+          <span>{role}</span>
+        </p>
         <p className="doc-header__location">{location}</p>
       </div>
       <address>
@@ -330,6 +335,7 @@ function ResumeView({
         linkedin={linkedin}
         portfolioHref={portfolioHref}
         role={resume.role}
+        tenure={resume.tenure}
         location={resume.location}
       />
 

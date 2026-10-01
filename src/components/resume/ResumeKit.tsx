@@ -302,8 +302,8 @@ function ContactBlock({
           <h1>{contact.name}</h1>
         </div>
         <p className="doc-header__role">
-          {tenure ? <span className="doc-header__tenure">{tenure}</span> : null}
           <span>{role}</span>
+          {tenure ? <span className="doc-header__tenure">{tenure}</span> : null}
         </p>
         <p className="doc-header__location">{location}</p>
       </div>

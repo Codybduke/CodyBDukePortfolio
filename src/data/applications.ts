@@ -10,7 +10,7 @@ export type Job = {
 
 export type ResumeContent = {
   role: string;
-  /** Sits between the role and the location in the header. */
+  /** Sits to the right of the role in the header. */
   tenure?: string;
   location: string;
   /** Replaces the default "Profile" heading when set. */

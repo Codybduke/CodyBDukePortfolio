@@ -7,6 +7,7 @@
 | Caliber | Product Designer | 2026-08-20 | Offer in discussion |
 | Canopy | Senior UX Designer | 2026-08-28 | Applied |
 | Engine | Senior Product Designer, Flights | 2026-09-26 | Applied. Confirmation received |
+| Fieldguide | Senior Product Designer | | Materials ready |
 | Outsmart | Principal Product Designer | | Materials ready |
 | Popl | Senior Product Designer | 2026-09-26 | Applied |
 | Rula | Senior Product Designer, Provider Team | 2026-09-28 | Applied |

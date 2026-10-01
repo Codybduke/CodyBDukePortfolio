@@ -290,8 +290,15 @@ function ContactBlock({
 }) {
   return (
     <header className="doc-header">
-      <div>
-        <h1>{contact.name}</h1>
+      <div className="doc-header__identity">
+        <div className="doc-header__name">
+          <img
+            className="doc-header__mark"
+            src={withBase('/brand/stone-logo.svg')}
+            alt=""
+          />
+          <h1>{contact.name}</h1>
+        </div>
         <p className="doc-header__role">{role}</p>
         <p className="doc-header__location">{location}</p>
       </div>

@@ -104,6 +104,24 @@ a:hover {
   border-bottom: 1px solid var(--resume-line);
 }
 
+.doc-header__identity {
+  font-family: var(--font-display);
+  font-size: 2.15rem;
+  font-weight: 600;
+}
+
+.doc-header__name {
+  display: flex;
+  align-items: baseline;
+  gap: 0.32em;
+}
+
+.doc-header__mark {
+  display: block;
+  width: auto;
+  height: 1cap;
+}
+
 h1 {
   margin: 0;
   font-family: var(--font-display);
@@ -152,8 +170,9 @@ address a {
 
 .resume__body {
   display: grid;
-  grid-template-columns: 2.35in 1fr;
+  grid-template-columns: 2.7in 1fr;
   align-items: start;
+  border-top: 1px solid var(--resume-line);
 }
 
 .resume__rail {
@@ -167,7 +186,7 @@ address a {
 
 h2 {
   margin: 0 0 0.58rem;
-  padding-top: 0.12rem;
+  padding-top: 0.7rem;
   border-top: 1px solid var(--resume-line);
   font-family: var(--font-ui);
   font-size: 0.7rem;
@@ -176,8 +195,12 @@ h2 {
   text-transform: uppercase;
 }
 
+.resume__rail > section:first-child > h2,
+.resume__main > section:first-child > h2 {
+  border-top: 0;
+}
+
 .resume__profile-heading {
-  letter-spacing: 0.04em;
   line-height: 1.35;
   white-space: pre-line;
 }
@@ -240,7 +263,7 @@ strong {
   font-family: var(--font-body);
   font-size: 0.84rem;
   line-height: 1.42;
-  margin: 0 0 0.36rem;
+  margin: 0 0 0.62rem;
 }
 
 .job li:last-child {
@@ -496,6 +519,15 @@ strong {
   .resume__main {
     padding: 1.25rem 0 0;
     border: 0;
+  }
+
+  .resume__body {
+    border-top: 0;
+  }
+
+  .resume__rail > section:first-child > h2,
+  .resume__main > section:first-child > h2 {
+    border-top: 1px solid var(--resume-line);
   }
 
   .resume__main {

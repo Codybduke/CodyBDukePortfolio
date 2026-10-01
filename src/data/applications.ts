@@ -47,10 +47,10 @@ export const contact = {
   phoneHref: 'tel:+15013395093',
 };
 
-const generalResume: ResumeContent = {
+const general2Resume: ResumeContent = {
   role: 'Product Designer',
   location: 'Utah-based, open to remote',
-  profileHeading: 'Senior Product Designer\nwith 10 years experience',
+  profileHeading: 'Senior Product Designer',
   profile:
     'I design from production data, customer feedback, and the outcome the business has to hit. I research and refine until that outcome is measurable and the work is good enough to ship. I partner with engineering while the problem is still being framed.',
   skills: [
@@ -76,7 +76,7 @@ const generalResume: ResumeContent = {
     {
       company: 'Entrata',
       dates: 'July 2019 – 2026',
-      title: 'Senior Product Designer · Product Manager / Designer hybrid',
+      title: 'Senior Product Designer · Product Manager hybrid',
       bullets: [
         'I was the sole designer for projects related to the company’s largest client.',
         'I was the product manager and designer who led a remote team of six engineers.',
@@ -788,6 +788,73 @@ const outsmartResume: ResumeContent = {
   ],
 };
 
+const generalResume: ResumeContent = {
+  role: 'Senior Product Designer',
+  location: 'Utah-based, open to remote',
+  profile:
+    'I partner with engineering, product managers, and users to frame problems, then I design from production data, customer feedback, and the outcome the business has to hit. I research and refine until that outcome is measurable and the work is good enough to ship.',
+  skills: [
+    'Complex B2B workflows',
+    'AI-assisted workflows',
+    'Systems UX',
+    'UX research and testing',
+    'Production data',
+    'Visual craft',
+    'AI-assisted prototyping',
+    'Team player',
+    'Figma',
+    'Cursor',
+    'FigJam',
+  ],
+  education: {
+    degree: 'BFA, Graphic Design',
+    school: 'Brigham Young University–Idaho',
+    year: '2017',
+  },
+  jobs: [
+    {
+      company: 'Entrata',
+      dates: 'July 2019 – 2026',
+      title: 'Senior Product Designer · Product Manager hybrid',
+      bullets: [
+        'I was the sole designer for projects related to the company’s largest client.',
+        'I was the product manager and designer who led a remote team of six engineers.',
+        'I led the team and created the designs for a hackathon-winning AI workflow that reads income documents and autofills affordable-housing certifications.',
+        'I simplified core workflows for Homebody, a resident-facing self-serve mobile app. After launch, it reached 4.4 out of 5 stars on iOS from 600+ reviews in the first 6 months.',
+        'I redesigned a complex enterprise setup system to add flexibility without adding complexity. Within the first couple of months, more than 8,000 offers used my new targeting rules.',
+        'I cut the work in half by designing a zero-to-one mobile experience for move-in workflows, so staff could move a resident in, in real time, instead of re-entering the record later.',
+      ],
+    },
+    {
+      company: 'FamilySearch',
+      dates: '2017 – 2019',
+      title: 'UX Designer',
+      bullets: [
+        'I led product design of 26 personalized discovery experiences that served as an entry point and a reason to come back.',
+        'Those campaigns retained 95% more members and 107% more other users than the previous year, reached 1.1 million people outside the US, and earned 90% positive feedback from 86,000 comments.',
+        'I oversaw third-party design so each campaign used the same tried-and-true loop.',
+        'I refined how the product team worked so we moved faster, did more thorough work, and ran into fewer surprises.',
+      ],
+    },
+  ],
+};
+
+const fieldguideLetter: CoverLetterContent = {
+  role: 'Senior Product Designer',
+  location: 'Pleasant Grove, Utah, remote',
+  date: 'September 29, 2026',
+  recipient: 'Fieldguide hiring team',
+  position: 'Senior Product Designer',
+  paragraphs: [
+    'I am applying for the Senior Product Designer role on Fieldguide’s Audit team. Auditors spend their days proving a business can be trusted. A lot of that day is evidence, review, and the same checks again. The software should take that repetition off their plate and leave the judgment with them.',
+    'I have not designed audit software. I have spent seven years on work that has to be right, with an AI step a person can see and correct. At Entrata I led the design for a flow that reads income documents and fills an affordable-housing certification. A long application became an upload. Hundreds of teams entered, and we won Most Likely to Land a New Logo. A separate upload matches a spreadsheet to leases, sorts the rows into three buckets, and writes nothing until someone confirms.',
+    'When one promotion needed to hold more than one offer, staff already knew the Pricing screen, so we extended that screen. Within the first couple of months, more than 8,000 offers used the new rules. I was also the product manager and designer for a remote team of six engineers. I framed the problem with them and stayed through ship.',
+    'At FamilySearch I led 26 discovery experiences on one loop, and I worked with outside designers so it stayed one product. The next year we kept 95% more members and 107% more other people. I tightened how that team worked so we moved faster and ran into fewer surprises.',
+    'I use AI when I prototype. I live in Pleasant Grove, Utah, and I work remotely in the United States. I would like to walk you through the work.',
+  ],
+  signoff: 'Sincerely,',
+};
+
 const outsmartLetter: CoverLetterContent = {
   role: 'Principal Product Designer',
   location: 'Pleasant Grove, Utah',
@@ -795,10 +862,10 @@ const outsmartLetter: CoverLetterContent = {
   recipient: 'Outsmart hiring team',
   position: 'Principal Product Designer',
   paragraphs: [
-    'I am applying for the Principal Product Designer role at Outsmart. A student who is done with lectures and debt still has to come back tomorrow. The design job is a next step that is obvious, an interface that looks cared for, and a system that can grow without becoming a pile of one-off screens.',
-    'At FamilySearch, beginners arrived hoping to feel a connection and met a toolbox built for hobbyists. I led product design for 26 personalized discovery experiences. Each one started from a person already in the tree and offered one next action. Retention rose 95% for members and 107% for other users versus the prior year. I set that loop as the standard and guided outside designers so the volume stayed one product.',
-    'At Entrata I spent seven years on that same ownership. For about a year I was Product Lead with an engineering team, from the problem through ship. When we redesigned how staff create rental promotions, we extended the Pricing pattern people already used. After launch, 8,290 specials used the new targeting rules. Homebody, the resident app, reached 4.4 out of 5 on iOS from more than 600 reviews in its first six months. I use AI to prototype, and I have designed AI in the product so a person can still review the result.',
-    'I have not managed a team of product designers, and I have not designed a college. I have led design, guided other designers on a shared system, and shipped consumer work people came back to. I live in Pleasant Grove, so the Lehi office is a drive I can make. I would welcome the chance to walk you through the work.',
+    'People still have to come back tomorrow, even if they are tired of lectures and debt. The next step has to be obvious. The interface has to look cared for. And it has to stay one system as it grows.',
+    'At FamilySearch, beginners showed up hoping to feel a connection and got a toolbox built for hobbyists. I led 26 discovery experiences. Each one started with a person already in their tree and gave them one thing to do next. The next year we kept 95% more members and 107% more other people. I made that the standard and worked with outside designers so it stayed one product.',
+    'I spent seven years at Entrata on that same kind of work. For about a year I was Product Lead with an engineering team, and I stayed with it from the problem through ship. Staff already knew the Pricing screen, so when one promotion needed to hold more than one offer, we extended that screen. After launch, 8,290 specials used the new rules. Homebody, the resident app, landed at 4.4 out of 5 on iOS from more than 600 reviews in six months. I use AI when I prototype. If AI is in the product, a person still decides.',
+    'I have not managed a product design team, and I have not designed a college. I have led the work, helped other designers share one system, and shipped consumer products people came back to. I live in Pleasant Grove, so Lehi is a normal drive. I would like to walk you through the work.',
   ],
   signoff: 'Sincerely,',
 };
@@ -809,6 +876,17 @@ export const applications: Application[] = [
     label: 'General',
     resume: generalResume,
     coverLetter: generalLetter,
+  },
+  {
+    id: 'general-2',
+    label: 'General 2',
+    resume: general2Resume,
+  },
+  {
+    id: 'fieldguide',
+    label: 'Fieldguide',
+    resume: generalResume,
+    coverLetter: fieldguideLetter,
   },
   {
     id: 'bamboo-hr',

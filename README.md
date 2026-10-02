@@ -1,6 +1,6 @@
 # Cody Duke — Portfolio Site
 
-Static Product Design portfolio (Astro). Built to host on GitHub Pages later.
+Product design portfolio, built with Astro and published on GitHub Pages.
 
 ## Pages
 
@@ -8,7 +8,7 @@ Static Product Design portfolio (Astro). Built to host on GitHub Pages later.
 |---|---|
 | `/` | Home — brand, one-liner, CTAs, highlight 3 + view more |
 | `/work` | Full work index |
-| `/work/[slug]` | Case study stubs |
+| `/work/[slug]` | Case study |
 | `/about` | Narrative arc + contact |
 | `/fun` | Hobbies / side AI projects |
 
@@ -32,10 +32,8 @@ npm run preview
 - Case studies: `src/data/cases.ts`
 - Fun stuff: `src/data/fun.ts`
 
-Prep drafts and assets still live in `Cody_Duke's_PM_Workspace/Portfolio/`.
+## Hosting
 
-## Hosting notes
+Published at https://codybduke.github.io/CodyBDukePortfolio/
 
-- Default `site` in `astro.config.mjs` is set for a user/org GitHub Pages root.
-- If you publish as a **project** page, uncomment `base: '/cody-duke-portfolio'`.
-- Sanitize case content before making the repo public.
+`site` and `base` are set in `astro.config.mjs`.

@@ -31,3 +31,6 @@ pnpm-debug.log*
 
 # large source assets (keep optimized public/models/)
 assets/*.source.glb
+
+# application materials stay local
+Job Applications/

@@ -1,1 +1,0 @@
-Older resume and cover-letter exports from the Desktop. The current files for each company are in the parent folders, named `Cody Duke Product Design Resume.pdf` and `Cody Duke Product Design Cover Letter.pdf`.

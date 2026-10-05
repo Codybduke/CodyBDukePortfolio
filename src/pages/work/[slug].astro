@@ -1,8 +1,9 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import PrototypeEmbed from '../../components/PrototypeEmbed.astro';
+import CaseArticle from '../../components/CaseArticle.astro';
+import MoveInWalkthrough from '../../components/presentations/MoveInWalkthrough';
 import { getCase, publicCases } from '../../data/cases';
-import { getRichCase } from '../../data/case-studies';
+import { getRichCase, getRichCaseRewrite } from '../../data/case-studies';
 import { withBase } from '../../lib/paths';
 
 export function getStaticPaths() {
@@ -19,247 +20,74 @@ if (!item) {
 }
 
 const rich = getRichCase(slug!);
+const rewrite = getRichCaseRewrite(slug!);
 ---
 
 <BaseLayout title={item.title} description={item.summary}>
   {
     rich ? (
-      <article class="case-study">
-        <header class="case-study__header shell">
-          <p class="section__eyebrow">{item.eyebrow}</p>
-          <h1>{item.title}</h1>
-          <p class="case-study__claim">{rich.openingClaim}</p>
-          {
-            slug === 'move-in-scanner' && (
-              <p class="case-study__claim" style="margin-top: 0.75rem;">
-                <a href={withBase('/present/move-in-scanner/')}>Open live walkthrough →</a>
-              </p>
-            )
-          }
+      <>
+      {rewrite ? (
+        <>
+          <CaseArticle item={item} rich={rewrite.case} version="a">
+            <MoveInWalkthrough
+              slot="lead"
+              client:visible
+              protoSrc={withBase('/prototypes/oxp-mobile/')}
+              presentHref={withBase('/present/move-in-scanner/')}
+              notes={rewrite.sceneNotes}
+            />
+          </CaseArticle>
+          <CaseArticle item={item} rich={rich} version="b" hidden />
+          <p class="case-version-mark" hidden>Original</p>
 
-          <div class="meta-bar meta-bar--case">
-            <div>
-              <strong>Role</strong>
-              {item.role}
-            </div>
-            <div>
-              <strong>Timeframe</strong>
-              {item.timeframe}
-            </div>
-            {
-              rich.collaborators && (
-                <div>
-                  <strong>Collaborators</strong>
-                  {rich.collaborators}
-                </div>
-              )
-            }
-            {
-              rich.surface && (
-                <div>
-                  <strong>Surface</strong>
-                  {rich.surface}
-                </div>
-              )
-            }
-            {
-              rich.live && (
-                <div>
-                  <strong>Still live</strong>
-                  <a href={rich.live.href} target="_blank" rel="noopener noreferrer">
-                    {rich.live.label}
-                  </a>
-                </div>
-              )
-            }
-          </div>
-        </header>
+          <script>
+            const DOUBLE_TAP_MS = 420;
+            const reads = {
+              a: document.querySelector<HTMLElement>('[data-case-version="a"]'),
+              b: document.querySelector<HTMLElement>('[data-case-version="b"]'),
+            };
+            const mark = document.querySelector<HTMLElement>('.case-version-mark');
+            let lastKey = '';
+            let lastAt = 0;
 
-        {
-          rich.heroFigure && (
-            <figure class="case-figure case-figure--hero">
-              <img
-                src={rich.heroFigure.src}
-                alt={rich.heroFigure.alt}
-                width="2493"
-                height="1696"
-                loading="eager"
-              />
-              <figcaption>{rich.heroFigure.caption}</figcaption>
-            </figure>
-          )
-        }
+            const typingInField = (target: EventTarget | null) => {
+              if (!(target instanceof HTMLElement)) return false;
+              const tag = target.tagName;
+              return tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT' || target.isContentEditable;
+            };
 
-        <div class="case-study__body shell">
-          {
-            (() => {
-              let previousStage = '';
-              return rich.sections.map((section) => {
-                const showParent = Boolean(section.stage && section.stage !== previousStage);
-                if (section.stage) previousStage = section.stage;
-                return (
-              <section class="case-section" id={section.id}>
-                {showParent && <h2 class="case-parent">{section.stage}</h2>}
-                {section.stage ? <h3>{section.title}</h3> : <h2>{section.title}</h2>}
+            window.addEventListener('keydown', (event) => {
+              if (event.metaKey || event.ctrlKey || event.altKey || event.repeat) return;
+              if (typingInField(event.target)) return;
 
-                {section.body?.map((paragraph) => <p>{paragraph}</p>)}
+              const key = event.key.toLowerCase();
+              if (key !== 'a' && key !== 'b') {
+                lastKey = '';
+                return;
+              }
 
-                {section.metrics && (
-                  <div class="case-metrics">
-                    {section.metrics.map((metric) => (
-                      <div class="case-metric">
-                        <p class="case-metric__value">{metric.value}</p>
-                        <p class="case-metric__label">{metric.label}</p>
-                      </div>
-                    ))}
-                  </div>
-                )}
+              const now = performance.now();
+              const doubled = key === lastKey && now - lastAt < DOUBLE_TAP_MS;
+              lastKey = key;
+              lastAt = now;
+              if (!doubled) return;
 
-                {section.table && (
-                  <div class="case-table-wrap">
-                    <table class="case-table">
-                      <thead>
-                        <tr>
-                          {section.table.headers.map((header) => (
-                            <th scope="col">{header}</th>
-                          ))}
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {section.table.rows.map((row) => (
-                          <tr>
-                            {row.map((cell) => (
-                              <td>{cell}</td>
-                            ))}
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-                )}
-
-                {section.callout && <p class="case-callout">{section.callout}</p>}
-
-                {section.bullets && (
-                  <ul class="case-bullets">
-                    {section.bullets.map((bullet) => (
-                      <li>{bullet}</li>
-                    ))}
-                  </ul>
-                )}
-
-                {section.embed && <PrototypeEmbed embed={section.embed} />}
-
-                {section.figures && section.figures.length > 0 && (
-                  <div
-                    class:list={[
-                      'case-figure-row',
-                      section.figures.length >= 3 && 'case-figure-row--trio',
-                      section.figures.length === 2 && 'case-figure-row--pair',
-                      section.figures.length === 1 &&
-                        !section.figures.some((figure) => figure.layout === 'center') &&
-                        'case-figure-row--single',
-                      section.figures.some((figure) => figure.layout === 'wide') &&
-                        'case-figure-row--wide',
-                      section.figures.some((figure) => figure.layout === 'center') &&
-                        'case-figure-row--center',
-                    ]}
-                  >
-                    {section.figures.map((figure) => (
-                      <figure class:list={['case-figure', `case-figure--${figure.layout ?? 'device'}`]}>
-                        <button
-                          type="button"
-                          class="case-zoom"
-                          aria-label={`View larger: ${figure.caption}`}
-                          data-zoom-src={figure.src}
-                          data-zoom-alt={figure.alt}
-                          data-zoom-caption={figure.caption}
-                        >
-                          <img
-                            src={figure.src}
-                            alt={figure.alt}
-                            width="836"
-                            height="1744"
-                            loading="lazy"
-                          />
-                        </button>
-                        <figcaption>{figure.caption}</figcaption>
-                      </figure>
-                    ))}
-                  </div>
-                )}
-              </section>
-                );
-              });
-            })()
-          }
-
-          {
-            rich.live && (
-              <p class="case-live">
-                {rich.live.note ? `${rich.live.note} ` : 'Still live: '}
-                <a href={rich.live.href} target="_blank" rel="noopener noreferrer">
-                  {rich.live.label}
-                </a>
-              </p>
-            )
-          }
-
-          {
-            rich.sibling &&
-              getCase(rich.sibling.href.replace(/\/work\//, '').replace(/^\//, '')) && (
-              <p class="case-sibling">
-                Sibling case:{' '}
-                <a href={withBase(rich.sibling.href)}>{rich.sibling.label}</a>
-              </p>
-            )
-          }
-
-          {
-            item.builtWith && (
-              <p class="built-with">
-                <strong>Built with</strong> — {item.builtWith}
-              </p>
-            )
-          }
-
-          <ul class="tag-row case-tags">
-            {item.tags.map((tag) => (
-              <li>{tag}</li>
-            ))}
-          </ul>
-
-          <p class="case-back">
-            <a href={withBase('/work')}>← All work</a>
-          </p>
-        </div>
-
-        <script>
-          const dialog = document.querySelector('.case-lightbox');
-          if (dialog instanceof HTMLDialogElement) {
-            const image = dialog.querySelector('img');
-            const close = dialog.querySelector('[data-lightbox-close]');
-
-            document.querySelectorAll('.case-zoom').forEach((button) => {
-              if (!(button instanceof HTMLButtonElement)) return;
-              button.addEventListener('click', () => {
-                if (!(image instanceof HTMLImageElement)) return;
-                image.src = button.dataset.zoomSrc ?? '';
-                image.alt = button.dataset.zoomAlt ?? '';
-                dialog.showModal();
-              });
+              event.preventDefault();
+              lastKey = '';
+              const show = reads[key];
+              const hide = reads[key === 'a' ? 'b' : 'a'];
+              if (!show || !hide || !show.hidden) return;
+              hide.hidden = true;
+              show.hidden = false;
+              if (mark) mark.hidden = key === 'a';
+              window.scrollTo({ top: 0, behavior: 'instant' });
             });
-
-            close?.addEventListener('click', () => dialog.close());
-            dialog.addEventListener('click', (event) => {
-              if (event.target === dialog) dialog.close();
-            });
-            dialog.addEventListener('close', () => {
-              if (image instanceof HTMLImageElement) image.removeAttribute('src');
-            });
-          }
-        </script>
-      </article>
+          </script>
+        </>
+      ) : (
+        <CaseArticle item={item} rich={rich} />
+      )}
 
       <dialog class="case-lightbox">
         <button type="button" class="case-lightbox__close" data-lightbox-close aria-label="Close">
@@ -267,6 +95,33 @@ const rich = getRichCase(slug!);
         </button>
         <img alt="" />
       </dialog>
+
+      <script>
+        const dialog = document.querySelector('.case-lightbox');
+        if (dialog instanceof HTMLDialogElement) {
+          const image = dialog.querySelector('img');
+          const close = dialog.querySelector('[data-lightbox-close]');
+
+          document.querySelectorAll('.case-zoom').forEach((button) => {
+            if (!(button instanceof HTMLButtonElement)) return;
+            button.addEventListener('click', () => {
+              if (!(image instanceof HTMLImageElement)) return;
+              image.src = button.dataset.zoomSrc ?? '';
+              image.alt = button.dataset.zoomAlt ?? '';
+              dialog.showModal();
+            });
+          });
+
+          close?.addEventListener('click', () => dialog.close());
+          dialog.addEventListener('click', (event) => {
+            if (event.target === dialog) dialog.close();
+          });
+          dialog.addEventListener('close', () => {
+            if (image instanceof HTMLImageElement) image.removeAttribute('src');
+          });
+        }
+      </script>
+      </>
     ) : (
       <article class="shell page-hero">
         <p class="section__eyebrow">{item.eyebrow}</p>

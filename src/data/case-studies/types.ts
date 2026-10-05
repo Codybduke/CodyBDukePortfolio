@@ -54,3 +54,9 @@ export type RichCaseStudy = {
   sibling?: { href: string; label: string };
   nextCaptures?: string[];
 };
+
+export type CaseRewrite = {
+  case: RichCaseStudy;
+  /** One sentence per prototype scene, keyed by scene id. */
+  sceneNotes: Record<string, string>;
+};

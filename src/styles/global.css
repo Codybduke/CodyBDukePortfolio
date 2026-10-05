@@ -1367,6 +1367,45 @@ dialog.case-lightbox:modal {
   font-size: 0.84rem;
 }
 
+.case-walk {
+  left: auto;
+  transform: none;
+  margin: var(--space-6) auto var(--space-7);
+}
+
+.case-walk__title {
+  width: min(var(--shell-w), 48rem);
+  margin: 0 auto var(--space-4);
+  font-size: clamp(1.45rem, 2.4vw, 1.75rem);
+}
+
+.case-walk .case-embed__frame {
+  background: transparent;
+  border: 0;
+}
+
+.case-version-mark {
+  position: fixed;
+  left: 1rem;
+  bottom: 1rem;
+  z-index: 50;
+  margin: 0;
+  padding: 0.3rem 0.65rem;
+  font-family: var(--font-ui);
+  font-size: 0.72rem;
+  font-weight: 650;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--bg);
+  background: var(--ink);
+  border-radius: 999px;
+  pointer-events: none;
+}
+
+.case-version-mark[hidden] {
+  display: none;
+}
+
 .case-sibling,
 .case-live {
   margin-top: var(--space-7);

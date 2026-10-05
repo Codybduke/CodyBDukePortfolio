@@ -1,0 +1,230 @@
+---
+import PrototypeEmbed from './PrototypeEmbed.astro';
+import { getCase, type CaseStudy } from '../data/cases';
+import type { RichCaseStudy } from '../data/case-studies';
+import { withBase } from '../lib/paths';
+
+type Props = {
+  item: CaseStudy;
+  rich: RichCaseStudy;
+  /** Set on the Move-In case so the a/b switch can find each read. */
+  version?: 'a' | 'b';
+  hidden?: boolean;
+};
+
+const { item, rich, version, hidden } = Astro.props;
+const slug = item.slug;
+---
+
+<article class="case-study" data-case-version={version} hidden={hidden}>
+  <header class="case-study__header shell">
+    <p class="section__eyebrow">{item.eyebrow}</p>
+    <h1>{item.title}</h1>
+    <p class="case-study__claim">{rich.openingClaim}</p>
+    {
+      slug === 'move-in-scanner' && (
+        <p class="case-study__claim" style="margin-top: 0.75rem;">
+          <a href={withBase('/present/move-in-scanner/')}>Open live walkthrough →</a>
+        </p>
+      )
+    }
+
+    <div class="meta-bar meta-bar--case">
+      <div>
+        <strong>Role</strong>
+        {item.role}
+      </div>
+      <div>
+        <strong>Timeframe</strong>
+        {item.timeframe}
+      </div>
+      {
+        rich.collaborators && (
+          <div>
+            <strong>Collaborators</strong>
+            {rich.collaborators}
+          </div>
+        )
+      }
+      {
+        rich.surface && (
+          <div>
+            <strong>Surface</strong>
+            {rich.surface}
+          </div>
+        )
+      }
+      {
+        rich.live && (
+          <div>
+            <strong>Still live</strong>
+            <a href={rich.live.href} target="_blank" rel="noopener noreferrer">
+              {rich.live.label}
+            </a>
+          </div>
+        )
+      }
+    </div>
+  </header>
+
+  <slot name="lead" />
+
+  {
+    rich.heroFigure && (
+      <figure class="case-figure case-figure--hero">
+        <img
+          src={rich.heroFigure.src}
+          alt={rich.heroFigure.alt}
+          width="2493"
+          height="1696"
+          loading={hidden ? 'lazy' : 'eager'}
+        />
+        <figcaption>{rich.heroFigure.caption}</figcaption>
+      </figure>
+    )
+  }
+
+  <div class="case-study__body shell">
+    {
+      (() => {
+        let previousStage = '';
+        return rich.sections.map((section) => {
+          const showParent = Boolean(section.stage && section.stage !== previousStage);
+          if (section.stage) previousStage = section.stage;
+          return (
+        <section class="case-section" id={section.id}>
+          {showParent && <h2 class="case-parent">{section.stage}</h2>}
+          {section.stage ? <h3>{section.title}</h3> : <h2>{section.title}</h2>}
+
+          {section.body?.map((paragraph) => <p>{paragraph}</p>)}
+
+          {section.metrics && (
+            <div class="case-metrics">
+              {section.metrics.map((metric) => (
+                <div class="case-metric">
+                  <p class="case-metric__value">{metric.value}</p>
+                  <p class="case-metric__label">{metric.label}</p>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {section.table && (
+            <div class="case-table-wrap">
+              <table class="case-table">
+                <thead>
+                  <tr>
+                    {section.table.headers.map((header) => (
+                      <th scope="col">{header}</th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {section.table.rows.map((row) => (
+                    <tr>
+                      {row.map((cell) => (
+                        <td>{cell}</td>
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+
+          {section.callout && <p class="case-callout">{section.callout}</p>}
+
+          {section.bullets && (
+            <ul class="case-bullets">
+              {section.bullets.map((bullet) => (
+                <li>{bullet}</li>
+              ))}
+            </ul>
+          )}
+
+          {section.embed && <PrototypeEmbed embed={section.embed} />}
+
+          {section.figures && section.figures.length > 0 && (
+            <div
+              class:list={[
+                'case-figure-row',
+                section.figures.length >= 3 && 'case-figure-row--trio',
+                section.figures.length === 2 && 'case-figure-row--pair',
+                section.figures.length === 1 &&
+                  !section.figures.some((figure) => figure.layout === 'center') &&
+                  'case-figure-row--single',
+                section.figures.some((figure) => figure.layout === 'wide') &&
+                  'case-figure-row--wide',
+                section.figures.some((figure) => figure.layout === 'center') &&
+                  'case-figure-row--center',
+              ]}
+            >
+              {section.figures.map((figure) => (
+                <figure class:list={['case-figure', `case-figure--${figure.layout ?? 'device'}`]}>
+                  <button
+                    type="button"
+                    class="case-zoom"
+                    aria-label={`View larger: ${figure.caption}`}
+                    data-zoom-src={figure.src}
+                    data-zoom-alt={figure.alt}
+                    data-zoom-caption={figure.caption}
+                  >
+                    <img
+                      src={figure.src}
+                      alt={figure.alt}
+                      width="836"
+                      height="1744"
+                      loading="lazy"
+                    />
+                  </button>
+                  <figcaption>{figure.caption}</figcaption>
+                </figure>
+              ))}
+            </div>
+          )}
+        </section>
+          );
+        });
+      })()
+    }
+
+    {
+      rich.live && (
+        <p class="case-live">
+          {rich.live.note ? `${rich.live.note} ` : 'Still live: '}
+          <a href={rich.live.href} target="_blank" rel="noopener noreferrer">
+            {rich.live.label}
+          </a>
+        </p>
+      )
+    }
+
+    {
+      rich.sibling &&
+        getCase(rich.sibling.href.replace(/\/work\//, '').replace(/^\//, '')) && (
+          <p class="case-sibling">
+            Sibling case:{' '}
+            <a href={withBase(rich.sibling.href)}>{rich.sibling.label}</a>
+          </p>
+        )
+    }
+
+    {
+      item.builtWith && (
+        <p class="built-with">
+          <strong>Built with</strong> — {item.builtWith}
+        </p>
+      )
+    }
+
+    <ul class="tag-row case-tags">
+      {item.tags.map((tag) => (
+        <li>{tag}</li>
+      ))}
+    </ul>
+
+    <p class="case-back">
+      <a href={withBase('/work')}>← All work</a>
+    </p>
+  </div>
+</article>

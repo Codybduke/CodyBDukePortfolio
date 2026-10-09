@@ -4,11 +4,11 @@ import { defineConfig } from 'astro/config';
 import react from '@astrojs/react';
 import { resumePdfDevPlugin } from './scripts/resume-pdf.mjs';
 
-const base = '/CodyBDukePortfolio';
+const base = '/';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://codybduke.github.io',
+  site: 'https://codybduke.com',
   base,
   integrations: [react()],
   vite: {

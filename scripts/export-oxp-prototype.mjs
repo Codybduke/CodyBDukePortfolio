@@ -17,7 +17,7 @@ const PROTO = path.resolve(__dirname, '../../OXP-Mobile-Product-Prototype');
 const APP_JSON = path.join(PROTO, 'app.json');
 const DIST = path.join(PROTO, 'dist');
 const OUT = path.resolve(__dirname, '../public/prototypes/oxp-mobile');
-const BASE_URL = '/CodyBDukePortfolio/prototypes/oxp-mobile';
+const BASE_URL = '/prototypes/oxp-mobile';
 
 if (!fs.existsSync(APP_JSON)) {
   throw new Error(`Prototype not found at ${PROTO}`);

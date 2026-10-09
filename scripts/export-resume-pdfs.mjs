@@ -30,7 +30,7 @@ try {
     for (const doc of docs) {
       const pdf = await renderResumePdf({
         origin,
-        base: '/CodyBDukePortfolio',
+        base: '/',
         id: application.id,
         doc,
       });

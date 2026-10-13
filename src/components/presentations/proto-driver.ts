@@ -38,7 +38,10 @@ function smallestTextMatch(root: Document | Element, text: string, exact: boolea
     if (!t) continue;
     const match = exact ? t === needle : t.includes(needle);
     if (!match) continue;
-    if (t.length < bestLen) {
+    // `<=` keeps the deepest element among equal-length ties. In React Native Web
+    // the text "Move in" repeats on the text node, the pressable, and its wrapper;
+    // the innermost node is the one whose click bubbles up through the pressable.
+    if (t.length <= bestLen) {
       best = el;
       bestLen = t.length;
     }

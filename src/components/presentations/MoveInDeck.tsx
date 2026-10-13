@@ -1,72 +1,256 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
-import { scenes, slides, type SceneId } from '../../data/presentations/move-in-scanner';
-import { driveScene, labSrc, networkFor, waitUntilReady } from './proto-driver';
+import {
+  slides,
+  type ComparePair,
+  type RingSlice,
+  type Slide,
+  type SlideMetric,
+} from '../../data/presentations/move-in-scanner';
+import { labSrc } from './proto-driver';
 
 type Props = {
   protoSrc: string;
 };
 
-function paramsOf(src: string) {
-  return (src.split('?')[1] ?? '').replace(/&r=\d+/g, '');
+const RING_COLORS = ['#1c1c1a', '#8a8a82', '#d0d0c6'];
+
+function StageImage({ image }: { image: NonNullable<Slide['image']> }) {
+  return <img className="deck-img" src={image.src} alt={image.alt} data-fit={image.fit ?? 'cover'} />;
+}
+
+function Metrics({ metrics }: { metrics: SlideMetric[] }) {
+  return (
+    <div className="deck-metrics">
+      {metrics.map((metric) => (
+        <div key={metric.label} className="deck-metric">
+          <p className="deck-metric__value">{metric.value}</p>
+          <p className="deck-metric__label">{metric.label}</p>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function Bullets({ bullets }: { bullets: string[] }) {
+  return (
+    <ul className="deck-bullets">
+      {bullets.map((bullet) => (
+        <li key={bullet}>{bullet}</li>
+      ))}
+    </ul>
+  );
+}
+
+function Donut({ slices, track = false }: { slices: { value: number; color: string }[]; track?: boolean }) {
+  const r = 62;
+  const c = 2 * Math.PI * r;
+  const cx = 90;
+  const cy = 90;
+  let offset = 0;
+
+  return (
+    <svg className="deck-donut" viewBox="0 0 180 180" aria-hidden="true">
+      {track && <circle cx={cx} cy={cy} r={r} fill="none" stroke="#e4e4d8" strokeWidth="16" />}
+      <g transform={`rotate(-90 ${cx} ${cy})`}>
+        {slices.map((slice) => {
+          const len = (slice.value / 100) * c;
+          const node = (
+            <circle
+              key={`${slice.color}-${offset}`}
+              cx={cx}
+              cy={cy}
+              r={r}
+              fill="none"
+              stroke={slice.color}
+              strokeWidth="16"
+              strokeDasharray={`${len} ${c - len}`}
+              strokeDashoffset={-offset}
+            />
+          );
+          offset += len;
+          return node;
+        })}
+      </g>
+    </svg>
+  );
+}
+
+function RingKey({ rings }: { rings: RingSlice[] }) {
+  return (
+    <ul className="deck-ring__key">
+      {rings.map((ring, index) => (
+        <li key={ring.label}>
+          <span className="deck-ring__swatch" style={{ background: RING_COLORS[index] }} />
+          <div>
+            <p className="deck-ring__value">{ring.display}</p>
+            <p className="deck-ring__label">{ring.label}</p>
+            <p className="deck-ring__hint">{ring.hint}</p>
+          </div>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+function Pairs({ pairs }: { pairs: ComparePair[] }) {
+  return (
+    <div className="deck-pairs">
+      {pairs.map((pair) => (
+        <figure key={pair.label} className="deck-pair">
+          <div className="deck-pair__shots">
+            <div>
+              <img src={pair.before.src} alt={pair.before.alt} data-wide={pair.before.wide ? '' : undefined} />
+              <p>Before</p>
+            </div>
+            <div>
+              <img src={pair.after.src} alt={pair.after.alt} />
+              <p>After</p>
+            </div>
+          </div>
+        </figure>
+      ))}
+    </div>
+  );
+}
+
+function SlideContent({ slide }: { slide: Slide }) {
+  switch (slide.layout) {
+    case 'title':
+      return (
+        <div className="slide slide--title slide--bleed">
+          {slide.image && <StageImage image={slide.image} />}
+          <div className="slide__scrim" />
+          <div className="slide__inner">
+            {slide.stage && <p className="slide__eyebrow slide__eyebrow--light">{slide.stage}</p>}
+            <h1 className="slide__title">{slide.title}</h1>
+            {slide.lead && <p className="slide__lead">{slide.lead}</p>}
+          </div>
+        </div>
+      );
+
+    case 'chapter':
+      return (
+        <div className={`slide slide--chapter${slide.image ? ' slide--bleed' : ''}`}>
+          {slide.image && <StageImage image={slide.image} />}
+          {slide.image && <div className="slide__scrim" />}
+          <div className="slide__inner">
+            {slide.stage && (
+              <p className={`slide__eyebrow${slide.image ? ' slide__eyebrow--light' : ''}`}>{slide.stage}</p>
+            )}
+            <h1 className="slide__chapter-title">{slide.title}</h1>
+            {slide.lead && <p className="slide__lead">{slide.lead}</p>}
+            {slide.bullets && <Bullets bullets={slide.bullets} />}
+          </div>
+        </div>
+      );
+
+    case 'statement':
+      return (
+        <div className="slide slide--statement slide--bleed">
+          {slide.image && <StageImage image={slide.image} />}
+          {slide.image && <div className="slide__scrim slide__scrim--bottom" />}
+          <div className="slide__inner slide__inner--bottom">
+            {slide.stage && <p className="slide__eyebrow slide__eyebrow--light">{slide.stage}</p>}
+            {slide.lead && <p className="slide__statement">{slide.lead}</p>}
+            {slide.body && <p className="slide__meaning">{slide.body}</p>}
+          </div>
+        </div>
+      );
+
+    case 'rings':
+      return (
+        <div className="slide slide--metrics">
+          <div className="slide__inner">
+            {slide.stage && <p className="slide__eyebrow">{slide.stage}</p>}
+            {slide.title && <h1 className="slide__title slide__title--md">{slide.title}</h1>}
+            {slide.body && <p className="slide__body">{slide.body}</p>}
+            {slide.rings && (
+              <div className="deck-ring">
+                <Donut slices={slide.rings.map((ring, index) => ({ value: ring.value, color: RING_COLORS[index] }))} />
+                <RingKey rings={slide.rings} />
+              </div>
+            )}
+          </div>
+        </div>
+      );
+
+    case 'metrics':
+      return (
+        <div className="slide slide--metrics">
+          <div className="slide__inner">
+            {slide.stage && <p className="slide__eyebrow">{slide.stage}</p>}
+            {slide.title && <h1 className="slide__title slide__title--md">{slide.title}</h1>}
+            {slide.body && <p className="slide__body">{slide.body}</p>}
+            {slide.metrics && <Metrics metrics={slide.metrics} />}
+          </div>
+        </div>
+      );
+
+    case 'compare':
+      return (
+        <div className="slide slide--compare">
+          <div className="slide__inner">
+            {slide.stage && <p className="slide__eyebrow">{slide.stage}</p>}
+            {slide.title && <h1 className="slide__title slide__title--md">{slide.title}</h1>}
+            {slide.body && <p className="slide__body">{slide.body}</p>}
+            {slide.bullets && <Bullets bullets={slide.bullets} />}
+            {slide.pairs && <Pairs pairs={slide.pairs} />}
+          </div>
+        </div>
+      );
+
+    case 'prose':
+      return (
+        <div className="slide slide--prose">
+          <div className="slide__inner">
+            {slide.stage && <p className="slide__eyebrow">{slide.stage}</p>}
+            {slide.title && <h1 className="slide__title slide__title--md">{slide.title}</h1>}
+            {slide.body && <p className="slide__body">{slide.body}</p>}
+            {slide.bullets && <Bullets bullets={slide.bullets} />}
+          </div>
+        </div>
+      );
+
+    case 'feature':
+      return (
+        <div className="slide slide--feature">
+          <div className="slide__feature-media">{slide.image && <StageImage image={slide.image} />}</div>
+          <div className="slide__feature-copy">
+            {slide.stage && <p className="slide__eyebrow">{slide.stage}</p>}
+            {slide.title && <h1 className="slide__title slide__title--sm">{slide.title}</h1>}
+            {slide.body && <p className="slide__body">{slide.body}</p>}
+            {slide.bullets && <Bullets bullets={slide.bullets} />}
+          </div>
+        </div>
+      );
+
+    case 'split':
+    default:
+      return (
+        <div className="slide slide--split">
+          <div className="deck__copy">
+            {slide.stage && <p className="slide__eyebrow">{slide.stage}</p>}
+            {slide.title && <h1 className="slide__title slide__title--sm">{slide.title}</h1>}
+            {slide.body && <p className="slide__body">{slide.body}</p>}
+            {slide.metrics && <Metrics metrics={slide.metrics} />}
+            {slide.bullets && <Bullets bullets={slide.bullets} />}
+          </div>
+        </div>
+      );
+  }
 }
 
 export default function MoveInDeck({ protoSrc }: Props) {
-  const iframeRef = useRef<HTMLIFrameElement>(null);
-  const abortRef = useRef<AbortController | null>(null);
-  const sceneRef = useRef<SceneId>(slides[0].scene);
-  const reloadsRef = useRef(0);
   const [index, setIndex] = useState(0);
-  const [sceneOverride, setSceneOverride] = useState<SceneId | null>(null);
-  const [iframeSrc, setIframeSrc] = useState(() => labSrc(protoSrc, 'online'));
-  const [driving, setDriving] = useState(false);
+  const [iframeSrc] = useState(() => labSrc(protoSrc, 'online'));
 
   const slide = slides[index];
-  const scene = sceneOverride ?? slide.scene;
-  sceneRef.current = scene;
+  const isSplit = slide.layout === 'split';
 
   const go = useCallback((next: number) => {
-    setSceneOverride(null);
     setIndex(Math.max(0, Math.min(slides.length - 1, next)));
   }, []);
-
-  const requestSrc = useCallback(
-    (target: SceneId, force = false) => {
-      const next = labSrc(protoSrc, networkFor(target));
-      setIframeSrc((prev) => {
-        if (!force && paramsOf(prev) === paramsOf(next)) return prev;
-        reloadsRef.current = force ? reloadsRef.current + 1 : 0;
-        return force ? `${next}&r=${Date.now()}` : next;
-      });
-    },
-    [protoSrc],
-  );
-
-  const runScene = useCallback(async (target: SceneId) => {
-    const iframe = iframeRef.current;
-    if (!iframe) return;
-    abortRef.current?.abort();
-    const ac = new AbortController();
-    abortRef.current = ac;
-    setDriving(true);
-    try {
-      await waitUntilReady(iframe, ac.signal);
-      if (ac.signal.aborted || sceneRef.current !== target) return;
-      const result = await driveScene(iframe, target, ac.signal);
-      if (ac.signal.aborted || sceneRef.current !== target) return;
-      if (result === 'reload' && reloadsRef.current < 1) {
-        requestSrc(target, true);
-      }
-    } finally {
-      if (sceneRef.current === target) setDriving(false);
-    }
-  }, [requestSrc]);
-
-  useEffect(() => {
-    requestSrc(scene);
-    void runScene(scene);
-    return () => abortRef.current?.abort();
-  }, [scene, requestSrc, runScene]);
 
   useEffect(() => {
     const onKey = (event: KeyboardEvent) => {
@@ -91,90 +275,41 @@ export default function MoveInDeck({ protoSrc }: Props) {
   }, [go, index]);
 
   useEffect(() => {
-    const hash = `#${index + 1}`;
-    if (window.location.hash !== hash) history.replaceState(null, '', hash);
-  }, [index]);
-
-  useEffect(() => {
     const raw = Number(window.location.hash.replace('#', ''));
     if (Number.isInteger(raw) && raw >= 1 && raw <= slides.length) setIndex(raw - 1);
   }, []);
 
+  useEffect(() => {
+    const hash = `#${index + 1}`;
+    if (window.location.hash !== hash) history.replaceState(null, '', hash);
+  }, [index]);
+
   return (
-    <div className="deck">
-      <section className="deck__copy" aria-live="polite">
-        <p className="deck__eyebrow">
-          {slide.stage ?? 'Walkthrough'}
-          <span className="deck__count">
-            {index + 1} / {slides.length}
-          </span>
-        </p>
-        {slide.kicker && <p className="deck__kicker">{slide.kicker}</p>}
-        <h1>{slide.title}</h1>
-        {slide.body && <p className="deck__body">{slide.body}</p>}
-        {slide.metrics && (
-          <div className="deck__metrics">
-            {slide.metrics.map((metric) => (
-              <div key={metric.label} className="deck__metric">
-                <p className="deck__metric-value">{metric.value}</p>
-                <p className="deck__metric-label">{metric.label}</p>
-              </div>
-            ))}
-          </div>
-        )}
-        {slide.bullets && (
-          <ul className="deck__bullets">
-            {slide.bullets.map((bullet) => (
-              <li key={bullet}>{bullet}</li>
-            ))}
-          </ul>
-        )}
-        {slide.cue && <p className="deck__cue">{slide.cue}</p>}
+    <div className={`deck deck--${slide.layout}`}>
+      <div className="deck__prototype" aria-hidden={!isSplit}>
+        <iframe src={iframeSrc} title="OXP Move-In prototype" />
+      </div>
 
-        <div className="deck__nav">
-          <button type="button" onClick={() => go(index - 1)} disabled={index === 0}>
-            Prev
-          </button>
-          <button type="button" onClick={() => go(index + 1)} disabled={index === slides.length - 1}>
-            Next
-          </button>
-          <p className="deck__keys">← → or space</p>
-        </div>
-      </section>
+      <div className="deck__content" key={index} aria-live="polite">
+        <SlideContent slide={slide} />
+      </div>
 
-      <section className="deck__stage">
-        <div className="deck__scenes" role="tablist" aria-label="Prototype states">
-          {scenes.map((item) => (
-            <button
-              key={item.id}
-              type="button"
-              role="tab"
-              aria-selected={scene === item.id}
-              className={scene === item.id ? 'is-active' : undefined}
-              onClick={() => {
-                reloadsRef.current = 0;
-                setSceneOverride(item.id);
-              }}
-            >
-              {item.label}
-            </button>
-          ))}
-        </div>
-        <div className="deck__frame">
-          <iframe
-            ref={iframeRef}
-            src={iframeSrc}
-            title="OXP Move-In prototype"
-            onLoad={() => {
-              reloadsRef.current = 0;
-              void runScene(sceneRef.current);
-            }}
-          />
-          {driving && (
-            <p className="deck__driving">Opening {scenes.find((item) => item.id === scene)?.label}…</p>
-          )}
-        </div>
-      </section>
+      <nav className="deck__controls" aria-label="Slide navigation">
+        <button type="button" onClick={() => go(index - 1)} disabled={index === 0} aria-label="Previous slide">
+          ‹
+        </button>
+        <span className="deck__count">
+          {index + 1} / {slides.length}
+        </span>
+        <button
+          type="button"
+          onClick={() => go(index + 1)}
+          disabled={index === slides.length - 1}
+          aria-label="Next slide"
+        >
+          ›
+        </button>
+      </nav>
     </div>
   );
 }

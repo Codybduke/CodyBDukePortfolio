@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useId, useState } from 'react';
 
+import { atsResumeIsTailored, getAtsResume } from '../../data/ats-resume';
 import {
   applications,
   contact,
@@ -52,6 +53,7 @@ function writeUrl(
 }
 
 function pageTitle(application: Application, doc: DocKind) {
+  if (doc === 'ats') return 'Cody Duke, ATS Resume';
   if (doc === 'letter') return `Cody Duke, ${application.label} Cover Letter`;
   if (application.id === 'general') return 'Cody Duke, Product Designer Resume';
   return `Cody Duke, ${application.label} Resume`;
@@ -73,7 +75,7 @@ export default function ResumeKit({
   const [pdfStatus, setPdfStatus] = useState<'idle' | 'preparing' | 'error'>('idle');
 
   const application = getApplication(companyId);
-  const view: DocKind = doc === 'letter' && application.coverLetter ? 'letter' : 'resume';
+  const view: DocKind = doc === 'letter' && !application.coverLetter ? 'resume' : doc;
 
   useEffect(() => {
     const parsed = readUrl();
@@ -91,23 +93,28 @@ export default function ResumeKit({
     setTitled(true);
   }, [hydrated, companyId, view, application, initialCompanyId, initialDoc]);
 
-  async function downloadPdf() {
+  async function downloadFile() {
     setPdfStatus('preparing');
     try {
-      const response = await fetch(withBase(resumePdfPath(application.id, view)), {
-        cache: import.meta.env.DEV ? 'no-store' : 'default',
-      });
-      if (!response.ok) throw new Error(`PDF request failed (${response.status})`);
-      const blob = await response.blob();
-      if (!blob.size) throw new Error('Empty PDF');
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = resumePdfDownloadName(application, view);
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
-      window.setTimeout(() => URL.revokeObjectURL(url), 1500);
+      if (view === 'ats') {
+        const { downloadAtsResume } = await import('../../lib/ats-docx');
+        await downloadAtsResume(getAtsResume(application.id));
+      } else {
+        const response = await fetch(withBase(resumePdfPath(application.id, view)), {
+          cache: import.meta.env.DEV ? 'no-store' : 'default',
+        });
+        if (!response.ok) throw new Error(`PDF request failed (${response.status})`);
+        const blob = await response.blob();
+        if (!blob.size) throw new Error('Empty PDF');
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = resumePdfDownloadName(application, view);
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        window.setTimeout(() => URL.revokeObjectURL(url), 1500);
+      }
       setPdfStatus('idle');
     } catch {
       setPdfStatus('error');
@@ -168,20 +175,28 @@ export default function ResumeKit({
         <a href={portfolioHref}>← Portfolio</a>
         <button
           type="button"
-          onClick={downloadPdf}
+          onClick={downloadFile}
           disabled={pdfStatus === 'preparing'}
           aria-busy={pdfStatus === 'preparing'}
         >
-          {pdfStatus === 'preparing' ? 'Preparing PDF…' : 'Download PDF'}
+          {pdfStatus === 'preparing'
+            ? view === 'ats'
+              ? 'Preparing Word…'
+              : 'Preparing PDF…'
+            : view === 'ats'
+              ? 'Download Word'
+              : 'Download PDF'}
         </button>
       </p>
       {pdfStatus === 'error' ? (
         <p className="doc-chrome__status" role="alert">
-          The PDF didn't download. Try again.
+          The file didn't download. Try again.
         </p>
       ) : null}
 
-      {view === 'letter' && application.coverLetter ? (
+      {view === 'ats' ? (
+        <AtsResumeView resume={getAtsResume(application.id)} />
+      ) : view === 'letter' && application.coverLetter ? (
         <CoverLetterView
           email={email}
           linkedin={linkedin}
@@ -240,11 +255,25 @@ export default function ResumeKit({
               >
                 Cover letter
               </button>
+              <button
+                type="button"
+                aria-pressed={view === 'ats'}
+                onClick={() => setDoc('ats')}
+              >
+                ATS Resume
+              </button>
             </div>
           </fieldset>
 
           <fieldset className="kit-menu__group">
             <legend>Company</legend>
+            {view === 'ats' ? (
+              <p className="kit-menu__note">
+                {atsResumeIsTailored(application.id)
+                  ? 'Tailored for this company.'
+                  : 'Uses the shared ATS resume.'}
+              </p>
+            ) : null}
             <div className="kit-menu__list">
               {applications.map((item) => (
                 <button
@@ -272,7 +301,7 @@ export default function ResumeKit({
 /** PDF print resolves relative links against localhost. Contact links need the public site. */
 function publishedPortfolioHref(href: string) {
   if (/^https?:\/\//i.test(href)) return href;
-  return new URL(href, 'https://codybduke.github.io/').href;
+  return new URL(href, 'https://codybduke.com/').href;
 }
 
 function ContactBlock({
@@ -399,6 +428,65 @@ function ResumeView({
   );
 }
 
+function AtsResumeView({ resume }: { resume: ReturnType<typeof getAtsResume> }) {
+  return (
+    <article className="ats">
+      <h1>{resume.name}</h1>
+      <p className="ats__headline">{resume.headline}</p>
+      <p className="ats__contact">
+        <a href={`mailto:${resume.email}`}>{resume.email}</a>
+      </p>
+      <p className="ats__contact">{resume.phoneDisplay}</p>
+      <p className="ats__contact">{resume.city}</p>
+      <p className="ats__contact">
+        <a href={resume.portfolio}>{resume.portfolioLabel}</a>
+      </p>
+      <p className="ats__contact">
+        <a href={resume.linkedin}>{resume.linkedinLabel}</a>
+      </p>
+
+      <h2>Summary</h2>
+      {resume.summary.map((paragraph) => (
+        <p key={paragraph}>{paragraph}</p>
+      ))}
+
+      <h2>Work Experience</h2>
+      {resume.roles.map((role) => (
+        <section className="ats__role" key={`${role.company}-${role.title}`}>
+          <p className="ats__row">
+            <span className="ats__title">{role.title}</span>
+            <span>{role.dates}</span>
+          </p>
+          <p className="ats__org">
+            <span className="ats__company">{role.company}</span>
+            {` | ${role.location}`}
+          </p>
+          <p>{role.overview}</p>
+          <ul>
+            {role.bullets.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
+        </section>
+      ))}
+
+      <h2>Education</h2>
+      <p className="ats__row">
+        <span>{resume.education.school}</span>
+        <span>{resume.education.year}</span>
+      </p>
+      <p>
+        {resume.education.degree} {resume.education.field}
+      </p>
+
+      <h2>Skills</h2>
+      <p>{resume.skills}</p>
+      <p className="ats__systems">Systems</p>
+      <p>{resume.systems}</p>
+    </article>
+  );
+}
+
 function CoverLetterView({
   email,
   linkedin,
@@ -422,7 +510,7 @@ function CoverLetterView({
 
       <p className="letter__meta">{letter.date}</p>
       <p className="letter__meta">{letter.recipient}</p>
-      <p className="letter__meta">{letter.position}</p>
+      {letter.position ? <p className="letter__meta">{letter.position}</p> : null}
 
       <div className="letter__body">
         {letter.paragraphs.map((paragraph) => (

@@ -1,6 +1,6 @@
 # Cody Duke — Portfolio Site
 
-Product design portfolio, built with Astro and published on GitHub Pages.
+Product design portfolio, built with Astro and published at [codybduke.com](https://codybduke.com).
 
 ## Pages
 
@@ -34,6 +34,6 @@ npm run preview
 
 ## Hosting
 
-Published at https://codybduke.github.io/CodyBDukePortfolio/
+Published at https://codybduke.com/
 
 `site` and `base` are set in `astro.config.mjs`.

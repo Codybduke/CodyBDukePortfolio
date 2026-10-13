@@ -67,8 +67,9 @@ export const cases: CaseStudy[] = [
       'Optional checklist items create an internal follow-up task instead of disappearing after confirm.',
     ],
     metrics: [
-      'About 21% of student move-ins at a large operator were processed in Entrata in real time on move-in day.',
-      'About 36% had zero Entrata activity in the move-in window and were caught up overnight.',
+      'About 21% of student move-ins at a large operator were completed in Entrata in real time on move-in day.',
+      'About 36% had no activity in the move-in window and were completed by the next morning.',
+      'The other 43% were completed later than the next morning, or were no-shows and never completed.',
       'Near-zero use of desktop Bulk Move-In in peak months, even at the largest student operator in the set.',
     ],
     outcome:

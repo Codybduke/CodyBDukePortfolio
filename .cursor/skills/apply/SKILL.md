@@ -37,7 +37,14 @@ Check `INDEX.md` and `companies/`. Reuse an existing company folder. Do not crea
 
 Edit `src/data/applications.ts` in the portfolio repo. Add one `Application` whose `id` is a kebab-case company slug and whose `label` is the company folder name.
 
-Read `general` and the two existing applications closest to this job. Match their voice. Reorder and rewrite so the closest true work leads. Do not add employers, titles, dates, tools, or numbers that are not already in `applications.ts` or the portfolio cases.
+Read `general-2` and `netsmart-cass` before writing a resume. General 2 is the layout. The Netsmart Cass resume is the wording. Reorder bullets so the closest true work leads. Do not add employers, titles, dates, tools, or numbers that are not already in those two resumes or the portfolio cases.
+
+Resume rules:
+
+- Layout follows General 2. Use `profileHeading`. Do not use an italic profile lede, a tenure line, or a job `summary` paragraph.
+- The profile walks through the process the way the Netsmart Cass profile does: who you partner with, how you research, what you design, and that you stay through a measurable ship. Adapt the nouns to the job. Keep it to two or three sentences.
+- Work experience is bullets only. Write them in the Netsmart Cass voice: a past-tense verb, a complete sentence, and the result in that same bullet. Keep the Entrata and FamilySearch stories those resumes already tell. Change order and emphasis for the job. Do not switch to a denser bullet style.
+- `Team player` is always the first skill.
 
 Cover letter: four or five short paragraphs. Open with the role and the human situation in the product. Use one or two true stories. If the domain is new, say so and name the analogous work. Close with Pleasant Grove and an invitation to walk through the work. Date it today. Recipient is the named hiring manager, or "{Company} hiring team".
 
@@ -53,8 +60,8 @@ astro dev --background
 
 Use `astro dev status` for the local origin. Download with curl:
 
-- `{origin}/CodyBDukePortfolio/documents/cody-duke-{id}-resume.pdf`
-- `{origin}/CodyBDukePortfolio/documents/cody-duke-{id}-letter.pdf`
+- `{origin}/documents/cody-duke-{id}-resume.pdf`
+- `{origin}/documents/cody-duke-{id}-letter.pdf`
 
 Save them in `Job Applications/companies/{Company}/` as:
 

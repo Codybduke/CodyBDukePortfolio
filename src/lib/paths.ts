@@ -1,4 +1,4 @@
-/** Join a root-relative path with Astro's configured `base` (GitHub project Pages). */
+/** Join a root-relative path with Astro's configured `base`. */
 export function withBase(path = '/'): string {
   const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   if (path === '/') return `${base}/`;

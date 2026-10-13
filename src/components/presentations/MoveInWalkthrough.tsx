@@ -11,9 +11,10 @@ type Props = {
 // The prototype paints its simulator gradient from these variables, set inline on <html>.
 // r-1fuvl1u and r-1gx6g7k are the exported atomic classes for the phone and lab-menu shadows;
 // the phone sits about 28px above the iframe's bottom edge, so its shadow has to stay inside that.
-const CLEAR_BACKDROP = `html {
+const CLEAR_BACKDROP = `html, body {
   --oxp-simulator-backdrop-start: transparent !important;
   --oxp-simulator-backdrop-end: transparent !important;
+  background: transparent !important;
 }
 .r-1fuvl1u { box-shadow: rgba(84, 70, 44, 0.18) 0 8px 18px !important; }
 .r-1gx6g7k { box-shadow: rgba(84, 70, 44, 0.1) 0 6px 14px !important; }`;

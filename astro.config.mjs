@@ -2,6 +2,7 @@
 import { defineConfig } from 'astro/config';
 
 import react from '@astrojs/react';
+import { oxpPrototypeDevPlugin } from './scripts/oxp-prototype-dev.mjs';
 import { resumePdfDevPlugin } from './scripts/resume-pdf.mjs';
 
 const base = '/';
@@ -12,6 +13,6 @@ export default defineConfig({
   base,
   integrations: [react()],
   vite: {
-    plugins: [resumePdfDevPlugin(base)],
+    plugins: [oxpPrototypeDevPlugin(base), resumePdfDevPlugin(base)],
   },
 });

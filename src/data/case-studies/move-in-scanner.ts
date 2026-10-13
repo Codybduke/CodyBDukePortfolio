@@ -26,16 +26,20 @@ export const moveInScannerCase: RichCaseStudy = {
         'Peak student turn is a full-day operation. Properties move in anywhere from about 100 to more than 500 residents, and staff set up in a breezeway, pull people through the office, or run a drive-through that stuck around after COVID because it kept the line moving. Wi-Fi is unreliable where they stand. The next few days are hectic too, because most of the work in Entrata still has not happened.',
         'Two workarounds showed up over and over. When they stayed offline, staff found the student on a spreadsheet, marked them moved in, handed over keys and a packet, and had almost no live view of the move-in checklist — the list of required and optional items that says whether someone is actually prepared. When they tried to stay online, they opened Entrata on a laptop, an iPad, or a phone. The web product is not built for that surface. It asks them to review a full profile, extra steps that student turn does not have time for, because readiness was supposed to be handled in advance.',
         'By the time someone is in line, staff should be able to see ready or not ready at a glance, then either move them in or send them to a different line. The old table did not give them that. Residents felt moved in. Entrata did not.',
-        'A May through August 2025 audit at a large student operator made the scale visible. Only about one in five student move-ins hit Entrata in real time on the day. About a third had zero activity in the window and got caught up overnight. Bulk Move-In, the existing desktop tool for processing many residents at once, barely showed up in peak months. More training on desktop was not going to change a day built around staying offline until the line was gone.',
+        'A May through August 2025 audit at a large student operator made the scale visible. About 21% of move-ins were completed in Entrata in real time on move-in day. About 36% had no activity during that window and were completed by the next morning. The other 43% were completed later than that, or were no-shows and never completed. Real-time was the exception. Bulk Move-In, the existing desktop tool for processing many residents at once, barely showed up in peak months.',
       ],
       metrics: [
         {
           value: '~21%',
-          label: 'Student move-ins processed in Entrata in real time on move-in day',
+          label: 'Student move-ins completed in Entrata in real time on move-in day',
         },
         {
           value: '~36%',
-          label: 'Move-ins with zero Entrata activity in the window, then caught up overnight',
+          label: 'Move-ins with no activity in the window, completed by the next morning',
+        },
+        {
+          value: '~43%',
+          label: 'Completed later than the next morning, or never completed',
         },
         {
           value: '~0%',

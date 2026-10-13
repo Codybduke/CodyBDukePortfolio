@@ -444,7 +444,7 @@ export const slides: Slide[] = [
     id: 'learned',
     layout: 'statement',
     stage: 'What I learned',
-    lead: 'Entrata becomes the record when the write happens at the table.',
+    lead: 'Entrata becomes the record when the write happens in real time.',
     body: 'The spreadsheet was the product they trusted, because it worked where they stood, including when the Wi-Fi was gone. A nicer screen of the desktop flow still leaves the day wrong.',
     image: cherokee,
   },

@@ -54,6 +54,7 @@ const ogImage = Astro.site
       rel="stylesheet"
     />
     <title>{pageTitle}</title>
+    <slot name="head" />
   </head>
   <body>
     <div class="atmosphere" aria-hidden="true"></div>

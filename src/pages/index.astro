@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import CaseCard from '../components/CaseCard.astro';
+import KnockoutHero from '../components/KnockoutHero';
 import StoneHero from '../components/StoneHero';
 import { highlights } from '../data/cases';
 import { site } from '../data/site';
@@ -9,7 +10,18 @@ import { withBase } from '../lib/paths';
 ---
 
 <BaseLayout>
-  <section class="hero shell">
+  <script is:inline slot="head">
+    var home = 'a';
+    try {
+      var saved = localStorage.getItem('home-version-v2');
+      if (saved === 'b' || saved === 'c') home = saved;
+    } catch (e) {}
+    document.documentElement.dataset.home = home;
+  </script>
+
+  <KnockoutHero client:load />
+
+  <section class="hero shell" data-home-variant="classic">
     <div class="hero__copy">
       <h1 class="hero__brand">{site.name}</h1>
       <p class="hero__headline">{site.headline}</p>
@@ -43,3 +55,41 @@ import { withBase } from '../lib/paths';
     </p>
   </section>
 </BaseLayout>
+
+<script>
+  import { readHomeVersion, setHomeVersion, type HomeVersion } from '../lib/homeVersion';
+
+  const DOUBLE_TAP_MS = 420;
+  const SCROLLED_PX = 48;
+  let lastKey = '';
+  let lastAt = 0;
+
+  const typingInField = (target: EventTarget | null) =>
+    target instanceof HTMLElement &&
+    (target.isContentEditable || ['INPUT', 'TEXTAREA', 'SELECT'].includes(target.tagName));
+
+  window.addEventListener('keydown', (event) => {
+    if (event.metaKey || event.ctrlKey || event.altKey || event.repeat) return;
+    if (typingInField(event.target)) return;
+    const key = event.key.toLowerCase();
+    if (key !== 'a' && key !== 'b' && key !== 'c') {
+      lastKey = '';
+      return;
+    }
+    const now = performance.now();
+    const doubled = key === lastKey && now - lastAt < DOUBLE_TAP_MS;
+    lastKey = key;
+    lastAt = now;
+    if (!doubled) return;
+    lastKey = '';
+    const next = key as HomeVersion;
+    if (readHomeVersion() === next) return;
+    window.scrollTo({ top: 0, behavior: 'instant' });
+    setHomeVersion(next);
+  });
+
+  const syncScrolled = () =>
+    document.documentElement.classList.toggle('home-scrolled', window.scrollY > SCROLLED_PX);
+  syncScrolled();
+  window.addEventListener('scroll', syncScrolled, { passive: true });
+</script>

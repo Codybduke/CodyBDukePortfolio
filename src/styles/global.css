@@ -1455,9 +1455,208 @@ dialog.case-lightbox:modal {
   border-bottom-color: var(--ink);
 }
 
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/*
+ * Homepage versions. Double-tap A, B, or C to switch. A is the knockout hero;
+ * B and C are the centred stone with its two rough sets. `html[data-home]`
+ * is set before first paint, so no hero flashes.
+ */
+html[data-home='b'] [data-home-variant='knockout'],
+html[data-home='c'] [data-home-variant='knockout'],
+html:not([data-home='b']):not([data-home='c']) [data-home-variant='classic'] {
+  display: none;
+}
+
+html[data-home='a'] .site-header {
+  background: transparent;
+  transition: background-color 280ms ease;
+}
+
+html[data-home='a'].home-scrolled .site-header {
+  background: var(--bg);
+}
+
+html[data-home='a'] .site-header .nav {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-0.35rem);
+  transition:
+    opacity 280ms ease,
+    transform 280ms ease,
+    visibility 0s linear 280ms;
+}
+
+html[data-home='a'].home-scrolled .site-header .nav {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  transition:
+    opacity 280ms ease,
+    transform 280ms ease;
+}
+
+/*
+ * Stacking: the text sits under the stone (z 1), the stone canvas paints the
+ * cream copy of the text where they overlap (z 2), and a hovered link lifts
+ * above both (z 3). Nothing between .knockout-hero and the links may start its own
+ * stacking context, or the links can no longer slot around the canvas.
+ */
+.knockout-hero {
+  --knockout-hero-word: clamp(3.25rem, min(10.5vw, 14.5svh), 13rem);
+  position: relative;
+  isolation: isolate;
+  min-height: 100svh;
+  margin-top: calc(-1 * var(--header-h));
+  padding-top: var(--header-h);
+  overflow: hidden;
+  touch-action: pan-y;
+}
+
+.knockout-hero--dragging {
+  user-select: none;
+}
+
+.knockout-hero__stage {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  animation: fade-in 900ms ease 80ms both;
+}
+
+.knockout-hero__canvas {
+  position: absolute !important;
+  inset: 0;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.knockout-hero__still {
+  position: absolute;
+  right: -6%;
+  top: 50%;
+  width: min(70vw, 120svh);
+  translate: 0 -50%;
+  z-index: 0;
+}
+
+.knockout-hero__inner {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100svh - var(--header-h));
+  padding: clamp(2.5rem, 9svh, 6.5rem) 0 clamp(3rem, 12svh, 8rem);
+}
+
+.knockout-hero__copy {
+  position: relative;
+  z-index: 1;
+  max-width: 24rem;
+}
+
+.knockout-hero__headline {
+  font-family: var(--font-display);
+  font-size: clamp(1rem, 1.3vw, 1.4rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+  margin: 0 0 0.6rem;
+  max-width: 17em;
+}
+
+.knockout-hero__lede {
+  font-family: var(--font-ui);
+  font-size: clamp(0.78rem, 0.8vw, 0.9rem);
+  font-weight: 500;
+  line-height: 1.45;
+  max-width: 26em;
+}
+
+.knockout-hero__nav {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: calc(var(--knockout-hero-word) * 0.16);
+  margin-top: clamp(2rem, 7svh, 5rem);
+}
+
+.knockout-hero__link {
+  position: relative;
+  z-index: 1;
+  display: inline-block;
+  margin-left: -0.2em;
+  padding: 0.04em 0.2em 0.1em;
+  font-family: var(--font-display);
+  font-size: var(--knockout-hero-word);
+  font-weight: 600;
+  letter-spacing: -0.035em;
+  line-height: 0.92;
+  color: var(--ink);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.knockout-hero__link:hover,
+.knockout-hero__link:focus-visible {
+  z-index: 3;
+  background: var(--ink);
+  color: var(--bg);
+  outline: none;
+}
+
+.knockout-hero__quote {
+  position: relative;
+  z-index: 1;
+  align-self: flex-end;
+  margin: var(--space-4) 0 0;
+  font-family: var(--font-mono);
+  font-size: clamp(0.68rem, 0.75vw, 0.82rem);
+  line-height: 1.6;
+  text-align: right;
+  color: var(--ink);
+}
+
+.knockout-hero__quote p {
+  margin: 0;
+}
+
+.knockout-hero__quote-line {
+  display: block;
+  white-space: nowrap;
+}
+
+.knockout-hero__quote-by {
+  font-weight: 500;
+}
+
+@media (max-width: 899px) {
+  .knockout-hero {
+    --knockout-hero-word: clamp(3rem, 16vw, 6rem);
+  }
+
+  .knockout-hero__quote {
+    margin-top: var(--space-6);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+  }
+
+  .knockout-hero__stage {
+    animation: none;
   }
 
   .hero__copy,

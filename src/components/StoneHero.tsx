@@ -21,6 +21,7 @@ import {
   STONE_TILT_DEG,
 } from '../data/stone-hull';
 import { STONE_HULL_B, STONE_OFFSET_B } from '../data/stone-hull-b';
+import { useHomeVersion } from '../lib/homeVersion';
 import { withBase } from '../lib/paths';
 
 const TILT_RAD = THREE.MathUtils.degToRad(STONE_TILT_DEG);
@@ -30,7 +31,7 @@ const STONE_POLISHED_GLB = withBase('/models/stone-polished.glb');
 const STONE_B_GLB = withBase('/models/stone-b.glb');
 const STONE_POLISHED_B_GLB = withBase('/models/stone-polished-b.glb');
 const STONE_CHUNKS_GLB = withBase('/models/stone-chunks.glb');
-const STONE_SETS = {
+export const STONE_SETS = {
   a: {
     rough: STONE_B_GLB,
     polished: STONE_POLISHED_B_GLB,
@@ -45,22 +46,21 @@ const STONE_SETS = {
   },
 } as const;
 type StoneSet = keyof typeof STONE_SETS;
-const DOUBLE_TAP_MS = 420;
 const STONE_STILL = withBase('/images/stone-smooth.png');
 const LOGO_LOCKUP = withBase('/brand/logo-lockup-light.svg');
-const HAMMER_READY_SRC = withBase('/brand/rock-hammer-minus-30.svg');
-const HAMMER_STRIKE_SRC = withBase('/brand/rock-hammer-plus-30.svg');
-const HAMMER_READY_HOT = { x: 27, y: 18 };
-const HAMMER_STRIKE_HOT = { x: 26, y: 2 };
+export const HAMMER_READY_SRC = withBase('/brand/rock-hammer-minus-30.svg');
+export const HAMMER_STRIKE_SRC = withBase('/brand/rock-hammer-plus-30.svg');
+export const HAMMER_READY_HOT = { x: 27, y: 18 };
+export const HAMMER_STRIKE_HOT = { x: 26, y: 2 };
 /** A fast click can end before the next paint. Hold the strike pose long enough to see it. */
-const HAMMER_STRIKE_HOLD_MS = 80;
+export const HAMMER_STRIKE_HOLD_MS = 80;
 const CHIPS_TO_POLISH = 3;
-const SHAKE_CHIP_MS = 420;
-const SHAKE_STRIKE_MS = 780;
-const SHAKE_CRUMBLE_MS = 640;
+export const SHAKE_CHIP_MS = 420;
+export const SHAKE_STRIKE_MS = 780;
+export const SHAKE_CRUMBLE_MS = 640;
 const STRIKE_IMPACT_MS = 170;
-const BLEND_MS = 560;
-const POLISHED_SCALE = 0.8;
+export const BLEND_MS = 560;
+export const POLISHED_SCALE = 0.8;
 const DRAG_THRESHOLD_PX = 6;
 const DRAG_YAW_PER_PX = 0.012;
 const DRAG_PITCH_PER_PX = 0.008;
@@ -68,8 +68,8 @@ const DUST_COUNT = 150;
 const CHUNK_POOL = 18;
 const noopRaycast = () => {};
 
-type ShakeKind = 'chip' | 'strike' | 'crumble';
-type BurstMode = 'strike' | 'crumble' | 'chip';
+export type ShakeKind = 'chip' | 'strike' | 'crumble';
+export type BurstMode = 'strike' | 'crumble' | 'chip';
 
 function unpackHull(flat: readonly number[]) {
   const pts: THREE.Vector3[] = [];
@@ -79,7 +79,7 @@ function unpackHull(flat: readonly number[]) {
   return pts;
 }
 
-function easeOutCubic(t: number) {
+export function easeOutCubic(t: number) {
   return 1 - (1 - t) ** 3;
 }
 
@@ -129,7 +129,7 @@ function applyStoneFade(root: THREE.Object3D, opacity: number, envBoost = 0) {
  * hull and the rendered mesh share a coordinate frame — the camera fit below
  * is only valid because of that.
  */
-function useNormalizedStone(url: string) {
+export function useNormalizedStone(url: string) {
   const { scene } = useGLTF(url);
 
   return useMemo(() => {
@@ -178,13 +178,14 @@ type StoneProps = {
   onPressChange: (pressed: boolean) => void;
 };
 
-function StoneMesh({
+export function StoneMesh({
   url,
   opacity,
   envBoost,
   renderOrder,
   dragging,
   onHoverChange,
+  prepare,
 }: {
   url: string;
   opacity: RefObject<number>;
@@ -192,15 +193,21 @@ function StoneMesh({
   renderOrder: number;
   dragging: RefObject<boolean>;
   onHoverChange: (hovering: boolean) => void;
+  /** Runs once per loaded stone, before the first frame. */
+  prepare?: (material: THREE.MeshStandardMaterial) => void;
 }) {
   const object = useNormalizedStone(url);
 
   useLayoutEffect(() => {
     object.traverse((node) => {
       node.renderOrder = renderOrder;
+      if (!prepare || !(node instanceof THREE.Mesh)) return;
+      for (const mat of [node.material].flat()) {
+        if (mat instanceof THREE.MeshStandardMaterial) prepare(mat);
+      }
     });
     applyStoneFade(object, opacity.current, envBoost.current);
-  }, [object, opacity, envBoost, renderOrder]);
+  }, [object, opacity, envBoost, renderOrder, prepare]);
 
   useFrame(() => {
     applyStoneFade(object, opacity.current, envBoost.current);
@@ -220,7 +227,7 @@ function StoneMesh({
   );
 }
 
-function DustBurst({ nonce, mode }: { nonce: number; mode: BurstMode }) {
+export function DustBurst({ nonce, mode }: { nonce: number; mode: BurstMode }) {
   const points = useRef<THREE.Points>(null);
   const texture = useMemo(() => makeGritTexture(), []);
   const sim = useMemo(() => {
@@ -373,7 +380,7 @@ function DustBurst({ nonce, mode }: { nonce: number; mode: BurstMode }) {
   );
 }
 
-function ChunkDebris({ nonce, mode }: { nonce: number; mode: BurstMode }) {
+export function ChunkDebris({ nonce, mode }: { nonce: number; mode: BurstMode }) {
   const { scene } = useGLTF(STONE_CHUNKS_GLB);
   const templates = useMemo(() => {
     const meshes: THREE.Mesh[] = [];
@@ -848,23 +855,103 @@ function StoneRig({
   );
 }
 
-export default function StoneHero() {
-  const scrollProgress = useRef(0);
+/**
+ * Three chips polish the stone; a click on the polished stone crumbles it back
+ * to rough. `onSwap` runs whenever the visible mesh changes.
+ */
+export function useChipCycle(polishedUrl: string, onSwap: () => void) {
   const busy = useRef(false);
   const timers = useRef<number[]>([]);
-  const [reducedMotion, setReducedMotion] = useState(false);
-  const [webglOk, setWebglOk] = useState(true);
+  const onSwapRef = useRef(onSwap);
+  onSwapRef.current = onSwap;
   const [gem, setGem] = useState(false);
   const [chips, setChips] = useState(0);
   const [shakeKind, setShakeKind] = useState<ShakeKind>('chip');
   const [shakeNonce, setShakeNonce] = useState(0);
   const [burstMode, setBurstMode] = useState<BurstMode>('strike');
   const [burstNonce, setBurstNonce] = useState(0);
+
+  useEffect(
+    () => () => {
+      for (const id of timers.current) window.clearTimeout(id);
+    },
+    [],
+  );
+
+  const chip = useCallback(() => {
+    if (busy.current) return;
+
+    if (gem) {
+      busy.current = true;
+      setShakeKind('crumble');
+      setShakeNonce((n) => n + 1);
+      setBurstMode('crumble');
+      setBurstNonce((n) => n + 1);
+      setGem(false);
+      setChips(0);
+      onSwapRef.current();
+      const done = window.setTimeout(() => {
+        busy.current = false;
+      }, SHAKE_CRUMBLE_MS);
+      timers.current.push(done);
+      return;
+    }
+
+    void Promise.resolve(useGLTF.preload(polishedUrl));
+    setChips((count) => {
+      const next = count + 1;
+      if (next >= CHIPS_TO_POLISH) {
+        busy.current = true;
+        setShakeKind('strike');
+        setShakeNonce((n) => n + 1);
+        const impact = window.setTimeout(() => {
+          setBurstMode('strike');
+          setBurstNonce((n) => n + 1);
+          setGem(true);
+          onSwapRef.current();
+        }, STRIKE_IMPACT_MS);
+        const done = window.setTimeout(() => {
+          busy.current = false;
+        }, SHAKE_STRIKE_MS);
+        timers.current.push(impact, done);
+      } else {
+        setShakeKind('chip');
+        setShakeNonce((n) => n + 1);
+        setBurstMode('chip');
+        setBurstNonce((n) => n + 1);
+      }
+      return next;
+    });
+  }, [gem, polishedUrl]);
+
+  const reset = useCallback(() => {
+    setGem(false);
+    setChips(0);
+  }, []);
+
+  return { gem, chips, shakeKind, shakeNonce, burstMode, burstNonce, chip, reset };
+}
+
+export default function StoneHero() {
+  const scrollProgress = useRef(0);
+  const [reducedMotion, setReducedMotion] = useState(false);
+  const [webglOk, setWebglOk] = useState(true);
   const [hovering, setHovering] = useState(false);
   const [dragging, setDragging] = useState(false);
   const [pressing, setPressing] = useState(false);
-  const [stoneSet, setStoneSet] = useState<StoneSet>('a');
+  const homeVersion = useHomeVersion();
+  const stoneSet: StoneSet = homeVersion === 'c' ? 'b' : 'a';
   const stones = STONE_SETS[stoneSet];
+  const {
+    gem,
+    chips,
+    shakeKind,
+    shakeNonce,
+    burstMode,
+    burstNonce,
+    chip,
+    reset: resetChips,
+  } = useChipCycle(stones.polished, () => setHovering(false));
   const hoveringRef = useRef(false);
   const draggingRef = useRef(false);
   const pressingRef = useRef(false);
@@ -964,99 +1051,13 @@ export default function StoneHero() {
       window.removeEventListener('pointermove', onPointerMove);
       window.clearTimeout(preload);
       window.clearTimeout(strikeTimer.current);
-      for (const id of timers.current) window.clearTimeout(id);
     };
   }, []);
 
   useEffect(() => {
-    let lastKey = '';
-    let lastAt = 0;
-
-    const typingInField = (target: EventTarget | null) => {
-      if (!(target instanceof HTMLElement)) return false;
-      const tag = target.tagName;
-      return tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT' || target.isContentEditable;
-    };
-
-    const onSwapKeys = (event: KeyboardEvent) => {
-      if (event.metaKey || event.ctrlKey || event.altKey || event.repeat) return;
-      if (typingInField(event.target)) return;
-
-      const key = event.key.toLowerCase();
-      if (key !== 'a' && key !== 'b') {
-        lastKey = '';
-        return;
-      }
-
-      if (key === 'b') {
-        void Promise.resolve(useGLTF.preload(STONE_SETS.b.rough));
-        void Promise.resolve(useGLTF.preload(STONE_SETS.b.polished));
-      }
-
-      const now = performance.now();
-      const doubled = key === lastKey && now - lastAt < DOUBLE_TAP_MS;
-      lastKey = key;
-      lastAt = now;
-      if (!doubled) return;
-
-      event.preventDefault();
-      lastKey = '';
-      const next: StoneSet = key === 'b' ? 'b' : 'a';
-      setStoneSet((prev) => (prev === next ? prev : next));
-      setGem(false);
-      setChips(0);
-      setHovering(false);
-    };
-
-    window.addEventListener('keydown', onSwapKeys);
-    return () => window.removeEventListener('keydown', onSwapKeys);
-  }, []);
-
-  const chip = useCallback(() => {
-    if (busy.current) return;
-
-    if (gem) {
-      busy.current = true;
-      setShakeKind('crumble');
-      setShakeNonce((n) => n + 1);
-      setBurstMode('crumble');
-      setBurstNonce((n) => n + 1);
-      setGem(false);
-      setChips(0);
-      setHovering(false);
-      const done = window.setTimeout(() => {
-        busy.current = false;
-      }, SHAKE_CRUMBLE_MS);
-      timers.current.push(done);
-      return;
-    }
-
-    void Promise.resolve(useGLTF.preload(stones.polished));
-    setChips((count) => {
-      const next = count + 1;
-      if (next >= CHIPS_TO_POLISH) {
-        busy.current = true;
-        setShakeKind('strike');
-        setShakeNonce((n) => n + 1);
-        const impact = window.setTimeout(() => {
-          setBurstMode('strike');
-          setBurstNonce((n) => n + 1);
-          setGem(true);
-          setHovering(false);
-        }, STRIKE_IMPACT_MS);
-        const done = window.setTimeout(() => {
-          busy.current = false;
-        }, SHAKE_STRIKE_MS);
-        timers.current.push(impact, done);
-      } else {
-        setShakeKind('chip');
-        setShakeNonce((n) => n + 1);
-        setBurstMode('chip');
-        setBurstNonce((n) => n + 1);
-      }
-      return next;
-    });
-  }, [gem, stones.polished]);
+    resetChips();
+    setHovering(false);
+  }, [stoneSet, resetChips]);
 
   const onKeyDown = (event: { key: string; preventDefault: () => void }) => {
     if (event.key === 'Enter' || event.key === ' ') {
@@ -1065,7 +1066,8 @@ export default function StoneHero() {
     }
   };
 
-  const show3d = webglOk && !reducedMotion;
+  const show3d =
+    webglOk && !reducedMotion && (homeVersion === 'b' || homeVersion === 'c');
   const label = gem
     ? 'Polished stone. Activate to restore the rough stone.'
     : chips === 0

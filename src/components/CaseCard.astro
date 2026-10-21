@@ -4,21 +4,23 @@ import { withBase } from '../lib/paths';
 
 interface Props {
   item: CaseStudy;
+  lead?: boolean;
 }
 
-const { item } = Astro.props;
+const { item, lead = false } = Astro.props;
 const cover = item.cover;
 const tags = item.tags.slice(0, 3);
 const mediaStyle = [
   item.field ? `--cover-field: var(--field-${item.field})` : '',
   cover?.position ? `--cover-pos: ${cover.position}` : '',
   cover?.scale ? `--cover-scale: ${cover.scale}` : '',
+  cover?.fit ? `--cover-fit: ${cover.fit}` : '',
 ]
   .filter(Boolean)
   .join('; ');
 ---
 
-<a class="case-card" href={withBase(`/work/${item.slug}`)}>
+<a class:list={['case-card', lead && 'case-card--lead']} href={withBase(`/work/${item.slug}`)}>
   <div
     class:list={[
       'case-card__media',
@@ -61,7 +63,9 @@ const mediaStyle = [
       }
     </div>
   </div>
-  <h3 class="case-card__title">{item.title}</h3>
+  <h3 class="case-card__title">
+    <span>{item.title}</span>
+  </h3>
   <ul class="case-card__tags" aria-label="Tags">
     {tags.map((tag) => (
       <li>{tag}</li>

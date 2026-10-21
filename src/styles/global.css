@@ -176,15 +176,23 @@ p:last-child {
   align-items: center;
   gap: 0.15rem 0.2rem;
   font-family: var(--font-ui);
-  font-size: 0.9rem;
+  font-size: 16px;
   font-weight: 560;
 }
 
-.nav__link {
+.nav__link,
+.chip {
+  display: inline-block;
   text-decoration: none;
   color: var(--ink);
-  padding: 0.4rem 0.8rem;
-  border-radius: var(--radius-pill);
+  padding: 8px;
+  border-radius: 0;
+  overflow: visible;
+  font-family: var(--font-ui);
+  font-size: 16px;
+  font-weight: 560;
+  line-height: 0.7;
+  text-box: trim-both cap alphabetic;
   transition: background 160ms ease, color 160ms ease;
 }
 
@@ -192,14 +200,18 @@ p:last-child {
   display: none;
 }
 
-.nav__link:hover {
-  color: var(--ink);
-  background: var(--accent-dim);
+.nav__link:hover,
+.nav__link:focus-visible,
+.chip:hover,
+.chip:focus-visible {
+  color: var(--bg);
+  background: var(--ink);
+  outline: none;
 }
 
 .nav__link--current,
 .nav__link[aria-current='page'] {
-  background: var(--stone);
+  background: var(--ink);
   color: var(--bg);
 }
 
@@ -546,13 +558,13 @@ p:last-child {
 }
 
 .section__eyebrow {
-  font-family: var(--font-ui);
-  font-size: 0.8rem;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--ink-faint);
-  margin: 0 0 var(--space-2);
+  font-family: var(--font-mono);
+  font-size: clamp(0.72rem, 0.8vw, 0.86rem);
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--ink);
+  margin: 0 0 var(--space-5);
 }
 
 .section__title {
@@ -574,10 +586,10 @@ p:last-child {
 }
 
 .section__close {
-  margin: var(--space-8) 0 0;
-  padding-top: var(--space-6);
-  border-top: 1px solid var(--line);
-  text-align: center;
+  margin: var(--space-7) 0 0;
+  padding-top: 0;
+  border-top: none;
+  text-align: left;
 }
 
 .case-grid {
@@ -593,6 +605,24 @@ p:last-child {
   .case-grid--compact {
     grid-template-columns: repeat(2, 1fr);
   }
+
+  .case-grid--home {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .case-grid--home > :first-child {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (min-width: 900px) {
+  .case-grid--home {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .case-grid--home > :first-child {
+    grid-column: 1 / -1;
+  }
 }
 
 .case-card {
@@ -605,19 +635,19 @@ p:last-child {
   color: inherit;
 }
 
+.case-card:focus-visible {
+  outline: 2px solid var(--stone);
+  outline-offset: 3px;
+}
+
 .case-card__media {
   display: block;
   aspect-ratio: 3 / 2;
   overflow: hidden;
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
+  border: none;
+  border-radius: 0;
   background: var(--cover-field, var(--bg-stone));
   padding: clamp(0.75rem, 5.5%, 1.35rem);
-  transition: border-color 200ms ease;
-}
-
-.case-card__media--mineral {
-  border-color: color-mix(in srgb, var(--cover-field) 72%, var(--stone));
 }
 
 .case-card__media--video {
@@ -641,11 +671,10 @@ p:last-child {
   display: block;
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: var(--cover-fit, cover);
   object-position: var(--cover-pos, center);
   transform: scale(var(--cover-scale, 1));
   transform-origin: var(--cover-pos, center);
-  transition: transform 400ms ease;
 }
 
 .case-card__media--video img,
@@ -653,8 +682,8 @@ p:last-child {
   display: block;
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  object-position: center;
+  object-fit: var(--cover-fit, cover);
+  object-position: var(--cover-pos, center);
   transform: none;
 }
 
@@ -672,48 +701,54 @@ p:last-child {
   visibility: visible;
 }
 
-.case-card:hover {
-  color: var(--ink);
-}
-
-.case-card:hover .case-card__media {
-  border-color: color-mix(in srgb, var(--stone) 28%, var(--line));
-}
-
-.case-card:hover .case-card__media--mineral {
-  border-color: color-mix(in srgb, var(--cover-field) 55%, var(--stone));
-}
-
-.case-card:hover:not(:has(video)) .case-card__media img {
-  transform: scale(calc(var(--cover-scale, 1) * 1.03));
-}
-
 .case-card__title {
-  font-size: 1.2rem;
+  font-family: var(--font-display);
+  font-size: clamp(1.2rem, 1.8vw, 1.55rem);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1.2;
   margin: 0;
-  line-height: 1.25;
+}
+
+.case-card--lead .case-card__title {
+  font-size: clamp(1.5rem, 2.6vw, 2.15rem);
+}
+
+.case-card__title span {
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+  padding: 8px;
+  line-height: 0.7;
+  text-box: trim-both cap alphabetic;
+  transition: background 160ms ease, color 160ms ease;
+}
+
+.case-card:hover .case-card__title span,
+.case-card:focus-visible .case-card__title span {
+  background: var(--ink);
+  color: var(--bg);
 }
 
 .case-card__tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.35rem 0;
+  gap: 0.2rem 0;
   margin: 0;
-  padding: 0;
+  padding: 0 0 0 8px;
   list-style: none;
-  font-family: var(--font-ui);
-  font-size: 0.72rem;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--ink-faint);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--ink);
 }
 
 .case-card__tags li:not(:last-child)::after {
-  content: '|';
+  content: '·';
   margin: 0 0.45em;
   font-weight: 400;
-  color: var(--line);
+  color: var(--ink-muted);
 }
 
 .tag-row {
@@ -737,6 +772,10 @@ p:last-child {
 .page-hero {
   padding: var(--space-8) 0 var(--space-6);
   animation: rise 600ms ease both;
+}
+
+.page-hero .section__eyebrow {
+  margin-bottom: var(--space-2);
 }
 
 .page-hero h1 {
@@ -1506,6 +1545,55 @@ html[data-home='a'].home-scrolled .site-header .nav {
     transform 280ms ease;
 }
 
+@media (max-width: 899px) {
+  :root {
+    --bottom-nav-h: calc(96px + env(safe-area-inset-bottom, 0px));
+  }
+
+  .brand__lockup {
+    height: 1.7rem;
+  }
+
+  .site-header__inner {
+    justify-content: flex-start;
+  }
+
+  /*
+   * App-style tab bar. Stays on screen so the lockup can keep the wordmark
+   * at the top without the links wrapping.
+   */
+  .nav,
+  html[data-home='a'] .site-header .nav,
+  html[data-home='a'].home-scrolled .site-header .nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 50;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0;
+    width: 100%;
+    margin: 0;
+    padding: 24px 24px calc(40px + env(safe-area-inset-bottom, 0px));
+    background: var(--bg);
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    transition: none;
+  }
+
+  .site-footer {
+    padding-bottom: calc(var(--space-8) + var(--bottom-nav-h));
+  }
+
+  .hero {
+    padding-bottom: var(--bottom-nav-h);
+  }
+}
+
 /*
  * Stacking: the text sits under the stone (z 1), the stone canvas paints the
  * cream copy of the text where they overlap (z 2), and a hovered link lifts
@@ -1555,32 +1643,9 @@ html[data-home='a'].home-scrolled .site-header .nav {
   position: relative;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   min-height: calc(100svh - var(--header-h));
-  padding: clamp(2.5rem, 9svh, 6.5rem) 0 clamp(3rem, 12svh, 8rem);
-}
-
-.knockout-hero__copy {
-  position: relative;
-  z-index: 1;
-  max-width: 24rem;
-}
-
-.knockout-hero__headline {
-  font-family: var(--font-display);
-  font-size: clamp(1rem, 1.3vw, 1.4rem);
-  font-weight: 600;
-  letter-spacing: -0.02em;
-  line-height: 1.25;
-  margin: 0 0 0.6rem;
-  max-width: 17em;
-}
-
-.knockout-hero__lede {
-  font-family: var(--font-ui);
-  font-size: clamp(0.78rem, 0.8vw, 0.9rem);
-  font-weight: 500;
-  line-height: 1.45;
-  max-width: 26em;
+  padding: clamp(2rem, 6svh, 4rem) 0 clamp(5rem, 14svh, 9rem);
 }
 
 .knockout-hero__nav {
@@ -1588,20 +1653,23 @@ html[data-home='a'].home-scrolled .site-header .nav {
   flex-direction: column;
   align-items: flex-start;
   gap: calc(var(--knockout-hero-word) * 0.16);
-  margin-top: clamp(2rem, 7svh, 5rem);
 }
 
 .knockout-hero__link {
   position: relative;
   z-index: 1;
   display: inline-block;
-  margin-left: -0.2em;
-  padding: 0.04em 0.2em 0.1em;
+  /* Pull the 32px side padding back so the letters keep their left edge. */
+  margin-left: -32px;
+  padding: 14px 32px;
+  overflow: visible;
   font-family: var(--font-display);
   font-size: var(--knockout-hero-word);
   font-weight: 600;
   letter-spacing: -0.035em;
-  line-height: 0.92;
+  /* Fallback: a cap-height line box so the Y hangs out of the chip. */
+  line-height: 0.7;
+  text-box: trim-both cap alphabetic;
   color: var(--ink);
   text-decoration: none;
   white-space: nowrap;
@@ -1615,28 +1683,33 @@ html[data-home='a'].home-scrolled .site-header .nav {
   outline: none;
 }
 
-.knockout-hero__quote {
-  position: relative;
-  z-index: 1;
-  align-self: flex-end;
-  margin: var(--space-4) 0 0;
+/* A specimen label at the base of the stone: above the canvas, never knocked out. */
+.knockout-hero__caption {
+  position: absolute;
+  right: 0;
+  bottom: clamp(1.5rem, 5svh, 3rem);
+  z-index: 3;
+  margin: 0;
+  padding: 0.55em 0.8em 0.6em;
+  background: var(--bg);
   font-family: var(--font-mono);
-  font-size: clamp(0.68rem, 0.75vw, 0.82rem);
-  line-height: 1.6;
-  text-align: right;
+  font-size: clamp(0.72rem, 0.8vw, 0.86rem);
+  line-height: 1.55;
   color: var(--ink);
 }
 
-.knockout-hero__quote p {
+.knockout-hero__caption blockquote,
+.knockout-hero__caption p {
   margin: 0;
 }
 
-.knockout-hero__quote-line {
+.knockout-hero__caption-line {
   display: block;
   white-space: nowrap;
 }
 
-.knockout-hero__quote-by {
+.knockout-hero__caption figcaption {
+  margin-top: 0.15em;
   font-weight: 500;
 }
 
@@ -1645,8 +1718,19 @@ html[data-home='a'].home-scrolled .site-header .nav {
     --knockout-hero-word: clamp(3rem, 16vw, 6rem);
   }
 
-  .knockout-hero__quote {
-    margin-top: var(--space-6);
+  .knockout-hero__inner {
+    padding-bottom: calc(var(--bottom-nav-h) + 2rem);
+  }
+
+  .knockout-hero__caption {
+    font-size: 0.7rem;
+    bottom: calc(var(--bottom-nav-h) + 0.75rem);
+    left: 0;
+    right: auto;
+  }
+
+  .knockout-hero__caption-line {
+    white-space: normal;
   }
 }
 
@@ -1667,12 +1751,7 @@ html[data-home='a'].home-scrolled .site-header .nav {
     animation: none;
   }
 
-  .case-card:hover,
   .btn:hover {
     transform: none;
-  }
-
-  .case-card:hover:not(:has(video)) .case-card__media img {
-    transform: scale(var(--cover-scale, 1));
   }
 }

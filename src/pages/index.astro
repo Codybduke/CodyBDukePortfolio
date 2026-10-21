@@ -40,18 +40,12 @@ import { withBase } from '../lib/paths';
   </section>
 
   <section class="section shell" id="selected-work" aria-labelledby="selected-heading">
-    <div class="section__head">
-      <div>
-        <p class="section__eyebrow">Selected work</p>
-        <h2 class="section__title" id="selected-heading">Four cases that carry the story</h2>
-      </div>
-      <a class="section__link" href={withBase('/work')}>View all work →</a>
-    </div>
-    <div class="case-grid case-grid--compact">
-      {highlights.map((item) => <CaseCard item={item} />)}
+    <h2 class="section__eyebrow" id="selected-heading">Selected work</h2>
+    <div class="case-grid case-grid--home">
+      {highlights.map((item, i) => <CaseCard item={item} lead={i === 0} />)}
     </div>
     <p class="section__close">
-      <a class="section__link" href={withBase('/work')}>View all work →</a>
+      <a class="chip" href={withBase('/work')}>View all work</a>
     </p>
   </section>
 </BaseLayout>

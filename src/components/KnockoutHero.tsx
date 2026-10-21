@@ -44,6 +44,12 @@ const DRAG_PITCH_PER_PX = 0.008;
 const DITHER_CELL_CSS_PX = 1.5;
 /** 0 is the plain render, 1 is pure two-tone dither. */
 const DITHER_MIX = 1;
+/** Scales luminance before dither. 1 is the lit mesh; lower prints more ink. */
+const ROUGH_DITHER_GAIN = 0.52;
+/** Multiply filter on the dithered stone. (1,1,1) is off. */
+const STONE_MULTIPLY = new THREE.Vector3(0.7, 0.69, 0.64);
+/** Contrast around mid-grey. 1 is unchanged; 1.15 is plus fifteen percent. */
+const ROUGH_CONTRAST = 1.15;
 const noop = () => {};
 
 const links = [
@@ -53,9 +59,8 @@ const links = [
 ] as const;
 
 const quoteLines = [
-  '“Man cannot remake himself',
-  'without suffering, for he',
-  'is both the marble and the',
+  '“Man cannot remake himself without suffering,',
+  'for he is both the marble and the sculptor.”',
 ];
 
 type Motion = {
@@ -97,6 +102,9 @@ const stoneUniforms = {
 const stoneHeader = /* glsl */ `
   uniform float uDitherCell;
   uniform float uDitherMix;
+  uniform float uDitherGain;
+  uniform float uContrast;
+  uniform vec3 uMultiply;
   uniform vec3 uInk;
   uniform vec3 uPaper;
   uniform sampler2D uKnockMap;
@@ -113,10 +121,11 @@ const stoneHeader = /* glsl */ `
  * paper over dark stone, ink over bright veins and highlights.
  */
 const stoneBody = /* glsl */ `
-  float stoneLum = dot(gl_FragColor.rgb, vec3(0.2126, 0.7152, 0.0722));
+  gl_FragColor.rgb = clamp((gl_FragColor.rgb - 0.5) * uContrast + 0.5, 0.0, 1.0);
+  float stoneLum = dot(gl_FragColor.rgb, vec3(0.2126, 0.7152, 0.0722)) * uDitherGain;
   float ditherT = ditherBayer8(floor(gl_FragCoord.xy / uDitherCell)) + 0.5 / 64.0;
   vec3 ditherTone = stoneLum > ditherT ? uPaper : uInk;
-  vec3 stoneTone = mix(gl_FragColor.rgb, ditherTone, uDitherMix);
+  vec3 stoneTone = mix(gl_FragColor.rgb, ditherTone, uDitherMix) * uMultiply;
   vec2 knockUv = (gl_FragCoord.xy - uKnockRect.xy) / uKnockRect.zw;
   float knock = 0.0;
   if (uKnockOn > 0.5 && knockUv.x >= 0.0 && knockUv.y >= 0.0 && knockUv.x <= 1.0 && knockUv.y <= 1.0) {
@@ -126,9 +135,19 @@ const stoneBody = /* glsl */ `
   gl_FragColor.rgb = mix(stoneTone, knockTone, knock);
 `;
 
-function prepareStone(mat: THREE.MeshStandardMaterial) {
+function prepareStone(
+  mat: THREE.MeshStandardMaterial,
+  ditherGain = 1,
+  multiply = new THREE.Vector3(1, 1, 1),
+  contrast = 1,
+) {
+  const locals = {
+    uDitherGain: { value: ditherGain },
+    uContrast: { value: contrast },
+    uMultiply: { value: multiply.clone() },
+  };
   mat.onBeforeCompile = (shader) => {
-    Object.assign(shader.uniforms, stoneUniforms);
+    Object.assign(shader.uniforms, stoneUniforms, locals);
     shader.fragmentShader = shader.fragmentShader
       .replace('void main() {', `${stoneHeader}\nvoid main() {`)
       .replace('#include <dithering_fragment>', `#include <dithering_fragment>\n${stoneBody}`);
@@ -136,6 +155,11 @@ function prepareStone(mat: THREE.MeshStandardMaterial) {
   mat.customProgramCacheKey = () => 'knockout-hero-stone';
   mat.needsUpdate = true;
 }
+
+const prepareRough = (mat: THREE.MeshStandardMaterial) =>
+  prepareStone(mat, ROUGH_DITHER_GAIN, STONE_MULTIPLY, ROUGH_CONTRAST);
+const preparePolished = (mat: THREE.MeshStandardMaterial) =>
+  prepareStone(mat, 1, STONE_MULTIPLY);
 
 type StoneProps = {
   motion: RefObject<Motion>;
@@ -279,7 +303,7 @@ function Stone({ motion, api, gem, shakeKind, shakeNonce, burstMode, burstNonce 
                     renderOrder={0}
                     dragging={dragging}
                     onHoverChange={noop}
-                    prepare={prepareStone}
+                    prepare={prepareRough}
                   />
                 </Suspense>
                 <Suspense fallback={null}>
@@ -290,7 +314,7 @@ function Stone({ motion, api, gem, shakeKind, shakeNonce, burstMode, burstNonce 
                     renderOrder={1}
                     dragging={dragging}
                     onHoverChange={noop}
-                    prepare={prepareStone}
+                    prepare={preparePolished}
                   />
                 </Suspense>
               </group>
@@ -655,11 +679,6 @@ export default function KnockoutHero() {
         <h1 className="sr-only" id="knockout-hero-title">
           {site.name}, product designer
         </h1>
-        <div className="knockout-hero__copy">
-          <p className="knockout-hero__headline">{site.headline}</p>
-          <p className="knockout-hero__lede">{site.oneLiner}</p>
-        </div>
-
         <nav className="knockout-hero__nav" aria-label="Main menu">
           {links.map((link) => (
             <a
@@ -673,23 +692,18 @@ export default function KnockoutHero() {
           ))}
         </nav>
 
-        <blockquote className="knockout-hero__quote">
-          <p>
-            {quoteLines.map((line) => (
-              <span key={line}>
-                <span className="knockout-hero__quote-line" data-knockout>
-                  {line}
-                </span>{' '}
-              </span>
-            ))}
-            <span className="knockout-hero__quote-line">
-              <span data-knockout>sculptor.” </span>
-              <span className="knockout-hero__quote-by" data-knockout>
-                – Alexis Carrel
-              </span>
-            </span>
-          </p>
-        </blockquote>
+        <figure className="knockout-hero__caption">
+          <blockquote>
+            <p>
+              {quoteLines.map((line) => (
+                <span key={line} className="knockout-hero__caption-line">
+                  {line}{' '}
+                </span>
+              ))}
+            </p>
+          </blockquote>
+          <figcaption>– Alexis Carrel</figcaption>
+        </figure>
       </div>
     </section>
   );

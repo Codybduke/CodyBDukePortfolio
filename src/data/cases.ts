@@ -9,6 +9,8 @@ export type CaseCover = {
   position?: string;
   /** Extra zoom on the crop. 1 = none. */
   scale?: number;
+  /** How the cover sits in the plate. Default cover. */
+  fit?: 'cover' | 'contain';
 };
 
 /** Cut-face mineral field for tiles and later case bands */

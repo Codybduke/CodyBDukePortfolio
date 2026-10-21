@@ -25,6 +25,8 @@ export type ResumeContent = {
   profileLede?: string;
   profile: string;
   skills: string[];
+  /** Extra skills on the two-column resume only. Shown after the first skill. */
+  railSkills?: string[];
   education: {
     degree: string;
     school: string;
@@ -1229,11 +1231,13 @@ const weaveResume: ResumeContent = {
   profile:
     'I take a setup people already have to live in and make it more capable without making it harder. I research with the people who run it and with product analytics, design the user flows through the edge and error states, and stay with engineering until the pattern ships and the result can be measured.',
   skills: [
-    'Team player',
+    'Collaborative team leader',
     'Systems UX',
     'Complex B2B workflows',
     'UX research and testing',
     'Design thinking',
+    'Product analytics',
+    'User flows',
     'Production data',
     'Prototyping',
     'Cross-team collaboration',
@@ -1241,6 +1245,12 @@ const weaveResume: ResumeContent = {
     'Figma',
     'FigJam',
     'Cursor',
+  ],
+  railSkills: [
+    'Scoping',
+    'Clear writing',
+    'Stakeholder communication',
+    'Remote collaboration',
   ],
   education: {
     degree: 'BFA, Graphic Design',

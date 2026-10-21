@@ -393,12 +393,23 @@ function ProfileSection({ resume }: { resume: ResumeContent }) {
   );
 }
 
-function SkillsSection({ resume }: { resume: ResumeContent }) {
+function SkillsSection({
+  resume,
+  layout = 'columns',
+}: {
+  resume: ResumeContent;
+  layout?: 'columns' | 'single';
+}) {
+  const skills =
+    layout === 'columns' && resume.railSkills?.length
+      ? [resume.skills[0], ...resume.railSkills, ...resume.skills.slice(1)]
+      : resume.skills;
+
   return (
     <section>
       <h2>Skills</h2>
       <ul className="resume__skills">
-        {resume.skills.map((skill) => (
+        {skills.map((skill) => (
           <li key={skill}>{skill}</li>
         ))}
       </ul>
@@ -507,7 +518,7 @@ function ResumeView({
         {contact}
         <div className="resume__flow">
           <ProfileSection resume={resume} />
-          <SkillsSection resume={resume} />
+          <SkillsSection resume={resume} layout="single" />
           <EducationSection resume={resume} inline />
           <ExperienceSection resume={resume} />
         </div>
@@ -522,7 +533,7 @@ function ResumeView({
       <div className="resume__body">
         <aside className="resume__rail">
           <ProfileSection resume={resume} />
-          <SkillsSection resume={resume} />
+          <SkillsSection resume={resume} layout="columns" />
           <EducationSection resume={resume} />
         </aside>
 

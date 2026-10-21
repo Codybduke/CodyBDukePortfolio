@@ -293,7 +293,7 @@ export const weaveAtsResume: AtsResumeContent = {
     },
   ],
   skills:
-    'Team player, Design thinking, Systems UX, Complex B2B workflows, Product analytics, User flows, UX research and testing, Prototyping, Visual craft, Figma',
+    'Collaborative team leader, Design thinking, Systems UX, Complex B2B workflows, Product analytics, User flows, UX research and testing, Prototyping, Visual craft, Figma',
 };
 
 export function getAtsResume(companyId?: string | null): AtsResumeContent {

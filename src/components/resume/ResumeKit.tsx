@@ -71,7 +71,7 @@ export default function ResumeKit({
   email,
   linkedin,
   portfolioHref,
-  initialCompanyId = 'general',
+  initialCompanyId = 'weave',
   initialDoc = 'resume',
 }: Props) {
   const menuTitleId = useId();

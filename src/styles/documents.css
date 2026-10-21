@@ -248,6 +248,22 @@ h1 {
   color: var(--resume-muted);
 }
 
+.doc-header__role:has(.doc-header__dot) {
+  gap: 0;
+}
+
+.doc-header__role:has(.doc-header__dot) .doc-header__role-name {
+  margin-right: -0.22em;
+}
+
+.doc-header__dot {
+  padding-inline: 0.45em;
+  letter-spacing: 0;
+  text-transform: none;
+  font-weight: 400;
+  line-height: 1;
+}
+
 .doc-header__tenure {
   letter-spacing: 0;
   text-transform: none;
@@ -317,12 +333,146 @@ h2 {
   white-space: pre-line;
 }
 
+.resume__profile-title {
+  margin: 0 0 0.35rem;
+  font-family: var(--font-ui);
+  font-size: 0.84rem;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.resume:not(.resume--single) .resume__profile--plain {
+  padding-top: 0.7rem;
+}
+
 .resume__rail section + section,
-.resume__main .job + .job {
+.resume__main .job + .job,
+.resume--single .job + .job {
   margin-top: 0.32in;
 }
 
+.resume__main .job + .job.job--continued,
+.resume--single .job + .job.job--continued {
+  margin-top: 0.16in;
+}
+
+.job__employer {
+  margin: 0 0 0.28rem;
+  font-family: var(--font-ui);
+  font-size: 0.92rem;
+  font-weight: 700;
+}
+
+.job--progression h3 {
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.resume--single {
+  padding-left: 1in;
+  padding-right: 1in;
+}
+
+.resume--single .doc-header {
+  padding-bottom: 0.16in;
+}
+
+.resume--single .job__head {
+  justify-content: flex-start;
+  gap: 0.85rem;
+}
+
+.resume--single .job__dates {
+  font-size: 0.74rem !important;
+}
+
+.job__place::before {
+  content: '·';
+  margin: 0 0.4rem;
+  font-weight: 400;
+}
+
+.resume--single h2 {
+  margin-bottom: 0.4rem;
+  padding-top: 0;
+  border-top: 0;
+}
+
+.resume--single .resume__flow > section + section,
+.resume--single.resume--ranked .resume__flow > section + section,
+.resume--single.resume--ranked .resume__flow > .resume__experience {
+  margin-top: 0.22in;
+}
+
+.resume--single.resume--ranked .job + .job {
+  margin-top: 0.16in;
+}
+
+.resume--single.resume--ranked .job li {
+  margin-bottom: 0.18rem;
+}
+
+.resume--single .resume__profile p {
+  font-size: 0.9rem;
+  line-height: 1.48;
+}
+
+.resume--single .resume__skills {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  row-gap: 0.28rem;
+}
+
+.resume--single .resume__skills li {
+  margin: 0;
+}
+
+.resume--single .resume__skills li:not(:last-child)::after {
+  content: '·';
+  margin: 0 0.55rem;
+  color: var(--resume-muted);
+  font-weight: 400;
+}
+
+.resume--single .resume__school {
+  margin: 0;
+  font-size: 0.84rem !important;
+  line-height: 1.45 !important;
+}
+
+.resume__systems {
+  margin: 0.55rem 0 0;
+  font-family: var(--font-ui);
+  font-size: 0.78rem;
+  font-weight: 500;
+  line-height: 1.45;
+}
+
+.resume__systems span {
+  margin-right: 0.55rem;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--resume-muted);
+}
+
+.resume__school--line {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+}
+
+.resume__school--line > * + *::before {
+  content: '·';
+  margin: 0 0.55rem;
+  color: var(--resume-muted);
+  font-weight: 400;
+}
+
 .resume__rail p,
+.resume__profile p,
 .job p {
   margin: 0 0 0.42rem;
   font-size: 0.84rem;
@@ -330,6 +480,7 @@ h2 {
 }
 
 .resume__rail p:last-child,
+.resume__profile p:last-child,
 .job p:last-child {
   margin-bottom: 0;
 }
@@ -368,14 +519,25 @@ strong {
 
 .job ul {
   margin: 0.16rem 0 0;
-  padding: 0 0 0 0.95rem;
+  padding: 0;
+  list-style: none;
 }
 
 .job li {
+  position: relative;
   font-family: var(--font-body);
   font-size: 0.84rem;
   line-height: 1.42;
   margin: 0 0 0.62rem;
+}
+
+.job li::before {
+  content: '•';
+  position: absolute;
+  top: 0;
+  right: calc(100% + 0.45em);
+  font-family: var(--font-body);
+  line-height: inherit;
 }
 
 .job li:last-child {
@@ -636,6 +798,12 @@ strong {
     display: block;
   }
 
+  .resume--single .job__head {
+    display: flex;
+    justify-content: flex-start;
+    gap: 0.75rem;
+  }
+
   .doc-header address {
     text-align: left;
     margin-top: 1rem;
@@ -654,6 +822,11 @@ strong {
   .resume__rail > section:first-child > h2,
   .resume__main > section:first-child > h2 {
     border-top: 1px solid var(--resume-line);
+  }
+
+  .resume--single h2 {
+    border-top: 0;
+    padding-top: 0;
   }
 
   .resume__main {

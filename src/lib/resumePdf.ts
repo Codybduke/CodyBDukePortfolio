@@ -10,7 +10,7 @@ export function resumePdfPath(id: string, doc: DocKind): string {
 }
 
 export function resumePdfDownloadName(_application: Application, doc: DocKind): string {
-  return doc === 'letter'
-    ? 'Cody Duke Product Design Cover Letter.pdf'
-    : 'Cody Duke Product Design Resume.pdf';
+  if (doc === 'letter') return 'Cody Duke Product Design Cover Letter.pdf';
+  if (doc === 'single') return 'Cody Duke Product Design Resume Single Column.pdf';
+  return 'Cody Duke Product Design Resume.pdf';
 }

@@ -1,4 +1,4 @@
-export type DocKind = 'resume' | 'letter' | 'ats';
+export type DocKind = 'resume' | 'single' | 'letter' | 'ats';
 
 export type Job = {
   company: string;
@@ -6,6 +6,11 @@ export type Job = {
   title: string;
   summary?: string;
   bullets: string[];
+  /**
+   * Splits one employer into ranks. `lead` prints the company once.
+   * `rank` is a later title at that same company.
+   */
+  progression?: 'lead' | 'rank';
 };
 
 export type ResumeContent = {
@@ -13,8 +18,10 @@ export type ResumeContent = {
   /** Sits to the right of the role in the header. */
   tenure?: string;
   location: string;
-  /** Replaces the default "Profile" heading when set. */
+  /** Replaces the default "Profile" heading when set. An empty string omits the heading. */
   profileHeading?: string;
+  /** Bold line above the profile paragraph. Sentence case, not a section label. */
+  profileTitle?: string;
   profileLede?: string;
   profile: string;
   skills: string[];
@@ -1213,6 +1220,92 @@ const stealthStartupResume: ResumeContent = {
   ],
 };
 
+const weaveResume: ResumeContent = {
+  role: 'Senior Product Designer',
+  tenure: '• 10 years',
+  location: 'Pleasant Grove, Utah, open to remote',
+  profileHeading: '',
+  profileTitle: 'More capability, without more complexity',
+  profile:
+    'I take a setup people already have to live in and make it more capable without making it harder. I research with the people who run it and with product analytics, design the user flows through the edge and error states, and stay with engineering until the pattern ships and the result can be measured.',
+  skills: [
+    'Team player',
+    'Systems UX',
+    'Complex B2B workflows',
+    'UX research and testing',
+    'Design thinking',
+    'Production data',
+    'Prototyping',
+    'Cross-team collaboration',
+    'Visual craft',
+    'Figma',
+    'FigJam',
+    'Cursor',
+  ],
+  education: {
+    degree: 'BFA, Graphic Design',
+    school: 'Brigham Young University–Idaho',
+    year: '2017',
+  },
+  jobs: [
+    {
+      company: 'Entrata',
+      dates: '2025 – 2026',
+      title: 'Product Lead',
+      progression: 'lead',
+      bullets: [
+        'Led a remote team of six engineers as product manager and designer. Owned scope, requirements, and prototypes from discovery through launch.',
+        'Designed a zero-to-one mobile experience for move-in workflows, from the user flows through prototyping. Staff now move a resident in, in real time, instead of re-entering the record later, which cut the work in half.',
+      ],
+    },
+    {
+      company: 'Entrata',
+      dates: '2020 – 2025',
+      title: 'Senior Product Designer',
+      progression: 'rank',
+      bullets: [
+        'Redesigned a complex enterprise setup system and extended its design language without adding complexity. More than 8,000 offers used the new targeting rules within the first couple of months.',
+        'Served as sole designer for projects tied to the company’s largest client. Translated that client’s operational needs into workflows engineering could build.',
+        'Led the team and designed a hackathon-winning AI workflow that reads income documents and autofills affordable-housing certifications, replacing manual entry in a compliance-driven process.',
+      ],
+    },
+    {
+      company: 'Entrata',
+      dates: '2019 – 2020',
+      title: 'Product Designer',
+      progression: 'rank',
+      bullets: [
+        'Redesigned unit inspection and other facilities workflows so staff could finish the job in fewer steps and take on new features.',
+      ],
+    },
+    {
+      company: 'FamilySearch',
+      dates: '2017 – 2019',
+      title: 'UX Designer',
+      bullets: [
+        'Oversaw third-party design so every campaign followed the same tried-and-true loop.',
+        'Led product design of 26 personalized discovery experiences that gave members an entry point and a reason to come back.',
+        'Retained 95% more members and 107% more other users than the previous year. Reached 1.1 million people outside the US and earned 90% positive feedback from 86,000 comments.',
+      ],
+    },
+  ],
+};
+
+const weaveLetter: CoverLetterContent = {
+  role: 'Senior Product Designer',
+  location: 'Pleasant Grove, Utah, open to remote',
+  date: 'October 20, 2026',
+  recipient: 'Weave hiring team',
+  position: 'Senior Product Designer, User Infrastructure',
+  paragraphs: [
+    'I am applying for the Senior Product Designer role on User Infrastructure at Weave. A practice opens Weave on the first morning, and someone has to get the staff signed in, decide who can see what, and keep that true when the business has two locations or a hundred. Often that someone is one person in IT. If the setup fails, they call support. If it holds, the rest of the product can start.',
+    'I have not designed single sign-on, and I have not designed for a dental or veterinary office. I have spent seven years on the same kind of setup. At Entrata I redesigned a complex enterprise system so one offer could carry more than one rule, inside the pattern staff already knew. Within the first couple of months, more than 8,000 offers used the new targeting rules. I also designed a mobile move-in flow so staff could finish while the resident was still there, including when the Wi-Fi was down, instead of re-entering the record later. That cut the work in half.',
+    'For about a year I was product manager and designer with a remote team of six engineers, and I stayed from the problem through ship. I was also the sole designer on projects for the company’s largest client. At FamilySearch I led 26 discovery experiences and worked with outside designers so each one used the same loop.',
+    'I live in Pleasant Grove, so Lehi is a drive I can make, and I am glad to work remotely in the United States. I would welcome the chance to walk you through the work.',
+  ],
+  signoff: 'Sincerely,',
+};
+
 export const applications: Application[] = [
   {
     id: 'general',
@@ -1326,6 +1419,12 @@ export const applications: Application[] = [
     resume: caliberResume,
     coverLetter: caliberLetter,
   },
+  {
+    id: 'weave',
+    label: 'Weave',
+    resume: weaveResume,
+    coverLetter: weaveLetter,
+  },
 ];
 
 export function getApplication(id: string | null | undefined): Application {
@@ -1333,5 +1432,5 @@ export function getApplication(id: string | null | undefined): Application {
 }
 
 export function isDocKind(value: string | null | undefined): value is DocKind {
-  return value === 'resume' || value === 'letter' || value === 'ats';
+  return value === 'resume' || value === 'single' || value === 'letter' || value === 'ats';
 }

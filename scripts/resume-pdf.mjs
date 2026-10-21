@@ -18,7 +18,7 @@ const watchFiles = [
   'src/layouts/PrintDocument.astro',
 ];
 
-const pdfPathPattern = /^\/documents\/cody-duke-([a-z0-9-]+)-(resume|letter)\.pdf$/;
+const pdfPathPattern = /^\/documents\/cody-duke-([a-z0-9-]+)-(resume|single|letter)\.pdf$/;
 
 let browserPromise;
 const pdfCache = new Map();

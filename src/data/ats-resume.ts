@@ -251,10 +251,56 @@ export const stealthAtsResume: AtsResumeContent = {
     'Visual design, Typography, Interaction design, UI design, Prototyping, Design systems, User flows, User research, Usability testing, Figma, AI',
 };
 
+/**
+ * Weave Senior Product Designer scan. The shared resume is the base.
+ * User flows and product analytics each appear in a sentence. Design thinking stays in skills.
+ * Healthcare, Domo, and access management stay off.
+ * Every paragraph stays under 40 words.
+ */
+export const weaveAtsResume: AtsResumeContent = {
+  ...atsResume,
+  headline: 'Senior Product Designer',
+  summary: [
+    'More capability, without more complexity.',
+    'I take a setup people already have to live in and make it more capable without making it harder.',
+    'I research with the people who run it and with product analytics, design the user flows through the edge and error states, and stay with engineering until the pattern ships and the result can be measured.',
+  ],
+  roles: [
+    {
+      ...atsResume.roles[0],
+      overview:
+        'Led a remote team of six engineers as product manager and designer. Owned scope, requirements, and prototypes from discovery through launch.',
+      bullets: [
+        'Designed a zero-to-one mobile experience for move-in workflows, from the user flows through prototyping. Staff now move a resident in, in real time, instead of re-entering the record later, which cut the work in half.',
+      ],
+    },
+    {
+      ...atsResume.roles[1],
+      bullets: [
+        'Redesigned a complex enterprise setup system and extended its design language without adding complexity. More than 8,000 offers used the new targeting rules within the first couple of months.',
+        'Served as sole designer for projects tied to the company’s largest client. Translated that client’s operational needs into workflows engineering could build.',
+        'Led the team and designed a hackathon-winning AI workflow that reads income documents and autofills affordable-housing certifications, replacing manual entry in a compliance-driven process.',
+      ],
+    },
+    atsResume.roles[2],
+    {
+      ...atsResume.roles[3],
+      bullets: [
+        'Oversaw third-party design so every campaign followed the same tried-and-true loop.',
+        'Led product design of 26 personalized discovery experiences that gave members an entry point and a reason to come back.',
+        'Retained 95% more members and 107% more other users than the previous year. Reached 1.1 million people outside the US and earned 90% positive feedback from 86,000 comments.',
+      ],
+    },
+  ],
+  skills:
+    'Team player, Design thinking, Systems UX, Complex B2B workflows, Product analytics, User flows, UX research and testing, Prototyping, Visual craft, Figma',
+};
+
 export function getAtsResume(companyId?: string | null): AtsResumeContent {
   if (companyId === 'enzo-health') return enzoAtsResume;
   if (companyId === 'bamboo-hr') return bambooAtsResume;
   if (companyId === 'stealth-startup') return stealthAtsResume;
+  if (companyId === 'weave') return weaveAtsResume;
   return atsResume;
 }
 
@@ -266,5 +312,6 @@ export function atsDownloadName(resume: AtsResumeContent): string {
   if (resume === enzoAtsResume) return 'Cody Duke Enzo Health ATS Resume.docx';
   if (resume === bambooAtsResume) return 'Cody Duke BambooHR ATS Resume.docx';
   if (resume === stealthAtsResume) return 'Cody Duke Stealth Startup ATS Resume.docx';
+  if (resume === weaveAtsResume) return 'Cody Duke Weave ATS Resume.docx';
   return atsResumeDownloadName;
 }

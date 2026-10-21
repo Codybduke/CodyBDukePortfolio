@@ -26,7 +26,7 @@ fs.mkdirSync(outDir, { recursive: true });
 
 try {
   for (const application of applications) {
-    const docs = application.coverLetter ? ['resume', 'letter'] : ['resume'];
+    const docs = application.coverLetter ? ['resume', 'single', 'letter'] : ['resume', 'single'];
     for (const doc of docs) {
       const pdf = await renderResumePdf({
         origin,

@@ -377,7 +377,7 @@ export const slides: Slide[] = [
     metrics: [
       { value: '95%+', label: 'Same-day completion, from about 21%' },
       { value: '<20s', label: 'Time to process someone at the table, from about 90s' },
-      { value: '−60%', label: 'Overtime re-key, from about 8 hours' },
+      { value: '−60%', label: 'Overtime data entry, from about 8 hours' },
       { value: '30%+', label: 'Share of move-ins done on the device, from about 0%' },
     ],
   },
@@ -446,6 +446,103 @@ export const slides: Slide[] = [
     stage: 'What I learned',
     lead: 'Entrata becomes the record when the write happens in real time.',
     body: 'The spreadsheet was the product they trusted, because it worked where they stood, including when the Wi-Fi was gone. A nicer screen of the desktop flow still leaves the day wrong.',
+    image: cherokee,
+  },
+];
+
+const full = (id: string) => {
+  const slide = slides.find((item) => item.id === id);
+  if (!slide) throw new Error(`Missing slide ${id}`);
+  return slide;
+};
+
+/** 30-minute interview cut. Double-tap B for this list, double-tap A for the full deck. */
+export const slidesB: Slide[] = [
+  {
+    id: 'b-title',
+    layout: 'title',
+    stage: 'OXP Mobile · 2026',
+    title: 'They leave with keys.',
+    lead: 'Entrata still says they never arrived.',
+    image: jeep,
+  },
+  {
+    ...full('line'),
+    id: 'b-line',
+    title: 'Only about 21% were written while they were still there',
+    body: undefined,
+  },
+  {
+    id: 'b-solution',
+    layout: 'chapter',
+    stage: 'Solution',
+    title: 'Search. Readiness. Confirm.',
+    lead: 'In seconds, online or off.',
+  },
+  {
+    id: 'b-search',
+    layout: 'split',
+    stage: 'Solution',
+    title: 'Search leads',
+    bullets: ['They type the name they just heard.'],
+    scene: 'roster',
+  },
+  {
+    id: 'b-confirm',
+    layout: 'split',
+    stage: 'Solution',
+    title: 'Confirm stays short',
+    bullets: ['Glance at the checklist, match a photo ID, confirm.'],
+    scene: 'confirm',
+  },
+  {
+    id: 'b-optional',
+    layout: 'split',
+    stage: 'Solution',
+    title: 'They still move in',
+    bullets: ['Open items become a follow-up after the rush.'],
+    scene: 'morgan',
+  },
+  {
+    id: 'b-required',
+    layout: 'split',
+    stage: 'Solution',
+    title: 'Required stops the line',
+    bullets: ['No override in the first release.'],
+    scene: 'jamie',
+  },
+  {
+    id: 'b-offline',
+    layout: 'split',
+    stage: 'Solution',
+    title: 'Wi-Fi was scarce',
+    bullets: ['The next 30 days are cached. The Offline chip says the write has not reached Entrata.'],
+    scene: 'offline-home',
+  },
+  {
+    ...full('iteration-search'),
+    id: 'b-iteration-search',
+  },
+  {
+    ...full('targets'),
+    id: 'b-targets',
+    stage: 'The bet',
+    title: 'If same-day stays near 21%, the spreadsheet won',
+    body: 'The pilot is not back yet. These are the numbers the flow was built toward.',
+  },
+  {
+    id: 'b-handoff',
+    layout: 'prose',
+    stage: 'Handoff',
+    title: 'Five defects in about 30 minutes',
+    body: 'What left my hands was a SwiftUI package the mobile team could drop into the staff app. They walked the module and made small changes to fit the app.',
+  },
+  {
+    id: 'b-learned',
+    layout: 'statement',
+    stage: 'What I learned',
+    lead: 'The write has to happen where they stand.',
+    body: 'Including when the Wi-Fi is gone. That is when Entrata becomes the record.',
     image: cherokee,
   },
 ];

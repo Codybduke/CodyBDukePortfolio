@@ -1,7 +1,8 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 import {
   slides,
+  slidesB,
   type ComparePair,
   type RingSlice,
   type Slide,
@@ -241,56 +242,203 @@ function SlideContent({ slide }: { slide: Slide }) {
   }
 }
 
+type DeckVersion = 'full' | 'short';
+
+const DECKS: Record<DeckVersion, Slide[]> = { full: slides, short: slidesB };
+const DOUBLE_TAP_MS = 700;
+
+function deckHash(version: DeckVersion, index: number) {
+  return version === 'short' ? `#b${index + 1}` : `#${index + 1}`;
+}
+
+function eraseStrayLetter(event: KeyboardEvent, letter: string) {
+  const target = event.target as HTMLInputElement | HTMLTextAreaElement | null;
+  if (!target || (target.tagName !== 'INPUT' && target.tagName !== 'TEXTAREA')) return;
+  const value = target.value ?? '';
+  if (!value.toLowerCase().endsWith(letter)) return;
+  const view = target.ownerDocument?.defaultView;
+  const ctor = target.tagName === 'TEXTAREA' ? view?.HTMLTextAreaElement : view?.HTMLInputElement;
+  const proto = ctor ? Object.getOwnPropertyDescriptor(ctor.prototype, 'value') : undefined;
+  const next = value.slice(0, -1);
+  if (proto?.set) proto.set.call(target, next);
+  else target.value = next;
+  target.dispatchEvent(new Event('input', { bubbles: true }));
+}
+
 export default function MoveInDeck({ protoSrc }: Props) {
+  const [version, setVersion] = useState<DeckVersion>('full');
   const [index, setIndex] = useState(0);
   const [iframeSrc] = useState(() => labSrc(protoSrc, 'online'));
+  const frameRef = useRef<HTMLIFrameElement>(null);
+  const versionRef = useRef<DeckVersion>('full');
+  const indexRef = useRef(0);
+  const memory = useRef<Record<DeckVersion, number>>({ full: 0, short: 0 });
+  const lastTap = useRef({ key: '', at: 0 });
+  const lastDown = useRef(0);
+  const lastStamp = useRef(-1);
+  const lastNav = useRef(0);
+  const skipHashWrite = useRef(true);
+  const onKeyRef = useRef<(event: KeyboardEvent) => void>(() => {});
 
-  const slide = slides[index];
+  const deck = DECKS[version];
+  const slide = deck[index] ?? deck[0];
   const isSplit = slide.layout === 'split';
 
   const go = useCallback((next: number) => {
-    setIndex(Math.max(0, Math.min(slides.length - 1, next)));
+    const length = DECKS[versionRef.current].length;
+    const clamped = Math.max(0, Math.min(length - 1, next));
+    memory.current[versionRef.current] = clamped;
+    indexRef.current = clamped;
+    setIndex(clamped);
   }, []);
 
+  const setDeck = useCallback((next: DeckVersion, at?: number) => {
+    const current = versionRef.current;
+    memory.current[current] = indexRef.current;
+    const restored =
+      at === undefined ? memory.current[next] : at;
+    const clamped = Math.max(0, Math.min(DECKS[next].length - 1, restored));
+    versionRef.current = next;
+    indexRef.current = clamped;
+    memory.current[next] = clamped;
+    setVersion(next);
+    setIndex(clamped);
+  }, []);
+
+  onKeyRef.current = (event: KeyboardEvent) => {
+    if (event.metaKey || event.ctrlKey || event.altKey || event.repeat) return;
+    if (event.timeStamp === lastStamp.current) return;
+
+    const deckLetter =
+      event.code === 'KeyA' || event.key === 'a' || event.key === 'A'
+        ? 'a'
+        : event.code === 'KeyB' || event.key === 'b' || event.key === 'B'
+          ? 'b'
+          : '';
+
+    if (deckLetter) {
+      // A keyup follows its keydown. Count that pair once. If the system only
+      // delivers the keyup, still count it.
+      if (event.type === 'keydown') lastDown.current = performance.now();
+      else if (performance.now() - lastDown.current < 500) return;
+
+      lastStamp.current = event.timeStamp;
+      const now = performance.now();
+      // The same press can be delivered twice when focus sits in the prototype.
+      // A real second tap is slower than that.
+      if (lastTap.current.key === deckLetter && now - lastTap.current.at <= 30) return;
+      if (lastTap.current.key === deckLetter && now - lastTap.current.at <= DOUBLE_TAP_MS) {
+        event.preventDefault();
+        event.stopPropagation();
+        lastTap.current = { key: '', at: 0 };
+        eraseStrayLetter(event, deckLetter);
+        if (deckLetter === 'a') setDeck('full', 0);
+        else setDeck('short');
+      } else {
+        lastTap.current = { key: deckLetter, at: now };
+      }
+      return;
+    }
+
+    if (event.type !== 'keydown') return;
+
+    const tag = (event.target as HTMLElement | null)?.tagName;
+    if (tag === 'INPUT' || tag === 'TEXTAREA') return;
+
+    const forward = event.key === 'ArrowRight' || event.key === ' ' || event.key === 'PageDown' || event.key === 'j';
+    const back = event.key === 'ArrowLeft' || event.key === 'PageUp' || event.key === 'k';
+    const home = event.key === 'Home';
+    const end = event.key === 'End';
+    if (!forward && !back && !home && !end) return;
+
+    const now = performance.now();
+    if (now - lastNav.current < 40) return;
+    lastNav.current = now;
+
+    event.preventDefault();
+    if (forward) go(indexRef.current + 1);
+    else if (back) go(indexRef.current - 1);
+    else if (home) go(0);
+    else go(DECKS[versionRef.current].length - 1);
+  };
+
   useEffect(() => {
-    const onKey = (event: KeyboardEvent) => {
-      const tag = (event.target as HTMLElement | null)?.tagName;
-      if (tag === 'INPUT' || tag === 'TEXTAREA') return;
-      if (event.key === 'ArrowRight' || event.key === ' ' || event.key === 'PageDown' || event.key === 'j') {
-        event.preventDefault();
-        go(index + 1);
-      } else if (event.key === 'ArrowLeft' || event.key === 'PageUp' || event.key === 'k') {
-        event.preventDefault();
-        go(index - 1);
-      } else if (event.key === 'Home') {
-        event.preventDefault();
-        go(0);
-      } else if (event.key === 'End') {
-        event.preventDefault();
-        go(slides.length - 1);
+    const onKey = (event: KeyboardEvent) => onKeyRef.current(event);
+    const attach = (target: Window | null | undefined) => {
+      target?.addEventListener('keydown', onKey, true);
+      target?.addEventListener('keyup', onKey, true);
+    };
+    const detach = (target: Window | null | undefined) => {
+      target?.removeEventListener('keydown', onKey, true);
+      target?.removeEventListener('keyup', onKey, true);
+    };
+
+    attach(window);
+
+    const iframe = frameRef.current;
+    const bindFrame = () => {
+      try {
+        detach(iframe?.contentWindow);
+        attach(iframe?.contentWindow);
+      } catch {
+        // Prototype window is not reachable until it loads.
       }
     };
-    window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
-  }, [go, index]);
+    iframe?.addEventListener('load', bindFrame);
+    window.addEventListener('blur', bindFrame);
+    bindFrame();
 
-  useEffect(() => {
-    const raw = Number(window.location.hash.replace('#', ''));
-    if (Number.isInteger(raw) && raw >= 1 && raw <= slides.length) setIndex(raw - 1);
+    return () => {
+      detach(window);
+      window.removeEventListener('blur', bindFrame);
+      iframe?.removeEventListener('load', bindFrame);
+      try {
+        detach(iframe?.contentWindow);
+      } catch {
+        // Prototype window is already gone.
+      }
+    };
   }, []);
 
   useEffect(() => {
-    const hash = `#${index + 1}`;
+    let nextVersion: DeckVersion = 'full';
+    let nextIndex = 0;
+    const short = /^#b(\d+)$/.exec(window.location.hash);
+    if (short) {
+      const n = Number(short[1]);
+      if (n >= 1 && n <= slidesB.length) {
+        nextVersion = 'short';
+        nextIndex = n - 1;
+      }
+    } else {
+      const n = Number(window.location.hash.replace('#', ''));
+      if (Number.isInteger(n) && n >= 1 && n <= slides.length) nextIndex = n - 1;
+    }
+    versionRef.current = nextVersion;
+    indexRef.current = nextIndex;
+    memory.current[nextVersion] = nextIndex;
+    setVersion(nextVersion);
+    setIndex(nextIndex);
+    const hash = deckHash(nextVersion, nextIndex);
     if (window.location.hash !== hash) history.replaceState(null, '', hash);
-  }, [index]);
+  }, []);
+
+  useEffect(() => {
+    if (skipHashWrite.current) {
+      skipHashWrite.current = false;
+      return;
+    }
+    const hash = deckHash(version, index);
+    if (window.location.hash !== hash) history.replaceState(null, '', hash);
+  }, [index, version]);
 
   return (
-    <div className={`deck deck--${slide.layout}`}>
+    <div className={`deck deck--${slide.layout}`} data-deck={version}>
       <div className="deck__prototype" aria-hidden={!isSplit}>
-        <iframe src={iframeSrc} title="OXP Move-In prototype" />
+        <iframe ref={frameRef} src={iframeSrc} title="OXP Move-In prototype" />
       </div>
 
-      <div className="deck__content" key={index} aria-live="polite">
+      <div className="deck__content" key={`${version}-${index}`} aria-live="polite">
         <SlideContent slide={slide} />
       </div>
 
@@ -298,13 +446,30 @@ export default function MoveInDeck({ protoSrc }: Props) {
         <button type="button" onClick={() => go(index - 1)} disabled={index === 0} aria-label="Previous slide">
           ‹
         </button>
-        <span className="deck__count">
-          {index + 1} / {slides.length}
+        <span
+          className="deck__count"
+          aria-label={
+            version === 'short'
+              ? `30-minute version, slide ${index + 1} of ${deck.length}`
+              : `Full version, slide ${index + 1} of ${deck.length}`
+          }
+        >
+          <span
+            className="deck__version"
+            title={
+              version === 'short'
+                ? '30-minute version. Double-tap A for the full deck, first slide.'
+                : 'Full deck. Double-tap B for the 30-minute version.'
+            }
+          >
+            {version === 'short' ? 'B' : 'A'}
+          </span>
+          {index + 1} / {deck.length}
         </span>
         <button
           type="button"
           onClick={() => go(index + 1)}
-          disabled={index === slides.length - 1}
+          disabled={index === deck.length - 1}
           aria-label="Next slide"
         >
           ›

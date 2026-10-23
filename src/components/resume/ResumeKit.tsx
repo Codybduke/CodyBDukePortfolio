@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useId, useState } from 'react';
+import { useCallback, useEffect, useId, useRef, useState, type KeyboardEvent as ReactKeyboardEvent } from 'react';
 
 import { atsResumeIsTailored, getAtsResume } from '../../data/ats-resume';
 import {
@@ -58,6 +58,7 @@ function writeUrl(
 
 function pageTitle(application: Application, doc: DocKind) {
   if (doc === 'ats') return 'Cody Duke, ATS Resume';
+  if (application.id === 'the-one-res' && doc === 'resume') return 'Cody Duke, The One Res';
   if (doc === 'letter') return `Cody Duke, ${application.label} Cover Letter`;
   if (doc === 'single') {
     if (application.id === 'general') return 'Cody Duke, Single Column Resume';
@@ -71,7 +72,7 @@ export default function ResumeKit({
   email,
   linkedin,
   portfolioHref,
-  initialCompanyId = 'weave',
+  initialCompanyId = 'the-one-res',
   initialDoc = 'resume',
 }: Props) {
   const menuTitleId = useId();
@@ -80,7 +81,13 @@ export default function ResumeKit({
   const [menuOpen, setMenuOpen] = useState(false);
   const [hydrated, setHydrated] = useState(false);
   const [titled, setTitled] = useState(false);
-  const [pdfStatus, setPdfStatus] = useState<'idle' | 'preparing' | 'error'>('idle');
+  const [pdfStatus, setPdfStatus] = useState<'idle' | 'preparing' | 'error' | 'print'>('idle');
+  const [formatOpen, setFormatOpen] = useState(false);
+  const [busyFormat, setBusyFormat] = useState<'pdf' | 'docx' | null>(null);
+  const downloadRef = useRef<HTMLDivElement>(null);
+  const formatMenuRef = useRef<HTMLDivElement>(null);
+  const formatFocusPending = useRef(false);
+  const formatMenuId = useId();
 
   const application = getApplication(companyId);
   const view: DocKind = doc === 'letter' && !application.coverLetter ? 'resume' : doc;
@@ -101,12 +108,51 @@ export default function ResumeKit({
     setTitled(true);
   }, [hydrated, companyId, view, application, initialCompanyId, initialDoc]);
 
-  async function downloadFile() {
+  useEffect(() => {
+    setFormatOpen(false);
+    setPdfStatus((status) => (status === 'error' || status === 'print' ? 'idle' : status));
+  }, [companyId, view]);
+
+  useEffect(() => {
+    if (!formatOpen) return;
+    const onPointer = (event: PointerEvent) => {
+      if (!downloadRef.current?.contains(event.target as Node)) setFormatOpen(false);
+    };
+    window.addEventListener('pointerdown', onPointer);
+    return () => window.removeEventListener('pointerdown', onPointer);
+  }, [formatOpen]);
+
+  useEffect(() => {
+    if (!formatOpen || !formatFocusPending.current) return;
+    formatFocusPending.current = false;
+    formatMenuRef.current?.querySelector<HTMLButtonElement>('[role="menuitem"]')?.focus();
+  }, [formatOpen]);
+
+  function openFormatMenu(fromKeyboard: boolean) {
+    formatFocusPending.current = fromKeyboard;
+    setFormatOpen(true);
+  }
+
+  async function downloadFile(format: 'pdf' | 'docx') {
+    setFormatOpen(false);
+    setBusyFormat(format);
     setPdfStatus('preparing');
     try {
-      if (view === 'ats') {
-        const { downloadAtsResume } = await import('../../lib/ats-docx');
-        await downloadAtsResume(getAtsResume(application.id));
+      if (view === 'ats' || format === 'docx') {
+        if (view === 'ats') {
+          const { downloadAtsResume } = await import('../../lib/ats-docx');
+          await downloadAtsResume(getAtsResume(application.id));
+        } else {
+          const { downloadDesignedDoc } = await import('../../lib/resume-docx');
+          await downloadDesignedDoc({
+            kind: view === 'letter' ? 'letter' : view,
+            resume: application.resume,
+            letter: application.coverLetter,
+            email,
+            linkedin,
+            portfolioHref,
+          });
+        }
       } else {
         const response = await fetch(withBase(resumePdfPath(application.id, view)), {
           cache: import.meta.env.DEV ? 'no-store' : 'default',
@@ -125,11 +171,27 @@ export default function ResumeKit({
       }
       setPdfStatus('idle');
     } catch {
-      setPdfStatus('error');
+      if (format === 'pdf' && view !== 'ats') {
+        const previousTitle = document.title;
+        const restoreTitle = () => {
+          document.title = previousTitle;
+          window.removeEventListener('afterprint', restoreTitle);
+          setPdfStatus('idle');
+        };
+        document.title = resumePdfDownloadName(application, view).replace(/\.pdf$/i, '');
+        window.addEventListener('afterprint', restoreTitle);
+        window.print();
+        setPdfStatus('print');
+      } else {
+        setPdfStatus('error');
+      }
+    } finally {
+      setBusyFormat(null);
     }
   }
 
   const toggleMenu = useCallback(() => {
+    setFormatOpen(false);
     setMenuOpen((open) => !open);
   }, []);
 
@@ -146,9 +208,10 @@ export default function ResumeKit({
         return;
       }
 
-      if (event.key === 'Escape' && menuOpen) {
+      if (event.key === 'Escape' && (menuOpen || formatOpen)) {
         event.preventDefault();
         setMenuOpen(false);
+        setFormatOpen(false);
         return;
       }
 
@@ -169,7 +232,7 @@ export default function ResumeKit({
 
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [menuOpen, toggleMenu]);
+  }, [menuOpen, formatOpen, toggleMenu]);
 
   const selectCompany = (id: string) => {
     const next = getApplication(id);
@@ -177,28 +240,108 @@ export default function ResumeKit({
     if (doc === 'letter' && !next.coverLetter) setDoc('resume');
   };
 
+  const offersChoice = view !== 'ats';
+  const downloadLabel =
+    pdfStatus === 'preparing'
+      ? busyFormat === 'docx' || view === 'ats'
+        ? 'Preparing Word…'
+        : 'Preparing PDF…'
+      : view === 'ats'
+        ? 'Download Word'
+        : 'Download PDF';
+
+  const onFormatMenuKeyDown = (event: ReactKeyboardEvent<HTMLDivElement>) => {
+    if (event.key !== 'ArrowDown' && event.key !== 'ArrowUp' && event.key !== 'Home' && event.key !== 'End') {
+      return;
+    }
+    const items = [
+      ...(formatMenuRef.current?.querySelectorAll<HTMLButtonElement>('[role="menuitem"]') ?? []),
+    ];
+    if (!items.length) return;
+    event.preventDefault();
+    const index = items.indexOf(document.activeElement as HTMLButtonElement);
+    if (event.key === 'Home') {
+      items[0]?.focus();
+      return;
+    }
+    if (event.key === 'End') {
+      items[items.length - 1]?.focus();
+      return;
+    }
+    const next = event.key === 'ArrowDown' ? index + 1 : index - 1;
+    items[(next + items.length) % items.length]?.focus();
+  };
+
   return (
     <>
-      <p className="doc-chrome" data-ready={titled ? 'true' : 'false'}>
+      <div className="doc-chrome" data-ready={titled ? 'true' : 'false'}>
         <a href={portfolioHref}>← Portfolio</a>
-        <button
-          type="button"
-          onClick={downloadFile}
-          disabled={pdfStatus === 'preparing'}
-          aria-busy={pdfStatus === 'preparing'}
-        >
-          {pdfStatus === 'preparing'
-            ? view === 'ats'
-              ? 'Preparing Word…'
-              : 'Preparing PDF…'
-            : view === 'ats'
-              ? 'Download Word'
-              : 'Download PDF'}
-        </button>
-      </p>
+        <div className="doc-download" ref={downloadRef}>
+          <div className="doc-download__bar">
+            <button
+              type="button"
+              className="doc-download__main"
+              onClick={() => downloadFile(view === 'ats' ? 'docx' : 'pdf')}
+              disabled={pdfStatus === 'preparing'}
+              aria-busy={pdfStatus === 'preparing'}
+            >
+              {downloadLabel}
+            </button>
+            {offersChoice ? (
+              <button
+                type="button"
+                className="doc-download__arrow"
+                aria-expanded={formatOpen}
+                aria-haspopup="menu"
+                aria-controls={formatMenuId}
+                aria-label="More download options"
+                disabled={pdfStatus === 'preparing'}
+                onClick={(event) => {
+                  if (formatOpen) {
+                    setFormatOpen(false);
+                    return;
+                  }
+                  openFormatMenu(event.detail === 0);
+                }}
+                onKeyDown={(event) => {
+                  if (event.key === 'ArrowDown' && !formatOpen) {
+                    event.preventDefault();
+                    openFormatMenu(true);
+                  }
+                }}
+              >
+                <svg width="8" height="5" viewBox="0 0 8 5" aria-hidden="true">
+                  <path fill="currentColor" d="M0 0h8L4 5z" />
+                </svg>
+              </button>
+            ) : null}
+          </div>
+          {offersChoice && formatOpen ? (
+            <div
+              className="doc-download__menu"
+              id={formatMenuId}
+              ref={formatMenuRef}
+              role="menu"
+              aria-label="Download format"
+              onKeyDown={onFormatMenuKeyDown}
+            >
+              <button type="button" role="menuitem" onClick={() => downloadFile('docx')}>
+                Download Word
+              </button>
+              <button type="button" role="menuitem" onClick={() => downloadFile('pdf')}>
+                Download PDF
+              </button>
+            </div>
+          ) : null}
+        </div>
+      </div>
       {pdfStatus === 'error' ? (
         <p className="doc-chrome__status" role="alert">
           The file didn't download. Try again.
+        </p>
+      ) : pdfStatus === 'print' ? (
+        <p className="doc-chrome__status" role="status">
+          Choose Save as PDF in the print dialog.
         </p>
       ) : null}
 
@@ -400,6 +543,26 @@ function SkillsSection({
   resume: ResumeContent;
   layout?: 'columns' | 'single';
 }) {
+  if (layout === 'columns' && resume.skillGroups?.length) {
+    return (
+      <section>
+        <h2>Skills</h2>
+        <div className="resume__skill-groups">
+          {resume.skillGroups.map((group) => (
+            <div className="resume__skill-group" key={group.label}>
+              <p className="resume__skill-group-label">{group.label}</p>
+              <ul className="resume__skills">
+                {group.items.map((skill) => (
+                  <li key={skill}>{skill}</li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </section>
+    );
+  }
+
   const skills =
     layout === 'columns' && resume.railSkills?.length
       ? [resume.skills[0], ...resume.railSkills, ...resume.skills.slice(1)]
@@ -626,19 +789,30 @@ function AtsResumeView({ resume }: { resume: ReturnType<typeof getAtsResume> }) 
       <p className="ats__headline">{resume.headline}</p>
       <p className="ats__contact">
         <a href={`mailto:${resume.email}`}>{resume.email}</a>
+        <span className="ats__sep" aria-hidden="true">·</span>
+        {resume.phoneDisplay}
+        <span className="ats__sep" aria-hidden="true">·</span>
+        {resume.city}
       </p>
-      <p className="ats__contact">{resume.phoneDisplay}</p>
-      <p className="ats__contact">{resume.city}</p>
       <p className="ats__contact">
         <a href={resume.portfolio}>{resume.portfolioLabel}</a>
-      </p>
-      <p className="ats__contact">
+        <span className="ats__sep" aria-hidden="true">·</span>
         <a href={resume.linkedin}>{resume.linkedinLabel}</a>
       </p>
+      <hr className="ats__divider" />
+      {resume.disclaimer ? (
+        <p className="ats__disclaimer">
+          {resume.disclaimer.before}
+          <a href={resume.disclaimer.href}>{resume.disclaimer.linkLabel}</a>
+          {resume.disclaimer.after}
+        </p>
+      ) : null}
 
       <h2>Summary</h2>
-      {resume.summary.map((paragraph) => (
-        <p key={paragraph}>{paragraph}</p>
+      {resume.summary.map((paragraph, index) => (
+        <p key={paragraph} className={index === 0 ? 'ats__lede' : undefined}>
+          {paragraph}
+        </p>
       ))}
 
       <h2>Work Experience</h2>
@@ -663,17 +837,26 @@ function AtsResumeView({ resume }: { resume: ReturnType<typeof getAtsResume> }) 
 
       <h2>Education</h2>
       <p className="ats__row">
-        <span>{resume.education.school}</span>
+        <span className="ats__title">{resume.education.school}</span>
         <span>{resume.education.year}</span>
       </p>
       <p>
-        {resume.education.degree} {resume.education.field}
+        {resume.education.degree}, {resume.education.field}
       </p>
 
       <h2>Skills</h2>
-      <p>{resume.skills}</p>
-      <p className="ats__systems">Systems</p>
-      <p>{resume.systems}</p>
+      {resume.skillCategories?.length ? (
+        resume.skillCategories.map((category) => (
+          <p key={category.label} className="ats__skill">
+            <strong>{category.label}:</strong> {category.items.join(', ')}
+          </p>
+        ))
+      ) : (
+        <p className="ats__skill">{resume.skills}</p>
+      )}
+      <p className="ats__skill">
+        <strong>Systems:</strong> {resume.systems}
+      </p>
     </article>
   );
 }

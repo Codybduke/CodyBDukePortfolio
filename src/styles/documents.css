@@ -41,39 +41,143 @@ a:hover {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 0.75rem 1rem;
+  flex-wrap: wrap;
   max-width: 8.5in;
-  margin: 1.25rem auto 0.75rem;
-  padding: 0 0.5rem;
+  margin: 1.25rem auto 0.65rem;
+  padding: 0;
   font-family: var(--font-ui);
   font-size: 0.8125rem;
   font-weight: 600;
 }
 
-.doc-chrome button {
-  font: inherit;
-  font-weight: 600;
+.doc-chrome > a {
   color: var(--resume-ink);
-  background: transparent;
-  border: 1px solid var(--resume-line);
-  border-radius: 999px;
-  padding: 0.4rem 0.85rem;
-  cursor: pointer;
 }
 
-.doc-chrome button:focus-visible {
+.doc-download {
+  position: relative;
+  z-index: 4;
+  margin-left: auto;
+}
+
+.doc-download__bar {
+  display: flex;
+  align-items: stretch;
+  gap: 0.35rem;
+}
+
+.doc-download__main,
+.doc-download__arrow {
+  height: 2.5rem;
+  font-family: var(--font-ui);
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1;
+  color: var(--resume-ink);
+  background: transparent;
+  border: 1px solid rgba(28, 28, 26, 0.16);
+  border-radius: 2px;
+  cursor: pointer;
+  transition:
+    background-color 120ms ease,
+    color 120ms ease,
+    border-color 120ms ease;
+}
+
+.doc-download__main {
+  padding: 0 0.85rem;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.doc-download__arrow {
+  display: grid;
+  width: 2.5rem;
+  place-items: center;
+  padding: 0;
+}
+
+.doc-download__main:hover,
+.doc-download__arrow:hover,
+.doc-download__arrow[aria-expanded='true'] {
+  background: #1c1c1a;
+  color: #fff;
+  border-color: #1c1c1a;
+}
+
+.doc-download__main:focus-visible,
+.doc-download__arrow:focus-visible,
+.doc-download__menu button:focus-visible {
   outline: 2px solid var(--resume-ink);
   outline-offset: 2px;
 }
 
-.doc-chrome button:disabled {
+.doc-download__main:disabled,
+.doc-download__arrow:disabled {
   opacity: 0.55;
   cursor: progress;
+}
+
+.doc-download__main:disabled:hover,
+.doc-download__arrow:disabled:hover {
+  background: transparent;
+  color: var(--resume-ink);
+  border-color: rgba(28, 28, 26, 0.16);
+}
+
+.doc-download__menu {
+  position: absolute;
+  top: calc(100% + 0.35rem);
+  right: 0;
+  left: 0;
+  z-index: 1;
+  display: grid;
+  gap: 0.1rem;
+  padding: 0.25rem;
+  background: #fff;
+  border: 1px solid rgba(28, 28, 26, 0.16);
+  border-radius: 2px;
+}
+
+.doc-download__menu button {
+  font-family: var(--font-ui);
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1;
+  color: var(--resume-ink);
+  text-align: left;
+  background: transparent;
+  border: 0;
+  border-radius: 2px;
+  padding: 0.55rem 0.6rem;
+  cursor: pointer;
+}
+
+.doc-download__menu button:hover,
+.doc-download__menu button:focus-visible {
+  background: #1c1c1a;
+  color: #fff;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .doc-download__main,
+  .doc-download__arrow {
+    transition: none;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .doc-chrome,
+  .doc-chrome__status {
+    padding-inline: 1.25rem;
+  }
 }
 
 .doc-chrome__status {
   max-width: 8.5in;
   margin: -0.25rem auto 0.75rem;
-  padding: 0 0.5rem;
+  padding: 0;
   font-family: var(--font-ui);
   font-size: 0.75rem;
   font-weight: 600;
@@ -94,11 +198,11 @@ a:hover {
 }
 
 .ats {
-  padding: 0.75in;
-  font-family: Calibri, "Segoe UI", sans-serif;
-  font-size: 11pt;
-  line-height: 1.15;
-  color: #000;
+  padding: 0.8in;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 10.5pt;
+  line-height: 1.4;
+  color: var(--resume-ink);
 }
 
 .ats h1,
@@ -107,48 +211,90 @@ a:hover {
 .ats h2,
 .ats__org,
 .ats__title,
-.ats__systems {
-  font-family: "Open Sans", Calibri, sans-serif;
+.ats__row span,
+.ats__skill {
+  font-family: "Calibri", "Segoe UI", system-ui, sans-serif;
 }
 
 .ats h1 {
   margin: 0;
-  font-size: 15pt;
+  font-size: 21pt;
   font-weight: 700;
-  letter-spacing: 0;
-  line-height: 1.15;
+  letter-spacing: 0.01em;
+  line-height: 1.08;
   text-transform: none;
 }
 
 .ats__headline {
-  margin: 0;
-  font-size: 12pt;
-  font-weight: 400;
+  margin: 4pt 0 0;
+  font-size: 10.5pt;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--resume-muted);
 }
 
 .ats__contact {
-  margin: 0;
-  font-style: italic;
+  margin: 11pt 0 0;
+  font-size: 9.5pt;
+  font-style: normal;
+  color: var(--resume-muted);
+}
+
+.ats__contact + .ats__contact {
+  margin-top: 3pt;
 }
 
 .ats__contact a {
-  color: #0563c1;
+  color: var(--resume-ink);
   text-decoration: underline;
-  text-underline-offset: 0.08em;
+  text-underline-offset: 0.12em;
+  text-decoration-color: rgba(28, 28, 26, 0.35);
+}
+
+.ats__sep {
+  margin: 0 0.55em;
+  color: var(--resume-line);
+}
+
+.ats__divider {
+  height: 0;
+  margin: 12pt 0 0;
+  border: 0;
+  border-top: 1px solid var(--resume-line);
+}
+
+.ats p.ats__disclaimer {
+  margin: 10pt 0 0;
+  font-size: 10.5pt;
+  font-style: normal;
+}
+
+.ats__disclaimer a {
+  color: var(--resume-ink);
+  text-decoration: underline;
+  text-underline-offset: 0.1em;
 }
 
 .ats h2 {
-  margin: 16pt 0 6pt;
-  padding: 0;
+  margin: 17pt 0 9pt;
+  padding: 0 0 4pt;
   border: 0;
-  font-size: 12pt;
-  font-weight: 400;
-  letter-spacing: 0;
-  text-transform: none;
+  border-bottom: 1px solid var(--resume-line);
+  font-size: 10.5pt;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--resume-muted);
 }
 
 .ats p {
   margin: 0 0 6pt;
+}
+
+.ats__lede {
+  font-style: italic;
+  margin-bottom: 7pt;
 }
 
 .ats__row {
@@ -156,20 +302,32 @@ a:hover {
   justify-content: space-between;
   align-items: baseline;
   gap: 1rem;
-  margin-bottom: 0;
+  margin: 0;
 }
 
 .ats__title {
-  font-size: 13pt;
+  font-size: 11.5pt;
   font-weight: 700;
+  color: var(--resume-ink);
+}
+
+.ats__row span:last-child {
+  font-size: 9.5pt;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--resume-muted);
+  white-space: nowrap;
 }
 
 .ats__company {
-  font-weight: 500;
+  font-weight: 400;
 }
 
 .ats__org {
-  margin: 0 0 6pt;
+  margin: 1pt 0 5pt;
+  font-size: 10pt;
+  color: var(--resume-muted);
 }
 
 .ats__role {
@@ -177,22 +335,32 @@ a:hover {
 }
 
 .ats__role:first-of-type {
-  margin-top: 2pt;
+  margin-top: 3pt;
 }
 
 .ats ul {
-  margin: 4pt 0 2pt;
-  padding-left: 0.5in;
+  margin: 3pt 0 2pt;
+  padding-left: 17pt;
   list-style-type: disc;
 }
 
 .ats li {
-  margin: 2pt 0;
+  margin: 3pt 0;
+  padding-left: 2pt;
 }
 
-.ats__systems {
-  margin: 8pt 0 0;
-  font-weight: 400;
+.ats li::marker {
+  color: var(--resume-muted);
+}
+
+.ats__skill {
+  margin: 0 0 5pt;
+  font-size: 10pt;
+}
+
+.ats__skill strong {
+  font-weight: 600;
+  color: var(--resume-ink);
 }
 
 .doc-header {
@@ -497,6 +665,22 @@ h2 {
 
 strong {
   font-weight: 600;
+}
+
+.resume__skill-groups {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.resume__skill-group-label {
+  margin: 0 0 0.22rem !important;
+  font-family: var(--font-ui);
+  font-size: 0.64rem !important;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  line-height: 1.3 !important;
+  text-transform: uppercase;
+  color: var(--resume-muted);
 }
 
 .resume__skills {

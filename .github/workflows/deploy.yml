@@ -12,7 +12,9 @@ permissions:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    # ubuntu-latest is 26.04, and the Playwright build that prints resumes
+    # cannot install Chromium there. 24.04 still can, so the site deploys.
+    runs-on: ubuntu-24.04
     steps:
       - name: Checkout your repository using git
         uses: actions/checkout@v4

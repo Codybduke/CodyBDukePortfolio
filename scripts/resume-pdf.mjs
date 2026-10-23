@@ -2,7 +2,7 @@
  * Render the resume page to a letter PDF with the print stylesheet.
  * Dev serves these on click. `export-resume-pdfs.mjs` writes them at build time.
  */
-import { execFileSync } from 'node:child_process';
+import { execFileSync, spawn } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -10,6 +10,11 @@ import { chromium } from 'playwright';
 
 const root = fileURLToPath(new URL('..', import.meta.url));
 const playwrightCli = path.join(root, 'node_modules/playwright/cli.js');
+const helperScript = fileURLToPath(new URL('./resume-pdf-helper.mjs', import.meta.url));
+
+/** Chromium crashes under the Cursor seatbelt (IOKit). A helper outside it prints instead. */
+export const RESUME_PDF_HELPER_PORT = 4491;
+const helperOrigin = `http://127.0.0.1:${RESUME_PDF_HELPER_PORT}`;
 
 const watchFiles = [
   'src/data/applications.ts',
@@ -68,8 +73,17 @@ async function launchBrowser() {
   }
 }
 
+function inCursorSandbox() {
+  return process.env.CURSOR_SANDBOX === 'seatbelt';
+}
+
 export function getBrowser() {
-  if (!browserPromise) browserPromise = launchBrowser();
+  if (!browserPromise) {
+    browserPromise = launchBrowser().catch((error) => {
+      browserPromise = null;
+      throw error;
+    });
+  }
   return browserPromise;
 }
 
@@ -122,6 +136,67 @@ export async function renderResumePdf({ origin, base, id, doc }) {
   }
 }
 
+let helperNoteShown = false;
+
+function noteHelper(message) {
+  if (helperNoteShown) return;
+  helperNoteShown = true;
+  console.warn(message);
+}
+
+async function requestHelper(args) {
+  let response;
+  try {
+    response = await fetch(`${helperOrigin}/render`, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify(args),
+      signal: AbortSignal.timeout(90_000),
+    });
+  } catch (error) {
+    const code = error?.cause?.code;
+    if (code === 'ECONNREFUSED' || code === 'ECONNRESET') {
+      throw new Error('PDF helper is not running.');
+    }
+    throw error;
+  }
+  if (!response.ok) {
+    const detail = (await response.text()).trim();
+    throw new Error(detail || `PDF helper failed (${response.status})`);
+  }
+  const pdf = Buffer.from(await response.arrayBuffer());
+  if (pdf.length < 1000) throw new Error('PDF helper returned an empty file.');
+  return pdf;
+}
+
+async function pdfFromHelper(args) {
+  try {
+    return await requestHelper(args);
+  } catch (error) {
+    if (!/not running/i.test(error?.message ?? '')) throw error;
+    await new Promise((resolve) => setTimeout(resolve, 700));
+    return requestHelper(args);
+  }
+}
+
+async function createResumePdf(args) {
+  if (inCursorSandbox()) {
+    noteHelper('PDF browser cannot run in this dev server. Sending the resume to the local PDF helper.');
+    return pdfFromHelper(args);
+  }
+
+  try {
+    return await renderResumePdf(args);
+  } catch (error) {
+    try {
+      noteHelper('In-process PDF browser failed. Trying the local PDF helper.');
+      return await pdfFromHelper(args);
+    } catch {
+      throw error;
+    }
+  }
+}
+
 export async function cachedResumePdf(args) {
   const stamp = sourceStamp();
   if (stamp !== cacheStamp) {
@@ -132,9 +207,26 @@ export async function cachedResumePdf(args) {
   const hit = pdfCache.get(key);
   if (hit) return hit;
 
-  const pdf = await renderResumePdf(args);
+  const pdf = await createResumePdf(args);
   if (cacheStamp === stamp) pdfCache.set(key, pdf);
   return pdf;
+}
+
+export function ensureResumePdfHelper() {
+  if (inCursorSandbox()) return;
+  fetch(`${helperOrigin}/health`, { signal: AbortSignal.timeout(400) })
+    .then((response) => {
+      if (!response.ok) throw new Error('down');
+    })
+    .catch(() => {
+      const child = spawn(process.execPath, [helperScript], {
+        cwd: root,
+        detached: true,
+        stdio: 'ignore',
+        env: process.env,
+      });
+      child.unref();
+    });
 }
 
 function requestPath(reqUrl, base) {
@@ -152,6 +244,7 @@ export function resumePdfDevPlugin(base) {
     name: 'resume-pdf-dev',
     apply: 'serve',
     configureServer(server) {
+      ensureResumePdfHelper();
       server.middlewares.use((req, res, next) => {
         if (req.method !== 'GET') return next();
         const parsed = matchResumePdfPath(requestPath(req.url, base));

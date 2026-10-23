@@ -34,7 +34,24 @@ export type AtsResumeContent = {
   };
   /** One comma-separated line. Hard skills and soft skills together. */
   skills: string;
+  /**
+   * Optional grouped skills for the master resume. When set, the ATS views and
+   * the Word export render these labeled lines instead of the flat `skills`
+   * string. Keep `skills` populated as the flat fallback. Each line stays
+   * ATS-safe: a bold category label, then comma-separated capabilities.
+   */
+  skillCategories?: { label: string; items: string[] }[];
   systems: string;
+  /**
+   * Short note under the contact lines. The link points at the designed resume.
+   * Keep the whole note under 40 words so Jobscan does not flag the paragraph.
+   */
+  disclaimer?: {
+    before: string;
+    linkLabel: string;
+    href: string;
+    after?: string;
+  };
 };
 
 /**
@@ -296,11 +313,203 @@ export const weaveAtsResume: AtsResumeContent = {
     'Collaborative team leader, Design thinking, Systems UX, Complex B2B workflows, Product analytics, User flows, UX research and testing, Prototyping, Visual craft, Figma',
 };
 
+/** Office Hours Senior Product Designer scan. Weave is the base. */
+export const officeHoursAtsResume: AtsResumeContent = {
+  ...weaveAtsResume,
+  summary: [
+    'More capability, without more complexity.',
+    'I bring visual craft and systems judgment to products with more than one kind of user.',
+    'I research with the people who run the workflow and with product analytics, design the flows, the hierarchy, and the shared patterns, and stay with engineering until it ships and the result can be measured.',
+  ],
+  roles: [
+    weaveAtsResume.roles[0],
+    {
+      ...weaveAtsResume.roles[1],
+      bullets: [
+        'Redesigned a complex enterprise setup system and extended its design system without adding complexity. More than 8,000 offers used the new targeting rules within the first couple of months.',
+        ...weaveAtsResume.roles[1].bullets.slice(1),
+      ],
+    },
+    weaveAtsResume.roles[2],
+    {
+      ...weaveAtsResume.roles[3],
+      bullets: [
+        'Oversaw third-party design so every campaign followed the same visual system.',
+        ...weaveAtsResume.roles[3].bullets.slice(1),
+      ],
+    },
+  ],
+  skills:
+    'Visual craft, Typography, Design systems, Interaction design, Systems UX, Complex B2B workflows, Collaborative team leader, Product analytics, User flows, UX research and testing, Prototyping, Figma',
+};
+
+/**
+ * Preply Staff Product Designer scan. Weave is the base.
+ * Interaction design, retention, and AI each appear in a sentence.
+ * Every paragraph stays under 40 words.
+ */
+export const preplyAtsResume: AtsResumeContent = {
+  ...weaveAtsResume,
+  headline: 'Staff Product Designer',
+  summary: [
+    'A reason to come back.',
+    'I bring interaction and visual craft to consumer products people open often, and I shape the next step with product managers and engineers.',
+    'I research with users and product analytics, design the mobile experience, including where AI helps and where a person still decides, and stay with engineering until it ships and the result can be measured.',
+  ],
+  roles: [
+    weaveAtsResume.roles[0],
+    {
+      ...weaveAtsResume.roles[1],
+      bullets: [
+        weaveAtsResume.roles[1].bullets[0],
+        weaveAtsResume.roles[1].bullets[1],
+        'Led the team and designed a hackathon-winning AI workflow that reads income documents and autofills affordable-housing certifications. A person reviews the result before it replaces manual entry.',
+      ],
+    },
+    weaveAtsResume.roles[2],
+    weaveAtsResume.roles[3],
+  ],
+  skills:
+    'Collaborative team leader, Visual craft, Interaction design, Retention and habit loops, UX research and testing, AI-assisted prototyping, Product analytics, User flows, Production data, Prototyping, Cross-team collaboration, Figma',
+};
+
+/**
+ * Vasion Senior Product Designer scan. Weave is the base.
+ * Design systems, interaction design, and AI-assisted prototyping each appear in a sentence.
+ * Every paragraph stays under 40 words.
+ */
+export const vasionAtsResume: AtsResumeContent = {
+  ...weaveAtsResume,
+  headline: 'Senior Product Designer',
+  summary: [
+    'More capability, without more complexity.',
+    'I take a complex enterprise workflow people already live in and make it more capable without making it harder.',
+    'I research with the people who run it and with production data, design the interaction and the design system, use AI when it helps the prototype, and stay with engineering until the pattern ships.',
+  ],
+  roles: [
+    {
+      ...weaveAtsResume.roles[0],
+      bullets: [
+        'Designed a zero-to-one mobile experience for move-in workflows and handed it to the iOS team as SwiftUI. Staff now move a resident in, in real time, instead of re-entering the record later, which cut the work in half.',
+      ],
+    },
+    {
+      ...weaveAtsResume.roles[1],
+      bullets: [
+        'Redesigned a complex enterprise setup system and extended the design system without adding complexity. More than 8,000 offers used the new targeting rules within the first couple of months.',
+        ...weaveAtsResume.roles[1].bullets.slice(1),
+      ],
+    },
+    weaveAtsResume.roles[2],
+    weaveAtsResume.roles[3],
+  ],
+  skills:
+    'Collaborative team leader, Design systems, Complex B2B workflows, Systems UX, AI-assisted prototyping, Interaction design, UX research and testing, Product analytics, User flows, Prototyping, Visual craft, Figma',
+};
+
+/**
+ * The One Res — the authoritative master ATS resume. This is the general-purpose
+ * default for the Senior / Lead / Product Lead family. Keep it in content parity
+ * with the designed master (`theOneResume` in applications.ts). Plain-English
+ * first: no "zero-to-one", no "SaaS", no "operator workflows", no disclaimer.
+ * Skills are grouped and reflect capabilities that recur across the target
+ * postings and that Cody actually does. Every paragraph stays under 40 words.
+ */
+export const theOneAtsResume: AtsResumeContent = {
+  ...weaveAtsResume,
+  headline: 'Senior Product Designer',
+  summary: [
+    'More capability, without more complexity.',
+    'Senior product designer with 10 years turning complex software into clear, useful workflows, across enterprise B2B products and mobile apps.',
+    'I partner with product managers and engineers, ground decisions in user research and product analytics, and stay with the work from problem definition through a measured launch.',
+  ],
+  roles: [
+    {
+      ...atsResume.roles[0],
+      overview:
+        'Led a remote team of six engineers as product manager and designer. Owned scope, requirements, and prototypes from discovery through launch.',
+      bullets: [
+        'Designed Entrata’s first mobile app for property-manager staff, from the information architecture to the on-site workflow of looking up a resident and taking the next action, instead of a desktop product squeezed onto a phone.',
+        'Designed a new move-in flow so staff complete it in one real-time session instead of two. Recording a resident now finishes the task, instead of saving the name to complete later. Handed it to the iOS team as SwiftUI.',
+      ],
+    },
+    {
+      ...atsResume.roles[1],
+      overview:
+        'Designed workflows for property managers and residents in Entrata’s property-management software, including projects for the company’s largest client.',
+      bullets: [
+        'Redesigned a complex enterprise setup system after usability testing and extended the design system so a property could offer residents a choice of incentives. More than 8,000 rental promotions used the new targeting rules in a few months.',
+        'Served as the sole designer for the company’s largest client, translating their operational needs into clear workflows engineering could build.',
+        'Led a hackathon team that designed an AI workflow to read income documents and fill affordable-housing certification forms, cutting manual data entry. It won Most Likely to Land a New Logo, and a version later shipped.',
+        'Simplified core workflows for Homebody, a resident-facing mobile app. After launch, it reached 4.4 out of 5 on iOS from more than 600 reviews in its first six months.',
+      ],
+    },
+    {
+      ...atsResume.roles[2],
+      overview: 'Designed facilities workflows for desktop and mobile.',
+      bullets: [
+        'Redesigned unit inspection and other facilities workflows so staff finish tasks in fewer steps, making room for new features.',
+      ],
+    },
+    {
+      ...atsResume.roles[3],
+      overview:
+        'Led product design for member discovery and kept outside design partners on one consistent pattern.',
+      bullets: [
+        'Led the design of 26 personalized discovery experiences that gave members a relevant entry point and a reason to come back.',
+        'Month-over-month return through the campaign was 95% higher for members and 107% higher for non-members than the year before, reaching 1.1 million people outside the US and earning 90% positive feedback across 86,000 comments.',
+        'Coordinated with external design partners to keep a consistent design process across campaigns.',
+      ],
+    },
+  ],
+  skills:
+    'Product discovery, Scoping and requirements, Cross-functional leadership, Stakeholder collaboration, Product analytics, Interaction design, User flows, Information architecture, Visual design, UI design, Prototyping, Design systems, Typography, User research, Usability testing, Systems thinking, Complex B2B workflows, AI-assisted design and prototyping',
+  skillCategories: [
+    {
+      label: 'Product strategy and delivery',
+      items: [
+        'Product discovery',
+        'Scoping and requirements',
+        'Cross-functional leadership',
+        'Stakeholder collaboration',
+        'Product analytics',
+      ],
+    },
+    {
+      label: 'Product design',
+      items: [
+        'Interaction design',
+        'User flows',
+        'Information architecture',
+        'Visual design',
+        'UI design',
+        'Prototyping',
+        'Design systems',
+        'Typography',
+      ],
+    },
+    {
+      label: 'Research and problem solving',
+      items: [
+        'User research',
+        'Usability testing',
+        'Systems thinking',
+        'Complex B2B workflows',
+        'AI-assisted design and prototyping',
+      ],
+    },
+  ],
+};
+
 export function getAtsResume(companyId?: string | null): AtsResumeContent {
+  if (companyId === 'the-one-res') return theOneAtsResume;
   if (companyId === 'enzo-health') return enzoAtsResume;
   if (companyId === 'bamboo-hr') return bambooAtsResume;
   if (companyId === 'stealth-startup') return stealthAtsResume;
   if (companyId === 'weave') return weaveAtsResume;
+  if (companyId === 'office-hours') return officeHoursAtsResume;
+  if (companyId === 'preply') return preplyAtsResume;
+  if (companyId === 'vasion') return vasionAtsResume;
   return atsResume;
 }
 
@@ -309,9 +518,13 @@ export function atsResumeIsTailored(companyId?: string | null): boolean {
 }
 
 export function atsDownloadName(resume: AtsResumeContent): string {
+  if (resume === theOneAtsResume) return 'Cody Duke The One Res ATS Resume.docx';
   if (resume === enzoAtsResume) return 'Cody Duke Enzo Health ATS Resume.docx';
   if (resume === bambooAtsResume) return 'Cody Duke BambooHR ATS Resume.docx';
   if (resume === stealthAtsResume) return 'Cody Duke Stealth Startup ATS Resume.docx';
   if (resume === weaveAtsResume) return 'Cody Duke Weave ATS Resume.docx';
+  if (resume === vasionAtsResume) return 'Cody Duke Vasion ATS Resume.docx';
+  if (resume === officeHoursAtsResume) return 'Cody Duke Office Hours ATS Resume.docx';
+  if (resume === preplyAtsResume) return 'Cody Duke Preply ATS Resume.docx';
   return atsResumeDownloadName;
 }

@@ -27,6 +27,12 @@ export type ResumeContent = {
   skills: string[];
   /** Extra skills on the two-column resume only. Shown after the first skill. */
   railSkills?: string[];
+  /**
+   * Grouped skills for the two-column resume. When set, these replace the flat
+   * list (and railSkills) in the two-column view and its Word export. Keep
+   * `skills` populated as the flat fallback for the single-column and ATS views.
+   */
+  skillGroups?: { label: string; items: string[] }[];
   education: {
     degree: string;
     school: string;
@@ -1301,6 +1307,400 @@ const weaveResume: ResumeContent = {
   ],
 };
 
+const theOneResume: ResumeContent = {
+  role: 'Senior Product Designer',
+  tenure: '• 10 years',
+  location: 'Pleasant Grove, Utah, open to remote',
+  profileHeading: '',
+  profileTitle: 'Designing complex products that feel simple',
+  profile:
+    'I’m a senior product designer with 10 years of experience turning complex workflows into clear, useful software. I partner with users, product teams, and engineers to understand problems, shape solutions, and deliver experiences that improve how people work.',
+  skills: [
+    'Product discovery',
+    'Scoping and requirements',
+    'Stakeholder collaboration',
+    'Product analytics',
+    'Cross-functional leadership',
+    'Interaction design',
+    'User flows',
+    'Information architecture',
+    'Visual design',
+    'Prototyping',
+    'Design systems',
+    'Typography',
+    'User research',
+    'Usability testing',
+    'Systems thinking',
+    'Complex B2B workflows',
+    'Figma',
+    'AI-assisted design and prototyping',
+  ],
+  skillGroups: [
+    {
+      label: 'Product & Strategy',
+      items: [
+        'Product discovery',
+        'Scoping and requirements',
+        'Stakeholder collaboration',
+        'Product analytics',
+        'Cross-functional leadership',
+      ],
+    },
+    {
+      label: 'Product Design',
+      items: [
+        'Interaction design',
+        'User flows',
+        'Information architecture',
+        'Visual design',
+        'Prototyping',
+        'Design systems',
+        'Typography',
+      ],
+    },
+    {
+      label: 'Research & Problem Solving',
+      items: ['User research', 'Usability testing', 'Systems thinking', 'Complex B2B workflows'],
+    },
+    {
+      label: 'Tools & Technology',
+      items: ['Figma', 'AI-assisted design and prototyping'],
+    },
+  ],
+  education: {
+    degree: 'BFA, Graphic Design',
+    school: 'Brigham Young University–Idaho',
+    year: '2017',
+  },
+  jobs: [
+    {
+      company: 'Entrata',
+      dates: '2025 – 2026',
+      title: 'Product Lead',
+      progression: 'lead',
+      bullets: [
+        'Led a remote team of six engineers as both product manager and designer. Turned user and business needs into scope, requirements, and prototypes from discovery through launch.',
+        'Designed a new mobile move-in that finishes a resident move-in in one real-time session instead of two. Recording a name now completes it on the spot, instead of saving it to finish later. Led it from information architecture through prototyping.',
+      ],
+    },
+    {
+      company: 'Entrata',
+      dates: '2020 – 2025',
+      title: 'Senior Product Designer',
+      progression: 'rank',
+      bullets: [
+        'Redesigned an enterprise setup workflow from usability testing and extended the design system so a property could offer residents a choice of incentives. More than 8,000 rental promotions used the new targeting rules within a few months.',
+        'Served as the sole designer for the company’s largest client, translating complex operational requirements into clear workflows and implementation-ready designs for engineering.',
+        'Led a hackathon team that designed an AI workflow to read income documents and fill affordable-housing certification forms, cutting manual data entry. It won Most Likely to Land a New Logo, and a version later shipped.',
+      ],
+    },
+    {
+      company: 'Entrata',
+      dates: '2019 – 2020',
+      title: 'Product Designer',
+      progression: 'rank',
+      bullets: [
+        'Redesigned unit inspection and facilities-management workflows to help staff complete tasks in fewer steps while making room for additional functionality.',
+      ],
+    },
+    {
+      company: 'FamilySearch',
+      dates: '2017 – 2019',
+      title: 'UX Designer',
+      bullets: [
+        'Coordinated with external design partners to maintain a consistent design process across campaigns.',
+        'Led the design of 26 personalized discovery experiences that helped members find relevant content and gave them reasons to return.',
+        'Month-over-month return through the campaign was 95% higher for members and 107% higher for non-members than the year before. It reached 1.1 million people outside the US and earned 90% positive feedback across 86,000 comments.',
+      ],
+    },
+  ],
+};
+
+const preplyResume: ResumeContent = {
+  role: 'Staff Product Designer',
+  tenure: '• 10 years',
+  location: 'Pleasant Grove, Utah, open to remote',
+  profileHeading: '',
+  profileTitle: 'A reason to come back',
+  profile:
+    'I bring interaction and visual craft to consumer products people open often, and I shape the next step with product managers and engineers. I research with users and product analytics, design the mobile experience, including where AI helps and where a person still decides, and stay with engineering until it ships and the result can be measured.',
+  skills: [
+    'Collaborative team leader',
+    'Visual craft',
+    'Interaction design',
+    'Retention and habit loops',
+    'UX research and testing',
+    'AI-assisted prototyping',
+    'Product analytics',
+    'User flows',
+    'Production data',
+    'Prototyping',
+    'Cross-team collaboration',
+    'Figma',
+    'FigJam',
+    'Cursor',
+  ],
+  railSkills: [
+    'Scoping',
+    'Clear writing',
+    'Stakeholder communication',
+    'Remote collaboration',
+  ],
+  education: {
+    degree: 'BFA, Graphic Design',
+    school: 'Brigham Young University–Idaho',
+    year: '2017',
+  },
+  jobs: [
+    {
+      company: 'Entrata',
+      dates: '2025 – 2026',
+      title: 'Product Lead',
+      progression: 'lead',
+      bullets: [
+        'Led a remote team of six engineers as product manager and designer. Owned scope, requirements, and prototypes from discovery through launch.',
+        'Designed a zero-to-one mobile experience for move-in workflows, from the user flows through prototyping. Staff now move a resident in, in real time, instead of re-entering the record later, which cut the work in half.',
+      ],
+    },
+    {
+      company: 'Entrata',
+      dates: '2020 – 2025',
+      title: 'Senior Product Designer',
+      progression: 'rank',
+      bullets: [
+        'Redesigned a complex enterprise setup system and extended its design language without adding complexity. More than 8,000 offers used the new targeting rules within the first couple of months.',
+        'Served as sole designer for projects tied to the company’s largest client. Translated that client’s operational needs into workflows engineering could build.',
+        'Led the team and designed a hackathon-winning AI workflow that reads income documents and autofills affordable-housing certifications. A person reviews the result before it replaces manual entry.',
+      ],
+    },
+    {
+      company: 'Entrata',
+      dates: '2019 – 2020',
+      title: 'Product Designer',
+      progression: 'rank',
+      bullets: [
+        'Redesigned unit inspection and other facilities workflows so staff could finish the job in fewer steps and take on new features.',
+      ],
+    },
+    {
+      company: 'FamilySearch',
+      dates: '2017 – 2019',
+      title: 'UX Designer',
+      bullets: [
+        'Oversaw third-party design so every campaign followed the same tried-and-true loop.',
+        'Led product design of 26 personalized discovery experiences that gave members an entry point and a reason to come back.',
+        'Retained 95% more members and 107% more other users than the previous year. Reached 1.1 million people outside the US and earned 90% positive feedback from 86,000 comments.',
+      ],
+    },
+  ],
+};
+
+const preplyLetter: CoverLetterContent = {
+  role: 'Staff Product Designer',
+  location: 'Pleasant Grove, Utah',
+  date: 'October 21, 2026',
+  recipient: 'Preply hiring team',
+  position: 'Staff Product Designer',
+  paragraphs: [
+    'I am applying for the Staff Product Designer role at Preply. A learner is trying to stay with a language. The product has to help them find a tutor they trust and give them a reason to come back for the next lesson. The lesson is still a person teaching a person, and the software around it has to make that progress feel clear.',
+    'Language learning and a tutor marketplace are new to me. The closest work is a consumer product built around a reason to return. At FamilySearch I led 26 personalized discovery experiences. Each one started with a person already in the tree and one next step. The next year we kept 95% more members and 107% more other users than the previous year. I worked with outside designers so every campaign used that same loop.',
+    'At Entrata I simplified the core workflows for Homebody, a resident mobile app. After launch it reached 4.4 out of 5 on iOS from more than 600 reviews in the first six months. I also led an AI workflow that reads income documents and fills an affordable-housing certification, so a long form becomes an upload a person can still review. For about a year I was product manager and designer with a remote engineering team, and I stayed from the problem through ship.',
+    'I live in Pleasant Grove, Utah, and I work remotely in the United States. I would welcome the chance to walk you through the work.',
+  ],
+  signoff: 'Sincerely,',
+};
+
+const officeHoursResume: ResumeContent = {
+  role: 'Senior Product Designer',
+  tenure: '• 10 years',
+  location: 'Pleasant Grove, Utah, open to remote',
+  profileHeading: '',
+  profileTitle: 'More capability, without more complexity',
+  profile:
+    'I bring visual craft and systems judgment to products with more than one kind of user. I research with the people who run the workflow and with product analytics, design the flows, the hierarchy, and the shared patterns, and stay with engineering until it ships and the result can be measured.',
+  skills: [
+    'Collaborative team leader',
+    'Visual craft',
+    'Design systems',
+    'Typography',
+    'Systems UX',
+    'Complex B2B workflows',
+    'Interaction design',
+    'UX research and testing',
+    'Prototyping',
+    'User flows',
+    'Product analytics',
+    'Production data',
+    'Cross-team collaboration',
+    'Figma',
+    'FigJam',
+    'Cursor',
+  ],
+  railSkills: [
+    'Scoping',
+    'Clear writing',
+    'Stakeholder communication',
+    'Remote collaboration',
+  ],
+  education: {
+    degree: 'BFA, Graphic Design',
+    school: 'Brigham Young University–Idaho',
+    year: '2017',
+  },
+  jobs: [
+    {
+      company: 'Entrata',
+      dates: '2025 – 2026',
+      title: 'Product Lead',
+      progression: 'lead',
+      bullets: [
+        'Led a remote team of six engineers as product manager and designer. Owned scope, requirements, and prototypes from discovery through launch.',
+        'Designed a zero-to-one mobile experience for move-in workflows, from the user flows through prototyping. Staff now move a resident in, in real time, instead of re-entering the record later, which cut the work in half.',
+      ],
+    },
+    {
+      company: 'Entrata',
+      dates: '2020 – 2025',
+      title: 'Senior Product Designer',
+      progression: 'rank',
+      bullets: [
+        'Redesigned a complex enterprise setup system and extended its design system without adding complexity. More than 8,000 offers used the new targeting rules within the first couple of months.',
+        'Served as sole designer for projects tied to the company’s largest client. Translated that client’s operational needs into workflows engineering could build.',
+        'Led the team and designed a hackathon-winning AI workflow that reads income documents and autofills affordable-housing certifications, replacing manual entry in a compliance-driven process.',
+      ],
+    },
+    {
+      company: 'Entrata',
+      dates: '2019 – 2020',
+      title: 'Product Designer',
+      progression: 'rank',
+      bullets: [
+        'Redesigned unit inspection and other facilities workflows so staff could finish the job in fewer steps and take on new features.',
+      ],
+    },
+    {
+      company: 'FamilySearch',
+      dates: '2017 – 2019',
+      title: 'UX Designer',
+      bullets: [
+        'Oversaw third-party design so every campaign followed the same visual system.',
+        'Led product design of 26 personalized discovery experiences that gave members an entry point and a reason to come back.',
+        'Retained 95% more members and 107% more other users than the previous year. Reached 1.1 million people outside the US and earned 90% positive feedback from 86,000 comments.',
+      ],
+    },
+  ],
+};
+
+const officeHoursLetter: CoverLetterContent = {
+  role: 'Senior Product Designer',
+  location: 'Utah-based, open to remote',
+  date: 'October 21, 2026',
+  recipient: 'Office Hours hiring team',
+  position: 'Senior Product Designer',
+  paragraphs: [
+    'I am applying for the Senior Product Designer role at Office Hours. A company needs someone who has already done the work, and that person needs a clear way to share what they know. Between them sit screening, scheduling, compliance, and payment. If that machinery is confusing, the conversation they came for never starts.',
+    'I have not designed an expert network. I have spent seven years at Entrata designing software for the people who run a property and the residents who live there. When one rental offer needed to carry more than one incentive, I redesigned the setup staff already used so it could hold more rules without feeling harder. Within the first couple of months, more than 8,000 offers used the new targeting rules.',
+    'I also designed the resident side. Homebody, a self-serve mobile app, reached 4.4 out of 5 stars on iOS from more than 600 reviews in its first six months. For about a year I was product manager and designer with a remote team of six engineers, and I stayed from the problem through ship. I was the sole designer on projects for the company’s largest client.',
+    'At FamilySearch I led 26 discovery experiences and worked with outside designers so each campaign used the same loop. Retention rose 95% for members and 107% for other users versus the prior year.',
+    'I live in Pleasant Grove, Utah, and I work remotely in the United States. I would welcome the chance to walk you through the work.',
+  ],
+  signoff: 'Sincerely,',
+};
+
+const vasionResume: ResumeContent = {
+  role: 'Senior Product Designer',
+  tenure: '• 10 years',
+  location: 'Pleasant Grove, Utah, open to remote',
+  profileHeading: '',
+  profileTitle: 'More capability, without more complexity',
+  profile:
+    'I take a complex enterprise workflow people already live in and make it more capable without making it harder. I research with the people who run it and with production data, design the interaction and the design system, use AI when it helps the prototype, and stay with engineering until the pattern ships and the result can be measured.',
+  skills: [
+    'Collaborative team leader',
+    'Design systems',
+    'Complex B2B workflows',
+    'Systems UX',
+    'AI-assisted prototyping',
+    'UX research and testing',
+    'Interaction design',
+    'Product analytics',
+    'User flows',
+    'Production data',
+    'Prototyping',
+    'Visual craft',
+    'Figma',
+    'Cursor',
+  ],
+  railSkills: [
+    'Cross-team collaboration',
+    'Stakeholder communication',
+    'Clear writing',
+    'Scoping',
+  ],
+  education: {
+    degree: 'BFA, Graphic Design',
+    school: 'Brigham Young University–Idaho',
+    year: '2017',
+  },
+  jobs: [
+    {
+      company: 'Entrata',
+      dates: '2025 – 2026',
+      title: 'Product Lead',
+      progression: 'lead',
+      bullets: [
+        'Led a remote team of six engineers as product manager and designer. Owned scope, requirements, and prototypes from discovery through launch.',
+        'Designed a zero-to-one mobile experience for move-in workflows, from the user flows through prototyping, and handed it to the iOS team as SwiftUI. Staff now move a resident in, in real time, instead of re-entering the record later, which cut the work in half.',
+      ],
+    },
+    {
+      company: 'Entrata',
+      dates: '2020 – 2025',
+      title: 'Senior Product Designer',
+      progression: 'rank',
+      bullets: [
+        'Redesigned a complex enterprise setup system and extended the design system without adding complexity. More than 8,000 offers used the new targeting rules within the first couple of months.',
+        'Served as sole designer for projects tied to the company’s largest client. Translated that client’s operational needs into workflows engineering could build.',
+        'Led the team and designed a hackathon-winning AI workflow that reads income documents and autofills affordable-housing certifications, replacing manual entry in a compliance-driven process.',
+      ],
+    },
+    {
+      company: 'Entrata',
+      dates: '2019 – 2020',
+      title: 'Product Designer',
+      progression: 'rank',
+      bullets: [
+        'Redesigned unit inspection and other facilities workflows so staff could finish the job in fewer steps and take on new features.',
+      ],
+    },
+    {
+      company: 'FamilySearch',
+      dates: '2017 – 2019',
+      title: 'UX Designer',
+      bullets: [
+        'Oversaw third-party design so every campaign followed the same tried-and-true loop.',
+        'Led product design of 26 personalized discovery experiences that gave members an entry point and a reason to come back.',
+        'Retained 95% more members and 107% more other users than the previous year. Reached 1.1 million people outside the US and earned 90% positive feedback from 86,000 comments.',
+      ],
+    },
+  ],
+};
+
+const vasionLetter: CoverLetterContent = {
+  role: 'Senior Product Designer',
+  location: 'Pleasant Grove, Utah',
+  date: 'October 21, 2026',
+  recipient: 'Vasion hiring team',
+  position: 'Senior Product Designer',
+  paragraphs: [
+    'I am applying for the Senior Product Designer role at Vasion. Someone still has to get a document from a screen to a printer, a signature, or the next system. The path has to stay simple when the process is regulated and the tools around it were never designed as one product.',
+    'Print and document automation are new to me. I have spent seven years at Entrata on the same kind of problem: an enterprise workflow that has to get more capable without getting harder. I redesigned a setup system so one offer could carry more than one rule, inside the pattern staff already knew. Within the first couple of months, more than 8,000 offers used the new targeting rules.',
+    'I also led an AI workflow that reads income documents and fills an affordable-housing certification, so a long form becomes an upload a person can still review. For about a year I was product manager and designer with a remote engineering team, and I stayed from the problem through ship. I use AI in the prototype when it helps, and I keep a person in charge when the product writes. At FamilySearch I worked with outside designers so 26 campaigns used the same loop.',
+    'I live in Pleasant Grove, so Lehi is a drive I can make a few days a week. I would welcome the chance to walk you through the work.',
+  ],
+  signoff: 'Sincerely,',
+};
+
 const weaveLetter: CoverLetterContent = {
   role: 'Senior Product Designer',
   location: 'Pleasant Grove, Utah, open to remote',
@@ -1312,6 +1712,98 @@ const weaveLetter: CoverLetterContent = {
     'I have not designed single sign-on, and I have not designed for a dental or veterinary office. I have spent seven years on the same kind of setup. At Entrata I redesigned a complex enterprise system so one offer could carry more than one rule, inside the pattern staff already knew. Within the first couple of months, more than 8,000 offers used the new targeting rules. I also designed a mobile move-in flow so staff could finish while the resident was still there, including when the Wi-Fi was down, instead of re-entering the record later. That cut the work in half.',
     'For about a year I was product manager and designer with a remote team of six engineers, and I stayed from the problem through ship. I was also the sole designer on projects for the company’s largest client. At FamilySearch I led 26 discovery experiences and worked with outside designers so each one used the same loop.',
     'I live in Pleasant Grove, so Lehi is a drive I can make, and I am glad to work remotely in the United States. I would welcome the chance to walk you through the work.',
+  ],
+  signoff: 'Sincerely,',
+};
+
+const wguResume: ResumeContent = {
+  role: 'Senior UX Designer',
+  tenure: '• 10 years',
+  location: 'Pleasant Grove, Utah',
+  profileHeading: '',
+  profileTitle: 'Research and visual craft',
+  profile:
+    'I bring user research, prototyping, and visual craft to web experiences on mobile and desktop. I work with product managers, engineers, and the people using the product, test early versions with them, and design in Figma until the next step is clear. I stay with engineering until it ships and the result can be measured.',
+  skills: [
+    'Collaborative team leader',
+    'Visual craft',
+    'Interaction design',
+    'User flows',
+    'Figma',
+    'Cross-team collaboration',
+    'AI-assisted prototyping',
+    'Retention and habit loops',
+    'Product analytics',
+    'Production data',
+    'FigJam',
+    'Cursor',
+  ],
+  railSkills: [
+    'UX research and testing',
+    'Prototyping',
+    'Web and mobile',
+    'Stakeholder communication',
+  ],
+  education: {
+    degree: 'BFA, Graphic Design',
+    school: 'Brigham Young University–Idaho',
+    year: '2017',
+  },
+  jobs: [
+    {
+      company: 'Entrata',
+      dates: '2025 – 2026',
+      title: 'Product Lead',
+      progression: 'lead',
+      bullets: [
+        'Led a remote team of six engineers as product manager and designer. Owned scope, requirements, and prototypes from discovery through launch.',
+        'Designed a zero-to-one mobile experience for move-in workflows, from user research and the user flows through prototyping. Staff now move a resident in, in real time, instead of re-entering the record later, which cut the work in half.',
+      ],
+    },
+    {
+      company: 'Entrata',
+      dates: '2020 – 2025',
+      title: 'Senior Product Designer',
+      progression: 'rank',
+      bullets: [
+        'Redesigned a complex enterprise setup system and extended its design language without adding complexity. Usability testing kept the flow inside the pattern staff already knew. More than 8,000 offers used the new targeting rules within the first couple of months.',
+        'Served as sole designer for projects tied to the company’s largest client. Translated that client’s operational needs into workflows engineering could build.',
+        'Led the team and designed a hackathon-winning AI workflow that reads income documents and autofills affordable-housing certifications, replacing manual entry in a compliance-driven process.',
+      ],
+    },
+    {
+      company: 'Entrata',
+      dates: '2019 – 2020',
+      title: 'Product Designer',
+      progression: 'rank',
+      bullets: [
+        'Redesigned unit inspection and other facilities workflows so staff could finish the job in fewer steps and take on new features.',
+      ],
+    },
+    {
+      company: 'FamilySearch',
+      dates: '2017 – 2019',
+      title: 'UX Designer',
+      bullets: [
+        'Led product design of 26 personalized discovery experiences that gave members an entry point and a reason to come back.',
+        'Retained 95% more members and 107% more other users than the previous year. Reached 1.1 million people outside the US and earned 90% positive feedback from 86,000 comments.',
+        'Oversaw third-party design so every campaign followed the same tried-and-true loop.',
+      ],
+    },
+  ],
+};
+
+const wguLetter: CoverLetterContent = {
+  role: 'Senior UX Designer',
+  location: 'Pleasant Grove, Utah',
+  date: 'October 21, 2026',
+  recipient: 'WGU hiring team',
+  position: 'Senior UX Designer',
+  paragraphs: [
+    'I am applying for the Senior UX Designer role at WGU. A student is trying to finish a degree while working and taking care of a family. The site has to make the next step obvious on a phone or a laptop, whether they are choosing a program or coming back to the one they already started.',
+    'Higher education is new to me. The closest work is a web experience built around one next step and a reason to return. At FamilySearch I led 26 personalized discovery experiences. Each one started with a person already in the tree and one thing to do next. The next year we kept 95% more members and 107% more other users than the previous year. I worked with outside designers so every campaign used that same loop.',
+    'At Entrata I spent seven years enhancing products people already used. When one rental offer needed to carry more than one incentive, I redesigned the setup inside the pattern staff already knew. Within the first couple of months, more than 8,000 offers used the new targeting rules. For about a year I was product manager and designer with a remote engineering team, and I stayed from the problem through ship.',
+    'I live in Pleasant Grove, so the Salt Lake City office is a drive I can make. I would welcome the chance to walk you through the work.',
   ],
   signoff: 'Sincerely,',
 };
@@ -1430,10 +1922,39 @@ export const applications: Application[] = [
     coverLetter: caliberLetter,
   },
   {
+    id: 'the-one-res',
+    label: 'The One Res',
+    resume: theOneResume,
+  },
+  {
     id: 'weave',
     label: 'Weave',
     resume: weaveResume,
     coverLetter: weaveLetter,
+  },
+  {
+    id: 'preply',
+    label: 'Preply',
+    resume: preplyResume,
+    coverLetter: preplyLetter,
+  },
+  {
+    id: 'office-hours',
+    label: 'Office Hours',
+    resume: officeHoursResume,
+    coverLetter: officeHoursLetter,
+  },
+  {
+    id: 'vasion',
+    label: 'Vasion',
+    resume: vasionResume,
+    coverLetter: vasionLetter,
+  },
+  {
+    id: 'wgu',
+    label: 'WGU',
+    resume: wguResume,
+    coverLetter: wguLetter,
   },
 ];
 

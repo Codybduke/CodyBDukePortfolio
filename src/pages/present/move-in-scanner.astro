@@ -304,6 +304,62 @@ import { withBase } from '../../lib/paths';
     color: rgba(255, 255, 255, 0.85);
   }
 
+  /* ---- Stone title (homepage knockout) --------------------------------- */
+
+  .deck-stone {
+    --deck-stone-word: clamp(3.25rem, min(10.5vw, 14.5svh), 13rem);
+    background: var(--bg);
+    color: var(--ink);
+    isolation: isolate;
+  }
+
+  .deck-stone__stage {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  .deck-stone__canvas {
+    position: absolute !important;
+    inset: 0;
+    width: 100% !important;
+    height: 100% !important;
+  }
+
+  .deck-stone__still {
+    position: absolute;
+    right: -6%;
+    top: 50%;
+    width: min(70vw, 120svh);
+    translate: 0 -50%;
+  }
+
+  .deck-stone__title {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: calc(var(--deck-stone-word) * 0.16);
+    width: min(100vw - clamp(2rem, 13.2vw, 8.5rem), 90rem);
+    height: 100%;
+    margin: 0 auto;
+  }
+
+  .deck-stone__line {
+    display: block;
+    font-family: var(--font-display);
+    font-size: var(--deck-stone-word);
+    font-weight: 600;
+    letter-spacing: -0.035em;
+    line-height: 0.7;
+    text-box: trim-both cap alphabetic;
+    color: var(--ink);
+    white-space: nowrap;
+  }
+
   /* ---- Title ------------------------------------------------------------ */
 
   .slide--title .slide__inner {
@@ -715,6 +771,10 @@ import { withBase } from '../../lib/paths';
     .deck-pairs {
       flex-direction: column;
       align-items: center;
+    }
+
+    .deck-stone {
+      --deck-stone-word: clamp(3rem, 16vw, 6rem);
     }
   }
 </style>

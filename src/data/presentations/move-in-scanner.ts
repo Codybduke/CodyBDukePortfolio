@@ -18,6 +18,7 @@ export type SlideMetric = {
 };
 
 export type SlideLayout =
+  | 'stone'
   | 'title'
   | 'chapter'
   | 'statement'
@@ -105,6 +106,11 @@ const shot = (file: string, alt: string): SlideImage => ({
 });
 
 export const slides: Slide[] = [
+  {
+    id: 'opener',
+    layout: 'stone',
+    title: 'Real Time\nMove-ins',
+  },
   {
     id: 'title',
     layout: 'title',
@@ -458,6 +464,11 @@ const full = (id: string) => {
 
 /** 30-minute interview cut. Double-tap B for this list, double-tap A for the full deck. */
 export const slidesB: Slide[] = [
+  {
+    id: 'b-opener',
+    layout: 'stone',
+    title: 'Real Time\nMove-ins',
+  },
   {
     id: 'b-title',
     layout: 'title',

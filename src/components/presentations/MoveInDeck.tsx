@@ -8,6 +8,7 @@ import {
   type Slide,
   type SlideMetric,
 } from '../../data/presentations/move-in-scanner';
+import DeckStoneTitle from './DeckStoneTitle';
 import { labSrc } from './proto-driver';
 
 type Props = {
@@ -117,6 +118,9 @@ function Pairs({ pairs }: { pairs: ComparePair[] }) {
 
 function SlideContent({ slide }: { slide: Slide }) {
   switch (slide.layout) {
+    case 'stone':
+      return <DeckStoneTitle title={slide.title ?? 'Real Time\nMove-ins'} />;
+
     case 'title':
       return (
         <div className="slide slide--title slide--bleed">

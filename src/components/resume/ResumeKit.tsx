@@ -744,7 +744,7 @@ function AtsSingleColumnView({ resume }: { resume: ReturnType<typeof getAtsResum
                 {role.title}
                 <span className="job__place">{role.location}</span>
               </p>
-              <p>{role.overview}</p>
+              {role.overview ? <p>{role.overview}</p> : null}
               <ul>
                 {role.bullets.map((item) => (
                   <li key={item}>{item}</li>
@@ -782,11 +782,28 @@ function AtsSingleColumnView({ resume }: { resume: ReturnType<typeof getAtsResum
   );
 }
 
+function AtsHeadline({ headline, tenure }: { headline: string; tenure?: string }) {
+  const tenureMark = tenure?.match(/^([•·])\s*([\s\S]*)$/);
+  const tenureLabel = tenureMark ? tenureMark[2] : tenure;
+
+  return (
+    <p className="ats__headline">
+      <span>{headline}</span>
+      {tenureMark ? (
+        <span className="ats__headline-dot" aria-hidden="true">
+          {tenureMark[1]}
+        </span>
+      ) : null}
+      {tenureLabel ? <span className="ats__headline-tenure">{tenureLabel}</span> : null}
+    </p>
+  );
+}
+
 function AtsResumeView({ resume }: { resume: ReturnType<typeof getAtsResume> }) {
   return (
     <article className="ats">
       <h1>{resume.name}</h1>
-      <p className="ats__headline">{resume.headline}</p>
+      <AtsHeadline headline={resume.headline} tenure={resume.tenure} />
       <p className="ats__contact">
         <a href={`mailto:${resume.email}`}>{resume.email}</a>
         <span className="ats__sep" aria-hidden="true">·</span>
@@ -820,13 +837,13 @@ function AtsResumeView({ resume }: { resume: ReturnType<typeof getAtsResume> }) 
         <section className="ats__role" key={`${role.company}-${role.title}`}>
           <p className="ats__row">
             <span className="ats__title">{role.title}</span>
-            <span>{role.dates}</span>
+            <span className="ats__dates">{role.dates}</span>
           </p>
           <p className="ats__org">
             <span className="ats__company">{role.company}</span>
             {` | ${role.location}`}
           </p>
-          <p>{role.overview}</p>
+          {role.overview ? <p>{role.overview}</p> : null}
           <ul>
             {role.bullets.map((item) => (
               <li key={item}>{item}</li>
@@ -838,7 +855,7 @@ function AtsResumeView({ resume }: { resume: ReturnType<typeof getAtsResume> }) 
       <h2>Education</h2>
       <p className="ats__row">
         <span className="ats__title">{resume.education.school}</span>
-        <span>{resume.education.year}</span>
+        <span className="ats__dates">{resume.education.year}</span>
       </p>
       <p>
         {resume.education.degree}, {resume.education.field}

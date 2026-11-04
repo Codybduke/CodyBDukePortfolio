@@ -1,0 +1,69 @@
+---
+description: Writing standards for creating, revising, tailoring, or critiquing Cody's resumes and resume bullets. Use only for resume work, not unrelated writing.
+globs: src/data/applications.ts,src/data/ats-resume.ts,src/lib/resume-docx.ts,src/lib/ats-docx.ts,src/components/resume/**
+alwaysApply: false
+---
+
+# Resume writing
+
+Apply these standards whenever Cody asks you to create, revise, tailor, critique, or optimize a resume or a resume bullet in this workspace. Do not apply them to unrelated writing. Case studies and site copy follow `case-study-writing.mdc`; this rule governs resumes only.
+
+## Audience
+
+Write for two readers at once:
+
+- A senior product design hiring manager who understands UX, product strategy, design systems, enterprise software, and cross-functional delivery.
+- A recruiter with limited technical context who must quickly grasp Cody's level, scope, skills, and results.
+
+An intelligent recruiter should understand each bullet on the first read.
+
+## Voice and clarity
+
+- Favor plain, precise language over jargon. Prefer "designed a new mobile experience" over "zero-to-one experience," and "extracts information from documents and fills out forms" over "autofills certifications."
+- Keep legitimate technical detail that establishes expertise; explain a specialized term in the next clause instead of removing it.
+- Write with confidence and restraint. Avoid corporate filler, stacked adjectives, and generic AI phrasing. Vary sentence shape so bullets do not read identically.
+- Keep bullets concise and scannable, ideally one or two lines.
+- Demonstrate clear writing through the resume itself; do not list "clear writing" or "design thinking" as a skill.
+
+## Structure a bullet around value
+
+Prefer: the action, the problem or purpose (what needed to improve and for whom), and the outcome (what shipped, changed, or was learned). Not every bullet needs all three; responsibilities, scope, and leadership can be stated directly when no measured result exists. Lead with the user problem and outcome over a list of design activities.
+
+## Seniority through evidence
+
+Show senior ability through navigating complex requirements, making thoughtful decisions, collaborating with engineering and stakeholders, owning work from discovery through delivery, balancing user, business, and technical needs, improving systems without adding complexity, and connecting work to results. Do not manufacture seniority with words like "strategic," "visionary," "transformative," or "world-class."
+
+## Accuracy is non-negotiable
+
+- Never fabricate accomplishments, metrics, responsibilities, technologies, tools, project details, or outcomes. Preserve the meaning and context of Cody's actual experience, terminology, and numbers.
+- Do not silently reinterpret a metric. Distinguish relative percentage increases, percentage-point changes, and absolute values. If a metric's meaning is ambiguous, keep it provisionally and flag it for Cody rather than reinterpreting it.
+- Do not claim Cody's work caused an outcome unless the relationship is supported. Use "contributed to" or similar when attribution is uncertain or team-wide.
+- Do not upgrade participation into ownership, collaboration into leadership, or an experiment or hackathon project into a launched product. Distinguish shipped products from concepts, prototypes, experiments, and hackathon work.
+- If more information would materially improve a bullet, leave a specific question for Cody instead of guessing.
+
+## The master resume is the source of truth
+
+The One Res is the authoritative, general-purpose master for the Senior / Lead / Product Lead family. It lives in two parts that must stay in content parity:
+
+- `theOneAtsResume` in `src/data/ats-resume.ts` — the ATS-safe Word version (single column, standard headings, no disclaimer).
+- `theOneResume` in `src/data/applications.ts` — the designed PDF version.
+
+Every new or tailored resume starts from this master, not from a blank page or a different variant. Preserve its employment history, dates, titles, and verified metrics exactly. Do not rewrite the master for a single posting. Tailor only with evidence-supported, clearly scoped changes (reordering bullets, swapping a true keyword, trimming a role), and keep the master itself a reliable default.
+
+Never silently change factual content to raise a keyword-match score. A score is one input, not the goal; the resume must still read like an experienced designer wrote it.
+
+### ATS Word structure
+
+Keep the ATS version single column with standard headings (Summary, Work Experience, Education, Skills). No tables, columns, text boxes, icons-as-text, or graphics that carry meaning. Keep name, contact, portfolio, and LinkedIn in the body, not in headers or footers. Keep each role heading with its bullets. Prefer a clean two pages over a cramped one page. Do not add an "optimized for ATS" disclaimer. Group skills under plain category labels; do not repeat a skill across categories or stuff keywords.
+
+## Tailoring and keywords
+
+Tailor wording to the target job without copying job-description language indiscriminately or keyword-stuffing. Use relevant keywords naturally only when they accurately describe Cody's experience. Keep the experience section more prominent than generic skills or personal branding.
+
+## Core positioning
+
+Cody makes complex software easier to use, helps product and engineering teams solve the right problems, and connects design decisions to meaningful user and business outcomes. Use this as a guiding theme, not mandatory verbatim copy. Preserve his design philosophy where it adds value: more capability without more complexity, and staying focused on the problem rather than a favorite solution.
+
+## Before finalizing
+
+Read the resume once as a recruiter and once as a senior product design hiring manager. Confirm the hierarchy (name, title, summary, experience, skills, education, contact) is clear, the experience section carries the most weight, portfolio and LinkedIn links work, and the exported PDF extracts to clean, logically ordered plain text. The result should read like an experienced designer wrote it, not a generic AI resume.

@@ -6,144 +6,84 @@ const img = (file: string) => withBase(`/work/pricing-specials/${file}`);
 export const pricingSpecialsCase: RichCaseStudy = {
   slug: 'pricing-specials',
   openingClaim:
-    'In Entrata Pricing, a special could carry one incentive — a gift or a credit. Two offers meant two specials, and the resident path got weird. I was the first designer on a rewrite of staff setup: property managers and regional admins needed one special that could hold a list of incentives, targeted by lease term, move-in date, space, applicant type, and whether it was for prospects, renewals, or both. I spent a few months in 2022 cutting the create flow until critique put some of it back, then usability testing pulled us toward the Pricing setup pattern people already knew instead of a sleeker one-off. Other teams built accept and prospect-portal display on that model. Engineering spent the next year shipping and repairing. After a rough first release settled, 10,204 active specials sat on 337 clients. 8,290 used lease-term rules. 162 specials on 38 clients ran the multi-select path that did not exist before.',
+    'In Entrata Pricing, a special could include only one incentive, a gift or a credit. If a property wanted residents to have a choice, staff created another special and tried to keep the two straight. I redesigned staff setup so one special could hold several incentives, and still follow the pricing rules student and conventional properties already used.',
   collaborators:
-    'Entrata Pricing PM and engineering; other product teams who built resident accept and prospect-portal display on the setup model',
-  surface: 'Desktop Entrata Pricing — staff setup for property, regional, and admin users',
+    'Pricing product manager, engineering, and the product teams responsible for resident-facing experiences',
+  surface: 'Entrata Pricing, desktop staff setup',
   heroFigure: {
     src: img('01-specials-list.png'),
     alt: 'Entrata Pricing Specials list for Lofts at Lorien, with Add Special and rows that mix concessions and gifts on one special.',
     caption:
-      'The hub. Type icons show when one special carries more than one incentive — Concession (2), Gift (2) — which the old model could not do.',
+      'The list shows when one special carries more than one incentive, such as Concession (2) and Gift (2).',
     layout: 'hero',
   },
   sections: [
     {
       id: 'problem',
       stage: 'Problem',
-      title: 'A special could hold one incentive',
+      title: 'One special could offer one incentive',
       body: [
-        'In Pricing, creating a special meant choosing a single incentive type. Gift or credit. If a property wanted a resident to pick from more than one, staff made multiple specials and hoped the downstream path made sense. It did not. The setup person was confused. The resident path was worse.',
-        'The hard part was not the marketing copy. It was the grid of properties those specials had to live on. Student housing especially: lease terms, move-in windows, space options or not. Conventional properties had a different creation path. The existing screen asked staff to do all of that at once.',
-      ],
-      metrics: [
-        {
-          value: '1',
-          label: 'Incentive per special in the old model — gift or credit, not both',
-        },
-        {
-          value: '2',
-          label: 'Property types the create flow had to cover: student and conventional',
-        },
-        {
-          value: 'Staff',
-          label: 'Primary user: property manager, regional, or admin setting up Pricing',
-        },
+        'Creating a special meant picking a single incentive. A property could offer a gift or a credit. It could not offer both on the same special.',
+        'When residents were supposed to choose, staff created a second special and managed it on its own. The person doing the setup was already confused. The resident trying to understand the options had it worse.',
+        'Operators who had used Yardi expected a choice. RentCafe could present a set of incentives during the online application, and the resident picked one. They wanted that same experience in Entrata. Separate specials were the workaround, and they did not feel like a choice.',
       ],
       callout:
-        'Multiple specials were not a workaround for multiple incentives. They were a different product, and residents could not use them that way.',
+        'For some customers, a choice of incentives was a leasing and retention tool they already relied on, and one reason they wanted Pricing to improve.',
     },
     {
-      id: 'business',
+      id: 'properties',
       stage: 'Problem',
-      title: 'Operators who knew Yardi expected a choice',
+      title: 'Student and conventional housing needed different setup',
       body: [
-        'Yardi’s RentCafe could already offer this kind of choice. It uses the guest card to present a set of options during the online application, so a resident picks among incentives instead of taking a single posted offer. Entrata Pricing could not do that. A special held one incentive, a gift or a credit.',
-        'Staff were already trying to get there. Two specials was the workaround, and it confused the person setting it up and the resident who had to use it. Operators who had run the offer in Yardi asked for the same setup in Entrata, and Pricing could not do it.',
-        'That gap was a retention problem. The promotion those operators used to lease and renew lived in the product they had left. One special that could hold a list of incentives was how Entrata kept that offer, and that client, inside Pricing.',
+        'Pricing had to support a wide range of property configurations, and those configurations did not share one creation path.',
+        'Student housing added lease terms, move-in dates, floor plans, and space options. The same unit might be offered as a private room, a shared room, or the whole unit, and each of those could be priced differently. Conventional properties had their own requirements and their own workflow.',
+        'The existing screen tried to hold all of that at once. Adding a list of incentives on top of it, without changing the steps, would have made a hard task harder.',
       ],
       callout:
-        'Former Yardi operators wanted a resident to choose among incentives. Until Pricing could do that, the offer was a reason to go back.',
+        'Staff needed one place to create a special with several incentives, without walking through every configuration just to start.',
     },
     {
-      id: 'evidence',
+      id: 'cutting',
       stage: 'Process',
-      title: 'Why the old Pricing screen stayed the map',
+      title: 'I started by taking the form apart',
       body: [
-        'I started by cutting. The philosophy was to remove so much that collaboration and critique would have to put about 20% back. That is how I knew we had actually reduced noise instead of rearranging it. A three-step wizard replaced the all-at-once create screen. Each step held less. The special itself could hold more: a list of incentives, then rules for lease terms, move-in dates, space options, applicant types, promo codes, manual-only, and whether prospects and renewals shared it.',
-        'The piece I pushed hardest to leave out was pricing per lease term and per space option. A space option is a student-housing fact: a room with two beds can be sold as private, shared, or as two rooms — and each of those can carry a different concession. I could set a $50 monthly discount, then a grid of different amounts for summer vs fall, private vs shared. About 1% of people priced at that grain. Those people sat on a significant set of clients. Pulling the grid would have broken how they already used Pricing the moment we added multi-incentive specials. I lost that argument to PM and engineering. I still think the default create path should not have been built around that 1%. I also had to design the grid well once it was in.',
-        'Usability testing is what stopped me from shipping a cleaner product that did not belong in Pricing. Testers were used to how Pricing is set up everywhere else in Entrata. The old UI looked dated. It was also the format they already trusted. A sleek, simple shell would have been a change-management project on top of a capability project. We went back toward that paradigm — quieter steps, same family as the rest of Pricing — so the new special was learnable.',
-        'The screens still look like Entrata of that era: heavy red, a design library we were not going to break for one flow. Belonging mattered more than a portfolio-friendly UI. I would still make that call. I would also still say the library was holding the product back.',
+        'My first move was to simplify the creation screen as far as I could. I wanted critique to show us what actually had to come back, so I was willing to cut fields and restore the ones the work still needed.',
+        'I explored a three-step wizard in place of the all-in-one form. The steps were the special’s details, who would receive it, and the incentives on it.',
+        'A special could now hold more than one incentive. It could also carry rules for lease terms, move-in dates, space options, applicant types, promo codes, and whether the offer applied to prospects, renewals, or both. The goal was a shorter path for the common case, with the flexibility customers still needed.',
       ],
-      table: {
-        headers: ['Input', 'What it changed'],
-        rows: [
-          [
-            'Old model: one incentive per special',
-            'Creation had to support a list on a single special, not a pile of specials.',
-          ],
-          [
-            'Student vs conventional, space options vs not',
-            'One create process with forked steps, not four products.',
-          ],
-          [
-            'Pricing per lease term × space option (~1% of setups, concentrated clients)',
-            'Pushed to cut it. Lost. Keeping it meant multi-incentive could not strand existing Pricing users.',
-          ],
-          [
-            'Usability: Pricing setup is a habit',
-            'Dropped the sleek one-off. Kept the quieter steps inside the existing paradigm.',
-          ],
-          [
-            'Design library and brand red',
-            'Shipped looking like Entrata so it would get used. Did not pretend this was a visual redesign.',
-          ],
-        ],
-      },
-      callout:
-        'The first instinct was a nicer wizard. The useful instinct was: do not orphan specials from Pricing.',
     },
     {
-      id: 'strategy',
+      id: 'tradeoff',
       stage: 'Process',
-      title: 'What setup had to be for other teams',
+      title: 'We kept pricing by lease term and space option',
       body: [
-        'I owned staff create. That was the first design on the initiative, and it became the contract. Resident accept, incentive select, and prospect-portal display were assisted and then taken by other product teams — they had to follow how setup named incentives, stacked them, and restricted them. If setup was a mess, every downstream surface would be a mess.',
-        'The targeting model is what made multi-select safe to offer. A resident can only choose from a list the property can honor: this lease term, this move-in window, this space option, this applicant type, sometimes a promo code, sometimes staff-only. Without those restrictions, a list of incentives is a promise accounting cannot keep.',
-        'I was not on the channel for the full year and a half. Design was a few months in mid-2022, with follow-ups. Release, the rough first launch, the R1 re-implementation of applicant types, Anil’s differential rebuild, and the drop in incoming bugs were engineering’s chapter. The adoption numbers are from after that chapter. I designed the setup those diagnostics count. I did not personally ship the rebuild.',
+        'The sharpest disagreement was pricing by lease term and space option. In student housing, the same unit can be a private room, a shared room, or the whole unit. Each configuration can have its own price and its own incentive, and those amounts can change again by lease term.',
+        'About 1% of setups priced at that level of detail. I wanted it off the main creation flow, because it was making the screen heavy for everyone else. Product and engineering kept it. The customers using it were an important group of existing clients, and removing it would have broken a workflow they already depended on.',
+        'I understood why it had to stay. From there, I focused on keeping it available when someone needed it, without letting it run the rest of the workflow.',
       ],
-      table: {
-        headers: ['Choice', 'Why / what we dropped'],
-        rows: [
-          [
-            'One special, many incentives',
-            'Multiple specials could not produce a real choice for the resident.',
-          ],
-          [
-            'Three quieter steps, not one mega-form',
-            'Staff still had to do the work. They did not have to see all of it at once.',
-          ],
-          [
-            'Match Pricing setup, not a new visual language',
-            'Usability: entrenched users. Change management was the hidden cost of “sleek.”',
-          ],
-          [
-            'Restrictions as part of create',
-            'Lease term, dates, space, applicant type — or the list would over-promise.',
-          ],
-          [
-            'Cut until critique added ~20% back — then lost the grid fight',
-            'Wanted lease-term × space-option amounts as an advanced path, not the main create. PM and eng kept it. About 1% priced there; those clients already depended on it.',
-          ],
-          [
-            'Stacked modal for lease-term rates',
-            'Textbook anti-pattern. Best option under the library and the grid we had to keep: one more surface, same create context, not a new page.',
-          ],
-          [
-            'Look like Entrata',
-            'A prettier island would have been skipped. The library was the constraint.',
-          ],
-        ],
-      },
+    },
+    {
+      id: 'testing',
+      stage: 'Process',
+      title: 'Testing sent us back to the Pricing people already knew',
+      body: [
+        'Usability testing changed the look of the work. My early concepts were cleaner and more modern than the rest of Pricing. Customers were used to how Pricing worked everywhere else in Entrata.',
+        'The existing interface looked dated, and people trusted it because they already knew it. A new visual pattern would have been a second thing to learn, on top of the new capability.',
+        'We kept the three steps and brought the screens back in line with the rest of Pricing. I had wanted a more modern interface. The priority was making the new capability easier to adopt.',
+      ],
     },
     {
       id: 'simple',
       stage: 'Solution',
-      title: 'The three default steps',
+      title: 'Details, recipients, and incentives',
       body: [
-        'Details, Recipients, Incentives. Name it, say who it is for, add the list. Floor-plan and space-option pickers stay collapsed as “all” or “selected.” Toggles for date caps sit off until someone needs them. That is the default path — quieter than the old mega-form, still in Pricing’s chrome, still dummy data.',
-        'Complexity is available. It is not in your face. If they never price by space option and lease term, they never see the grid. If they do, the UI gets denser on purpose. That was the trade: still simpler than original create, honest about the 1% path we lost the fight to keep out of the default.',
+        'The creation flow is three steps: Details, Recipients, and Incentives. Details covers the name and description. Other settings are available, and staff can leave them for later.',
+        'Recipients is the audience. A special can apply to prospects, renewals, or both. Staff can also limit it to specific properties, floor plans, unit types, or individual units.',
+        'Incentives is where one special holds more than one offer. Staff can group a gift and a concession together and give residents a choice.',
+        'Less common options stay closed. Floor plan and space option selections open when someone needs them. Date restrictions turn on when they matter.',
       ],
+      callout:
+        'The common path stays short. The advanced configuration is still there for the people who need it.',
       figures: [
         {
           src: img('02-details.png'),
@@ -155,14 +95,14 @@ export const pricingSpecialsCase: RichCaseStudy = {
           src: img('03-recipients.png'),
           alt: 'Add Special modal on step Recipients, with Prospects and Renewals checked and Selected Floor Plans active.',
           caption:
-            'On Recipients, prospects and renewals are the audience, and targeting stays in dropdowns until it has to expand.',
+            'On Recipients, prospects and renewals are the audience, and narrower targeting stays closed until someone needs it.',
           layout: 'wide',
         },
         {
           src: img('04-incentives.png'),
           alt: 'Add Special modal on step Incentives, with two gifts and one concession summarizing three space options.',
           caption:
-            'On Incentives, two gifts and a concession sit on one special, and Price by Lease Term is a door rather than the room.',
+            'On Incentives, two gifts and a concession sit on one special, and Price by Lease Term stays closed until the amounts need to vary.',
           layout: 'wide',
         },
       ],
@@ -170,27 +110,25 @@ export const pricingSpecialsCase: RichCaseStudy = {
     {
       id: 'making',
       stage: 'Solution',
-      title: 'Lease terms and space options',
+      title: 'Amounts can still vary by room and by lease term',
       body: [
-        'This is the shape we ended up having to support. A special could be for prospects and renewals but not current residents; limited by date range and renewal start; assigned to selected properties, and then to selected floor plans, unit types, or even specific units. On that special, three incentives: two gifts with different values, and one concession. That concession could itself be a stack — a one-time $100 plus $50 a month — and those amounts could differ for a shared room versus a private room, and again for summer term versus fall. That is one special. That is why setup could not be a pretty three-field form.',
-        'When someone opens the concession, the summary becomes a row per space option: private room, private unit, shared room. Price by Lease Term then opens a second dialog on top of Add Special — Lease Terms Rates — so spring vs fall can differ without dumping that table into the already-full create modal. A lot of UX writing says never stack dialogs. It depends. Under this design library, with create already a modal, a new page would have dropped the special context. A second small modal kept the grid in the same session. I would still defend that here. I would not make it a house rule.',
-        'I assisted how a resident accepts and selects, and how specials show in the prospect portal. Those screens are supporting. Setup is the case.',
+        'Customers who needed more control could still price by lease term and space option. A single concession can include more than one amount, such as a one-time $100 credit and $50 off each month. Those amounts can differ for a private room and a shared room, and they can change again by lease term.',
+        'I put that grid on its own surface, so it never sat in the main steps. It opens as a second dialog on top of the creation dialog.',
+        'I try to avoid stacked dialogs. Creation was already a modal, and the design library was built that way, so a second dialog kept people on the special they were configuring. A new page would have taken them away from it. What shipped is a manageable way through a complicated set of requirements.',
       ],
-      callout:
-        'If they want it complicated, it can be. The default path does not start there. We simplified the workflow. We did not simplify the domain.',
       figures: [
         {
           src: img('05-space-options.png'),
           alt: 'Concession incentive expanded to Private Room, Private Unit, and Shared Room rows, each with Price by Lease Term.',
           caption:
-            'Amounts per space option are the path about 1% of setups use, and lease terms are the next door.',
+            'A concession can carry a different amount for a private room, a private unit, and a shared room.',
           layout: 'wide',
         },
         {
           src: img('06-lease-term-rates.png'),
           alt: 'Lease Terms Rates dialog stacked on Add Special, with a row per spring lease term for amount, tax, and total.',
           caption:
-            'A second dialog stacks on Add Special so spring terms can differ without leaving the special.',
+            'Lease-term rates open in a second dialog, so spring and fall can differ without leaving the special.',
           layout: 'wide',
         },
       ],
@@ -198,17 +136,18 @@ export const pricingSpecialsCase: RichCaseStudy = {
     {
       id: 'inherit',
       stage: 'Solution',
-      title: 'What other teams inherited',
+      title: 'Other teams built on the same special',
       body: [
-        'I did not own the resident-profile surface. I helped. Other product teams designed this version. It is here because it is the same object: Gift (2) on one row, Concession plus Gift on another — the setup model showing up where staff actually apply a special.',
-        'If a resident called the office to pick an incentive, the person on the phone could accept it here instead of sending them through a portal. Status is active or inactive. Received is a date, or a button to mark it received. That is office-side completion of a choice that started in Pricing setup.',
+        'I owned the staff creation experience. Other product teams owned what residents and prospects saw next, including choosing an incentive, accepting it, and seeing the special in the prospect portal. I helped on some of those screens. Other designers led them.',
+        'They needed the same incentive structure, the same names, and the same restrictions. A special configured in Pricing had to show up accurately everywhere else it appeared.',
+        'When a resident called the office to pick an incentive, staff had to manage that choice from the resident profile. The special from setup had to survive that handoff. Getting the model right mattered as much as making the form easier to use.',
       ],
       figures: [
         {
           src: img('07-resident-profile.png'),
           alt: 'Resident profile Specials tab showing a Summer Renewal gift special as active with a Received button, and an inactive Winter Move-In special with concession and gifts.',
           caption:
-            'Lease → Specials on a resident profile (dummy data). I assisted; I did not lead this screen. The type mix is the setup contract landing in the office workflow.',
+            'The same special shows up on the resident profile, where staff can mark an incentive received.',
           layout: 'wide',
         },
       ],
@@ -216,42 +155,51 @@ export const pricingSpecialsCase: RichCaseStudy = {
     {
       id: 'outcome',
       stage: 'Results',
-      title: 'Adoption after the rough launch',
+      title: 'How specials were used after the improvements',
       body: [
-        'The first release was rough. I would not lead with that, and I would not hide it. After R1 2024, incoming bugs dropped sharply. Applicant types had to be re-implemented. A differential rebuild made a large difference for customers. That is the engineering story that made the setup usable in production.',
-        'The snapshot that closed the channel: 10,204 active specials across 337 clients. That is how much of the client base was relying on specials for leasing and retention — the platform, not a claim that I caused 337 logos. Inside that base, the capabilities I designed setup for actually got used.',
-        'Lease-term restrictions showed up on 8,290 specials across 278 clients. Move-in date restrictions on 1,563 specials across 155. Applicant types on 1,266 specials across 118. Shared prospect and renewal on 432 specials across 57. Multi-select — the new behavior — on 162 specials across 38 clients. That last number is small because it is a new way to lease, not a default toggle. Zero clients could do it before.',
+        'The first release had problems. Engineering kept improving it over the following year. Applicant type handling was reworked, and a later rebuild addressed issues customers were feeling.',
+        'After that, usage showed how widely specials were used, and which of the newer options people actually turned on. These counts describe the platform after those improvements. They are not a conversion rate, and they are not a measure of my work alone.',
       ],
       metrics: [
         {
           value: '10,204',
-          label: 'Active specials across 337 clients after the initiative (platform)',
+          label: 'Active specials across 337 clients.',
         },
         {
           value: '8,290',
-          label: 'Specials using lease-term restrictions (278 clients)',
+          label: 'Specials limited by lease term, across 278 clients.',
+        },
+        {
+          value: '1,563',
+          label: 'Specials limited by move-in date, across 155 clients.',
         },
         {
           value: '1,266',
-          label: 'Specials for specific applicant types (118 clients), after the R1 re-implementation',
+          label: 'Specials aimed at specific applicant types, across 118 clients.',
+        },
+        {
+          value: '432',
+          label: 'Specials shared by prospects and renewals, across 57 clients.',
         },
         {
           value: '162',
-          label: 'Specials with multiple incentives to choose from (38 clients) — did not exist before',
+          label: 'Specials with more than one incentive, across 38 clients.',
         },
       ],
       callout:
-        'I designed the setup those diagnostics measure. The 1.5-year ship, the rebuild, and the bug drop were a multi-team release. I do not claim the 337-client base as a personal conversion.',
+        'Those 162 specials are the new behavior: a resident can choose among incentives on a single special. I designed the staff setup that made that configuration possible.',
     },
     {
       id: 'reflection',
       stage: 'Results',
-      title: 'What I would change',
-      bullets: [
-        'Instrument setup itself: time-to-create, error on publish, which branch (student / conventional / space options) actually got used. Channel diagnostics counted live specials. They did not tell us if the wizard was faster than the old mega-form.',
-        'Keep a before screenshot in the design file on purpose. The all-at-once create screen is the argument. I am still hunting it in the recovered file.',
-        'I would still conform to Pricing’s setup pattern. I would still have cut per-lease-term × space-option pricing from the default create path — make it advanced, not the main story. I lost that one. I would push harder, earlier, on the design library. Belonging was right. Shipping a red, dated shell as the cost of belonging was a company constraint I would not pretend was taste.',
+      title: 'What I would do differently',
+      body: [
+        'I would measure the setup experience itself. We could see how customers used specials. We could not see how long a special took to create, where people hit errors, or which configuration paths they actually took.',
+        'I would separate the advanced path more clearly. We did move lease-term and space-option pricing out of the main steps. People who did not need it could skip it, and people who did could open it while they configured an incentive. I would still make that door easier to tell apart from the default, so the complex path never feels like the way everyone has to work.',
+        'I would have pushed on the design library sooner. Staying consistent with the rest of Pricing was the right call. The library also limited how much the interface could improve, and I treated that limit as fixed for too long.',
       ],
+      callout:
+        'Simplifying this product meant knowing which complexity mattered, who needed it, and how to keep it from getting in everyone else’s way.',
     },
   ],
   nextCaptures: [

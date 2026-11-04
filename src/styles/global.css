@@ -883,34 +883,231 @@ p:last-child {
   margin: 0;
 }
 
-.about-grid {
-  display: grid;
-  gap: var(--space-7);
+.about-page {
+  padding: var(--space-6) 0 var(--space-8);
 }
 
-@media (min-width: 840px) {
-  .about-grid {
-    grid-template-columns: 1.4fr 0.8fr;
-    align-items: start;
-  }
+.about-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas:
+    'photo'
+    'title'
+    'contact'
+    'copy';
+  row-gap: var(--space-6);
+}
+
+.about-title {
+  grid-area: title;
+  margin: 0;
+  max-width: none;
+  font-size: clamp(2.5rem, 3.6vw, 3.55rem);
+  font-weight: 600;
+  line-height: 1.02;
+  letter-spacing: -0.03em;
+}
+
+.about-copy {
+  grid-area: copy;
+  max-width: none;
+  color: var(--ink-muted);
+}
+
+.about-copy h2,
+.about-copy strong {
+  color: var(--ink);
+}
+
+.about-path {
+  display: grid;
+  gap: 1.15rem;
+}
+
+.about-path h3 {
+  margin: 0;
+  color: var(--ink);
+  font-size: 1.05rem;
+  font-weight: 650;
+  letter-spacing: -0.015em;
+}
+
+.about-path p {
+  margin: 0.2rem 0 0;
+}
+
+.about-aside {
+  display: contents;
+}
+
+.about-aside > :first-child {
+  grid-area: photo;
+}
+
+.about-grid .contact-panel {
+  grid-area: contact;
+}
+
+.about-portrait {
+  position: relative;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 419 / 529;
+  background: #6d8488;
+  overflow: hidden;
+  touch-action: none;
+}
+
+.about-portrait.is-lens {
+  cursor: none;
+}
+
+.about-portrait:not(.is-ready) .about-portrait__color {
+  opacity: 0;
+}
+
+.about-portrait__color,
+.about-portrait__dither {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.about-portrait__color {
+  object-fit: cover;
+  object-position: center center;
+}
+
+.about-portrait__cursor {
+  position: absolute;
+  z-index: 2;
+  left: 0;
+  top: 0;
+  width: 90px;
+  height: 90px;
+  border: 1.5px solid var(--ink);
+  border-radius: 50%;
+  box-shadow: 0 0 0 1px var(--bg);
+  overflow: hidden;
+  pointer-events: none;
+  opacity: 0;
+  transform: translate(-50%, -50%);
+}
+
+.about-portrait__cursor img {
+  position: absolute;
+  max-width: none;
+  object-fit: cover;
+  object-position: center center;
+}
+
+.about-portrait__cursor.is-on {
+  opacity: 1;
+}
+
+.about-stage {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 419 / 529;
+  overflow: hidden;
+  background: var(--bg);
+}
+
+.about-stage__track {
+  height: 100%;
+}
+
+.about-stage__slide {
+  height: 100%;
+}
+
+.about-stage__slide .about-portrait {
+  height: 100%;
+  aspect-ratio: auto;
+}
+
+.about-stage__slide--stone {
+  display: grid;
+  place-items: center;
+  background: var(--bg);
+}
+
+.about-stage__slide--stone img {
+  width: 86%;
+  height: 86%;
+  object-fit: contain;
+  object-position: center;
 }
 
 .contact-panel {
-  padding: var(--space-5);
-  border: 1px solid var(--line);
-  background: var(--accent-dim);
+  padding: 0.95rem 0.85rem 0.9rem;
+  background: #edede1;
 }
 
 .contact-panel h2 {
-  font-size: 1.2rem;
+  margin: 0 0 0.7rem;
+  font-family: var(--font-ui);
+  font-size: 1.05rem;
+  font-weight: 650;
+  letter-spacing: -0.015em;
 }
 
-.contact-panel a {
+.contact-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+}
+
+.contact-actions a {
+  display: inline-flex;
+  align-items: center;
   font-family: var(--font-ui);
-  font-weight: 560;
+  font-size: 0.84rem;
+  font-weight: 600;
+  line-height: 1;
   text-decoration: none;
-  display: inline-block;
-  margin-top: var(--space-2);
+  color: var(--bg);
+  background: var(--stone);
+  border-radius: 4px;
+  padding: 0.48rem 0.72rem;
+}
+
+.contact-actions a:hover {
+  color: var(--bg);
+  background: #000;
+}
+
+@media (min-width: 900px) {
+  .about-grid {
+    /* Text and portrait stay the same width, as in the screenshot.
+       Cap the pair so the portrait and contact still fit on screen. */
+    width: min(
+      100%,
+      calc(2 * (100svh - var(--header-h) - 10.75rem) * 419 / 529 + clamp(1.75rem, 3.4vw, 3.75rem))
+    );
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-areas:
+      'title aside'
+      'copy aside';
+    column-gap: clamp(1.75rem, 3.4vw, 3.75rem);
+    row-gap: 1.35rem;
+    align-items: start;
+  }
+
+  .about-aside {
+    display: block;
+    grid-area: aside;
+    position: sticky;
+    top: calc(var(--header-h) + 0.85rem);
+    width: 100%;
+  }
+
+  .about-aside > :first-child,
+  .about-grid .contact-panel {
+    grid-area: auto;
+  }
 }
 
 .note {
@@ -952,28 +1149,6 @@ p:last-child {
   font-family: var(--font-ui);
   font-size: 0.82rem;
   font-style: normal;
-  color: var(--ink-faint);
-}
-
-.stone-pair {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--space-4);
-  margin: var(--space-6) 0 0;
-  max-width: 28rem;
-}
-
-.stone-pair img {
-  width: 100%;
-  height: auto;
-  background: var(--bg-elevated);
-  border-radius: var(--radius);
-}
-
-.stone-pair figcaption {
-  grid-column: 1 / -1;
-  font-family: var(--font-ui);
-  font-size: 0.85rem;
   color: var(--ink-faint);
 }
 

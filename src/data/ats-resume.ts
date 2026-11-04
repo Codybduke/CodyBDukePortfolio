@@ -14,6 +14,11 @@ export type AtsRole = {
 export type AtsResumeContent = {
   name: string;
   headline: string;
+  /**
+   * Optional mark after the headline, matching the designed resume.
+   * Example: "• 10 years".
+   */
+  tenure?: string;
   email: string;
   phoneDisplay: string;
   city: string;
@@ -418,44 +423,38 @@ export const vasionAtsResume: AtsResumeContent = {
 export const theOneAtsResume: AtsResumeContent = {
   ...weaveAtsResume,
   headline: 'Senior Product Designer',
+  tenure: '• 10 years',
   summary: [
-    'More capability, without more complexity.',
-    'Senior product designer with 10 years turning complex software into clear, useful workflows, across enterprise B2B products and mobile apps.',
-    'I partner with product managers and engineers, ground decisions in user research and product analytics, and stay with the work from problem definition through a measured launch.',
+    'Designing complex products that feel simple',
+    'I’m a senior product designer with 10 years of experience turning complex workflows into clear, useful software. I partner with users, product teams, and engineers to understand problems, shape solutions, and deliver experiences that improve how people work.',
   ],
   roles: [
     {
       ...atsResume.roles[0],
-      overview:
-        'Led a remote team of six engineers as product manager and designer. Owned scope, requirements, and prototypes from discovery through launch.',
+      overview: '',
       bullets: [
-        'Designed Entrata’s first mobile app for property-manager staff, from the information architecture to the on-site workflow of looking up a resident and taking the next action, instead of a desktop product squeezed onto a phone.',
+        'Led a remote team of six engineers as product manager and designer. Owned backlog prioritization, scope, requirements, and prototypes from discovery through launch.',
+        'Designed resident lookup and the next action on that resident for Entrata’s property-manager mobile app. Staff could find a resident and handle the request on site, instead of working through a desktop product squeezed onto a phone.',
         'Designed a new move-in flow so staff complete it in one real-time session instead of two. Recording a resident now finishes the task, instead of saving the name to complete later. Handed it to the iOS team as SwiftUI.',
       ],
     },
     {
       ...atsResume.roles[1],
-      overview:
-        'Designed workflows for property managers and residents in Entrata’s property-management software, including projects for the company’s largest client.',
+      dates: 'Jul 2019 - Jul 2025',
+      overview: '',
       bullets: [
-        'Redesigned a complex enterprise setup system after usability testing and extended the design system so a property could offer residents a choice of incentives. More than 8,000 rental promotions used the new targeting rules in a few months.',
-        'Served as the sole designer for the company’s largest client, translating their operational needs into clear workflows engineering could build.',
+        'Sole product designer for Greystar, Entrata’s largest client. Project managers led the account. The relationship was a major part of my work: requests arrived as lists of solutions, so I led discovery, framed the problem, and designed the workflow.',
+        'Redesigned the setup after usability testing so a property could offer residents a choice of incentives, extending an old design system it had to follow. More than 8,000 rental promotions used the new targeting rules in the first few months.',
         'Led a hackathon team that designed an AI workflow to read income documents and fill affordable-housing certification forms, cutting manual data entry. It won Most Likely to Land a New Logo, and a version later shipped.',
-        'Simplified core workflows for Homebody, a resident-facing mobile app. After launch, it reached 4.4 out of 5 on iOS from more than 600 reviews in its first six months.',
-      ],
-    },
-    {
-      ...atsResume.roles[2],
-      overview: 'Designed facilities workflows for desktop and mobile.',
-      bullets: [
+        'Contributed to a new design system for Homebody, a resident-facing app, and simplified its core workflows. After launch, it reached 4.4 out of 5 on iOS from more than 600 reviews in its first six months.',
         'Redesigned unit inspection and other facilities workflows so staff finish tasks in fewer steps, making room for new features.',
       ],
     },
     {
       ...atsResume.roles[3],
-      overview:
-        'Led product design for member discovery and kept outside design partners on one consistent pattern.',
+      overview: '',
       bullets: [
+        'Led product design for member discovery and kept outside design partners on one consistent pattern.',
         'Led the design of 26 personalized discovery experiences that gave members a relevant entry point and a reason to come back.',
         'Month-over-month return through the campaign was 95% higher for members and 107% higher for non-members than the year before, reaching 1.1 million people outside the US and earning 90% positive feedback across 86,000 comments.',
         'Coordinated with external design partners to keep a consistent design process across campaigns.',

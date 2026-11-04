@@ -8,7 +8,6 @@ import {
   LineRuleType,
   Packer,
   Paragraph,
-  TabStopType,
   TextRun,
   UnderlineType,
   type IParagraphStylePropertiesOptions,
@@ -29,8 +28,9 @@ import {
  * sans that renders identically in recipients' Word (Calibri); reading text
  * (summary, role overviews, bullets) is set in a widely installed serif
  * (Georgia) to echo the site's editorial body. Hierarchy comes from a deliberate
- * type scale, tracked small-caps section labels, hairline rules, and a two-tone
- * ink/muted palette pulled from the site — not from bolding everything.
+ * type scale, tracked small-caps section labels with space above them, one
+ * hairline under the contact block, and a two-tone ink/muted palette pulled
+ * from the site — not from bolding everything.
  */
 const SANS = 'Calibri';
 const SERIF = 'Georgia';
@@ -54,7 +54,6 @@ const RULE = 'C9C7C0';
 const PAGE_WIDTH = 12240;
 const PAGE_HEIGHT = 15840;
 const MARGIN = 1152; // 0.8in
-const CONTENT_WIDTH = PAGE_WIDTH - MARGIN * 2;
 const LINE = { line: 276, lineRule: LineRuleType.AUTO };
 
 type RunOptions = {
@@ -96,7 +95,7 @@ function link(label: string, href: string, size = CONTACT) {
 }
 
 function separator() {
-  return run('    ·    ', { size: CONTACT, color: RULE });
+  return run('    ·    ', { size: CONTACT, color: INK });
 }
 
 function block(children: ParagraphChild[], options?: { before?: number; after?: number }) {
@@ -115,13 +114,12 @@ function rule(options?: { before?: number; after?: number; size?: number }) {
   });
 }
 
-/** Tracked small-caps section label with a hairline underneath. */
+/** Tracked small-caps section label. Space above stands in for a rule. */
 function sectionHeading(label: string) {
   return new Paragraph({
     heading: HeadingLevel.HEADING_2,
     keepNext: true,
-    spacing: { before: 300, after: 140, ...LINE },
-    border: { bottom: { style: BorderStyle.SINGLE, size: 4, color: RULE, space: 4 } },
+    spacing: { before: 440, after: 140, ...LINE },
     children: [run(label, { size: LABEL, bold: true, caps: true, spacing: 50, color: MUTED })],
   });
 }
@@ -133,9 +131,26 @@ function datedRow(
 ) {
   return new Paragraph({
     keepNext: options?.keepNext,
-    tabStops: [{ type: TabStopType.RIGHT, position: CONTENT_WIDTH }],
     spacing: { before: options?.before ?? 0, after: options?.after ?? 0, ...LINE },
-    children: [...left, run('\t'), run(right, { size: DATE, color: MUTED, caps: true, spacing: 20 })],
+    children: [
+      ...left,
+      run(' ', { size: DATE }),
+      run(right, { size: DATE, color: MUTED, caps: true, spacing: 20 }),
+    ],
+  });
+}
+
+function headlineLine(resume: AtsResumeContent) {
+  const tenureMark = resume.tenure?.match(/^([•·])\s*([\s\S]*)$/);
+  const tenureLabel = tenureMark ? tenureMark[2] : resume.tenure;
+  const children: ParagraphChild[] = [
+    run(resume.headline, { size: ROLE, caps: true, spacing: 60, color: MUTED }),
+  ];
+  if (tenureMark) children.push(run(` ${tenureMark[1]}  `, { size: ROLE, color: MUTED }));
+  if (tenureLabel) children.push(run(tenureLabel, { size: ROLE, color: MUTED }));
+  return new Paragraph({
+    spacing: { before: 0, after: 150, ...LINE },
+    children,
   });
 }
 
@@ -163,10 +178,7 @@ export function buildAtsDocument(resume: AtsResumeContent = atsResume) {
       spacing: { before: 0, after: 20, ...LINE },
       children: [run(resume.name, { size: NAME, bold: true, spacing: 20 })],
     }),
-    new Paragraph({
-      spacing: { before: 0, after: 150, ...LINE },
-      children: [run(resume.headline, { size: ROLE, caps: true, spacing: 60, color: MUTED })],
-    }),
+    headlineLine(resume),
     block([
       link(resume.email, `mailto:${resume.email}`),
       separator(),
@@ -219,7 +231,9 @@ export function buildAtsDocument(resume: AtsResumeContent = atsResume) {
         { before: 30 },
       ),
     );
-    children.push(keepNextPara([text(role.overview)], { before: 70, after: 70 }));
+    if (role.overview) {
+      children.push(keepNextPara([text(role.overview)], { before: 70, after: 70 }));
+    }
     for (const item of role.bullets) children.push(bullet(item));
   }
 

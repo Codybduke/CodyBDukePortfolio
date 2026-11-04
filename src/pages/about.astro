@@ -1,78 +1,109 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import PortraitReveal from '../components/PortraitReveal';
 import { site } from '../data/site';
 import { withBase } from '../lib/paths';
 ---
 
 <BaseLayout
   title="About"
-  description="Cody Duke — product designer. FamilySearch and Entrata; research through engineering delivery."
+  description="Cody Duke, product designer. Ten years turning complex problems into useful experiences, from research through delivery."
 >
-  <div class="shell page-hero">
-    <p class="section__eyebrow">About</p>
-    <h1>Product designer who owns the loop — not just the screens.</h1>
-  </div>
+  <div class="shell about-page">
+    <div class="about-grid">
+      <h1 class="about-title">I design products,<br />not just screens.</h1>
 
-  <div class="shell about-grid">
-    <div class="prose">
+      <div class="about-copy prose">
       <p>
-        Just over 10 years in UX. BFA in Graphic Design from BYU-Idaho (2012–2017), then
-        FamilySearch — UX Design Intern (2016), then UX Designer (2017–2019). From July 2019
-        through 2026 I was at Entrata as a Senior Product Designer on complex
-        property-management systems. For about a year that role expanded into Product Lead:
-        research through conception, prototype, handoff, and delivery with an owned
-        development team.
+        I’m a product designer with 10+ years of experience turning complex problems into useful,
+        thoughtful experiences. I care about the full picture, from understanding the problem and
+        shaping the strategy to designing, building, and getting the right solution into people’s
+        hands.
       </p>
       <p>
-        At FamilySearch I helped drive measurable campaign outcomes — 95% more members and 107%
-        more other patrons retained than the previous year, 1.1 million patrons outside the US engaged in a
-        campaign, and 86K feedback comments (90% positive) across 26 campaigns. That early habit of
-        tying experience work to engagement and retention carried into Entrata.
+        I earned a BFA in Graphic Design from BYU-Idaho in 2017 and started my UX career at
+        FamilySearch, where I worked on experiences focused on engagement, retention, and discovery.
+        Some of that work contributed to measurable results, including 95% more members and 107%
+        more other patrons retained compared to the previous year, along with a campaign that
+        reached 1.1 million patrons outside the US. Across 26 campaigns, we also collected 86,000
+        feedback comments, 90% of which were positive.
       </p>
       <p>
-        About a year and a half into that Entrata stretch the company held a Burn the Boats
-        moment: traditional design and product-management workflows gave way to AI-assisted
-        systems. I built my own operating system in that shift — research synthesis, data
-        pulls, prototyping, documentation, and eng communication — first with Figma Make,
-        then with Cursor — so I could move at Product Lead speed without dropping craft or
-        judgment.
+        In 2019, I joined Entrata, where I spent seven years designing complex products for the
+        property management industry. I eventually stepped into a Product Lead role, expanding my
+        responsibilities beyond design to include research, product strategy, prioritization,
+        prototyping, and close collaboration with an engineering team. I enjoyed being involved in
+        the entire process, not just handing off designs and hoping for the best.
       </p>
       <p>
-        I’m looking for Product Design roles where that mix is valued: ambiguous problem spaces,
-        field and production data as decision fuel, AI as leverage, and honest outcomes (or clear
-        measurement plans when results are still maturing).
+        During my time at Entrata, the way I worked changed significantly. As the company shifted
+        toward AI-assisted product development, I started rethinking my own process. Over the past
+        year and a half, I’ve built an AI-powered design workflow using tools like Figma Make and
+        Cursor. I use them to move from research and ideas to working prototypes, documentation,
+        and engineering collaboration much faster. The goal isn’t just to work faster. It’s to
+        spend less time on busywork and more time thinking through the problems and making better
+        decisions.
+      </p>
+      <p>
+        I’m looking for a team that values curiosity, ownership, and good problem-solving. I enjoy
+        ambiguous challenges, complex workflows, and products where understanding the people using
+        them matters just as much as understanding the business behind them.
       </p>
 
       <h2>The polished stone</h2>
       <p>
-        The stone on the home page is the metaphor for how I work. You start with a rough complaint,
-        idea, or problem — jagged, too big, full of the wrong facets. Research and validation knock
-        pieces off. Workflows, wires, and sketches give it a shape. Prototypes take feedback and
-        abrasion. Usability testing polishes further. What ships should feel dense and usable —
-        a polished stone, not a raw boulder with a coat of paint.
+        The stone on my homepage represents how I think about design.
       </p>
-      <figure class="stone-pair">
-        <img src={withBase('/images/stone-rough.png')} alt="Rough veined stone with mark" width="320" height="320" />
-        <img src={withBase('/images/stone-smooth.png')} alt="Polished veined stone with mark" width="320" height="320" />
-        <figcaption>Rough → refined — the same material, less of what doesn’t belong.</figcaption>
-      </figure>
+      <p>
+        Most good products start out a little rough. There’s a problem, an idea, or a complaint,
+        but it’s usually bigger and messier than it first appears. You have to work through it.
+      </p>
+      <p>
+        Research helps uncover what’s actually going on. Sketches and workflows start giving the
+        problem shape. Prototypes put ideas to the test, and feedback helps reveal what needs to
+        change. Each iteration removes a little more of what’s unnecessary.
+      </p>
+      <p>
+        The goal is to create something that feels simple and intentional, not because the problem
+        was simple, but because the work behind it was thoughtful.
+      </p>
+      <p>
+        That’s the kind of design I enjoy doing.
+      </p>
 
       <h2>How I work</h2>
       <ul>
-        <li>Own the problem end-to-end — framing, research, strategy, design, and eng partnership.</li>
-        <li>Ground UI in site visits, interviews, and production data when it’s available.</li>
-        <li>Make tradeoffs explicit: what shipped, what waited, and which metric we were chasing.</li>
-        <li>Use AI workflows to go faster on synthesis, prototyping, and documentation — without outsourcing the decisions.</li>
+        <li><strong>Own the problem.</strong> I like being involved from the initial question through research, strategy, design, and delivery.</li>
+        <li><strong>Stay close to reality.</strong> Site visits, customer conversations, usability testing, and production data help keep decisions grounded in how people actually work.</li>
+        <li><strong>Make thoughtful tradeoffs.</strong> Good design involves knowing what matters most, what can wait, and how we’ll know whether something worked.</li>
+        <li><strong>Use the tools available.</strong> AI has become a big part of my workflow, helping me research, prototype, document, and collaborate more efficiently. The tools can accelerate the work, but the thinking and decisions still belong to me.</li>
       </ul>
 
-      <h2>Path</h2>
-      <ul>
-        <li><strong>BYU-Idaho (BFA, Graphic Design)</strong> — 2012–2017; craft foundation.</li>
-        <li><strong>FamilySearch</strong> — Intern (2016) → UX Designer (2017–2019); retention, reach, and discovery feedback as proof points.</li>
-        <li><strong>Entrata</strong> — Senior Product Designer (2019–2026); systems and AI workflow products in property management.</li>
-        <li><strong>Product Lead (~1 yr, at Entrata)</strong> — research → ship with an owned eng team against business goals (scope beyond the LinkedIn title).</li>
-        <li><strong>AI-native practice (~1.5 yrs)</strong> — rebuilt how I design and deliver after Burn the Boats; Cursor skills, rules, and coded prototypes.</li>
-      </ul>
+      <h2>The path here</h2>
+      <div class="about-path">
+        <div>
+          <h3>BYU-Idaho</h3>
+          <p>BFA, Graphic Design · 2012–2017</p>
+        </div>
+        <div>
+          <h3>FamilySearch</h3>
+          <p>UX Design Intern · 2016</p>
+          <p>UX Designer · 2017–2019</p>
+        </div>
+        <div>
+          <h3>Entrata</h3>
+          <p>Senior Product Designer · 2019–2026</p>
+          <p>Product Lead · Approximately 1 year</p>
+        </div>
+        <div>
+          <h3>Today</h3>
+          <p>
+            Building AI-assisted design workflows, creating coded prototypes, and exploring what
+            product design looks like when the distance between an idea and a working product gets
+            smaller.
+          </p>
+        </div>
+      </div>
 
       <h2>What collaborators say</h2>
       <blockquote class="quote">
@@ -87,11 +118,43 @@ import { withBase } from '../lib/paths';
       </blockquote>
       <blockquote class="quote">
         <p>
+          “Cody is an amazing product manager with a strong eye for design. We partnered together to
+          build a lot of stuff at Entrata and he always raised the bar to deliver exceptional products
+          and features that our clients raved about for years to come. I hope we end up on the same
+          team again!”
+        </p>
+        <footer>— Robert Jones, Principal Product Manager (Entrata)</footer>
+      </blockquote>
+      <blockquote class="quote">
+        <p>
           “Cody is one of the most talented overall designers I’ve worked with. He can take seriously
           complicated flows and turn them into interfaces people can actually use without thinking
           twice.”
         </p>
         <footer>— Kyle Ashby, Product Designer (Entrata)</footer>
+      </blockquote>
+      <blockquote class="quote">
+        <p>
+          “I have had the privilege of managing Cody on our User Experience Design team. Cody is a
+          talented designer that is thoughtful about crafting delightful experiences. He has worked on
+          a variety of projects on our team and I always knew I could count on him to be dependable,
+          thorough, and work well with his team. Cody took complex data and requirements and
+          prototyped, usability tested, produced high fidelity designs to his development team with
+          sometimes a very quick turnaround. He also acted as an art director with third-party design
+          firms and was able to greatly improve the usability of experiences and our brand’s presence.”
+        </p>
+        <footer>— Michelle Barber, UX Design Manager (FamilySearch)</footer>
+      </blockquote>
+      <blockquote class="quote">
+        <p>
+          “Cody has been a great addition to our UX team. We hired him as an intern and were privileged
+          to have him work for us full time. He is passionate about making designs work for our
+          customers by using good design and testing. He works well with a number of stakeholders.
+          Juggling the demands and needs of several marketing product managers, engineering and the
+          customers. He is hungry for feedback and ways to improve, but he works independently to keep
+          projects moving and shipping on time. Highly recommended.”
+        </p>
+        <footer>— Grant Skousen, Chief Empathy Officer (FamilySearch)</footer>
       </blockquote>
       <blockquote class="quote">
         <p>
@@ -101,16 +164,40 @@ import { withBase } from '../lib/paths';
         </p>
         <footer>— Cris Rees, Sr. Product Manager (FamilySearch)</footer>
       </blockquote>
-    </div>
+      <blockquote class="quote">
+        <p>
+          “Cody has been a user experience design mentor for me since I joined his agile team,
+          encouraging me and guiding me through this maze. He regularly and cheerfully designs
+          successful online campaigns while fielding the constant stream of curve balls thrown his way
+          during the process, making sure to achieve stakeholder goals and pushes even farther to
+          achieve additional campaign successes they hadn’t even been thinking of.”
+        </p>
+        <footer>— Robb Perry (FamilySearch)</footer>
+      </blockquote>
+      <blockquote class="quote">
+        <p>
+          “Cody is a real craftsman when it comes to visual design. While I worked with him during my
+          internship, I feel like my sense of visual aesthetic increased by receiving feedback and
+          shadowing him. As a UX Designer, he is able to bring intention and human-centered design
+          methodologies to bear in his work. By making sure to validate any solutions he had through
+          meticulous testing he is able to marry stunning visuals with the intention of a proper
+          product designer.”
+        </p>
+        <footer>— Caden Damiano, Software Designer (FamilySearch)</footer>
+      </blockquote>
+      </div>
 
-    <aside class="contact-panel" id="contact">
-      <h2>Get in touch</h2>
-      <p>{site.location}</p>
-      <a href={`mailto:${site.email}`}>{site.email}</a>
-      <br />
-      <a href={site.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a>
-      <br />
-      <a href={withBase('/resume/')}>Resume</a>
-    </aside>
+      <aside class="about-aside">
+        <PortraitReveal client:load src={withBase('/images/cody-duke.jpg')} alt="Portrait of Cody Duke" />
+        <div class="contact-panel" id="contact">
+          <h2>Get in touch</h2>
+          <div class="contact-actions">
+            <a href={`mailto:${site.email}`}>Send a message</a>
+            <a href={site.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a>
+            <a href={withBase('/resume')}>Resume</a>
+          </div>
+        </div>
+      </aside>
+    </div>
   </div>
 </BaseLayout>

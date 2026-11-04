@@ -6,120 +6,98 @@ const img = (file: string) => withBase(`/work/mobile-strategy-resident-lookup/${
 export const mobileStrategyResidentLookupCase: RichCaseStudy = {
   slug: 'mobile-strategy-resident-lookup',
   openingClaim:
-    'Entrata had never shipped a mobile app for property managers. Facilities had a phone app. Everyone else had desktop Entrata, or the same product squeezed onto a phone browser. Resident lookup is a core piece of Entrata, not an OXP workflow. Anytime a resident has a question, staff pull that person up on desktop, or they try the same profile on a phone, which is a terrible experience. We asked property managers what they already try to do on a mobile device. Looking up residents was always first. On a walk they wrote it down, called the office, or fought the web app. I designed a quick search and a light profile: enough to answer the question and make small adjustments, without bringing over desktop work like a financial move-out that needs a desk and time to get the details right.',
+    'Entrata had never built a native mobile app for property managers. Staff were still using desktop Entrata on their phones, even to look up a resident while walking the property. I helped shape the mobile strategy and designed a first experience around that job: find the person, see what you need, and take action without going back to the office.',
   collaborators:
     'OXP product partners, Customer Workflows, customer feedback program',
-  surface: 'Expo prototype of Entrata’s staff iOS app (Command Center + Residents) plus a SwiftUI lookup module',
+  surface:
+    'Expo prototype of Entrata’s staff iOS app (Command Center + Residents), plus a SwiftUI resident lookup module',
   heroFigure: {
     src: img('00-hero-three-up.png'),
     alt: 'Three phone screens from the OXP Expo prototype: Command Center home, resident search results for Marcus Johnson, and his profile hub.',
     caption:
-      'Command Center, search, and profile come from the Expo prototype we used to make the strategy testable.',
+      'Command Center, search, and the resident profile come from the Expo prototype we used to walk the strategy with partners.',
     layout: 'hero',
   },
   sections: [
     {
       id: 'problem',
       stage: 'Problem',
-      title: 'Staff were already looking people up',
+      title: 'The mobile experience was missing',
       body: [
-        'Entrata had a facilities mobile app. It did not have a staff app for property managers. The OXP app was the first time the company put Entrata in a native phone experience for that audience. There is plenty in that app that belongs to OXP. Resident lookup is not one of those things. It is a core piece of Entrata that people use every day.',
-        'A question from a resident means pulling that person up. On desktop that is routine. On a phone it meant the web version of Entrata, which is a terrible experience, or a workaround: write it down and look it up later, attempt it on the phone anyway, or call someone who is still at the office.',
-        'We asked staff what they already try to do on a mobile device. Looking up residents was always first. They get the question while they are walking the property. The job is already happening. The product just was not there.',
-        'The question was not whether to ship a mobile app. It was which information architecture earns a second open, and which wedge proves it first. A light profile had to be enough to answer the question and make small adjustments. Major desktop work, like a financial move-out, stayed off the phone. That is desk work. You want time, focus, and the details in front of you.',
-      ],
-      metrics: [
-        {
-          value: '~4,600',
-          label: 'Gong calls filtered for mobile and field themes',
-        },
-        {
-          value: '30+',
-          label: 'Processed customer feedback transcripts across the beta program',
-        },
-        {
-          value: '5',
-          label: 'Staff-facing competitor apps scanned for moat versus parity',
-        },
+        'Entrata had a mobile app for facilities teams, and nothing native for property managers. Resident lookup was already everyday work in Entrata. On desktop, staff pull a person up whenever a resident has a question.',
+        'On a phone, that same profile was the web app. It is a poor way to answer someone at the door, so the lookup often waited until a manager got back to a desk.',
+        'A resident might ask about a balance while a manager was walking the property. Staff wrote the question down, called the office, or struggled through the mobile site.',
+        'We asked property managers what they actually needed to do on their phones. Looking up residents came first.',
+        'The opportunity was to make the common field tasks easier, and to learn which of those tasks would make someone open the app a second time. Fitting all of desktop Entrata onto a smaller screen was not the goal.',
       ],
     },
     {
       id: 'evidence',
       stage: 'Process',
-      title: 'What the research corrected',
+      title: 'Research changed our direction',
       body: [
-        'Early home concepts leaned toward a performance dashboard. That matched how desktop OXP talks about the business, and it would have failed the person standing in a parking lot. Gong and beta notes kept repeating next action, not portfolio charts.',
-        'We also treated Resident Lookup as a directory you browse. Field conversations start from a name, a unit, or a car. Search had to lead. Even then, the first search fields were name, unit, and email. Fire-lane and parking scenarios stall without a plate, and the usability simulation made that impossible to ignore.',
-        'Every major claim in the strategy memo carried an explicit confidence label. We had interviews, call research, and competitors. We did not have our own retention curve. That gap is why the first ship was sized to learn, not to complete a vision.',
+        'Our early concepts leaned toward a performance dashboard. That matched how the desktop product talks about the business. It did not match someone standing in a parking lot. Staff wanted to know what needed their attention, and they wanted a fast way to find the people they were working with.',
+        'I used call recordings, customer feedback, competing staff apps, and a usability simulation to reset the direction. Regional managers mattered more than the first concepts assumed. They travel between communities, so they would use the app, and they would be the ones asking their teams to use it.',
+        'We had also been treating resident lookup like a directory you browse. A conversation usually starts with a name or a unit. Parking and fire-lane work starts with a car. Search had to lead, and it had to include a license plate. The first fields were only name, unit, and email.',
+        'We did not have our own usage data yet. The strategy memo said how confident we were in each claim, because the first release was there to teach us.',
       ],
       table: {
-        headers: ['Input', 'What it changed'],
+        headers: ['Source', 'What it changed'],
         rows: [
           [
-            'Gong (~4,600 calls)',
-            '“Look up people on the phone” was the remembered competitor workflow. Field-to-desk round-trip was the waste. Maintenance is already phone-only.',
+            'About 4,600 Gong calls. Gong records customer conversations.',
+            'Looking people up on a phone was the workflow staff remembered from other products. The waste was the trip back to the desk. Maintenance work was already happening on a phone.',
           ],
           [
-            'Feedback transcripts (30+)',
-            'Regional managers would be the heaviest users because of travel. Ledger and approvals from the field. A hollow app after a mandate burns the manager who pushed it.',
+            '30+ customer feedback transcripts, from regional and community managers.',
+            'Regional managers would be heavy users because they travel, and they needed balances and approvals in the field. A thin app after a mandate would burn the manager who had pushed it.',
           ],
           [
-            'Competitive scan (5 vendors)',
-            'The market is fragmented single-function apps. Cloning desktop information architecture would not win. Platform-owner workflows (escalations, playbooks, workforce) are the moat; a KPI wall is not.',
+            '5 staff apps from competitors.',
+            'The market was a set of single-purpose apps. Copying desktop navigation would not set Entrata apart. The advantage is work Entrata already owns, such as escalations, playbooks, and staffing.',
           ],
           [
-            'Usability sim (4 personas, 32 walkthroughs)',
-            'Glanceable headers and tile previews worked. Plate search, wrong-property empty results, and the All Properties picker were ship-stoppers.',
+            '32 usability walkthroughs across 4 personas.',
+            'Short headers and previews were enough to hold a conversation. Plate search, empty results from the wrong property, and the All Properties picker were the failures.',
           ],
         ],
       },
       callout:
-        'Entrata had already proved the failure mode. A tablet product got deployed from the top and then sat unused. Top-down distribution gets the icon. Bottom-up job-fit keeps it.',
+        'Entrata had already watched a version of this fail. A tablet product was rolled out from the top and then sat unused. A mandate can put the icon on the phone. The job still has to be worth opening.',
     },
     {
       id: 'strategy',
       stage: 'Process',
-      title: 'Three bets for the first ship',
+      title: 'Three decisions for the first release',
       body: [
-        'Treating mobile as “OXP, but smaller” would have shipped a KPI wall and a nav tree nobody could use outdoors. We cut that framing and kept three bets.',
-        'The regional manager is the hinge. They mandate adoption and they use the app themselves. If the app is great for them, they push it. If they mandate a hollow app, their credibility takes the hit with ours. That mechanism was inferred, not measured, and the memo said so.',
-        'Resident Lookup is the daily wedge for on-site staff. Charge disputes, walk-ins, and after-hours questions do not wait for a desk. Heavier analytics waited until attribution quality was trustworthy. The trade-off was real: the home looks less like a command dashboard, and the first ship proves a conversation, not a portfolio review.',
+        'I helped set three priorities so the first version would not become a smaller copy of desktop Entrata.',
+        '1. The home screen should start with the work in front of someone: what needs attention today, and the actions staff repeat. Performance charts could wait until we trusted the numbers behind them. This version had to hold up a conversation in the field.',
+        '2. It had to work for regional managers too. They need to see which property they are in, and they need a view across the communities they cover. They are also the people most likely to ask their teams to adopt the app. If they pushed something that did not help, their credibility would take the hit along with ours. That was an inference from the research, and the memo said we had not measured it.',
+        '3. Resident lookup had to be a core path. Staff needed to search, see enough for the question in front of them, and take a common action. Charge disputes, walk-up questions, and after-hours calls do not wait for a desk.',
       ],
-      table: {
-        headers: ['Bet', 'Product consequence'],
-        rows: [
-          ['Action-first home', 'Command Center: Daily Briefing + Quick Actions, not a KPI dashboard'],
-          [
-            'Regional manager as hinge',
-            'Scope, multi-property, and “across my portfolio” language on home and search',
-          ],
-          [
-            'Resident Lookup as daily wedge',
-            'Search → profile hub → drill-ins for financials, lease, household, vehicles, work orders',
-          ],
-        ],
-      },
     },
     {
       id: 'home',
       stage: 'Solution',
-      title: 'Daily Briefing and Quick Actions',
+      title: 'A home screen built around daily work',
       body: [
-        'Daily Briefing sits at the top of home so role and scope are visible without hunting nav. Quick Actions are the verbs: packages, message, move-in, work order, add lead. We talked about burying those under desktop-shaped modules. That would have failed the field job, so they stay on the first surface.',
-        'When connectivity drops, Quick Actions collapse toward the work that can still run offline. Move-In is the extreme version of that rule. The rest of this case is the everyday version: look someone up and answer the question in front of you.',
+        'Command Center is that home screen. Daily Briefing sits at the top, so the next piece of work is visible, along with the role and the property, without a hunt through navigation. Quick Actions are the tasks people repeat: packages, messaging, move-ins, work orders, and adding a lead.',
+        'We talked about filing those actions under the same modules as desktop. That would have buried the reason someone opened the app, so they stay on the first screen. Performance snapshots sit lower. For someone in the field, the next task matters more than another dashboard.',
+        'We also planned for a dropped connection. When service goes, the actions left on screen should be the ones staff can still finish. Move-in is the extreme version of that. The everyday version is the rest of this case: look someone up and answer the question in front of you.',
       ],
       figures: [
         {
           src: img('01-command-center.png'),
           alt: 'OXP Command Center home with Daily Briefing 2.0: a Do Next escalation for Daniel Park, plus escalated threads, schedule, and approvals.',
-          caption: 'Daily Briefing is the home anchor, so scope and the next piece of work show up before any chart.',
+          caption:
+            'Daily Briefing leads the home screen, with the next escalation, the schedule, and approvals before any chart.',
           layout: 'device',
         },
         {
           src: img('02-quick-actions.png'),
           alt: 'Command Center Quick Actions grid with Packages, Properties, Move-In, Work Order, and related field verbs.',
           caption:
-            'Quick Actions are the primary verbs, and the snapshot sits below so charts wait until after the field jobs.',
+            'Quick Actions are the tasks staff repeat, and the performance snapshot waits below them.',
           layout: 'device',
         },
       ],
@@ -127,29 +105,30 @@ export const mobileStrategyResidentLookupCase: RichCaseStudy = {
     {
       id: 'lookup',
       stage: 'Solution',
-      title: 'Search, then the profile',
+      title: 'Finding a resident starts with search',
       body: [
-        'The Residents tab stays quiet until you search. Recent people are a shortcut, not a rent roll to scroll. That matches how a conversation starts: a name at the door, a unit on a package, a question about a balance.',
-        'The path is search, open the hub, then drill in only if the header is not enough. Message, work order, and note stay available without leaving the person. Ledger and household stay read-only in this cut. Field utility without premature write surfaces.',
+        'I designed the Residents tab around search. Recent searches are a way back to someone familiar. They are not a rent roll to scroll, which is the pattern from the desk.',
+        'From a result, the profile hub puts the useful facts up front: how to reach the person, the lease, the balance, and a way into financials, household, vehicles, and work orders. Message, call, and a new work order stay on that profile.',
+        'Financials and household are read-only in this version. Staff can answer the question and make a small adjustment. Heavier work, like a financial move-out, still belongs at a desk, where there is time to get the details right.',
       ],
       figures: [
         {
           src: img('03-residents-idle.png'),
           alt: 'Residents tab with search field and recent searches, not a full directory list.',
-          caption: 'Search leads, and the directory stays quiet until there is a query.',
+          caption: 'The Residents tab opens on search and recent people.',
           layout: 'device',
         },
         {
           src: img('05-search-marcus.png'),
           alt: 'Search results for Marcus showing Marcus Johnson at Westwood Commons with a balance due.',
-          caption: 'Name search returns the person, the property, the unit, and the balance in one row.',
+          caption: 'A name search returns the resident, the property, the unit, and the balance in one row.',
           layout: 'device',
         },
         {
           src: img('06-profile-hub.png'),
           alt: 'Marcus Johnson resident profile hub with contact actions, lease snapshot, balance due, and drill-in rows.',
           caption:
-            'The hub shows balance, status, and the lease snapshot on first glance, and contact, call, and work order stay on the person.',
+            'The profile leads with contact actions, the lease, and the balance. Financials, household, vehicles, and work orders are one step further in.',
           layout: 'device',
         },
       ],
@@ -157,17 +136,18 @@ export const mobileStrategyResidentLookupCase: RichCaseStudy = {
     {
       id: 'financials',
       stage: 'Solution',
-      title: 'The charge dispute at the door',
+      title: 'A late fee you can explain on the spot',
       body: [
-        'The charge-dispute path is why lookup had to ship before analytics. Someone is standing there asking about a late fee. Staff need the balance, the last charge, and enough ledger detail to talk, not a full AR workstation.',
-        'The usability simulation walked that scenario with four personas. All four completed it. Glanceable headers did the work. What still hurt was a running balance on each ledger line, which desktop AR users expect, and getting to the person at all when the only clue is a car.',
+        'One scenario we tested was a resident disputing a late fee. The manager had to find the person, see the balance and the recent charges, and know enough to talk about it while they were still standing there.',
+        'All four personas finished that scenario. A short summary and the recent charges were enough for the conversation. We did not need the full desktop accounts receivable screen on the phone.',
+        'The ledger was still thin in one place that matters. People who use the desktop ledger expect a running balance beside each charge, and the first mobile design did not have it.',
       ],
       figures: [
         {
           src: img('07-financials.png'),
           alt: 'Financials drill-in for Marcus Johnson with summary cards, ledger tabs, and recent charges including a late fee.',
           caption:
-            'Financials is a conversation aid, enough to dispute a charge on site without cloning the desktop ledger.',
+            'Financials shows the account summary and recent charges, which is enough to talk through a fee on site.',
           layout: 'device',
         },
       ],
@@ -177,20 +157,22 @@ export const mobileStrategyResidentLookupCase: RichCaseStudy = {
       stage: 'Solution',
       title: 'Search cannot start from a license plate',
       body: [
-        'Search fields said name, unit, or email. Parking and fire-lane work starts from a car. In the simulation, that path hesitated or failed for every persona. Gong had already described looking people up in the field. We still shipped a search box that could not see a plate.',
-        'The vehicle is on the profile. The plate is in Vehicles & Pets. None of that helps if you cannot get to the person from the parking lot. Plate search is still on the fix list. So is the empty-results pattern when property scope is wrong: a quiet chip that says you are searching one community, with no way to widen, looks like “no resident.”',
+        'The larger gap was the license plate. Parking and fire-lane problems start with a vehicle. Search accepted a name, a unit, or an email, and every persona hesitated or failed when the plate was the only clue.',
+        'The vehicle is already on the profile, plate included. That only helps after you have found the resident. In a parking lot, the plate is the search. Plate search stayed on the list of fixes.',
+        'So did the empty result when someone is looking at the wrong property. A quiet note that you are searching one community, with no way to widen it, looks like the resident does not exist.',
       ],
       figures: [
         {
           src: img('04-search-plate-miss.png'),
           alt: 'Residents search for a license plate returning no results.',
-          caption: 'A plate query returns an empty list, so the parking-lot job dies here.',
+          caption: 'A plate search comes back empty, so the parking-lot job ends on this screen.',
           layout: 'device',
         },
         {
           src: img('08-vehicles-pets.png'),
           alt: 'Vehicles and Pets screen for Marcus Johnson showing a silver Toyota Camry and plate EWX-4429.',
-          caption: 'The plate lives one drill-in deep. Useful after you have the person. Useless as the query.',
+          caption:
+            'The plate is on the vehicle screen, which helps only after you already know who the resident is.',
           layout: 'device',
         },
       ],
@@ -198,51 +180,52 @@ export const mobileStrategyResidentLookupCase: RichCaseStudy = {
     {
       id: 'prototype',
       stage: 'Solution',
-      title: 'Try it in the prototype',
+      title: 'A prototype the team could walk',
       body: [
-        'This is the Expo prototype we used with partners. The people tab lands on Residents, not a directory. Search a name, open the hub, then Financials. A plate still returns nothing. That was the point of putting a walkable build in front of people.',
+        'I put the strategy into a working prototype, built in Expo, so partners could try the flows on a phone instead of reviewing still screens.',
+        'The prototype includes Command Center and Residents. A separate lookup prototype carried the usability simulation: 32 walkthroughs across four personas, with the findings grouped and a queue of what to fix. A SwiftUI module showed the native iOS team the same lookup flow. That is the handoff pattern we used on Move-In.',
+        'The plate gap is still in the build. We left it there so the miss stayed visible while people were trying the rest of the flow.',
       ],
       embed: {
         src: withBase('/prototypes/oxp-mobile/'),
         title: 'Interactive OXP resident lookup prototype',
         caption:
-          'Start on Home, open the people tab, search Marcus, open the profile, and tap Financials; a plate like EWX-4429 still returns nothing.',
+          'Start on Home, open Residents, search for Marcus Johnson, and open Financials. A plate like EWX-4429 still returns nothing.',
       },
     },
     {
       id: 'decisions',
       stage: 'Solution',
-      title: 'The choices that held',
+      title: 'What we prioritized and what we left out',
+      body: [
+        'The research and the test made the first version smaller on purpose. A few problems stayed open: license plate search, empty results from the wrong property, and the All Properties picker, which could trap someone in a multi-select.',
+      ],
       table: {
-        headers: ['Choice', 'Why / what we dropped'],
+        headers: ['In the first version', 'Left for later'],
         rows: [
           [
-            'Action-first home, not a KPI dashboard',
-            'Staff on feet optimize for next action. Portfolio charts belong later, after attribution is trustworthy.',
+            'The home screen leads with the day’s work, because staff on their feet need the next task.',
+            'Performance charts as the main experience. Those can wait until we trust the numbers.',
           ],
           [
-            'Daily Briefing as the home anchor',
-            'Role and scope without hunting nav. A module tree copied from desktop would have buried the day.',
+            'Daily Briefing and Quick Actions on the first screen.',
+            'Desktop-style modules, which would bury those tasks.',
           ],
           [
-            'Quick Actions as primary verbs',
-            'Move-in, work order, packages, add lead. Two taps from the same home staff already open.',
+            'Resident lookup that starts with search.',
+            'A directory of every resident, scrolled like a rent roll.',
           ],
           [
-            'Search-first lookup, not a browseable directory',
-            'Conversations start from a name or unit. A rent roll to scroll is the desk pattern.',
+            'A profile hub, with financials, household, vehicles, and work orders one step in.',
+            'A full desktop profile on a phone.',
           ],
           [
-            'Hub plus drill-in sheets',
-            'Act (message, work order, note) without leaving the person. Align with desktop concepts, do not clone desktop information architecture.',
+            'Financials and household you can read, enough to talk through a charge.',
+            'Editing complex financials, including a move-out, which needs a desk.',
           ],
           [
-            'Read-only ledger and household',
-            'Field utility without premature write surfaces. AR still completes a charge dispute in view-only.',
-          ],
-          [
-            'Property scope always visible on search',
-            'Wrong scope returns empty results that look like “no resident.” The chip is the start of that fix, not the end.',
+            'The property you are searching is always visible.',
+            'A search that hides that scope and comes back empty.',
           ],
         ],
       },
@@ -250,50 +233,52 @@ export const mobileStrategyResidentLookupCase: RichCaseStudy = {
     {
       id: 'handoff',
       stage: 'Solution',
-      title: 'What partners got',
+      title: 'What we handed to partners',
       body: [
-        'The strategy memo named the bets, the confidence on each claim, and the kill criteria for the first 90 days after GA. That was the artifact for product partners: mobile as distribution for the AI workforce, with owned engagement metrics sitting beside shared agent-touched outcomes so a surface problem and an agent-layer problem stay distinguishable.',
-        'The Expo app made Command Center and Residents walkable. A dedicated lookup prototype carried the four-persona simulation: 32 walkthroughs, clustered findings, and a validation queue. A SwiftUI module mirrored the lookup flow for a native-team audience, the same handoff pattern we used on Move-In.',
-      ],
-      bullets: [
-        'Three bets written down with UI consequences: action-first home, RM as hinge, lookup as daily wedge.',
-        'Usability blockers logged: plate search, property-scope empty states, All Properties multi-select trap.',
-        'Left out of this cut on purpose: performance analytics on home, ledger writes, and treating lookup as a desktop profile clone.',
+        'The strategy memo named the three decisions, how sure we were about each one, and what we would check in the first 90 days after general availability. The checks were there so we could tell if the bet was wrong. We did not have usage yet, so they were criteria, not a result.',
+        'Entrata was also shipping agent features in this same app. The memo kept how often staff opened it separate from outcomes those agents touched, so a weak phone experience would not get mistaken for an agent problem.',
       ],
     },
     {
       id: 'outcome',
       stage: "What's next",
-      title: 'Targets we have not measured yet',
+      title: 'What came out of the work',
       body: [
-        'What we left behind was a coherent mobile information architecture story and a lookup flow staff could actually try, not a shrunk desktop. The work shaped roadmap sequencing and prototype direction. It is not a measured GA retention curve.',
-        'Initiative targets were set as learning goals for a CSM-activated cohort, with explicit kill criteria. Until first-party usage lands, these are goals, not results.',
+        'The team walked away with a mobile direction they could argue from, and prototypes they could try. I turned the research into the three priorities, decided which information belonged on the phone, and built the home screen, the lookup flow, and the native handoff.',
+        'We also set targets for a group of customers their success managers would bring onto the app. Until our own usage exists, these are goals. They are not measured results.',
       ],
       table: {
-        headers: ['Metric', 'Target (unmeasured)'],
+        headers: ['Success measure', 'Target'],
         rows: [
-          ['Weekly active staff use (habit, not installs)', '>50% of staff at OXP customers, 12 months after GA'],
-          ['Regional manager DAU at 30 days (pilot cohort)', '>50% rolling 7-day'],
-          ['Community manager DAU at 30 days post-mandate', '>40% (3+ days in the past 7)'],
-          ['Charge dispute completable on device (sim)', '4 of 4 personas completed'],
-          ['Plate-only parking lookup (sim)', 'Hesitated or failed across personas'],
+          [
+            'Weekly active staff',
+            'More than half of staff at customers on OXP, Entrata’s new staff app, within 12 months of general availability.',
+          ],
+          [
+            'Regional managers',
+            'More than half active across a rolling 7 days, at 30 days in the pilot group.',
+          ],
+          [
+            'Community managers',
+            'More than 40% active on at least 3 of the past 7 days, 30 days after a mandate.',
+          ],
         ],
       },
     },
     {
       id: 'reflection',
       stage: "What's next",
-      title: 'What I would change',
-      bullets: [
-        'Put plate search in the first lookup cut. Waiting for the simulation to prove a Gong theme we already had wasted a cycle.',
-        'Treat wrong-property empty states as a blocker, not polish. A quiet scope chip without a widen action looks like a missing resident.',
-        'Keep lookup and performance analytics in separate stories. Mixing them would have turned the daily wedge into another dashboard.',
+      title: 'What I would do differently',
+      body: [
+        'The biggest miss was license plate search. The research already said a lot of field work starts from a vehicle, and the simulation confirmed it. I would have put plate search in the first version, instead of using a test cycle to relearn something we already knew.',
+        'I would also treat the wrong property as a usability problem from the start. A search that returns nothing because you are looking at the wrong community is easy to read as a missing resident.',
+        'I would keep resident lookup and performance analytics as separate efforts. They serve different moments. Putting them in one project would have made it harder to get the everyday mobile experience right.',
       ],
     },
   ],
   sibling: {
     href: '/work/move-in-scanner',
-    label: 'OXP Mobile Move-In Scanner (Quick Action depth)',
+    label: 'Real-time Move-ins',
   },
   nextCaptures: [
     'Wrong-property empty results with a widen CTA',

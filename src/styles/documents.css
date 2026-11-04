@@ -234,6 +234,17 @@ a:hover {
   color: var(--resume-muted);
 }
 
+.ats__headline-dot,
+.ats__headline-tenure {
+  letter-spacing: 0;
+  text-transform: none;
+  font-weight: 400;
+}
+
+.ats__headline-dot {
+  padding-inline: 0.45em;
+}
+
 .ats__contact {
   margin: 11pt 0 0;
   font-size: 9.5pt;
@@ -254,7 +265,7 @@ a:hover {
 
 .ats__sep {
   margin: 0 0.55em;
-  color: var(--resume-line);
+  color: var(--resume-ink);
 }
 
 .ats__divider {
@@ -277,10 +288,9 @@ a:hover {
 }
 
 .ats h2 {
-  margin: 17pt 0 9pt;
-  padding: 0 0 4pt;
+  margin: 24pt 0 9pt;
+  padding: 0;
   border: 0;
-  border-bottom: 1px solid var(--resume-line);
   font-size: 10.5pt;
   font-weight: 600;
   letter-spacing: 0.2em;
@@ -298,10 +308,6 @@ a:hover {
 }
 
 .ats__row {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  gap: 1rem;
   margin: 0;
 }
 
@@ -311,7 +317,8 @@ a:hover {
   color: var(--resume-ink);
 }
 
-.ats__row span:last-child {
+.ats__dates {
+  margin-left: 0.3em;
   font-size: 9.5pt;
   font-weight: 400;
   letter-spacing: 0.08em;

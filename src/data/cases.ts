@@ -40,10 +40,10 @@ export type CaseStudy = {
 export const cases: CaseStudy[] = [
   {
     slug: 'move-in-scanner',
-    title: 'OXP Mobile Move-In Scanner',
+    title: 'Real-time Move-ins',
     eyebrow: 'Staff iOS, offline on move-in day',
     summary:
-      'Student housing was a majority of Entrata’s clients, and move-in day is when that segment either uses the system of record or replaces it with a spreadsheet. I designed a search-first, offline mobile flow so staff can find the person, see if the checklist is ready, confirm a photo ID, and turn leftover optional items into a follow-up.',
+      'On move-in day, staff were getting residents in the door and catching Entrata up later. I designed a phone flow so they could find the person, check the list, confirm a photo ID, and record the move-in while they were still standing there.',
     role: 'Product Lead (PM + UX + prototype handoff)',
     timeframe: 'Mar – May 2026',
     highlight: true,
@@ -79,7 +79,7 @@ export const cases: CaseStudy[] = [
     handoff:
       'A SwiftUI package and demo target for the OXP app. The in-house mobile team walked the module, found five defects in about 30 minutes, and made small changes to fit the app.',
     builtWith:
-      'Field research and SQL. Expo to argue about states, then SwiftUI for handoff to the OXP mobile team.',
+      'Field research, an Expo prototype to work through the states, then SwiftUI for the mobile team.',
     status: 'ready',
   },
   {
@@ -129,9 +129,9 @@ export const cases: CaseStudy[] = [
     title: 'Entrata Pricing Specials',
     eyebrow: 'Desktop · Systems',
     summary:
-      'A special could carry one incentive. I redesigned staff setup in Entrata Pricing so one special could hold a list — targeted by lease term, dates, space, and applicant type — inside the setup pattern people already knew. After a rough first release settled, 8,290 specials used lease-term rules and 162 on 38 clients ran multi-select that did not exist before.',
-    role: 'Product designer (staff setup; first designer on the initiative)',
-    timeframe: '2022 (design); shipped through 2024',
+      'In Entrata Pricing, a special could include only one incentive. I redesigned staff setup so one special could hold several, and still follow the pricing rules student and conventional properties already used. After later engineering improvements, 162 specials across 38 clients offered residents that choice.',
+    role: 'Product designer',
+    timeframe: 'Design in 2022, releases through 2024',
     highlight: true,
     tags: ['Setup', 'Systems', 'Pricing'],
     field: 'terracotta',
@@ -142,26 +142,26 @@ export const cases: CaseStudy[] = [
       videoReverse: '/work/pricing-specials/cover-reverse.mp4',
     },
     problem:
-      'Staff created one special with one incentive — gift or credit. Multiple offers meant multiple specials, which residents could not use as a real choice. Create was an all-at-once screen that forked for student, conventional, and space options.',
+      'A special could include one incentive, a gift or a credit. Properties that wanted to offer a choice had to create separate specials. Student and conventional housing also needed different pricing rules on the same setup screen.',
     process: [
-      'Cut the create flow until critique had to put about 20% back; replaced the mega-form with quieter steps.',
-      'Pushed to drop pricing per lease term × space option (~1% of setups, concentrated clients). Lost to PM and eng — existing Pricing users would have been stranded.',
-      'Usability testing showed the dated Pricing pattern was the map. We conformed to it instead of shipping a sleek one-off.',
+      'I replaced the all-in-one form with three steps: details, recipients, and incentives, and cut until critique showed what had to come back.',
+      'I wanted lease-term and space-option pricing off the default path. About 1% of setups used it. Product and engineering kept it because those clients already depended on it.',
+      'Usability testing showed customers trusted the existing Pricing patterns. We kept the three steps and brought the interface back in line with the rest of the product.',
     ],
     decisions: [
-      'One special, many incentives — plus restrictions so the list could be honored.',
-      'Keep the amounts grid we did not want, then hide it behind Price by Lease Term — including a stacked modal — so the default create path stays quiet.',
-      'Match existing Pricing setup to cut change management, not a new visual language.',
+      'One special can hold several incentives, with restrictions for who can receive them.',
+      'Advanced pricing stays available from the incentive, including a second dialog for lease-term amounts.',
+      'The screens follow existing Pricing patterns so the new capability is easier to adopt.',
     ],
     metrics: [
-      '10,204 active specials across 337 clients after the initiative (platform; I designed setup, not the full 1.5-year ship).',
-      '8,290 specials / 278 clients used lease-term restrictions.',
-      '162 specials / 38 clients had multiple incentives to choose from — zero before.',
+      '10,204 active specials across 337 clients, after later engineering improvements. Platform usage, not a personal conversion.',
+      '8,290 specials across 278 clients used lease-term restrictions.',
+      '162 specials across 38 clients offered more than one incentive. I designed the staff setup that made that possible.',
     ],
     outcome:
-      'Setup became the contract other teams inherited for accept and portal display. Adoption is from after the rough launch and rebuild. Multi-select is the new behavior; lease-term targeting is what scaled.',
+      'Staff can create one special with several incentives, and other teams used that same model for resident selection and the prospect portal. The adoption counts come after a rough first release and a later engineering rebuild.',
     handoff:
-      'Staff create in desktop Entrata Pricing. Resident select and prospect-portal display were assisted, then owned by other product teams on this model.',
+      'Staff creation in desktop Entrata Pricing. Other product teams owned resident selection, acceptance, and prospect-portal display on this model.',
     builtWith:
       'Figma (click-through prototype, dummy data); usability testing; Pricing design library constraints.',
     status: 'ready',
@@ -253,9 +253,9 @@ export const cases: CaseStudy[] = [
     title: 'Mobile Strategy + Resident Lookup',
     eyebrow: 'Strategy · Information architecture · Mobile',
     summary:
-      'Entrata had never shipped a mobile app for property managers. Resident lookup is the everyday job on desktop, and the number one thing staff already try to do on a phone. We built a quick search and a light profile: enough to answer questions in the field, without the desktop work that does not belong on a phone.',
-    role: 'Product Lead / product designer (strategy + information architecture + prototype)',
-    timeframe: 'Apr – May 2026',
+      'Entrata had never built a native mobile app for property managers. I helped shape the mobile strategy and designed resident lookup so staff could find a person and handle the request in the field.',
+    role: 'Product Lead / Product Designer (strategy, research, information architecture, prototyping)',
+    timeframe: 'April – May 2026',
     highlight: true,
     tags: ['Research synthesis', 'Information architecture', 'Mobile'],
     field: 'obsidian',
@@ -267,28 +267,28 @@ export const cases: CaseStudy[] = [
       position: 'center center',
     },
     problem:
-      'Property managers get resident questions on a walk and have no good way to look that person up. Desktop Entrata is the daily tool. The phone path was the web app, a note for later, or a call to the office.',
+      'Property managers were asked resident questions while walking the property, and the phone path was desktop Entrata in a browser. They wrote the question down, called the office, or struggled through the web app.',
     process: [
-      'Asked staff what they already try to do on a phone. Looking up residents was always first.',
-      'Prototyped Command Center and Residents in Expo so partners could walk the information architecture.',
-      'Scoped a light resident profile for the field: enough to answer questions and make small adjustments, without desktop work like a financial move-out.',
+      'Asked property managers what they needed on a phone. Looking up residents came first.',
+      'Used Gong calls, customer feedback, competitor apps, and a four-persona usability simulation to move off an early dashboard direction.',
+      'Prototyped Command Center and Residents in Expo, plus a SwiftUI lookup module for the native team.',
     ],
     decisions: [
-      'Action-first home (Daily Briefing + Quick Actions) instead of a KPI dashboard.',
-      'Property managers as the primary users, with regional managers in the mix.',
-      'Resident Lookup as the daily wedge: quick search plus a light profile, not a desktop clone.',
+      'The home screen leads with Daily Briefing and Quick Actions.',
+      'Regional managers both drive adoption and use the app, so property scope has to be obvious.',
+      'Resident lookup starts with search and a short profile, including read-only financials.',
     ],
     metrics: [
-      '~4,600 Gong calls filtered for mobile and field themes; 30-plus processed feedback transcripts.',
-      'Usability sim: all four personas completed a charge dispute; plate-only lookup hesitated or failed.',
-      'Blockers logged: vehicle-plate search, wrong-property empty results, All Properties multi-select trap.',
+      'About 4,600 Gong calls, 30+ feedback transcripts, 5 competitor apps, and 32 walkthroughs across 4 personas.',
+      'All four personas completed a charge-dispute scenario. Every persona hesitated or failed on a plate-only search.',
+      'Targets, not results: more than half of staff active weekly within 12 months of general availability.',
     ],
     outcome:
-      'A coherent mobile information architecture story and a walkable lookup flow for partners, not a shrunk desktop profile. Pilot actuals still TBD.',
+      'A mobile direction, a walkable Command Center and Residents prototype, and a resident lookup flow the team could try. The usage targets are not measured yet.',
     handoff:
-      'Strategy memo with confidence labels and kill criteria, Expo Command Center + Residents, usability findings, and a SwiftUI lookup module.',
+      'A strategy memo with confidence on each claim and checks for the first 90 days, an Expo prototype, usability findings, and a SwiftUI resident lookup module.',
     builtWith:
-      'Research synthesis plus Expo to make the strategy testable; a dedicated lookup prototype for the usability sim.',
+      'Research synthesis, an Expo prototype of Command Center and Residents, and a SwiftUI lookup module for the native team.',
     status: 'ready',
   },
   {

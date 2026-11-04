@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Portfolio feedback for Christina Segura</title>
+    <style>
+      @font-face {
+        font-family: "Figtree";
+        src: url("../src/assets/fonts/Figtree-Regular.ttf") format("truetype");
+        font-weight: 400;
+        font-style: normal;
+      }
+
+      @font-face {
+        font-family: "Figtree";
+        src: url("../src/assets/fonts/Figtree-Medium.ttf") format("truetype");
+        font-weight: 500;
+        font-style: normal;
+      }
+
+      @font-face {
+        font-family: "Figtree";
+        src: url("../src/assets/fonts/Figtree-SemiBold.ttf") format("truetype");
+        font-weight: 600;
+        font-style: normal;
+      }
+
+      @font-face {
+        font-family: "Source Serif 4";
+        src: url("../src/assets/fonts/SourceSerif4-Regular.ttf") format("truetype");
+        font-weight: 400;
+        font-style: normal;
+      }
+
+      @font-face {
+        font-family: "Source Serif 4";
+        src: url("../src/assets/fonts/SourceSerif4-Semibold.ttf") format("truetype");
+        font-weight: 600;
+        font-style: normal;
+      }
+
+      @font-face {
+        font-family: "Clash Grotesk";
+        src: url("../src/assets/fonts/ClashGrotesk-Semibold.otf") format("opentype");
+        font-weight: 600;
+        font-style: normal;
+      }
+
+      :root {
+        --ink: #1c1c1a;
+        --muted: #5c5c56;
+        --faint: #8a8a82;
+        --line: rgba(28, 28, 26, 0.16);
+        --rule: rgba(28, 28, 26, 0.22);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      @page {
+        size: letter;
+        margin: 0.72in 0.86in 0.68in;
+
+        @bottom-left {
+          content: "Cody Duke  ·  For Christina Segura";
+          font-family: "Figtree", "Helvetica Neue", sans-serif;
+          font-size: 8pt;
+          font-weight: 500;
+          letter-spacing: 0.01em;
+          color: #8a8a82;
+        }
+
+        @bottom-right {
+          content: counter(page);
+          font-family: "Figtree", "Helvetica Neue", sans-serif;
+          font-size: 8pt;
+          font-weight: 600;
+          color: #1c1c1a;
+        }
+      }
+
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        background: #fff;
+        color: var(--ink);
+      }
+
+      body {
+        font-family: "Source Serif 4", Georgia, serif;
+        font-size: 10.75pt;
+        font-weight: 400;
+        line-height: 1.48;
+        font-feature-settings: "kern" 1, "liga" 1;
+        text-rendering: optimizeLegibility;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      p {
+        margin: 0;
+        text-wrap: pretty;
+        orphans: 3;
+        widows: 3;
+      }
+
+      p + p {
+        margin-top: 0.72em;
+      }
+
+      .hello {
+        margin: 0 0 0.72em;
+      }
+
+      h1,
+      h2,
+      h3 {
+        margin: 0;
+        color: var(--ink);
+        break-inside: avoid;
+        break-after: avoid;
+        page-break-inside: avoid;
+        page-break-after: avoid;
+      }
+
+      h2 + p,
+      h2 + h3,
+      h3 + p {
+        break-before: avoid;
+        page-break-before: avoid;
+      }
+
+      h1 {
+        font-family: "Clash Grotesk", "Figtree", sans-serif;
+        font-weight: 600;
+        font-size: 28pt;
+        line-height: 1.02;
+        letter-spacing: -0.028em;
+      }
+
+      .kicker {
+        margin: 0 0 0.42rem;
+        font-family: "Figtree", sans-serif;
+        font-size: 8pt;
+        font-weight: 600;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+
+      .meta {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 0.75rem;
+        margin: 1.15rem 0 1.45rem;
+        padding: 0.62rem 0 0.66rem;
+        border-top: 1px solid var(--rule);
+        border-bottom: 1px solid var(--rule);
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+
+      .meta dt {
+        margin: 0 0 0.18rem;
+        font-family: "Figtree", sans-serif;
+        font-size: 7.5pt;
+        font-weight: 600;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--faint);
+      }
+
+      .meta dd {
+        margin: 0;
+        font-family: "Figtree", sans-serif;
+        font-size: 10.5pt;
+        font-weight: 500;
+        letter-spacing: -0.011em;
+        line-height: 1.2;
+      }
+
+      h2 {
+        margin: 0.92rem 0 0.32rem;
+        padding-top: 0.48rem;
+        border-top: 1px solid var(--rule);
+        font-family: "Clash Grotesk", "Figtree", sans-serif;
+        font-weight: 600;
+        font-size: 15.5pt;
+        line-height: 1.15;
+        letter-spacing: -0.02em;
+      }
+
+      h2 .idx {
+        display: block;
+        margin-bottom: 0.22rem;
+        font-family: "Figtree", sans-serif;
+        font-size: 8pt;
+        font-weight: 600;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+
+      h3 {
+        margin: 1.05rem 0 0.4rem;
+        font-family: "Figtree", sans-serif;
+        font-weight: 600;
+        font-size: 11pt;
+        line-height: 1.25;
+        letter-spacing: -0.014em;
+      }
+
+      ul {
+        margin: 0.55rem 0 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      ul li {
+        position: relative;
+        margin-top: 0.38em;
+        padding-left: 1rem;
+        text-wrap: pretty;
+      }
+
+      ul li::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0.62em;
+        width: 0.38rem;
+        height: 1px;
+        background: var(--ink);
+      }
+
+      .pairs,
+      .steps,
+      .priorities {
+        margin: 0.7rem 0 0.15rem;
+        padding: 0;
+        list-style: none;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .pairs li,
+      .steps li,
+      .priorities li {
+        break-inside: avoid;
+        page-break-inside: avoid;
+        border-top: 1px solid var(--line);
+      }
+
+      .pairs li {
+        display: grid;
+        grid-template-columns: 1.72in 1fr;
+        column-gap: 0.38in;
+        padding: 0.58rem 0 0.62rem;
+      }
+
+      .pairs h3,
+      .steps h3 {
+        margin: 0;
+        padding-top: 0.08rem;
+        font-size: 10.25pt;
+        line-height: 1.3;
+      }
+
+      .pairs p,
+      .steps p,
+      .priorities p {
+        margin: 0;
+      }
+
+      .steps li {
+        display: grid;
+        grid-template-columns: 0.72rem 1.42in 1fr;
+        column-gap: 0.42rem;
+        align-items: baseline;
+        padding: 0.46rem 0 0.5rem;
+      }
+
+      .steps .n,
+      .priorities .n {
+        font-family: "Figtree", sans-serif;
+        font-weight: 600;
+        font-variant-numeric: tabular-nums;
+        letter-spacing: 0.01em;
+        color: var(--muted);
+      }
+
+      .steps .n {
+        font-size: 10pt;
+      }
+
+      .steps h3 {
+        padding-top: 0;
+        font-size: 10.5pt;
+      }
+
+      .priorities li {
+        display: grid;
+        grid-template-columns: 1.15rem 1fr;
+        column-gap: 0.55rem;
+        padding: 0.58rem 0 0.64rem;
+      }
+
+      .priorities .n {
+        padding-top: 0.12rem;
+        font-size: 10pt;
+      }
+
+      .priorities strong {
+        display: block;
+        margin: 0 0 0.12rem;
+        font-family: "Figtree", sans-serif;
+        font-weight: 600;
+        font-size: 10.75pt;
+        letter-spacing: -0.014em;
+        line-height: 1.3;
+      }
+
+      .signoff {
+        margin-top: 0.72rem;
+      }
+
+      .signoff .name {
+        margin-top: 0.55rem;
+        font-family: "Figtree", sans-serif;
+        font-weight: 600;
+        font-size: 11pt;
+        letter-spacing: -0.014em;
+      }
+
+      .notes {
+        margin: 0.05rem 0 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .notes li {
+        position: relative;
+        margin: 0;
+        padding: 0.16rem 0 0.16rem 0.95rem;
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+
+      .notes li::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0.68em;
+        width: 0.42rem;
+        height: 1.25px;
+        background: var(--ink);
+      }
+
+      .notes strong {
+        font-family: "Source Serif 4", Georgia, serif;
+        font-weight: 600;
+      }
+
+    </style>
+  </head>
+  <body>
+    <p class="kicker">Portfolio feedback</p>
+    <h1>Notes for Christina</h1>
+    <dl class="meta">
+      <div>
+        <dt>For</dt>
+        <dd>Christina Segura</dd>
+      </div>
+      <div>
+        <dt>From</dt>
+        <dd>Cody Duke</dd>
+      </div>
+      <div>
+        <dt>Date</dt>
+        <dd>November 2, 2026</dd>
+      </div>
+    </dl>
+
+    <p class="hello">Hi Christina,</p>
+    <p>
+      Thanks for sharing your portfolio. I went through the site and your case studies. There is a lot of good work here, and a few focused changes would make it easier to see. I know how hard this is to pull together during a search.
+    </p>
+
+    <h2><span class="idx">01</span>What’s working</h2>
+    <ul class="notes">
+      <li><strong>The work is easy to find.</strong> The projects are right there, and Home, About, and Resume stay out of the way.</li>
+      <li><strong>The Schwab case shows how you think.</strong> The goals, findings, competitive analysis, sketches, and opportunities make the decisions visible.</li>
+      <li><strong>The projects have range.</strong> A login, a chatbot, Apple Business Chat, and Alexa are different kinds of interaction, held together by the same section treatment.</li>
+      <li><strong>The experience strip helps.</strong> At the very bottom of the homepage, the companies, roles, and dates give a fast picture of where you have been.</li>
+    </ul>
+
+    <h2><span class="idx">02</span>Worth fixing first</h2>
+    <ul class="notes">
+      <li><strong>The contact link</strong> still goes to a template address, jane@portfolio.com, with the subject “You’ve got mail!”</li>
+      <li><strong>Resume</strong> opens a page called Styleguide. The file is a 2020 image, so the text cannot be selected, and a phone number is public. A current PDF would be easier to share and to keep up to date.</li>
+      <li><strong>Two titles are swapped.</strong> “Apple Business Chat” opens the Alexa case, and “Wells Fargo + Amazon Alexa” opens Apple Chat. The pictures go to the right places.</li>
+      <li><strong>The tab and footer</strong> still use the template. The homepage tab says “Portfolio - Webflow HTML website template,” the cases are Project 1 through Project 4, and the footer says © 2020 and links to Webflow.</li>
+      <li><strong>Two images need a cleanup.</strong> One Schwab phone is an Imgur embed, with the mark and view count still in the frame. On the chatbot case, a row of phones runs off the right edge.</li>
+    </ul>
+
+    <h2><span class="idx">03</span>Bring the work forward</h2>
+    <ul class="notes">
+      <li><strong>Give the final screens more room.</strong> Older home-button frames, and graphics that have been enlarged, make the work feel older than it is. Use a current phone frame, export the diagrams larger, and leave out images that are too small to read. A large screen is worth the scroll.</li>
+      <li><strong>Lead with the problem, then the solution.</strong> In the Schwab case, the before-and-after and the InVision prototype are the clearest part, and they sit far down the page. Move those up, and let the research explain how you got there.</li>
+      <li><strong>Say what made each project different.</strong> Three of them include a balance, transactions, or an ATM. The interesting part is the constraint: legal copy and screen-reader behavior in the chatbot, designing inside iMessage, and Alexa’s failure lines, such as a bad passcode or an account that is not eligible.</li>
+      <li><strong>Close the loop on the outcome.</strong> Schwab already mentions 10.77 million clients, a call spike, and a later test where 6 of 7 people found the new login clear. Add whether it shipped, or what you would watch. “Fewer calls about this step” is enough.</li>
+    </ul>
+
+    <h2><span class="idx">04</span>Homepage and About</h2>
+    <ul class="notes">
+      <li><strong>Make the hello more specific.</strong> “A passion for engaging, innovative, and delightful products” is friendly. One sentence about the problems you like, or how you like to work with a team, will stay with someone longer.</li>
+      <li><strong>Use one title.</strong> The site currently says UI/UX designer, UX Designer, Product Designer, Senior UI/UX Designer, and User Experience Designer.</li>
+      <li><strong>The 10+ years line</strong> is on the homepage as well, at the very bottom, under “My experience.” Keep the years, and the roles just under them. The rest of that sentence can say more than a familiarity with UX standards.</li>
+      <li><strong>Let About say a little more.</strong> The photo, and Mochi and Hiro, are worth keeping. A few sentences on how you work would help, and it can stay short. Your resume also shows medical-device and agency work. Mentioning that range would make these four bank cases feel like a selection.</li>
+      <li><strong>Add a year, and a problem line, to each card.</strong> Use the same title on the card and in the case. A domain of your own is a nice last step. Check the renewal price before you buy.</li>
+    </ul>
+
+    <div class="signoff">
+      <p>
+        I would keep this site. Start with the links, titles, and footer, then move the Schwab solution up and give the final screens more room. I hope this is useful, and I would be glad to look again.
+      </p>
+      <p class="name">Cody</p>
+    </div>
+  </body>
+</html>

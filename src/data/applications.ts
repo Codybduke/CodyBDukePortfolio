@@ -1379,28 +1379,22 @@ const theOneResume: ResumeContent = {
       title: 'Product Lead',
       progression: 'lead',
       bullets: [
-        'Led a remote team of six engineers as both product manager and designer. Turned user and business needs into scope, requirements, and prototypes from discovery through launch.',
-        'Designed a new mobile move-in that finishes a resident move-in in one real-time session instead of two. Recording a name now completes it on the spot, instead of saving it to finish later. Led it from information architecture through prototyping.',
+        'Led a remote team of six engineers as both product manager and designer. Owned backlog prioritization, scope, requirements, and prototypes from discovery through launch.',
+        'Designed resident lookup and the next action on that resident for Entrata’s property-manager mobile app. Staff could find a resident and handle the request on site, instead of working through a desktop product squeezed onto a phone.',
+        'Designed a new move-in flow so staff complete it in one real-time session instead of two. Recording a resident now finishes the task, instead of saving the name to complete later. Handed it to the iOS team as SwiftUI.',
       ],
     },
     {
       company: 'Entrata',
-      dates: '2020 – 2025',
+      dates: '2019 – 2025',
       title: 'Senior Product Designer',
       progression: 'rank',
       bullets: [
-        'Redesigned an enterprise setup workflow from usability testing and extended the design system so a property could offer residents a choice of incentives. More than 8,000 rental promotions used the new targeting rules within a few months.',
-        'Served as the sole designer for the company’s largest client, translating complex operational requirements into clear workflows and implementation-ready designs for engineering.',
+        'Sole product designer for Greystar, Entrata’s largest client. Project managers led the account. The relationship was a major part of my work: requests arrived as lists of solutions, so I led discovery, framed the problem, and designed the workflow.',
+        'Redesigned the setup after usability testing so a property could offer residents a choice of incentives, extending an old design system it had to follow. More than 8,000 rental promotions used the new targeting rules in the first few months.',
         'Led a hackathon team that designed an AI workflow to read income documents and fill affordable-housing certification forms, cutting manual data entry. It won Most Likely to Land a New Logo, and a version later shipped.',
-      ],
-    },
-    {
-      company: 'Entrata',
-      dates: '2019 – 2020',
-      title: 'Product Designer',
-      progression: 'rank',
-      bullets: [
-        'Redesigned unit inspection and facilities-management workflows to help staff complete tasks in fewer steps while making room for additional functionality.',
+        'Contributed to a new design system for Homebody, a resident-facing app, and simplified its core workflows. After launch, it reached 4.4 out of 5 on iOS from more than 600 reviews in its first six months.',
+        'Redesigned unit inspection and other facilities workflows so staff finish tasks in fewer steps, making room for new features.',
       ],
     },
     {

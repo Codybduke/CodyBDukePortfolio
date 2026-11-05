@@ -34,6 +34,7 @@ export const moveInScannerRewrite: CaseRewrite = {
     sections: [
       {
         id: 'b-problem',
+        stone: 1,
         stage: 'Problem',
         title: 'Move-ins happened quickly, but Entrata wasn’t keeping up',
         body: [
@@ -67,6 +68,7 @@ export const moveInScannerRewrite: CaseRewrite = {
       },
       {
         id: 'b-first-answer',
+        stone: 2,
         stage: 'Process',
         title: 'Starting with the spreadsheet problem',
         body: [
@@ -87,6 +89,7 @@ export const moveInScannerRewrite: CaseRewrite = {
       },
       {
         id: 'b-wrong-first',
+        stone: 4,
         stage: 'Process',
         title: 'Research changed my assumptions',
         body: [
@@ -237,6 +240,7 @@ export const moveInScannerRewrite: CaseRewrite = {
       },
       {
         id: 'b-path',
+        stone: 6,
         stage: 'Solution',
         title: 'Search, Review, Confirm',
         body: [
@@ -316,6 +320,7 @@ export const moveInScannerRewrite: CaseRewrite = {
       },
       {
         id: 'b-handoff',
+        stone: 7,
         stage: 'Solution',
         title: 'Getting the prototype ready for engineering',
         body: [

@@ -19,6 +19,7 @@ export const caliberSkillCase: RichCaseStudy = {
   sections: [
     {
       id: 'background',
+      stone: 1,
       stage: 'Problem',
       title: 'What Caliber already measures',
       body: [
@@ -86,6 +87,7 @@ export const caliberSkillCase: RichCaseStudy = {
     },
     {
       id: 'research',
+      stone: 3,
       stage: 'Process',
       title: 'Research',
       body: [
@@ -129,6 +131,7 @@ export const caliberSkillCase: RichCaseStudy = {
     },
     {
       id: 'first-pass',
+      stone: 5,
       stage: 'Process',
       title: 'The first version',
       body: [
@@ -203,6 +206,7 @@ export const caliberSkillCase: RichCaseStudy = {
     },
     {
       id: 'quadrant',
+      stone: 6,
       stage: 'Solution',
       title: 'The quadrant chart',
       body: [
@@ -262,6 +266,7 @@ export const caliberSkillCase: RichCaseStudy = {
     },
     {
       id: 'play',
+      stone: 7,
       stage: 'Solution',
       title: 'Try it in the prototype',
       body: [

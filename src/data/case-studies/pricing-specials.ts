@@ -20,6 +20,7 @@ export const pricingSpecialsCase: RichCaseStudy = {
   sections: [
     {
       id: 'problem',
+      stone: 1,
       stage: 'Problem',
       title: 'One special could offer one incentive',
       body: [
@@ -64,6 +65,7 @@ export const pricingSpecialsCase: RichCaseStudy = {
     },
     {
       id: 'testing',
+      stone: 4,
       stage: 'Process',
       title: 'Testing sent us back to the Pricing people already knew',
       body: [
@@ -74,6 +76,7 @@ export const pricingSpecialsCase: RichCaseStudy = {
     },
     {
       id: 'simple',
+      stone: 6,
       stage: 'Solution',
       title: 'Details, recipients, and incentives',
       body: [
@@ -154,6 +157,7 @@ export const pricingSpecialsCase: RichCaseStudy = {
     },
     {
       id: 'outcome',
+      stone: 7,
       stage: 'Results',
       title: 'How specials were used after the improvements',
       body: [

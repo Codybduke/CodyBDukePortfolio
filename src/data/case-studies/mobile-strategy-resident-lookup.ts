@@ -21,6 +21,7 @@ export const mobileStrategyResidentLookupCase: RichCaseStudy = {
   sections: [
     {
       id: 'problem',
+      stone: 1,
       stage: 'Problem',
       title: 'The mobile experience was missing',
       body: [
@@ -33,6 +34,7 @@ export const mobileStrategyResidentLookupCase: RichCaseStudy = {
     },
     {
       id: 'evidence',
+      stone: 3,
       stage: 'Process',
       title: 'Research changed our direction',
       body: [
@@ -78,6 +80,7 @@ export const mobileStrategyResidentLookupCase: RichCaseStudy = {
     },
     {
       id: 'home',
+      stone: 6,
       stage: 'Solution',
       title: 'A home screen built around daily work',
       body: [
@@ -232,6 +235,7 @@ export const mobileStrategyResidentLookupCase: RichCaseStudy = {
     },
     {
       id: 'handoff',
+      stone: 7,
       stage: 'Solution',
       title: 'What we handed to partners',
       body: [

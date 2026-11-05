@@ -26,6 +26,7 @@ export const familysearchDiscoveryCase: RichCaseStudy = {
   sections: [
     {
       id: 'problem',
+      stone: 1,
       stage: 'Problem',
       title: 'Beginners signed up and did not come back',
       body: [
@@ -52,6 +53,7 @@ export const familysearchDiscoveryCase: RichCaseStudy = {
     },
     {
       id: 'evidence',
+      stone: 3,
       stage: 'Process',
       title: 'What was already on the tree',
       body: [
@@ -111,6 +113,7 @@ export const familysearchDiscoveryCase: RichCaseStudy = {
     },
     {
       id: 'pioneer',
+      stone: 6,
       stage: 'Solution',
       title: 'Pioneer: one ancestor, fully in view',
       body: [
@@ -184,6 +187,7 @@ export const familysearchDiscoveryCase: RichCaseStudy = {
     },
     {
       id: 'outcome',
+      stone: 7,
       stage: 'Results',
       title: 'Retention versus the previous year',
       body: [

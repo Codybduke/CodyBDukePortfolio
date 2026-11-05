@@ -30,6 +30,8 @@ export type CaseSection = {
   id: string;
   /** Parent shown once per group: Problem, Process, Solution, What's next. Results when the case shipped with measured outcomes. */
   stage?: string;
+  /** Erosion station in the gutter. 1 is the rough stone, 7 is the finished stone. */
+  stone?: 1 | 2 | 3 | 4 | 5 | 6 | 7;
   title: string;
   body?: string[];
   bullets?: string[];

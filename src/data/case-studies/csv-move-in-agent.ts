@@ -21,6 +21,7 @@ export const csvMoveInAgentCase: RichCaseStudy = {
   sections: [
     {
       id: 'problem',
+      stone: 1,
       stage: 'Problem',
       title: 'Staff spent the morning after move-in typing a spreadsheet into Entrata',
       body: [
@@ -51,6 +52,7 @@ export const csvMoveInAgentCase: RichCaseStudy = {
     },
     {
       id: 'pivot',
+      stone: 4,
       stage: 'Process',
       title: 'Why the overnight upload stopped being the main bet',
       body: [
@@ -60,6 +62,7 @@ export const csvMoveInAgentCase: RichCaseStudy = {
     },
     {
       id: 'trust',
+      stone: 7,
       stage: 'Solution',
       title: 'The review before anything is written',
       body: [

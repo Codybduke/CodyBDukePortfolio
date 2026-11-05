@@ -20,6 +20,7 @@ export const moveInScannerCase: RichCaseStudy = {
   sections: [
     {
       id: 'problem',
+      stone: 1,
       stage: 'Problem',
       title: 'Entrata still listed them as not moved in',
       body: [
@@ -60,6 +61,7 @@ export const moveInScannerCase: RichCaseStudy = {
     },
     {
       id: 'strategy',
+      stone: 2,
       stage: 'Process',
       title: 'The first answer was an overnight upload',
       body: [
@@ -102,6 +104,7 @@ export const moveInScannerCase: RichCaseStudy = {
     },
     {
       id: 'evidence',
+      stone: 4,
       stage: 'Process',
       title: 'What the visits and interviews changed',
       body: [
@@ -135,6 +138,7 @@ export const moveInScannerCase: RichCaseStudy = {
     },
     {
       id: 'entry',
+      stone: 6,
       stage: 'Solution',
       title: 'Move-In on the home screen',
       body: [
@@ -362,6 +366,7 @@ export const moveInScannerCase: RichCaseStudy = {
     },
     {
       id: 'handoff',
+      stone: 7,
       stage: 'Solution',
       title: 'What the mobile team received',
       body: [

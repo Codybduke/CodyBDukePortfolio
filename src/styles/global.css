@@ -1208,8 +1208,79 @@ p:last-child {
 }
 
 .case-study__body {
+  position: relative;
   max-width: min(var(--shell-w), 48rem);
   padding-top: var(--space-6);
+}
+
+.case-rail {
+  display: none;
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.case-rail__seg {
+  position: absolute;
+  width: 1px;
+  background: var(--line);
+  transform: translateX(-50%);
+}
+
+.case-section > .case-parent,
+.case-section > h2,
+.case-section > h3 {
+  position: relative;
+}
+
+.case-stone {
+  display: none;
+}
+
+@media (min-width: 1100px) {
+  .case-rail {
+    display: block;
+  }
+
+  .case-stone {
+    --stone-size: calc(2.75rem * 1.38);
+    --stone-offset: 2.15rem;
+    --stone-rule: 1.35rem;
+    display: grid;
+    place-items: center;
+    position: absolute;
+    right: calc(100% + var(--stone-offset));
+    top: 50%;
+    width: var(--stone-size);
+    height: var(--stone-size);
+    transform: translateY(-50%);
+  }
+
+  .case-stone img {
+    display: block;
+    height: var(--stone-size);
+    width: auto;
+  }
+
+  /* Clear pixels to the right of the rock, so the rule centers on the silhouette. */
+  .case-stone[data-stone='1'] { --stone-pad: calc(var(--stone-size) * 74 / 332); }
+  .case-stone[data-stone='2'] { --stone-pad: calc(var(--stone-size) * 102 / 362); }
+  .case-stone[data-stone='3'] { --stone-pad: calc(var(--stone-size) * 87 / 308); }
+  .case-stone[data-stone='4'],
+  .case-stone[data-stone='5'] { --stone-pad: calc(var(--stone-size) * 85 / 306); }
+  .case-stone[data-stone='6'] { --stone-pad: calc(var(--stone-size) * 54 / 234); }
+  .case-stone[data-stone='7'] { --stone-pad: calc(var(--stone-size) * 54 / 232); }
+
+  .case-stone::after {
+    content: '';
+    position: absolute;
+    left: calc(100% + (var(--stone-offset) - var(--stone-rule) - var(--stone-pad)) / 2);
+    top: 50%;
+    width: var(--stone-rule);
+    height: 1px;
+    background: var(--line);
+    transform: translateY(-50%);
+  }
 }
 
 .case-section {

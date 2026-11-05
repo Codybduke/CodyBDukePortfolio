@@ -85,6 +85,7 @@ const slug = item.slug;
   }
 
   <div class="case-study__body shell">
+    <div class="case-rail" aria-hidden="true"></div>
     {
       (() => {
         let previousStage = '';
@@ -93,8 +94,35 @@ const slug = item.slug;
           if (section.stage) previousStage = section.stage;
           return (
         <section class="case-section" id={section.id}>
-          {showParent && <h2 class="case-parent">{section.stage}</h2>}
-          {section.stage ? <h3>{section.title}</h3> : <h2>{section.title}</h2>}
+          {showParent && (
+            <h2 class="case-parent">
+              {section.stone && (
+                <span class="case-stone" data-stone={section.stone} aria-hidden="true">
+                  <img src={withBase(`/images/stones/stone-${section.stone}.png`)} alt="" />
+                </span>
+              )}
+              {section.stage}
+            </h2>
+          )}
+          {section.stage ? (
+            <h3>
+              {section.stone && !showParent && (
+                <span class="case-stone" data-stone={section.stone} aria-hidden="true">
+                  <img src={withBase(`/images/stones/stone-${section.stone}.png`)} alt="" />
+                </span>
+              )}
+              {section.title}
+            </h3>
+          ) : (
+            <h2>
+              {section.stone && (
+                <span class="case-stone" data-stone={section.stone} aria-hidden="true">
+                  <img src={withBase(`/images/stones/stone-${section.stone}.png`)} alt="" />
+                </span>
+              )}
+              {section.title}
+            </h2>
+          )}
 
           {section.body?.map((paragraph) => <p>{paragraph}</p>)}
 
@@ -228,3 +256,74 @@ const slug = item.slug;
     </p>
   </div>
 </article>
+
+<script>
+  const railQuery = '(min-width: 1100px)';
+  const stoneGap = 12;
+  const embedGap = 16;
+
+  const drawSegment = (rail: HTMLElement, x: number, top: number, bottom: number) => {
+    if (bottom - top < 6) return;
+    const seg = document.createElement('span');
+    seg.className = 'case-rail__seg';
+    seg.style.left = `${x}px`;
+    seg.style.top = `${top}px`;
+    seg.style.height = `${bottom - top}px`;
+    rail.append(seg);
+  };
+
+  const layoutRails = () => {
+    const wide = window.matchMedia(railQuery).matches;
+    document.querySelectorAll<HTMLElement>('.case-study').forEach((article) => {
+      const rail = article.querySelector<HTMLElement>('.case-rail');
+      if (!rail) return;
+      rail.replaceChildren();
+      if (!wide || article.hidden) return;
+
+      const stones = [...article.querySelectorAll<HTMLElement>('.case-stone')];
+      if (stones.length < 2) return;
+
+      const railBox = rail.getBoundingClientRect();
+      const blocked = [...article.querySelectorAll<HTMLElement>('.case-embed--lab')].map((embed) => {
+        const box = embed.getBoundingClientRect();
+        return {
+          top: box.top - railBox.top - embedGap,
+          bottom: box.bottom - railBox.top + embedGap,
+        };
+      });
+
+      for (let i = 0; i < stones.length - 1; i++) {
+        const from = stones[i].getBoundingClientRect();
+        const to = stones[i + 1].getBoundingClientRect();
+        const x = from.left + from.width / 2 - railBox.left;
+        let cursor = from.bottom - railBox.top + stoneGap;
+        const end = to.top - railBox.top - stoneGap;
+        const cuts = blocked
+          .filter((gap) => gap.bottom > cursor && gap.top < end)
+          .sort((a, b) => a.top - b.top);
+
+        for (const cut of cuts) {
+          drawSegment(rail, x, cursor, Math.min(end, cut.top));
+          cursor = Math.max(cursor, cut.bottom);
+        }
+        drawSegment(rail, x, cursor, end);
+      }
+    });
+  };
+
+  let frame = 0;
+  const scheduleRails = () => {
+    cancelAnimationFrame(frame);
+    frame = requestAnimationFrame(layoutRails);
+  };
+
+  scheduleRails();
+  window.addEventListener('resize', scheduleRails);
+  const articles = document.querySelectorAll('.case-study');
+  const mutations = new MutationObserver(scheduleRails);
+  const sizes = new ResizeObserver(scheduleRails);
+  articles.forEach((article) => {
+    mutations.observe(article, { attributes: true, attributeFilter: ['hidden'] });
+    sizes.observe(article);
+  });
+</script>

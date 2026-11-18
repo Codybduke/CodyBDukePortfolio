@@ -90,7 +90,12 @@ export default function ResumeKit({
   const formatMenuId = useId();
 
   const application = getApplication(companyId);
-  const view: DocKind = doc === 'letter' && !application.coverLetter ? 'resume' : doc;
+  const view: DocKind =
+    doc === 'letter' && !application.coverLetter
+      ? 'resume'
+      : doc === 'presentation'
+        ? 'resume'
+        : doc;
 
   useEffect(() => {
     const parsed = readUrl();
@@ -425,6 +430,18 @@ export default function ResumeKit({
               >
                 ATS Resume
               </button>
+              {application.presentationPath ? (
+                <a href={withBase(application.presentationPath)}>Presentation</a>
+              ) : (
+                <button
+                  type="button"
+                  aria-pressed={false}
+                  disabled
+                  title="Presentation is not available yet"
+                >
+                  Presentation
+                </button>
+              )}
             </div>
           </fieldset>
 

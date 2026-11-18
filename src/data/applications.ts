@@ -1,4 +1,4 @@
-export type DocKind = 'resume' | 'single' | 'letter' | 'ats';
+export type DocKind = 'resume' | 'single' | 'letter' | 'ats' | 'presentation';
 
 export type Job = {
   company: string;
@@ -56,6 +56,11 @@ export type Application = {
   label: string;
   resume: ResumeContent;
   coverLetter?: CoverLetterContent;
+  /**
+   * Company presentation (e.g. `/present/bill`). When set, Presentation in the
+   * Versions menu links here. Otherwise it stays disabled.
+   */
+  presentationPath?: string;
 };
 
 export const contact = {
@@ -1802,6 +1807,90 @@ const wguLetter: CoverLetterContent = {
   signoff: 'Sincerely,',
 };
 
+const hungryrootResume: ResumeContent = {
+  role: 'Senior Product Designer',
+  location: 'Pleasant Grove, Utah, open to remote',
+  profileHeading: 'Senior Product Designer',
+  profile:
+    'I partner with product managers, engineers, researchers, and customers to turn what a person needs into a clear experience on the web and on iOS. I research with people and with production data, design the interaction and the visual system, and prototype in Figma and with Cursor. I stay with engineering until it ships and the result can be measured.',
+  skills: [
+    'Team player',
+    'Retention and habit loops',
+    'Visual craft',
+    'Systems UX',
+    'UX research and testing',
+    'Production data',
+    'AI-assisted prototyping',
+    'Figma',
+    'Cursor',
+    'Expo',
+    'FigJam',
+  ],
+  education: {
+    degree: 'BFA, Graphic Design',
+    school: 'Brigham Young University–Idaho',
+    year: '2017',
+  },
+  jobs: [
+    {
+      company: 'Entrata',
+      dates: 'July 2019 – 2026',
+      title: 'Senior Product Designer · Product Manager hybrid',
+      bullets: [
+        'Simplified core workflows for Homebody, a resident-facing self-serve mobile app. It reached 4.4 out of 5 stars on iOS from 600+ reviews in the first 6 months.',
+        'Designed a zero-to-one mobile experience for move-in workflows and handed it to the iOS team as SwiftUI. Staff now move a resident in, in real time, instead of re-entering the record later, which cut the work in half.',
+        'Redesigned a complex enterprise setup system to add flexibility without adding complexity. More than 8,000 offers used the new targeting rules within the first couple of months.',
+        'Led the team and designed a hackathon-winning AI workflow that reads income documents and autofills affordable-housing certifications, replacing manual entry in a compliance-driven process.',
+        'Led a remote team of engineers as product manager and designer. Owned scope, requirements, and prototypes from discovery through launch.',
+        'Served as sole designer for projects tied to the company’s largest client. Translated that client’s operational needs into workflows engineering could build.',
+      ],
+    },
+    {
+      company: 'FamilySearch',
+      dates: '2017 – 2019',
+      title: 'UX Designer',
+      bullets: [
+        'Led product design of 26 personalized discovery experiences that gave members an entry point and a reason to come back.',
+        'Retained 95% more members and 107% more other users than the previous year. Reached 1.1 million people outside the US and earned 90% positive feedback from 86,000 comments.',
+        'Oversaw third-party design so every campaign followed the same tried-and-true loop.',
+        'Refined how the product team worked, so the team moved faster, did more thorough work, and ran into fewer surprises.',
+      ],
+    },
+  ],
+};
+
+const hungryrootLetter: CoverLetterContent = {
+  role: 'Senior Product Designer',
+  location: 'Pleasant Grove, Utah',
+  date: 'November 14, 2026',
+  recipient: 'Hungryroot hiring team',
+  position: 'Senior Product Designer',
+  paragraphs: [
+    'I am applying for the Senior Product Designer role on the Digital team at Hungryroot. Someone is trying to feed a household in a way that fits their goals, their week, and their budget. The product has to recommend groceries and a recipe they will actually cook, and it has to stay easy when the week changes.',
+    'Grocery and wellness are new to me. The closest work is a consumer product that starts from what it already knows about a person and gives them one reason to come back. At FamilySearch I led 26 personalized discovery experiences. Each one started with a person already in the tree and one next step. The next year we kept 95% more members and 107% more other users than the previous year.',
+    'At Entrata I spent seven years on web and mobile products people already used. I simplified the core workflows for Homebody, a resident app. After launch it reached 4.4 out of 5 on iOS from more than 600 reviews in the first six months. I also designed a mobile move-in flow and handed it to the iOS team as SwiftUI, so staff could finish while the resident was still there. That cut the work in half.',
+    'When one rental offer needed to carry more than one incentive, I extended the pattern staff already knew, and other teams inherited it. Within the first couple of months, more than 8,000 offers used the new targeting rules. I prototype in Figma and in Cursor so I can put a working version in front of someone before engineering builds it.',
+    'I live in Pleasant Grove, Utah, and I work remotely in the United States. I would welcome the chance to walk you through the work.',
+  ],
+  signoff: 'Sincerely,',
+};
+
+const angelLetter: CoverLetterContent = {
+  role: 'Senior Product Designer',
+  location: 'Pleasant Grove, Utah',
+  date: 'November 14, 2026',
+  recipient: 'Angel Hiring Team',
+  position: 'Senior Product Designer, Special Projects',
+  paragraphs: [
+    "I'm excited to apply for the Senior Product Designer role on the Special Projects team at Angel. What interests me about this opportunity is the chance to take an idea, figure out what people actually need, and help turn it into something worth building. I also like what Angel is doing to bring people together around stories they care about.",
+    'At FamilySearch, I led product design for 26 discovery experiences focused on helping people connect with their family history. We looked for ways to make a massive family tree feel more personal and give people a reason to keep exploring. The work contributed to a 95% increase in member retention and a 107% increase among other users compared to the previous year.',
+    "At Entrata, I worked on products and ideas that were still taking shape. One project I led was an AI-powered workflow that reads income documents and fills out affordable housing forms. A small team built it during a hackathon, where it won Most Likely to Land a New Logo. I also led design for a mobile move-in experience for student housing. Spending time with staff and watching how move-in actually worked changed our direction. We realized the biggest opportunity wasn't making bulk uploads easier. It was giving staff a better way to help residents right there in the line.",
+    "I've spent the last several years working across product strategy, UX, and hands-on development. I regularly use tools like Cursor to build working prototypes, test ideas, and work through interactions before they reach engineering. At Entrata, I also spent about a year working as both product manager and designer, leading a remote team of six engineers from initial problem discovery through delivery.",
+    "I'd love the opportunity to bring that mix of product thinking, design, and hands-on building to Angel. I live in Pleasant Grove, so getting to the Provo office would be easy. I'd welcome the chance to meet and talk more about the role.",
+  ],
+  signoff: 'Sincerely,',
+};
+
 export const applications: Application[] = [
   {
     id: 'general',
@@ -1950,6 +2039,24 @@ export const applications: Application[] = [
     resume: wguResume,
     coverLetter: wguLetter,
   },
+  {
+    id: 'angel',
+    label: 'Angel',
+    resume: general2Resume,
+    coverLetter: angelLetter,
+  },
+  {
+    id: 'hungryroot',
+    label: 'Hungryroot',
+    resume: hungryrootResume,
+    coverLetter: hungryrootLetter,
+  },
+  {
+    id: 'bill',
+    label: 'Bill',
+    resume: theOneResume,
+    presentationPath: '/present/bill',
+  },
 ];
 
 export function getApplication(id: string | null | undefined): Application {
@@ -1957,5 +2064,11 @@ export function getApplication(id: string | null | undefined): Application {
 }
 
 export function isDocKind(value: string | null | undefined): value is DocKind {
-  return value === 'resume' || value === 'single' || value === 'letter' || value === 'ats';
+  return (
+    value === 'resume' ||
+    value === 'single' ||
+    value === 'letter' ||
+    value === 'ats' ||
+    value === 'presentation'
+  );
 }

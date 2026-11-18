@@ -809,6 +809,9 @@ strong {
   bottom: 1.25rem;
   z-index: 20;
   width: min(18.5rem, calc(100vw - 2rem));
+  max-height: calc(100dvh - 2.5rem);
+  overflow-y: auto;
+  overscroll-behavior: contain;
   padding: 0.9rem 1rem 0.85rem;
   background: var(--resume-paper);
   color: var(--resume-ink);
@@ -835,12 +838,17 @@ strong {
 
 .kit-menu__close,
 .kit-menu__segment button,
+.kit-menu__segment a,
 .kit-menu__list button {
   font: inherit;
   color: inherit;
   background: transparent;
   border: 0;
   cursor: pointer;
+}
+
+.kit-menu__segment a {
+  text-decoration: none;
 }
 
 .kit-menu__close {
@@ -885,6 +893,7 @@ strong {
 }
 
 .kit-menu__segment button,
+.kit-menu__segment a,
 .kit-menu__list button {
   display: flex;
   align-items: baseline;
@@ -913,6 +922,7 @@ strong {
 
 .kit-menu__close:focus-visible,
 .kit-menu__segment button:focus-visible,
+.kit-menu__segment a:focus-visible,
 .kit-menu__list button:focus-visible {
   outline: 2px solid var(--resume-ink);
   outline-offset: 2px;

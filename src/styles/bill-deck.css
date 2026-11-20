@@ -435,7 +435,7 @@
     font-family: var(--font-display);
     font-weight: 600;
     line-height: 1;
-    font-size: clamp(2rem, 3.2vw, 2.9rem);
+    font-size: clamp(2.6rem, 4.8vw, 4.6rem);
   }
 
   .slide--split .deck-metric {
@@ -447,9 +447,9 @@
   }
 
   .deck-metric__label {
-    margin: 0.55rem 0 0;
+    margin: 0.7rem 0 0;
     font-family: var(--font-ui);
-    font-size: 0.82rem;
+    font-size: clamp(0.88rem, 1vw, 1.05rem);
     line-height: 1.35;
     color: var(--ink-muted);
   }
@@ -1218,7 +1218,7 @@
 }
 
 .deck-screens--workflow {
-  grid-template-columns: minmax(15rem, 23rem) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.65fr);
   align-items: start;
 }
 
@@ -1475,7 +1475,7 @@
   gap: var(--intro-gap);
   height: 100%;
   padding-right: var(--intro-gap);
-  padding-bottom: clamp(1.25rem, 2.2vw, 2.6rem);
+  padding-bottom: 3.4rem;
 }
 
 .intro-track__item {

@@ -375,6 +375,27 @@ function SlideContent({ slide }: { slide: BillSlide }) {
         </div>
       );
 
+    case 'showcase': {
+      const shot = slide.images?.[0];
+      return (
+        <div className="slide slide--showcase">
+          <div className="showcase-frame">
+            {shot && (
+              <figure className="showcase__card">
+                <img src={shot.src} alt={shot.alt} />
+              </figure>
+            )}
+            {slide.title && (
+              <h1 className="showcase__title">
+                {slide.titleLead && <span className="showcase__lead">{slide.titleLead} </span>}
+                {slide.title}
+              </h1>
+            )}
+          </div>
+        </div>
+      );
+    }
+
     case 'project':
       return (
         <div className={`slide slide--project slide--project-${slide.projectLayout ?? 'side'}`}>
@@ -779,7 +800,7 @@ export default function BillDeck({ protoSrc }: Props) {
         <SlideContent slide={slide} />
       </div>
 
-      {slide.chapter && slide.layout !== 'divider' && <ChapterGlyph icon={slide.chapter} className="chapter-mark" />}
+      {slide.chapter && slide.layout !== 'divider' && slide.layout !== 'showcase' && <ChapterGlyph icon={slide.chapter} className="chapter-mark" />}
 
       {showNotes && <Notes notes={slide.notes} index={index} total={billSlides.length} />}
 

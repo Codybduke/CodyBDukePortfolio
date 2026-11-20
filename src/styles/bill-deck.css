@@ -74,7 +74,8 @@
     background: #070707;
   }
 
-  .deck--project .deck__content {
+  .deck--project .deck__content,
+  .deck--showcase .deck__content {
     background: var(--project-bg);
   }
 
@@ -1676,4 +1677,55 @@
     background: rgba(251, 251, 241, 0.06);
     border-color: rgba(251, 251, 241, 0.16);
   }
+}
+
+/* ---- Finished screens --------------------------------------------------- */
+
+.slide--showcase {
+  background: var(--project-bg);
+}
+
+.showcase-frame {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: calc(1440 * var(--u));
+  height: calc(997 * var(--u));
+  transform: translate(-50%, -50%);
+}
+
+.showcase__card {
+  position: absolute;
+  top: calc(32 * var(--u));
+  left: calc(32 * var(--u));
+  width: calc(1376 * var(--u));
+  margin: 0;
+  padding: calc(24 * var(--u)) calc(24 * var(--u)) calc(32 * var(--u));
+  border: calc(4 * var(--u)) solid #c9c9c1;
+  border-radius: calc(32 * var(--u));
+  box-sizing: border-box;
+}
+
+.showcase__card img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.showcase__title {
+  position: absolute;
+  top: calc(882 * var(--u));
+  left: calc(var(--showcase-left, 56) * var(--u));
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: calc(65.6 * var(--u));
+  line-height: 1;
+  letter-spacing: 0;
+  white-space: nowrap;
+  color: var(--bg);
+}
+
+.showcase__lead {
+  font-weight: 300;
 }

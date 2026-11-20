@@ -41,7 +41,9 @@ export type ChapterIcon =
   | 'chart-no-axes-column';
 
 export type BillSlide = Omit<Slide, 'layout'> & {
-  layout: SlideLayout | 'opener' | 'gallery' | 'timeline' | 'feature' | 'screens' | 'close' | 'divider' | 'project';
+  layout: SlideLayout | 'opener' | 'gallery' | 'timeline' | 'feature' | 'screens' | 'close' | 'divider' | 'project' | 'showcase';
+  /** Showcase slides: a lighter-weight lead-in before the title, such as “Advanced:”. */
+  titleLead?: string;
   /** Project title slides: title beside the image, or title above it. */
   projectLayout?: 'side' | 'stacked';
   notes: SpeakerNote;
@@ -721,12 +723,9 @@ export const billSlides: BillSlide[] = [
   ),
   {
     id: 'pricing-details',
-    layout: 'screens',
+    layout: 'showcase',
     chapter: 'layers',
-    screenLayout: 'single',
-    stage: 'Shipped · Special Details',
-    title: 'Start with what the special is',
-    body: 'The first step is the name, the descriptions, and a few settings that apply to the special as a whole. Who receives it, and what they are offered, wait until the next steps.',
+    title: '1. Special Details',
     images: [
       shot(
         'final-step-1-special-details.png',
@@ -738,17 +737,14 @@ export const billSlides: BillSlide[] = [
       'Give people a second to read it. Name, internal notes, marketing description, terms. Active and the manual-apply toggles are here because they describe the special, not the offer.',
       'Who the special is for.',
       '1:00',
-      'The steps across the top are Special Details, Recipients, and Incentives. This is the shipped flow.',
+      'Start with what the special is. The first step is the name, the descriptions, and a few settings that apply to the special as a whole. Who receives it, and what they are offered, wait until the next steps. The steps across the top are Special Details, Recipients, and Incentives. This is the shipped flow.',
     ),
   },
   {
     id: 'pricing-recipients',
-    layout: 'screens',
+    layout: 'showcase',
     chapter: 'layers',
-    screenLayout: 'single',
-    stage: 'Shipped · Recipients',
-    title: 'Then decide who can receive it',
-    body: 'Recipients chooses prospects, renewals, or residents, and where the special applies. Lease terms and space options can stay on “all” when the special is not limited to a subset.',
+    title: '2. Recipients',
     images: [
       shot(
         'final-step-2-recipients.png',
@@ -760,17 +756,14 @@ export const billSlides: BillSlide[] = [
       'Audience first. Prospects are on in this example. Lease terms and space options default to all.',
       'The step the project existed to add: more than one incentive.',
       '0:55',
-      '“Off the common path” means the per-term and per-space amounts, not these fields. Selecting which terms or spaces are eligible still lives here.',
+      'Then decide who can receive it. Recipients chooses prospects, renewals, or residents, and where the special applies. Lease terms and space options can stay on “all” when the special is not limited to a subset. “Off the common path” means the per-term and per-space amounts, not these fields. Selecting which terms or spaces are eligible still lives here.',
     ),
   },
   {
     id: 'pricing-incentives',
-    layout: 'screens',
+    layout: 'showcase',
     chapter: 'layers',
-    screenLayout: 'single',
-    stage: 'Shipped · Incentives',
-    title: 'One special can hold several gifts and concessions',
-    body: 'This is the capability the project was for. A single special carries more than one incentive. Gifts stay short. A concession can stay collapsed until someone needs the pricing detail.',
+    title: '3. Incentives',
     images: [
       shot(
         'final-step-3-incentives.png',
@@ -782,18 +775,16 @@ export const billSlides: BillSlide[] = [
       'Point at the three incentives. This is the multiple-incentive special. The concession is summarized, not expanded.',
       'Where the advanced pricing went, and the control for how many incentives someone may pick.',
       '1:15',
-      'Two gift rows and one concession. The concession is summarized as 3 Space Options. Price by Lease Term is on that row. Do not name the gifts as a product list. The selection control is not on this screen.',
+      'One special can hold several gifts and concessions. This is the capability the project was for. A single special carries more than one incentive. Gifts stay short. A concession can stay collapsed until someone needs the pricing detail. Two gift rows and one concession. The concession is summarized as 3 Space Options. Price by Lease Term is on that row. Do not name the gifts as a product list. The selection control is not on this screen.',
       'Do not say the selection count is visible here. It shows up when the space options are expanded.',
     ),
   },
   {
     id: 'pricing-space',
-    layout: 'screens',
+    layout: 'showcase',
     chapter: 'layers',
-    screenLayout: 'single',
-    stage: 'Advanced pricing',
-    title: 'Space-specific amounts open only when someone needs them',
-    body: 'Expanding space options shows a row per space, in this case a private room, a private unit, and a shared room. This is also where you set how many incentives a recipient may select.',
+    titleLead: 'Advanced:',
+    title: 'Space options',
     images: [
       shot(
         'final-space-options.png',
@@ -805,18 +796,16 @@ export const billSlides: BillSlide[] = [
       'This is the compromise on screen. The detail is one click away, and the selection count lives with it.',
       'Lease-term amounts, in their own dialog.',
       '0:55',
-      'Private Room, Private Unit, Shared Room. Selection count is 2. Say that this control is on this screen, because it was not on the previous one.',
+      'Space-specific amounts open only when someone needs them. Expanding space options shows a row per space, in this case a private room, a private unit, and a shared room. This is also where you set how many incentives a recipient may select. Private Room, Private Unit, Shared Room. Selection count is 2. Say that this control is on this screen, because it was not on the previous one.',
       'If stacked dialogs come up, that was a component-library constraint.',
     ),
   },
   {
     id: 'pricing-lease',
-    layout: 'screens',
+    layout: 'showcase',
     chapter: 'layers',
-    screenLayout: 'single',
-    stage: 'Advanced pricing',
-    title: 'Lease-term amounts open in their own dialog',
-    body: 'Price by Lease Term leaves the main step and opens a dialog, one row per term. This screenshot is a student property, so the rows are academic terms. A conventional property would list durations such as 6, 12, or 18 months.',
+    titleLead: 'Advanced:',
+    title: 'Lease terms',
     images: [
       shot(
         'final-lease-term-rates.png',
@@ -828,7 +817,7 @@ export const billSlides: BillSlide[] = [
       'Say “lease term,” then immediately say why the rows look like seasons. Conventional properties use month counts.',
       'What shipped, as adoption, kept separate from how many specials exist overall.',
       '0:50',
-      'The dialog is amount, tax, and total per term. It opens from Price by Lease Term.',
+      'Lease-term amounts open in their own dialog. Price by Lease Term leaves the main step and opens a dialog, one row per term. This screenshot is a student property, so the rows are academic terms. A conventional property would list durations such as 6, 12, or 18 months. The dialog is amount, tax, and total per term. It opens from Price by Lease Term.',
       'Do not describe these rows as seasons the product invented.',
     ),
   },

@@ -1729,3 +1729,17 @@
 .showcase__lead {
   font-weight: 300;
 }
+
+/* ---- Background motif on text-only slides ------------------------------- */
+
+.slide__motif {
+  position: absolute;
+  z-index: 0;
+  top: calc(var(--motif-top) * var(--u));
+  right: calc(var(--motif-right) * var(--u));
+  width: calc(var(--motif-box) * var(--u));
+  height: calc(var(--motif-box) * var(--u));
+  color: #e2e2d9;
+  stroke-width: 2;
+  pointer-events: none;
+}

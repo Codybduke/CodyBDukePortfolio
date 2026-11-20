@@ -40,7 +40,12 @@ export type ChapterIcon =
   | 'layers'
   | 'chart-no-axes-column';
 
+/** Large background icons on text-only slides. Lucide names. */
+export type MotifIcon = 'pencil-sparkles' | 'user-exclamation-point' | 'sparkles' | 'squares-intersect';
+
 export type BillSlide = Omit<Slide, 'layout'> & {
+  /** On a text-only slide, a large uncropped icon in the top right that the copy overlaps. */
+  motif?: MotifIcon;
   layout: SlideLayout | 'opener' | 'gallery' | 'timeline' | 'feature' | 'screens' | 'close' | 'divider' | 'project' | 'showcase';
   /** Showcase slides: a lighter-weight lead-in before the title, such as “Advanced:”. */
   titleLead?: string;
@@ -300,6 +305,7 @@ export const billSlides: BillSlide[] = [
   {
     id: 'line-role',
     layout: 'prose',
+    motif: 'squares-intersect',
     chapter: 'git-branch',
     stage: 'My role',
     title: 'What I was responsible for',
@@ -514,6 +520,7 @@ export const billSlides: BillSlide[] = [
   {
     id: 'ai',
     layout: 'prose',
+    motif: 'pencil-sparkles',
     chapter: 'target',
     stage: 'How the work moved',
     title: 'AI shortened the path from research to something people could react to',
@@ -687,6 +694,7 @@ export const billSlides: BillSlide[] = [
   {
     id: 'pricing-testing',
     layout: 'prose',
+    motif: 'sparkles',
     chapter: 'pencil-ruler',
     stage: 'Usability testing',
     title: 'A new pattern in one workflow asked people to relearn Pricing',
@@ -702,6 +710,7 @@ export const billSlides: BillSlide[] = [
   {
     id: 'pricing-tradeoff',
     layout: 'prose',
+    motif: 'user-exclamation-point',
     chapter: 'pencil-ruler',
     stage: 'A disagreement',
     title: 'We kept advanced pricing, and moved it off the common path',

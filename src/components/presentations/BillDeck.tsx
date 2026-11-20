@@ -5,6 +5,7 @@ import {
   type BillImage,
   type BillSlide,
   type ChapterIcon,
+  type MotifIcon,
   type GallerySlot,
   type ScreenLayout,
   type SpeakerNote,
@@ -84,6 +85,95 @@ const CHAPTER_PATHS: Record<ChapterIcon, ReactNode> = {
     </>
   ),
 };
+
+/** Lucide 1.77 paths, with the drawn extent of each in the 24-unit viewBox (stroke included). */
+const MOTIFS: Record<MotifIcon, { paths: ReactNode; extent: [number, number, number, number] }> = {
+  'pencil-sparkles': {
+    extent: [1, 1, 23, 23],
+    paths: (
+      <>
+        <path d="M10 3H8" />
+        <path d="m15.007 5.008 3.987 3.986" />
+        <path d="M20 15v4" />
+        <path d="M21.174 6.813a2.82 2.82 0 0 0-3.986-3.987L3.842 16.175a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z" />
+        <path d="M22 17h-4" />
+        <path d="M4 5v4" />
+        <path d="M6 7H2" />
+        <path d="M9 2v2" />
+      </>
+    ),
+  },
+  'user-exclamation-point': {
+    extent: [4, 2, 20, 22],
+    paths: (
+      <>
+        <path d="M15 15H9a4 4 0 00-4 4v2" />
+        <path d="M18.988 13v4" />
+        <path d="M18.988 21h.01" />
+        <circle cx="12" cy="7" r="4" />
+      </>
+    ),
+  },
+  sparkles: {
+    extent: [1, 1, 23, 23],
+    paths: (
+      <>
+        <path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z" />
+        <path d="M20 2v4" />
+        <path d="M22 4h-4" />
+        <circle cx="4" cy="20" r="2" />
+      </>
+    ),
+  },
+  'squares-intersect': {
+    extent: [1, 1, 23, 23],
+    paths: (
+      <>
+        <path d="M10 22a2 2 0 0 1-2-2" />
+        <path d="M14 2a2 2 0 0 1 2 2" />
+        <path d="M16 22h-2" />
+        <path d="M2 10V8" />
+        <path d="M2 4a2 2 0 0 1 2-2" />
+        <path d="M20 8a2 2 0 0 1 2 2" />
+        <path d="M22 14v2" />
+        <path d="M22 20a2 2 0 0 1-2 2" />
+        <path d="M4 16a2 2 0 0 1-2-2" />
+        <path d="M8 10a2 2 0 0 1 2-2h5a1 1 0 0 1 1 1v5a2 2 0 0 1-2 2H9a1 1 0 0 1-1-1z" />
+        <path d="M8 2h2" />
+      </>
+    ),
+  },
+};
+
+/** The drawn icon sits this far from the top, right, and bottom of the 1440 x 997 frame. */
+const MOTIF_EDGE = 72;
+const MOTIF_HEIGHT = 997 - MOTIF_EDGE * 2;
+
+function Motif({ icon }: { icon: MotifIcon }) {
+  const { paths, extent } = MOTIFS[icon];
+  const [, top, right, bottom] = extent;
+  const box = (MOTIF_HEIGHT * 24) / (bottom - top);
+  const unit = box / 24;
+  const style = {
+    '--motif-box': box,
+    '--motif-top': MOTIF_EDGE - top * unit,
+    '--motif-right': MOTIF_EDGE - (24 - right) * unit,
+  } as CSSProperties;
+  return (
+    <svg
+      className="slide__motif"
+      style={style}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      {paths}
+    </svg>
+  );
+}
 
 function ChapterGlyph({ icon, className }: { icon: ChapterIcon; className: string }) {
   return (
@@ -546,6 +636,7 @@ function SlideContent({ slide }: { slide: BillSlide }) {
     case 'prose':
       return (
         <div className="slide slide--prose">
+          {slide.motif && <Motif icon={slide.motif} />}
           <div className="slide__inner">
             {slide.stage && <p className="slide__eyebrow">{slide.stage}</p>}
             {slide.title && <h1 className="slide__title slide__title--md">{slide.title}</h1>}

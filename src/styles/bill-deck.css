@@ -1589,3 +1589,91 @@
   left: calc(171 * var(--u));
   width: calc(1090 * var(--u));
 }
+
+/* ---- Inset media cards -------------------------------------------------
+   Half-screen images and the prototype sit 32 units in from the top, right,
+   and bottom edges with 32-unit corners. */
+
+@media (min-width: 961px) {
+  .deck {
+    --inset: calc(32 * var(--u));
+    --card-radius: calc(32 * var(--u));
+  }
+
+  .feature__figure,
+  .feature__figure[data-fit='contain'] {
+    padding: var(--inset) var(--inset) var(--inset) 0;
+    background: transparent;
+  }
+
+  .feature__figure img {
+    border-radius: var(--card-radius);
+  }
+
+  /* Contained images bring their own rounded card. */
+  .feature__figure[data-fit='contain'] {
+    display: block;
+  }
+
+  .feature__figure[data-fit='contain'] img {
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    max-height: none;
+    object-fit: contain;
+    object-position: right center;
+    border-radius: 0;
+  }
+
+  /* ---- Prototype walkthrough: dark page, prototype card on the right half */
+
+  .deck--split {
+    background: var(--project-bg);
+  }
+
+  .deck__prototype {
+    inset: var(--inset) var(--inset) var(--inset) 50%;
+    overflow: hidden;
+    border-radius: var(--card-radius);
+  }
+
+  .deck__prototype iframe {
+    inset: 0 auto auto 0;
+    width: calc(100% / var(--proto-scale, 1));
+    height: calc(100% / var(--proto-scale, 1));
+    transform: scale(var(--proto-scale, 1));
+    transform-origin: 0 0;
+  }
+
+  .deck--split .deck__content {
+    width: 50%;
+    border-right: 0;
+    background: var(--project-bg);
+  }
+
+  .slide--split .deck__copy {
+    justify-content: center;
+    padding: var(--inset) calc(64 * var(--u)) var(--inset) calc(104 * var(--u));
+    color: var(--bg);
+  }
+
+  .slide--split .deck__copy > * {
+    max-width: 34rem;
+  }
+
+  .slide--split .slide__eyebrow,
+  .slide--split .slide__body,
+  .slide--split .deck-metric__label {
+    color: rgba(251, 251, 241, 0.68);
+  }
+
+  .slide--split .slide__title,
+  .slide--split .deck-bullets {
+    color: var(--bg);
+  }
+
+  .slide--split .deck-metric {
+    background: rgba(251, 251, 241, 0.06);
+    border-color: rgba(251, 251, 241, 0.16);
+  }
+}

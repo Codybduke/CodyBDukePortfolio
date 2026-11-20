@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState, type PointerEvent as ReactPointerEvent, type ReactNode } from 'react';
+import { useCallback, useEffect, useRef, useState, type CSSProperties, type PointerEvent as ReactPointerEvent, type ReactNode } from 'react';
 
 import {
   billSlides,
@@ -578,6 +578,10 @@ function hashIndex(hash: string): number {
 
 type ProtoStatus = 'loading' | 'ready' | 'failed';
 
+/** The prototype draws its phone at a fixed 844px tall. Scale the frame so the phone fills this share of the card. */
+const PROTO_PHONE_HEIGHT = 844;
+const PROTO_PHONE_SHARE = 0.7;
+
 export default function BillDeck({ protoSrc }: Props) {
   const [index, setIndex] = useState(0);
   const [showNotes, setShowNotes] = useState(false);
@@ -587,6 +591,8 @@ export default function BillDeck({ protoSrc }: Props) {
   const [protoStatus, setProtoStatus] = useState<ProtoStatus>('loading');
   const [iframeSrc] = useState(() => labSrc(protoSrc, 'online'));
   const frameRef = useRef<HTMLIFrameElement>(null);
+  const paneRef = useRef<HTMLDivElement>(null);
+  const [protoScale, setProtoScale] = useState(1);
   const indexRef = useRef(0);
   const lastNav = useRef(0);
   const skipHashWrite = useRef(true);
@@ -738,11 +744,26 @@ export default function BillDeck({ protoSrc }: Props) {
     return () => window.clearInterval(id);
   }, [showTimer, startedAt]);
 
+  useEffect(() => {
+    const pane = paneRef.current;
+    if (!pane) return;
+    const fit = () => setProtoScale(Math.min(1, (pane.clientHeight * PROTO_PHONE_SHARE) / PROTO_PHONE_HEIGHT));
+    const observer = new ResizeObserver(fit);
+    observer.observe(pane);
+    fit();
+    return () => observer.disconnect();
+  }, []);
+
   const elapsed = startedAt === null ? 0 : Math.max(0, now - startedAt);
 
   return (
     <div className={`deck deck--${slide.layout}`}>
-      <div className="deck__prototype" aria-hidden={!isSplit}>
+      <div
+        ref={paneRef}
+        className="deck__prototype"
+        aria-hidden={!isSplit}
+        style={{ '--proto-scale': protoScale } as CSSProperties}
+      >
         <iframe ref={frameRef} src={iframeSrc} title="OXP Move-In prototype" />
         {protoStatus === 'failed' && slide.fallback && (
           <div className="deck__fallback">

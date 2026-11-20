@@ -344,7 +344,7 @@ export const billSlides: BillSlide[] = [
     stage: 'What the visits changed',
     title: 'The failure was happening in the line',
     body: 'A faster catch-up still left Entrata wrong while the keys were going out. Site visits and operator interviews moved the bet. Staff needed something they could use where they stood, including when the Wi-Fi dropped. The upload stayed as a next-day path for teams that kept the sheet. The table needed its own flow.',
-    image: { src: billFile('move-in-roster-phone.png'), alt: 'Upcoming move-ins on a tilted phone, with Ready, Optional, Required, and Blocked on the list.', fit: 'contain' },
+    image: { src: billFile('project/move-in-phone.png'), alt: 'The Upcoming Move-ins roster on a phone, with Blocked, Required, Optional, and Ready on each resident.', fit: 'contain' },
     caption: 'Ready, Optional, Required, and Blocked are visible before anyone is opened.',
     notes: note(
       'You changed direction after being on site. A nicer desktop screen of the old flow would still have left the day wrong.',

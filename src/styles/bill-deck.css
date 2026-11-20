@@ -74,6 +74,10 @@
     background: #070707;
   }
 
+  .deck--project .deck__content {
+    background: var(--project-bg);
+  }
+
 
   .deck__content > .slide {
     animation: deckIn 460ms cubic-bezier(0.22, 0.61, 0.36, 1);
@@ -1531,4 +1535,64 @@
   top: calc(445 * var(--u));
   font-size: calc(21.4 * var(--u));
   font-weight: 500;
+}
+
+/* ---- Project title ------------------------------------------------------ */
+
+.deck {
+  --project-bg: #4b4b48;
+}
+
+.slide--project {
+  background: var(--project-bg);
+}
+
+.project-frame {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: calc(1440 * var(--u));
+  height: calc(997 * var(--u));
+  transform: translate(-50%, -50%);
+}
+
+.project-frame__title {
+  position: absolute;
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: calc(88.5 * var(--u));
+  line-height: calc(109 * var(--u));
+  letter-spacing: 0;
+  white-space: pre-line;
+  color: var(--bg);
+}
+
+.project-frame__image {
+  position: absolute;
+  display: block;
+  height: auto;
+}
+
+.slide--project-side .project-frame__title {
+  top: calc(389 * var(--u));
+  left: calc(100 * var(--u));
+}
+
+.slide--project-side .project-frame__image {
+  top: calc(24 * var(--u));
+  left: calc(658 * var(--u));
+  width: calc(753 * var(--u));
+}
+
+.slide--project-stacked .project-frame__title {
+  top: calc(77 * var(--u));
+  left: calc(171 * var(--u));
+  white-space: nowrap;
+}
+
+.slide--project-stacked .project-frame__image {
+  top: calc(215 * var(--u));
+  left: calc(171 * var(--u));
+  width: calc(1090 * var(--u));
 }

@@ -316,6 +316,16 @@ function SlideContent({ slide }: { slide: BillSlide }) {
         </div>
       );
 
+    case 'project':
+      return (
+        <div className={`slide slide--project slide--project-${slide.projectLayout ?? 'side'}`}>
+          <div className="project-frame">
+            {slide.title && <h1 className="project-frame__title">{slide.title}</h1>}
+            {slide.image && <img className="project-frame__image" src={slide.image.src} alt={slide.image.alt} />}
+          </div>
+        </div>
+      );
+
     case 'timeline':
       return (
         <div className="slide slide--path">

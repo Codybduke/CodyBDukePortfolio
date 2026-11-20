@@ -41,7 +41,9 @@ export type ChapterIcon =
   | 'chart-no-axes-column';
 
 export type BillSlide = Omit<Slide, 'layout'> & {
-  layout: SlideLayout | 'opener' | 'gallery' | 'timeline' | 'feature' | 'screens' | 'close' | 'divider';
+  layout: SlideLayout | 'opener' | 'gallery' | 'timeline' | 'feature' | 'screens' | 'close' | 'divider' | 'project';
+  /** Project title slides: title beside the image, or title above it. */
+  projectLayout?: 'side' | 'stacked';
   notes: SpeakerNote;
   images?: BillImage[];
   screenLayout?: ScreenLayout;
@@ -200,13 +202,27 @@ export const billSlides: BillSlide[] = [
     ],
     notes: note(
       'Graphic design at BYU-Idaho, then FamilySearch, then Entrata. The product-lead year is a wider scope at the same company, not a new employer.',
-      'The first project: move-in day, and why the record was late.',
+      'The first project: real-time move-ins.',
       '1:20',
       'At Entrata the senior product designer role grew into product lead for about the last year. Discovery, prioritization, prototyping, and working with engineering through delivery became part of the job, along with the design.',
       'Do not say you led engineering. Do not add a design-philosophy slide after this.',
     ),
   },
 
+  {
+    id: 'project-move-in',
+    layout: 'project',
+    projectLayout: 'side',
+    title: 'Real-time\nMove-ins',
+    image: { src: billFile('project/move-in-phone.png'), alt: 'The Upcoming Move-ins roster on a phone, with Blocked, Required, Optional, and Ready on each resident.' },
+    notes: note(
+      'First project: real-time move-ins. A phone flow for leasing staff to finish a move-in at the desk while the resident is still there.',
+      'Understanding the problem.',
+      '0:10',
+      'The roster on the phone is the prototype, not a shipped screen.',
+      'Do not say it launched.',
+    ),
+  },
   divider(
     'chapter-move-problem',
     'search',
@@ -523,18 +539,31 @@ export const billSlides: BillSlide[] = [
     metrics: targets,
     notes: note(
       'Name the artifact, the review, and the one number that would have disproved the bet. Then stop.',
-      'A different project: a special that could only hold one incentive.',
+      'A different project: multi-incentive specials.',
       '1:15',
       'Five defects are from the handoff review, not from production. Targets: 95%+ same-day, under 20 seconds at the table, and about 60% less morning-after entry. Do not add a device-share target.',
       'Do not say it launched or that any target was hit.',
     ),
   },
 
+  {
+    id: 'project-specials',
+    layout: 'project',
+    projectLayout: 'stacked',
+    title: 'Multi-incentive specials',
+    image: { src: billFile('project/specials-laptop.png'), alt: 'Entrata Pricing on a laptop, with a special expanded to show three incentives.' },
+    notes: note(
+      'Second project: multi-incentive specials in Entrata Pricing. One special that can hold several offers.',
+      'Start with the problem.',
+      '0:10',
+      'This one shipped. Save the adoption number for the results.',
+    ),
+  },
   divider(
     'chapter-pricing-problem',
     'list-tree',
     'The Problem',
-    'Second project, Pricing. Start with the problem.',
+    'Pricing, part one: the problem.',
     'The problem with specials.',
   ),
   {

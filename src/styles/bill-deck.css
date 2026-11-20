@@ -1789,7 +1789,7 @@
   }
 
   .slide--prose .slide__inner {
-    max-width: calc(860 * var(--u));
+    max-width: calc(960 * var(--u));
   }
 }
 

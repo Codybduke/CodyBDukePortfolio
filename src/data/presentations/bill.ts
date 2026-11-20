@@ -1,13 +1,12 @@
 import { withBase } from '../../lib/paths';
 import type { RingSlice, Slide, SlideImage, SlideLayout, SlideMetric } from './move-in-scanner';
 
-/** Point and next are read while talking. The rest is secondary. */
+/** Short reminders read while talking, then the transition and anything to avoid saying. */
 export type SpeakerNote = {
-  point: string;
+  points: string[];
   next: string;
   time: string;
-  evidence?: string;
-  qualification?: string;
+  careful?: string;
 };
 
 export type BillImage = SlideImage & {
@@ -52,6 +51,8 @@ export type BillSlide = Omit<Slide, 'layout'> & {
   /** Project title slides: title beside the image, or title above it. */
   projectLayout?: 'side' | 'stacked';
   notes: SpeakerNote;
+  /** Metrics slides: the first metric leads and the rest read as supporting context. */
+  metricsLead?: boolean;
   images?: BillImage[];
   screenLayout?: ScreenLayout;
   caption?: string;
@@ -89,7 +90,11 @@ function note(
   evidence?: string,
   qualification?: string,
 ): SpeakerNote {
-  return { point, next, time, evidence, qualification };
+  return { points: evidence ? [point, evidence] : [point], next, time, careful: qualification };
+}
+
+function notes(points: string[], next: string, time: string, careful?: string): SpeakerNote {
+  return { points, next, time, careful };
 }
 
 function divider(id: string, chapter: ChapterIcon, label: string, point: string, next: string): BillSlide {

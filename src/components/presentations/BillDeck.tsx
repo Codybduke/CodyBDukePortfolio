@@ -196,9 +196,9 @@ function StageImage({ image }: { image: SlideImage }) {
   return <img className="deck-img" src={image.src} alt={image.alt} data-fit={image.fit ?? 'cover'} />;
 }
 
-function Metrics({ metrics }: { metrics: SlideMetric[] }) {
+function Metrics({ metrics, lead }: { metrics: SlideMetric[]; lead?: boolean }) {
   return (
-    <div className="deck-metrics">
+    <div className={`deck-metrics${lead ? ' deck-metrics--lead' : ''}`}>
       {metrics.map((metric) => (
         <div key={metric.label} className="deck-metric">
           <p className="deck-metric__value">{metric.value}</p>
@@ -481,6 +481,7 @@ function SlideContent({ slide }: { slide: BillSlide }) {
                 {slide.title}
               </h1>
             )}
+            {slide.body && <p className="showcase__support">{slide.body}</p>}
           </div>
         </div>
       );
@@ -511,8 +512,8 @@ function SlideContent({ slide }: { slide: BillSlide }) {
         <div className="slide slide--feature">
           <div className="slide__copy">
             {slide.stage && <p className="slide__eyebrow">{slide.stage}</p>}
-            {slide.title && <h1 className="slide__title slide__title--sm">{slide.title}</h1>}
-            {slide.body && <p className="slide__body">{slide.body}</p>}
+            {slide.title && <h1 className="slide__title slide__headline">{slide.title}</h1>}
+            {slide.body && <p className="slide__body slide__support">{slide.body}</p>}
             {slide.caption && <p className="feature__caption">{slide.caption}</p>}
           </div>
           {slide.image && (
@@ -584,8 +585,8 @@ function SlideContent({ slide }: { slide: BillSlide }) {
         <div className="slide slide--screens">
           <div className="slide__inner">
             {slide.stage && <p className="slide__eyebrow">{slide.stage}</p>}
-            {slide.title && <h1 className="slide__title">{slide.title}</h1>}
-            {slide.body && <p className="slide__body">{slide.body}</p>}
+            {slide.title && <h1 className="slide__title slide__headline">{slide.title}</h1>}
+            {slide.body && <p className="slide__body slide__support">{slide.body}</p>}
             {slide.images && <Screens images={slide.images} layout={slide.screenLayout ?? 'single'} />}
           </div>
         </div>
@@ -596,8 +597,8 @@ function SlideContent({ slide }: { slide: BillSlide }) {
         <div className="slide slide--metrics">
           <div className="slide__inner">
             {slide.stage && <p className="slide__eyebrow">{slide.stage}</p>}
-            {slide.title && <h1 className="slide__title slide__title--md">{slide.title}</h1>}
-            {slide.body && <p className="slide__body">{slide.body}</p>}
+            {slide.title && <h1 className="slide__title slide__headline">{slide.title}</h1>}
+            {slide.body && <p className="slide__body slide__support">{slide.body}</p>}
             {slide.rings && (
               <div className="deck-ring">
                 <Donut slices={slide.rings.map((ring, index) => ({ value: ring.value, color: RING_COLORS[index] }))} />
@@ -613,9 +614,9 @@ function SlideContent({ slide }: { slide: BillSlide }) {
         <div className="slide slide--metrics">
           <div className="slide__inner">
             {slide.stage && <p className="slide__eyebrow">{slide.stage}</p>}
-            {slide.title && <h1 className="slide__title slide__title--md">{slide.title}</h1>}
-            {slide.body && <p className="slide__body">{slide.body}</p>}
-            {slide.metrics && <Metrics metrics={slide.metrics} />}
+            {slide.title && <h1 className="slide__title slide__headline">{slide.title}</h1>}
+            {slide.body && <p className="slide__body slide__support">{slide.body}</p>}
+            {slide.metrics && <Metrics metrics={slide.metrics} lead={slide.metricsLead} />}
           </div>
         </div>
       );
@@ -639,8 +640,8 @@ function SlideContent({ slide }: { slide: BillSlide }) {
           {slide.motif && <Motif icon={slide.motif} />}
           <div className="slide__inner">
             {slide.stage && <p className="slide__eyebrow">{slide.stage}</p>}
-            {slide.title && <h1 className="slide__title slide__title--md">{slide.title}</h1>}
-            {slide.body && <p className="slide__body">{slide.body}</p>}
+            {slide.title && <h1 className="slide__title slide__headline">{slide.title}</h1>}
+            {slide.body && <p className="slide__body slide__support">{slide.body}</p>}
             {slide.bullets && <Bullets bullets={slide.bullets} />}
           </div>
         </div>
@@ -652,8 +653,8 @@ function SlideContent({ slide }: { slide: BillSlide }) {
         <div className="slide slide--split">
           <div className="deck__copy">
             {slide.stage && <p className="slide__eyebrow">{slide.stage}</p>}
-            {slide.title && <h1 className="slide__title slide__title--sm">{slide.title}</h1>}
-            {slide.body && <p className="slide__body">{slide.body}</p>}
+            {slide.title && <h1 className="slide__title slide__headline">{slide.title}</h1>}
+            {slide.body && <p className="slide__body slide__support">{slide.body}</p>}
             {slide.metrics && <Metrics metrics={slide.metrics} />}
             {slide.bullets && <Bullets bullets={slide.bullets} />}
           </div>
@@ -665,10 +666,13 @@ function SlideContent({ slide }: { slide: BillSlide }) {
 function Notes({ notes, index, total }: { notes: SpeakerNote; index: number; total: number }) {
   return (
     <aside className="deck__notes" aria-label="Speaker notes">
-      <p className="deck__notes-point">{notes.point}</p>
+      <ul className="deck__notes-points">
+        {notes.points.map((point) => (
+          <li key={point}>{point}</li>
+        ))}
+      </ul>
       <p className="deck__notes-next">Next: {notes.next}</p>
-      {notes.evidence && <p className="deck__notes-meta">{notes.evidence}</p>}
-      {notes.qualification && <p className="deck__notes-meta">Careful: {notes.qualification}</p>}
+      {notes.careful && <p className="deck__notes-meta">Careful: {notes.careful}</p>}
       <p className="deck__notes-meta">
         About {notes.time} · slide {index + 1} of {total}
       </p>

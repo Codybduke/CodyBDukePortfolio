@@ -1743,3 +1743,97 @@
   stroke-width: 2;
   pointer-events: none;
 }
+
+/* ---- Content slide hierarchy ---------------------------------------------
+   One headline, one supporting statement, and an optional section label. */
+
+.slide .slide__headline {
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.06;
+  text-wrap: balance;
+}
+
+.slide .slide__support {
+  color: var(--ink-muted);
+  text-wrap: pretty;
+}
+
+@media (min-width: 961px) {
+  .slide .slide__headline {
+    font-size: calc(60 * var(--u));
+  }
+
+  .slide--screens .slide__headline {
+    font-size: calc(48 * var(--u));
+  }
+
+  .slide .slide__support {
+    max-width: 34em;
+    margin-top: calc(22 * var(--u));
+    font-size: calc(26 * var(--u));
+    line-height: 1.38;
+  }
+
+  .slide--screens .slide__support {
+    margin-top: calc(12 * var(--u));
+    font-size: calc(22 * var(--u));
+  }
+
+  .slide .slide__eyebrow {
+    margin-bottom: calc(20 * var(--u));
+  }
+
+  .slide--split .slide__support {
+    color: rgba(251, 251, 241, 0.72);
+  }
+
+  .slide--prose .slide__inner {
+    max-width: calc(860 * var(--u));
+  }
+}
+
+.deck-metrics--lead {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: end;
+}
+
+.deck-metrics--lead .deck-metric + .deck-metric {
+  background: transparent;
+}
+
+.deck-metrics--lead .deck-metric + .deck-metric .deck-metric__value {
+  font-size: clamp(1.6rem, 2.4vw, 2.3rem);
+  color: var(--ink-muted);
+}
+
+/* ---- Finished screens: supporting statement under the headline ---------- */
+
+.slide--showcase .showcase__title {
+  top: calc(862 * var(--u));
+  font-size: calc(56 * var(--u));
+}
+
+.showcase__support {
+  position: absolute;
+  top: calc(930 * var(--u));
+  left: calc(var(--showcase-left, 56) * var(--u));
+  margin: 0;
+  font-size: calc(24 * var(--u));
+  line-height: 1.3;
+  color: rgba(251, 251, 241, 0.72);
+}
+
+/* ---- Speaker notes as short bullets ------------------------------------- */
+
+.deck__notes-points {
+  margin: 0;
+  padding-left: 1.1rem;
+  font-family: var(--font-ui);
+  font-size: 0.95rem;
+  line-height: 1.35;
+}
+
+.deck__notes-points li + li {
+  margin-top: 0.2rem;
+}

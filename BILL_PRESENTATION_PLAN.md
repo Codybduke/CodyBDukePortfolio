@@ -1,5 +1,7 @@
 # BILL interview presentation plan
 
+This file is an earlier technical plan. It is not the approved plan. Use `docs/BILL_PRESENTATION_PLAN.md` and `.cursor/rules/bill-presentation.mdc`. Do not put 10,204 or the 1,266 applicant-type count on the deck from the notes below.
+
 Technical direction that stays: dedicated `/present/bill`, a separate `BillDeck`, and the existing Presentation control in the hidden resume menu. No public nav link. Do not implement until this revision is approved.
 
 Prepared material is about **36:00** across **35 slides**. The extra room inside the 45-minute onsite is for questions. The first cut if the prototype runs long is slide 17.

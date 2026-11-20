@@ -10,7 +10,7 @@ alwaysApply: false
 - Do not alter unrelated portfolio pages or the separate Move-In presentation.
 - Inspect existing code, components, assets, and notes before proposing changes. Never guess exact component names, slide numbers, or screenshot file locations.
 - The approved implementation plan at `docs/BILL_PRESENTATION_PLAN.md` (after created and approved) governs what changes to make; no implementation without it.
-- Preserve existing navigation, speaker notes, timer, transitions, prototypes, fallback images, and 16:9 behavior.
+- Preserve existing navigation, speaker notes, timer, transitions, prototypes, fallback images, and 16:9 behavior. New chapter slides join `billSlides`, so arrows, the counter, notes, the timer, and hash routing include them. Do not build a second navigator, and do not remove a content slide to make room.
 - Do not merge, deploy, or make production changes automatically. Work through a separate reviewable branch/PR.
 
 ## Visual language
@@ -18,26 +18,30 @@ alwaysApply: false
 - Preserve the current warm cream + dark charcoal palette, bold typography, large stone motif, rounded elements, and generous whitespace.
 - Strong hierarchy: prominent slide title, concise takeaway, then screenshot/diagram/metric evidence. One primary idea per slide.
 - Reuse current typography, design tokens, layout patterns, and screenshot components rather than replacing the presentation architecture.
-- Chapter divider: one oversized, intentionally cropped, recognizable Lucide outline icon. Prefer largely static compositions; avoid repeating horizontal marquee patterns or distracting continuous animations.
-- Chapter indicator on subsequent content slides: same icon, subtle and consistently positioned in the bottom-left. Use coherent scale and stroke weight (roughly 32px and 1.5–2px stroke as a starting point).
+- Chapter dividers are eight new 16:9 slides, not existing content slides restyled to do that job. Each one is warm cream, one oversized Lucide outline cropped by the frame the way the opener stone is cropped, a large bold chapter title, and the same case-and-number label. The icon is a primary element. Placement and crop may shift slightly for balance. No marquee, no scrolling icon, no photograph.
+- Chapter indicator on the content slides that follow a divider: the same icon, bottom-left, same position, scale, and stroke (roughly 32px and 1.5–2px). It does not cover product imagery, prototype controls, or essential content. The divider itself does not also show the small icon.
 - Product image presentation: charcoal field, warm cream border (approx. 4–6px), rounded corners (approx. 24–32px), consistent padding (approx. 16–32px); values are illustrative and must adapt to existing design.
 - Plan reusable screenshot variants: hero, comparison, workflow sequence, focused detail. Preserve screenshot aspect ratio, avoid tiny UI and awkward white margins, and show no more than two side by side at 1280×720.
 - Use actual source UI screenshots, not fake/reconstructed screens. Avoid unsupported images or fabricated personal details.
 
-## Chapter mapping (titles can be refined only with approval)
+## Chapter dividers
+Create eight new slides, four per case study. Insert each one immediately before the first content slide of that chapter. Do not replace, remove, or substantially redesign an existing slide so that it can serve as the divider.
+
 **Real-Time Move-Ins**
-1. Understanding the Problem — `search`
-2. Finding a Better Approach — `git-branch`
-3. Designing the Experience — `smartphone`
-4. Building & Measuring — `target`
+1. Understanding the Problem — `search` — `chapter-move-problem`, between `intro-timeline` and `line-problem`
+2. Finding a Better Approach — `git-branch` — `chapter-move-approach`, between `line-baseline` and `line-role`
+3. Designing the Experience — `smartphone` — `chapter-move-experience`, between `line-shift` and `line-shape`
+4. Building & Measuring — `target` — `chapter-move-measure`, between `offline` and `ai`
 
 **Pricing Specials**
-1. The Problem — `list-tree`
-2. Exploration & Testing — `pencil-ruler`
-3. The Final Design — `layers`
-4. Results & Takeaways — `chart-no-axes-column`
+1. The Problem — `list-tree` — `chapter-pricing-problem`, between `targets` and `pricing-problem`
+2. Exploration & Testing — `pencil-ruler` — `chapter-pricing-explore`, between `pricing-original` and `pricing-challenge`
+3. The Final Design — `layers` — `chapter-pricing-design`, between `pricing-tradeoff` and `pricing-details`
+4. Results & Takeaways — `chart-no-axes-column` — `chapter-pricing-results`, between `pricing-lease` and `pricing-results`
 
-These are narrative sections, not an instruction to create eight additional slides. Prefer repurposing existing slides when appropriate.
+On the slide, number each case from 1 to 4 with the case name (“Move-ins · 1”, “Pricing · 1”). The large title is the chapter name above. Titles are fixed unless the owner approves a change.
+
+`line-problem`, `line-role`, `line-shape`, `targets`, `pricing-problem`, `pricing-challenge`, `pricing-details`, and `pricing-results` remain content slides. They may take the ordinary type, layout, and frame refinements in the approved plan. They do not function as chapter dividers.
 
 ## Project accuracy — hard constraints
 **Move-Ins:** Baseline roughly 21% recorded in real time, 36% next morning, 43% later or never. 95%+ same-day completion was a *goal*, not a measured achieved result. Remove 30% device-use from the main goal display. Do not imply the prototype shipped or its goals were achieved. Offline exception: `Save move-in for sync` may queue offline move-in; re-connection triggers synchronization attempt; conflicts may require review. Do not claim guaranteed sync or categorical absence of override. Spreadsheet/AI upload was an explored idea, not a shipped Bulk Move-In replacement.
@@ -58,7 +62,7 @@ For each changed slide group: BUILD → RENDER → CRITIQUE → REFINE → VERIF
 - If the environment cannot render the presentation, report the blocker instead of pretending to visually verify it.
 
 ## Pilot and independent reviewer gates
-- Start with **three representative slides** (chapter divider, ordinary content, screenshot-heavy). The human must approve the pilot before full-deck changes.
+- The approved pilot is four slides: `intro-gallery`, the new `chapter-move-problem` divider, `line-shift`, and `pricing-incentives`. The human must approve that pilot before the other seven dividers and the rest of the deck. `chapter-move-problem` does not exist yet. Capture the current deck as the baseline. For the new divider, the baseline context is the transition from `intro-timeline` to `line-problem`. Do not claim a before screenshot of a slide that was not in the deck.
 - Following the pilot and after the full-deck implementation, call the **`bill-visual-reviewer`** custom subagent in a separate context. Pass the actual screenshots, relevant intended slide messages, and rubric. Do **not** pass the implementing agent's self-scores, self-critiques, or reasons for design choices.
 - Reviewer must be skeptical, read-only, and identify at most the three highest-impact fixes per slide group, with visual evidence and severity. It cannot change code.
 - Address critical/high-priority findings within remaining cycle limits. If reviewer is unavailable, flag independent review as unverified and ask for a separate review; never mark the gate passed.

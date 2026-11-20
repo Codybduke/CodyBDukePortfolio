@@ -74,6 +74,11 @@
     background: #070707;
   }
 
+  .deck--project .deck__content,
+  .deck--showcase .deck__content {
+    background: var(--project-bg);
+  }
+
 
   .deck__content > .slide {
     animation: deckIn 460ms cubic-bezier(0.22, 0.61, 0.36, 1);
@@ -435,7 +440,7 @@
     font-family: var(--font-display);
     font-weight: 600;
     line-height: 1;
-    font-size: clamp(2rem, 3.2vw, 2.9rem);
+    font-size: clamp(2.6rem, 4.8vw, 4.6rem);
   }
 
   .slide--split .deck-metric {
@@ -447,9 +452,9 @@
   }
 
   .deck-metric__label {
-    margin: 0.55rem 0 0;
+    margin: 0.7rem 0 0;
     font-family: var(--font-ui);
-    font-size: 0.82rem;
+    font-size: clamp(0.88rem, 1vw, 1.05rem);
     line-height: 1.35;
     color: var(--ink-muted);
   }
@@ -994,8 +999,7 @@
   color: rgba(244, 241, 230, 0.74);
 }
 
-.slide--gallery .slide__inner,
-.slide--timeline .slide__inner {
+.slide--gallery .slide__inner {
   max-width: 78rem;
   width: 100%;
   margin-inline: auto;
@@ -1004,8 +1008,7 @@
   padding-bottom: 4.6rem;
 }
 
-.slide--gallery .slide__body,
-.slide--timeline .slide__body {
+.slide--gallery .slide__body {
   max-width: 44rem;
 }
 
@@ -1076,79 +1079,9 @@
   font-weight: 600;
 }
 
-.timeline {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: clamp(1rem, 2.5vw, 2rem);
-  margin: 1.8rem 0 0;
-  padding: 1.35rem 0 0;
-  list-style: none;
-  position: relative;
-}
-
-.timeline::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 8%;
-  height: 1px;
-  background: rgba(28, 28, 26, 0.22);
-}
-
-.timeline li {
-  position: relative;
-  margin: 0;
-  padding-top: 0.35rem;
-}
-
-.timeline li::before {
-  content: '';
-  position: absolute;
-  top: -1.55rem;
-  left: 0;
-  width: 0.55rem;
-  height: 0.55rem;
-  border-radius: 50%;
-  background: var(--ink);
-}
-
-.timeline__when {
-  margin: 0;
-  font-family: var(--font-ui);
-  font-size: 0.72rem;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--ink-muted);
-}
-
-.timeline h2 {
-  margin: 0.4rem 0 0;
-  font-family: var(--font-display);
-  font-weight: 600;
-  font-size: clamp(1.45rem, 2.1vw, 1.9rem);
-  letter-spacing: -0.03em;
-}
-
-.timeline__role {
-  margin: 0.35rem 0 0;
-  font-family: var(--font-ui);
-  font-weight: 600;
-  font-size: 0.95rem;
-}
-
-.timeline__detail {
-  margin: 0.45rem 0 0;
-  max-width: 22rem;
-  color: var(--ink-muted);
-  font-size: 1rem;
-  line-height: 1.45;
-}
-
 .slide--feature {
   display: grid;
-  grid-template-columns: minmax(20rem, 36rem) minmax(0, 1fr);
+  grid-template-columns: clamp(20rem, 45vw, 52rem) minmax(0, 1fr);
   height: 100%;
   background: var(--bg);
 }
@@ -1194,20 +1127,20 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 1.25rem 1.25rem 4.25rem;
+  padding: clamp(1.25rem, 4vh, 3rem);
   background: #e7ecef;
 }
 
 .feature__figure[data-fit='contain'] img {
   width: auto;
   height: auto;
-  max-width: min(100%, 22rem);
+  max-width: 100%;
   max-height: 100%;
   object-fit: contain;
 }
 
 .slide--screens .slide__title {
-  font-size: clamp(1.4rem, 2.1vw, 2rem);
+  font-size: clamp(1.7rem, 2.5vw, 2.4rem);
 }
 
 .slide--screens .slide__body {
@@ -1218,7 +1151,7 @@
 }
 
 .deck-screens--workflow {
-  grid-template-columns: minmax(15rem, 23rem) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.65fr);
   align-items: start;
 }
 
@@ -1245,7 +1178,6 @@
   }
 
   .gallery,
-  .timeline,
   .slide--feature {
     grid-template-columns: 1fr;
   }
@@ -1264,18 +1196,6 @@
     min-height: 11rem;
   }
 
-  .timeline {
-    padding-top: 0;
-  }
-
-  .timeline::before {
-    display: none;
-  }
-
-  .timeline li::before {
-    display: none;
-  }
-
   .slide--feature {
     grid-template-rows: auto minmax(14rem, 42vh);
   }
@@ -1284,4 +1204,636 @@
     height: 100%;
     min-height: 14rem;
   }
+}
+
+/* ---- Screenshot frame ------------------------------------------------- */
+
+.deck-screens {
+  grid-template-rows: minmax(0, 1fr);
+  align-items: stretch;
+}
+
+.deck-screens figure {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  container-type: size;
+}
+
+.screen-frame {
+  --frame-pad: clamp(1rem, 1.3vw, 1.5rem);
+  display: flex;
+  width: fit-content;
+  max-width: 100%;
+  padding: var(--frame-pad);
+  background: var(--bg-dark);
+  border-radius: 28px;
+}
+
+.deck-screens .screen-frame img {
+  width: auto;
+  height: auto;
+  max-width: calc(100cqw - 2 * var(--frame-pad));
+  max-height: min(calc(100dvh - 16rem), calc(100cqh - 2 * var(--frame-pad) - 3rem));
+  object-fit: contain;
+  border: 5px solid var(--bg);
+  border-radius: 14px;
+  background: #fff;
+}
+
+.slide--screens .slide__inner {
+  padding-bottom: 1.75rem;
+}
+
+.deck-screens figcaption {
+  margin-top: 0.6rem;
+}
+
+.deck-screens figure:last-child figcaption {
+  max-width: calc(100% - 11rem);
+}
+
+/* ---- Reference frame ----------------------------------------------------
+   The slide designs are drawn on a 1440 × 997 frame. One --u is one pixel of
+   that frame, scaled to whichever side of the viewport is tighter. */
+
+.deck {
+  --u: min(calc(100vw / 1440), calc(100dvh / 997));
+}
+
+/* ---- Chapter mark ------------------------------------------------------- */
+
+.chapter-mark {
+  position: absolute;
+  z-index: 15;
+  left: calc(19.2 * var(--u));
+  bottom: calc(19 * var(--u));
+  width: calc(57.6 * var(--u));
+  height: calc(57.6 * var(--u));
+  color: #c9c9c1;
+  stroke-width: 2;
+  pointer-events: none;
+}
+
+/* ---- Chapter divider ---------------------------------------------------- */
+
+.slide--divider {
+  background: var(--bg);
+}
+
+.divider__icon {
+  position: absolute;
+  top: calc(-337 * var(--u));
+  right: calc(-216 * var(--u));
+  width: calc(1488 * var(--u));
+  height: calc(1488 * var(--u));
+  color: #c9c9c1;
+  stroke-width: 2;
+}
+
+.divider__label {
+  position: absolute;
+  left: calc(144 * var(--u));
+  bottom: calc(139 * var(--u));
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: calc(64.6 * var(--u));
+  line-height: calc(80 * var(--u));
+  letter-spacing: 0;
+  white-space: pre-line;
+  color: #000;
+}
+
+/* ---- Opener ------------------------------------------------------------- */
+
+.slide--opener:not(.bill-open--close) .bill-open__copy {
+  position: absolute;
+  top: 50%;
+  left: 11.85vw;
+  display: block;
+  height: auto;
+  max-width: none;
+  padding: 0;
+  transform: translateY(-50%);
+}
+
+.slide--opener:not(.bill-open--close) .bill-open__name {
+  font-size: calc(96.5 * var(--u));
+  line-height: 1;
+  letter-spacing: 0;
+  white-space: nowrap;
+}
+
+/* ---- Introduction: fixed portrait over a looping photo grid ------------- */
+
+.slide--intro {
+  --edge: calc(40 * var(--u));
+  --gap: calc(26 * var(--u));
+  --radius: calc(32 * var(--u));
+  --portrait-w: calc(688 * var(--u));
+  background: var(--bg);
+}
+
+.intro-portrait {
+  position: absolute;
+  z-index: 2;
+  top: var(--edge);
+  bottom: var(--edge);
+  left: var(--edge);
+  width: var(--portrait-w);
+  background: var(--bg);
+}
+
+.intro-portrait img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: var(--radius);
+}
+
+.intro-portrait__title {
+  position: absolute;
+  left: calc(44 * var(--u));
+  bottom: calc(var(--cody-bottom, 45) * var(--u));
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: calc(96.5 * var(--u));
+  line-height: 1;
+  letter-spacing: 0;
+  color: var(--bg);
+}
+
+.photo-grid {
+  position: absolute;
+  top: var(--edge);
+  bottom: var(--edge);
+  left: var(--edge);
+  right: 0;
+  overflow: hidden;
+  container-type: size;
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+}
+
+.photo-grid.is-dragging {
+  cursor: grabbing;
+}
+
+.photo-grid__rail {
+  --band: calc((100cqh - var(--gap)) / 2);
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
+  width: max-content;
+  height: 100%;
+  margin-left: calc(var(--portrait-w) + var(--gap));
+  will-change: transform;
+}
+
+.photo-grid__band {
+  display: flex;
+  height: var(--band);
+}
+
+.photo-grid__set {
+  display: flex;
+  gap: var(--gap);
+  height: 100%;
+  padding-right: var(--gap);
+}
+
+.photo-grid__col {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
+  width: calc((var(--band) - var(--gap)) / 2 * 4 / 3);
+}
+
+.photo-grid__col--wide {
+  width: calc(var(--band) * 4 / 3);
+}
+
+.photo-grid__photo {
+  display: block;
+  flex: 1;
+  width: 100%;
+  min-height: 0;
+  object-fit: cover;
+  border-radius: var(--radius);
+}
+
+
+/* ---- The path here ------------------------------------------------------ */
+
+.slide--path {
+  background: var(--bg);
+}
+
+.path-frame {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: calc(1440 * var(--u));
+  height: calc(997 * var(--u));
+  transform: translate(-50%, -50%);
+}
+
+.path-frame__title {
+  position: absolute;
+  top: calc(144 * var(--u));
+  left: calc(64 * var(--u));
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: calc(97 * var(--u));
+  line-height: calc(95 * var(--u));
+  letter-spacing: 0;
+  white-space: pre-line;
+  color: #000;
+}
+
+.path {
+  position: absolute;
+  top: calc(450 * var(--u));
+  left: calc(72 * var(--u));
+  display: flex;
+  gap: calc(31 * var(--u));
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.path::before {
+  content: '';
+  position: absolute;
+  top: calc(349 * var(--u));
+  left: 0;
+  width: calc(1320 * var(--u));
+  height: max(1px, calc(1.5 * var(--u)));
+  background: rgba(28, 28, 26, 0.16);
+}
+
+.path li {
+  position: relative;
+  width: calc(300 * var(--u));
+}
+
+.path__card {
+  display: block;
+  width: calc(300 * var(--u));
+  height: calc(300 * var(--u));
+  object-fit: cover;
+  border-radius: calc(32 * var(--u));
+}
+
+.path__dot {
+  position: absolute;
+  top: calc(342 * var(--u));
+  left: 0;
+  width: calc(15 * var(--u));
+  height: calc(15 * var(--u));
+  border-radius: 50%;
+  background: var(--ink);
+}
+
+.path__when,
+.path__place,
+.path__role {
+  position: absolute;
+  left: 0;
+  margin: 0;
+  font-family: var(--font-display);
+  line-height: 1;
+  white-space: nowrap;
+  color: #2b2b29;
+}
+
+.path__when {
+  top: calc(372 * var(--u));
+  font-size: calc(22 * var(--u));
+  font-weight: 400;
+}
+
+.path__place {
+  top: calc(405 * var(--u));
+  font-size: calc(28.6 * var(--u));
+  font-weight: 600;
+}
+
+.path__role {
+  top: calc(445 * var(--u));
+  font-size: calc(21.4 * var(--u));
+  font-weight: 500;
+}
+
+/* ---- Project title ------------------------------------------------------ */
+
+.deck {
+  --project-bg: #4b4b48;
+}
+
+.slide--project {
+  background: var(--project-bg);
+}
+
+.project-frame {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: calc(1440 * var(--u));
+  height: calc(997 * var(--u));
+  transform: translate(-50%, -50%);
+}
+
+.project-frame__title {
+  position: absolute;
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: calc(88.5 * var(--u));
+  line-height: calc(109 * var(--u));
+  letter-spacing: 0;
+  white-space: pre-line;
+  color: var(--bg);
+}
+
+.project-frame__image {
+  position: absolute;
+  display: block;
+  height: auto;
+}
+
+.slide--project-side .project-frame__title {
+  top: calc(389 * var(--u));
+  left: calc(100 * var(--u));
+}
+
+.slide--project-side .project-frame__image {
+  top: calc(24 * var(--u));
+  left: calc(658 * var(--u));
+  width: calc(753 * var(--u));
+}
+
+.slide--project-stacked .project-frame__title {
+  top: calc(77 * var(--u));
+  left: calc(171 * var(--u));
+  white-space: nowrap;
+}
+
+.slide--project-stacked .project-frame__image {
+  top: calc(215 * var(--u));
+  left: calc(171 * var(--u));
+  width: calc(1090 * var(--u));
+}
+
+/* ---- Inset media cards -------------------------------------------------
+   Half-screen images and the prototype sit 32 units in from the top, right,
+   and bottom edges with 32-unit corners. */
+
+@media (min-width: 961px) {
+  .deck {
+    --inset: calc(32 * var(--u));
+    --card-radius: calc(32 * var(--u));
+  }
+
+  .feature__figure,
+  .feature__figure[data-fit='contain'] {
+    padding: var(--inset) var(--inset) var(--inset) 0;
+    background: transparent;
+  }
+
+  .feature__figure img {
+    border-radius: var(--card-radius);
+  }
+
+  /* Contained images bring their own rounded card. */
+  .feature__figure[data-fit='contain'] {
+    display: block;
+  }
+
+  .feature__figure[data-fit='contain'] img {
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    max-height: none;
+    object-fit: contain;
+    object-position: right center;
+    border-radius: 0;
+  }
+
+  /* ---- Prototype walkthrough: dark page, prototype card on the right half */
+
+  .deck--split {
+    background: var(--project-bg);
+  }
+
+  .deck__prototype {
+    inset: var(--inset) var(--inset) var(--inset) 50%;
+    overflow: hidden;
+    border-radius: var(--card-radius);
+  }
+
+  .deck__prototype iframe {
+    inset: 0 auto auto 0;
+    width: calc(100% / var(--proto-scale, 1));
+    height: calc(100% / var(--proto-scale, 1));
+    transform: scale(var(--proto-scale, 1));
+    transform-origin: 0 0;
+  }
+
+  .deck--split .deck__content {
+    width: 50%;
+    border-right: 0;
+    background: var(--project-bg);
+  }
+
+  .slide--split .deck__copy {
+    justify-content: center;
+    padding: var(--inset) calc(64 * var(--u)) var(--inset) calc(104 * var(--u));
+    color: var(--bg);
+  }
+
+  .slide--split .deck__copy > * {
+    max-width: 34rem;
+  }
+
+  .slide--split .slide__eyebrow,
+  .slide--split .slide__body,
+  .slide--split .deck-metric__label {
+    color: rgba(251, 251, 241, 0.68);
+  }
+
+  .slide--split .slide__title,
+  .slide--split .deck-bullets {
+    color: var(--bg);
+  }
+
+  .slide--split .deck-metric {
+    background: rgba(251, 251, 241, 0.06);
+    border-color: rgba(251, 251, 241, 0.16);
+  }
+}
+
+/* ---- Finished screens --------------------------------------------------- */
+
+.slide--showcase {
+  background: var(--project-bg);
+}
+
+.showcase-frame {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: calc(1440 * var(--u));
+  height: calc(997 * var(--u));
+  transform: translate(-50%, -50%);
+}
+
+.showcase__card {
+  position: absolute;
+  top: calc(32 * var(--u));
+  left: calc(32 * var(--u));
+  width: calc(1376 * var(--u));
+  margin: 0;
+  padding: calc(24 * var(--u)) calc(24 * var(--u)) calc(32 * var(--u));
+  border: calc(4 * var(--u)) solid #c9c9c1;
+  border-radius: calc(32 * var(--u));
+  box-sizing: border-box;
+}
+
+.showcase__card img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.showcase__title {
+  position: absolute;
+  top: calc(882 * var(--u));
+  left: calc(var(--showcase-left, 56) * var(--u));
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: calc(65.6 * var(--u));
+  line-height: 1;
+  letter-spacing: 0;
+  white-space: nowrap;
+  color: var(--bg);
+}
+
+.showcase__lead {
+  font-weight: 300;
+}
+
+/* ---- Background motif on text-only slides ------------------------------- */
+
+.slide__motif {
+  position: absolute;
+  z-index: 0;
+  top: calc(var(--motif-top) * var(--u));
+  right: calc(var(--motif-right) * var(--u));
+  width: calc(var(--motif-box) * var(--u));
+  height: calc(var(--motif-box) * var(--u));
+  color: #e2e2d9;
+  stroke-width: 2;
+  pointer-events: none;
+}
+
+/* ---- Content slide hierarchy ---------------------------------------------
+   One headline, one supporting statement, and an optional section label. */
+
+.slide .slide__headline {
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.06;
+  text-wrap: balance;
+}
+
+.slide .slide__support {
+  color: var(--ink-muted);
+  text-wrap: pretty;
+}
+
+@media (min-width: 961px) {
+  .slide .slide__headline {
+    font-size: calc(60 * var(--u));
+  }
+
+  .slide--screens .slide__headline {
+    font-size: calc(48 * var(--u));
+  }
+
+  .slide .slide__support {
+    max-width: 34em;
+    margin-top: calc(22 * var(--u));
+    font-size: calc(26 * var(--u));
+    line-height: 1.38;
+  }
+
+  .slide--screens .slide__support {
+    margin-top: calc(12 * var(--u));
+    font-size: calc(22 * var(--u));
+  }
+
+  .slide .slide__eyebrow {
+    margin-bottom: calc(20 * var(--u));
+  }
+
+  .slide--split .slide__support {
+    color: rgba(251, 251, 241, 0.72);
+  }
+
+  .slide--prose .slide__inner {
+    max-width: calc(960 * var(--u));
+  }
+}
+
+.deck-metrics--lead {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: end;
+}
+
+.deck-metrics--lead .deck-metric + .deck-metric {
+  background: transparent;
+}
+
+.deck-metrics--lead .deck-metric + .deck-metric .deck-metric__value {
+  font-size: clamp(1.6rem, 2.4vw, 2.3rem);
+  color: var(--ink-muted);
+}
+
+/* ---- Finished screens: supporting statement under the headline ---------- */
+
+.slide--showcase .showcase__title {
+  top: calc(862 * var(--u));
+  font-size: calc(56 * var(--u));
+}
+
+.showcase__support {
+  position: absolute;
+  top: calc(930 * var(--u));
+  left: calc(var(--showcase-left, 56) * var(--u));
+  margin: 0;
+  font-size: calc(24 * var(--u));
+  line-height: 1.3;
+  color: rgba(251, 251, 241, 0.72);
+}
+
+/* ---- Speaker notes as short bullets ------------------------------------- */
+
+.deck__notes-points {
+  margin: 0;
+  padding-left: 1.1rem;
+  font-family: var(--font-ui);
+  font-size: 0.95rem;
+  line-height: 1.35;
+}
+
+.deck__notes-points li + li {
+  margin-top: 0.2rem;
 }

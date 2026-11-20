@@ -1,0 +1,65 @@
+---
+description: Apply for planning, implementing, or reviewing the BILL Lead Product Designer interview presentation at /present/bill. Defines the visual system, factual safeguards, test criteria, and independent review gates.
+alwaysApply: false
+---
+
+# BILL interview presentation — project design rule
+
+## Scope and source of truth
+- Work only on the BILL presentation at `/present/bill` and directly related code/assets. Resolve actual repository paths by inspection; `/present/bill` is the route, not necessarily a directory.
+- Do not alter unrelated portfolio pages or the separate Move-In presentation.
+- Inspect existing code, components, assets, and notes before proposing changes. Never guess exact component names, slide numbers, or screenshot file locations.
+- The approved implementation plan at `docs/BILL_PRESENTATION_PLAN.md` (after created and approved) governs what changes to make; no implementation without it.
+- Preserve existing navigation, speaker notes, timer, transitions, prototypes, fallback images, and 16:9 behavior.
+- Do not merge, deploy, or make production changes automatically. Work through a separate reviewable branch/PR.
+
+## Visual language
+- Editorial, restrained product-design portfolio; not generic corporate slides.
+- Preserve the current warm cream + dark charcoal palette, bold typography, large stone motif, rounded elements, and generous whitespace.
+- Strong hierarchy: prominent slide title, concise takeaway, then screenshot/diagram/metric evidence. One primary idea per slide.
+- Reuse current typography, design tokens, layout patterns, and screenshot components rather than replacing the presentation architecture.
+- Chapter divider: one oversized, intentionally cropped, recognizable Lucide outline icon. Prefer largely static compositions; avoid repeating horizontal marquee patterns or distracting continuous animations.
+- Chapter indicator on subsequent content slides: same icon, subtle and consistently positioned in the bottom-left. Use coherent scale and stroke weight (roughly 32px and 1.5–2px stroke as a starting point).
+- Product image presentation: charcoal field, warm cream border (approx. 4–6px), rounded corners (approx. 24–32px), consistent padding (approx. 16–32px); values are illustrative and must adapt to existing design.
+- Plan reusable screenshot variants: hero, comparison, workflow sequence, focused detail. Preserve screenshot aspect ratio, avoid tiny UI and awkward white margins, and show no more than two side by side at 1280×720.
+- Use actual source UI screenshots, not fake/reconstructed screens. Avoid unsupported images or fabricated personal details.
+
+## Chapter mapping (titles can be refined only with approval)
+**Real-Time Move-Ins**
+1. Understanding the Problem — `search`
+2. Finding a Better Approach — `git-branch`
+3. Designing the Experience — `smartphone`
+4. Building & Measuring — `target`
+
+**Pricing Specials**
+1. The Problem — `list-tree`
+2. Exploration & Testing — `pencil-ruler`
+3. The Final Design — `layers`
+4. Results & Takeaways — `chart-no-axes-column`
+
+These are narrative sections, not an instruction to create eight additional slides. Prefer repurposing existing slides when appropriate.
+
+## Project accuracy — hard constraints
+**Move-Ins:** Baseline roughly 21% recorded in real time, 36% next morning, 43% later or never. 95%+ same-day completion was a *goal*, not a measured achieved result. Remove 30% device-use from the main goal display. Do not imply the prototype shipped or its goals were achieved. Offline exception: `Save move-in for sync` may queue offline move-in; re-connection triggers synchronization attempt; conflicts may require review. Do not claim guaranteed sync or categorical absence of override. Spreadsheet/AI upload was an explored idea, not a shipped Bulk Move-In replacement.
+
+**Pricing Specials:** The original Edit Special experience and rates editor must be represented accurately, rather than a misleading Add Special image; confirm actual assets. Distinguish V1/V2 exploration from final design. Final flow: Special Details → Recipients → Incentives. Advanced space-option pricing starts collapsed; lease-term pricing opens separately. Reference selection-count controls only where visible. The results slide shows two figures only: 162 multi-incentive specials / 38 clients, and 8,290 lease-term-restricted specials / 278 clients. If asked for one more cut, use 1,563 move-in-date-restricted specials / 155 clients. Do not substitute the older R1 2024 applicant-type count (1,266 / 118 clients). Other verified cuts stay off the slide unless asked: 432 shared by prospects and renewals / 57 clients; 187 promo-code specials / 58 clients; 245 space-option-restricted specials / 12 clients; 1,821 manual-only specials / 107 clients. Do not put the platform-wide 10,204 figure on this deck. Do not use an unverified 1% figure, an 8,000-offers claim, or invented business/efficiency metrics. Do not imply AI designed Pricing Specials.
+
+**All slides:** Distinguish research, concepts, prototypes, targets, launched functionality, and measured results. Do not inflate ownership (e.g. claiming design leadership over engineering without evidence). Do not invent facts or features.
+
+## Bounded visual loop
+For each changed slide group: BUILD → RENDER → CRITIQUE → REFINE → VERIFY.
+- Capture and inspect the **actual rendered UI**, not just source code, at 1280×720 and 1920×1080.
+- Evaluate visual hierarchy (25), legibility (25), consistency (20), storytelling (20), and polish (10).
+- 85/100 target with no critical defects; each category must reach at least 70% of its weight. Scores are self-assessment aids, not objective proof.
+- Zero tolerance for clipping, distorted product images, false claims, broken navigation/prototypes, unintended overflow, or changes outside scope.
+- Up to **four** refinement cycles per slide group, or **two consecutive cycles with no material improvement**; stop sooner if the quality gate passes.
+- At each phase, run build/tests where available and verify functional regressions.
+- Log evidence: slide identifier, screenshot path, problems seen, exact change, score, and unresolved items. Never claim a check was performed unless evidence exists.
+- If the environment cannot render the presentation, report the blocker instead of pretending to visually verify it.
+
+## Pilot and independent reviewer gates
+- Start with **three representative slides** (chapter divider, ordinary content, screenshot-heavy). The human must approve the pilot before full-deck changes.
+- Following the pilot and after the full-deck implementation, call the **`bill-visual-reviewer`** custom subagent in a separate context. Pass the actual screenshots, relevant intended slide messages, and rubric. Do **not** pass the implementing agent's self-scores, self-critiques, or reasons for design choices.
+- Reviewer must be skeptical, read-only, and identify at most the three highest-impact fixes per slide group, with visual evidence and severity. It cannot change code.
+- Address critical/high-priority findings within remaining cycle limits. If reviewer is unavailable, flag independent review as unverified and ask for a separate review; never mark the gate passed.
+- The final human approval and merge remain manual.

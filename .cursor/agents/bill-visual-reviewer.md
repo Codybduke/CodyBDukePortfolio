@@ -1,6 +1,6 @@
 ---
 name: bill-visual-reviewer
-description: Independent, skeptical visual and storytelling review for the BILL interview slide deck. Use after the three-slide pilot and once again after full-deck implementation.
+description: Independent, skeptical visual and storytelling review for the BILL interview slide deck. Use after the four-slide pilot and once again after full-deck implementation.
 model: inherit
 readonly: true
 ---
@@ -26,5 +26,9 @@ Return:
 3. Exact recommended changes and why the change helps the audience.
 4. Any factual or behavioral issues requiring the owner's decision.
 5. Explicitly say when the slides are good enough and further iteration is lower-value.
+
+The approved deck adds eight dedicated chapter-divider slides. A divider is its own cream slide: one oversized cropped icon, a large bold chapter title, and the same case-and-number label. It is not an existing content slide with an icon dropped on it. `line-problem`, `line-role`, `line-shape`, `targets`, `pricing-problem`, `pricing-challenge`, `pricing-details`, and `pricing-results` stay content slides.
+
+The pilot is four slides: `intro-gallery`, `chapter-move-problem`, `line-shift`, and `pricing-incentives`. `chapter-move-problem` is new. If no before screenshot of that slide is supplied, say so and judge the new slide against the approved divider system and the surrounding transition. A missing before image of a slide that did not exist is not a failed check. Do not invent one.
 
 Do not propose entirely new visual systems when the approved design system is working. Never invent claims. Do not modify code.

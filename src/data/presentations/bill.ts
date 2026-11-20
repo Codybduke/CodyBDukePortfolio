@@ -83,16 +83,6 @@ function phone(file: string, alt: string): SlideImage {
   return { src: moveIn(file), alt, fit: 'contain' };
 }
 
-function note(
-  point: string,
-  next: string,
-  time: string,
-  evidence?: string,
-  qualification?: string,
-): SpeakerNote {
-  return { points: evidence ? [point, evidence] : [point], next, time, careful: qualification };
-}
-
 function notes(points: string[], next: string, time: string, careful?: string): SpeakerNote {
   return { points, next, time, careful };
 }
@@ -571,11 +561,14 @@ export const billSlides: BillSlide[] = [
     projectLayout: 'stacked',
     title: 'Multi-incentive specials',
     image: { src: billFile('project/specials-laptop.png'), alt: 'Entrata Pricing on a laptop, with a special expanded to show three incentives.' },
-    notes: note(
-      'Second project: multi-incentive specials in Entrata Pricing. One special that can hold several offers.',
-      'Start with the problem.',
+    notes: notes(
+      [
+        'Second project: multi-incentive specials in Entrata Pricing.',
+        'One special that can hold several offers. This one shipped.',
+      ],
+      'The problem.',
       '0:10',
-      'This one shipped. Save the adoption number for the results.',
+      'Save the adoption numbers for the results.',
     ),
   },
   divider(
@@ -583,21 +576,23 @@ export const billSlides: BillSlide[] = [
     'list-tree',
     'The Problem',
     'Pricing, part one: the problem.',
-    'The problem with specials.',
+    'The one-incentive limit.',
   ),
   {
     id: 'pricing-problem',
     layout: 'prose',
     chapter: 'list-tree',
-    stage: 'Pricing Specials',
-    title: 'A special could hold only one incentive',
-    body: 'In Entrata Pricing, a special was a single offer. Customers needed several incentives in the same special, including a choice between a gift and a concession. Setup was also split across two tools. That was a real annoyance, and it was the smaller problem.',
-    notes: note(
-      'Say the one-incentive limit first. Say the fragmented setup second, on purpose.',
-      'The two screens that made up the old path.',
-      '1:00',
-      'This one shipped. The adoption number comes later. Do not preview 162 yet.',
-      'Do not open with the tiered-offer workaround or the journey map. Those are side artifacts.',
+    title: 'One special could only have one incentive.',
+    body: 'Properties wanted to combine gifts, concessions, and discounts. Entrata allowed one incentive per special.',
+    notes: notes(
+      [
+        'This was the core product problem.',
+        'Customers also wanted to offer a choice, like a gift or a concession.',
+        'Setup was split across two tools too. That’s the next slide.',
+      ],
+      'How a special was set up.',
+      '0:50',
+      'Don’t preview the adoption numbers yet.',
     ),
   },
   {
@@ -605,100 +600,86 @@ export const billSlides: BillSlide[] = [
     layout: 'screens',
     chapter: 'list-tree',
     screenLayout: 'workflow',
-    stage: 'The original path',
-    title: 'Save the special, then open the pricing editor',
-    body: 'Someone configured the special and saved it. Pricing continued in a separate bulk editor. That editor could handle detailed charges and credits. It was a general pricing tool, not a flow built for creating a special.',
+    title: 'Setting up a special meant using two different workflows.',
+    body: 'Save the special, then open the pricing editor.',
     images: [
       shot(
         'original-edit-special.png',
         'Edit Special, with fields for name, recipients, a single special type, dates, coupon, cap, and description.',
-        'The add screen was not captured. Edit Special used essentially the same fields, so this is the stand-in, not an Add Special screenshot.',
+        'First, the special, with a single type.',
       ),
       shot(
         'original-bulk-pricing-editor.png',
         'Bulk Edit Pricing for prospect rents, with a toast that special settings were saved and an empty charge grid.',
-        'After the save, this toast confirms the settings stuck, and the next surface is the general pricing editor. The grid in this capture is empty.',
+        'Then the general pricing editor.',
       ),
     ],
-    notes: note(
-      'Left is the special. Right is where pricing actually happened. One type on the special. The grid is a general charge editor.',
-      'What you were actually trying to change.',
-      '1:25',
-      'Special Type is one dropdown. The editor has charge timing, charge code, amount, tax, lease terms, and schedule updates, outside the special.',
-      'Do not call the left image an add screen. Do not describe charge rows. The grid is empty. You designed the special, not the bulk editor. Do not use the file named Original add screen.',
+    notes: notes(
+      [
+        'Left is the special. Right is where the pricing actually happened.',
+        'The editor was a general charge tool, not a flow built for creating a special.',
+        'The left image is Edit Special. Add Special used essentially the same fields.',
+      ],
+      'Exploration and testing.',
+      '1:10',
+      'You designed the special, not the bulk editor. The grid in this capture is empty.',
     ),
   },
   divider(
     'chapter-pricing-explore',
     'pencil-ruler',
     'Exploration\n& Testing',
-    'Exploration and testing.',
-    'The design challenge.',
+    'Part two: exploration and testing.',
+    'The first exploration.',
   ),
-  {
-    id: 'pricing-challenge',
-    layout: 'prose',
-    chapter: 'pencil-ruler',
-    stage: 'The design problem',
-    title: 'One special had to carry more than one offer',
-    body: 'The limit was the product problem. A property wanted gifts and a concession together, and sometimes a choice between them, without creating a new special for each. I also wanted that configuration to live in the creation flow, in fields a pricing person could finish, instead of sending every incentive through the general editor.',
-    notes: note(
-      'Restate the priority in your own words: multiple incentives first, a less fragmented setup second.',
-      'The first time you tried to put incentive setup inside the special.',
-      '1:00',
-      'Customers needed choices between gifts and concessions, not only a list of discounts.',
-      'Frame 425, the tiered-offer AND/OR sketch, is a side conversation. It is not the original workflow and not a research finding. Leave it out.',
-    ),
-  },
   {
     id: 'pricing-v1',
     layout: 'screens',
     chapter: 'pencil-ruler',
     screenLayout: 'single',
-    stage: 'First exploration',
-    title: 'The first pass was a name, a value, and a cap',
-    body: 'This was my first serious attempt to pull incentive setup into the special. I cut it down hard, so adding a gift or a rent discount was much simpler than filling out the pricing editor.',
+    title: 'I started by simplifying everything.',
+    body: 'A name, a value, and a cap.',
     images: [
       shot(
         'wizard-v1-step-2.png',
         'An early Add Special step listing gifts and a rent discount, each with a name, a value, and a cap.',
-        'Step two let one special hold several items. Each row was a name, a value, and a cap, plus how many items a person could select.',
+        'Several incentives in one special, added while creating it.',
       ),
     ],
-    notes: note(
-      'You were simplifying on purpose. Name, value, cap. The pricing editor’s charge grid is gone from this step.',
-      'The next version had to hold more of the real requirements.',
+    notes: notes(
+      [
+        'My hypothesis was that the pricing editor’s complexity was the main problem.',
+        'So I explored adding incentives directly while creating the special.',
+        'The goal was to make the common incentives much easier to set up.',
+      ],
+      'What a flat list couldn’t hold.',
       '1:00',
-      'There is an earlier details step in the folder. It is optional color. This incentives step is the one that matters.',
-      'This is an exploration, not the shipped design, and not a usability result.',
+      'This is an exploration, not the shipped design.',
     ),
   },
   {
     id: 'pricing-v2',
     layout: 'screens',
     chapter: 'pencil-ruler',
-    screenLayout: 'pair',
-    stage: 'The next pass',
-    title: 'The rows had to know what kind of offer they were',
-    body: 'A flat list was too thin once gifts and rent discounts needed different treatment. The next version gave each row a type, an item, a value, and a cap, and an edit control for the detail that did not belong on every row. A rent discount could open more pricing controls.',
+    screenLayout: 'single',
+    title: 'But different incentives needed different controls.',
+    body: 'Gifts and rent discounts weren’t interchangeable.',
     images: [
-      shot(
-        'wizard-v1-step-2.png',
-        'Earlier incentives step with a name, value, and cap on each row.',
-        'First pass. Every row is a name, a value, and a cap.',
-      ),
       shot(
         'wizard-v2-step-2.png',
         'Later incentives table with a special type, an item, value fields, and an edit control on each row.',
-        'Next pass. Type, item, value, and cap, with edit on the row. A rent discount can open more pricing detail.',
+        'Each row got a type, and a rent discount could open more detail.',
       ),
     ],
-    notes: note(
-      'Walk the difference: the left side is the simplification, the right side is you putting structure back as the requirements got specific.',
-      'What testing changed, and what it did not.',
-      '1:15',
-      'Types in this version include a gift, a rent discount, and a choice. The second value column is the cap.',
-      'Some of this change is design working through requirements. Do not attribute it to the usability test. V3, the later General and Incentives pass, stays in the folder unless someone asks.',
+    notes: notes(
+      [
+        'A flat list was too limited.',
+        'This version added incentive types and optional advanced details.',
+        'It was slowly bringing back the complexity I had tried to remove.',
+      ],
+      'What usability testing showed.',
+      '1:00',
+      'Some of this came from working through requirements, not from testing.',
     ),
   },
   {
@@ -707,14 +688,18 @@ export const billSlides: BillSlide[] = [
     motif: 'sparkles',
     chapter: 'pencil-ruler',
     stage: 'Usability testing',
-    title: 'A new pattern in one workflow asked people to relearn Pricing',
-    body: 'The wizard was meant to be simpler. Testing showed that people were already comfortable with the concession patterns used across Entrata. A different interaction model, in this workflow only, created relearning we did not need. The final design kept more of that existing language. Other changes along the way came from working through the requirements, not from the test.',
-    notes: note(
-      'The finding is familiarity, not a score. People knew concessions. A local reinvention made them learn Pricing twice.',
-      'The argument about advanced pricing, and the compromise.',
-      '1:00',
-      'Changing the concession pattern everywhere would have been its own project, with its own change management.',
-      'No participant quotes, no session count, no score. Do not say a tester asked for three steps. Do not show Frame 422 or Frame 328 as findings. The sheet with your PM was a working draft. The journey map was an edge case about coupon codes.',
+    title: 'We were simplifying the wrong thing.',
+    body: 'Users understood the pricing editor. Switching between workflows was the bigger problem.',
+    notes: notes(
+      [
+        'Users were already familiar with the pricing editor.',
+        'Separating creation from detailed setup is what confused them.',
+        'A simpler UI didn’t help if it broke up a workflow they already knew.',
+        'So we changed direction: one consolidated workflow that keeps the complexity it needs.',
+      ],
+      'Deciding which advanced options to keep.',
+      '1:10',
+      'No participant quotes, session counts, or scores.',
     ),
   },
   {
@@ -722,29 +707,34 @@ export const billSlides: BillSlide[] = [
     layout: 'prose',
     motif: 'user-exclamation-point',
     chapter: 'pencil-ruler',
-    stage: 'A disagreement',
-    title: 'We kept advanced pricing, and moved it off the common path',
-    body: 'I wanted to remove lease-term pricing and space-option pricing. They added a lot of complexity, and most people creating a special did not need them on the way through. My PM pushed back. Important customers depended on those capabilities, and taking them out was outside the project’s scope. We kept both, and we put the detailed configuration where someone goes only when they need it.',
-    notes: note(
-      'You argued for removal. You did not get it. The compromise was placement, and that was the right product call once the dependency was clear.',
-      'The shipped flow, one step at a time, big enough to read.',
+    stage: 'Working with my PM',
+    title: 'Low usage didn’t mean low value.',
+    body: 'We simplified the common path without removing advanced capabilities.',
+    notes: notes(
+      [
+        'Space-specific and lease-term pricing had very low usage, roughly 1%.',
+        'I suggested removing some of it. My PM pointed out that strategically important customers relied on it.',
+        'Removing it would also have added research and scope.',
+        'We agreed to keep it and keep the common path simple.',
+      ],
+      'The final design.',
       '1:10',
-      'Lease term and space option stayed. They are not on the default path as expanded pricing grids.',
-      'No 1% figure. Do not say you led the team or that engineering was overruled. Do not call lease terms seasons.',
+      'Tell it as a decision you reached together, not a disagreement you lost.',
     ),
   },
   divider(
     'chapter-pricing-design',
     'layers',
     'The Final\nDesign',
-    'The final design, one step at a time.',
-    'Step one, the special details.',
+    'Part three: the final design, one step at a time.',
+    'Starting with the special.',
   ),
   {
     id: 'pricing-details',
     layout: 'showcase',
     chapter: 'layers',
-    title: '1. Special Details',
+    title: 'Start with the special.',
+    body: 'Set up the basics first.',
     images: [
       shot(
         'final-step-1-special-details.png',
@@ -752,18 +742,22 @@ export const billSlides: BillSlide[] = [
         'Special Details names the special and holds the descriptions and a few global settings.',
       ),
     ],
-    notes: note(
-      'Give people a second to read it. Name, internal notes, marketing description, terms. Active and the manual-apply toggles are here because they describe the special, not the offer.',
-      'Who the special is for.',
-      '1:00',
-      'Start with what the special is. The first step is the name, the descriptions, and a few settings that apply to the special as a whole. Who receives it, and what they are offered, wait until the next steps. The steps across the top are Special Details, Recipients, and Incentives. This is the shipped flow.',
+    notes: notes(
+      [
+        'Name, internal notes, marketing description, and terms.',
+        'Active and the manual-apply settings live here because they describe the whole special.',
+        'The steps across the top are Special Details, Recipients, and Incentives.',
+      ],
+      'Who can receive it.',
+      '0:45',
     ),
   },
   {
     id: 'pricing-recipients',
     layout: 'showcase',
     chapter: 'layers',
-    title: '2. Recipients',
+    title: 'Then choose who can receive it.',
+    body: 'Keep recipients in the same workflow.',
     images: [
       shot(
         'final-step-2-recipients.png',
@@ -771,18 +765,22 @@ export const billSlides: BillSlide[] = [
         'Recipients sets who qualifies, which lease terms and spaces are included, and a few limits such as a move-in date or a promo code.',
       ),
     ],
-    notes: note(
-      'Audience first. Prospects are on in this example. Lease terms and space options default to all.',
-      'The step the project existed to add: more than one incentive.',
-      '0:55',
-      'Then decide who can receive it. Recipients chooses prospects, renewals, or residents, and where the special applies. Lease terms and space options can stay on “all” when the special is not limited to a subset. “Off the common path” means the per-term and per-space amounts, not these fields. Selecting which terms or spaces are eligible still lives here.',
+    notes: notes(
+      [
+        'Prospects, renewals, or residents, and where the special applies.',
+        'Lease terms and space options can stay on all.',
+        'Choosing eligible terms and spaces happens here. Per-term and per-space amounts come later.',
+      ],
+      'The incentives.',
+      '0:45',
     ),
   },
   {
     id: 'pricing-incentives',
     layout: 'showcase',
     chapter: 'layers',
-    title: '3. Incentives',
+    title: 'One special, multiple incentives.',
+    body: 'Combine gifts and concessions.',
     images: [
       shot(
         'final-step-3-incentives.png',
@@ -790,20 +788,23 @@ export const billSlides: BillSlide[] = [
         'Two gifts and a concession in one special. Space-level amounts stay collapsed on “3 Space Options.” Price by Lease Term sits on that row.',
       ),
     ],
-    notes: note(
-      'Point at the three incentives. This is the multiple-incentive special. The concession is summarized, not expanded.',
-      'Where the advanced pricing went, and the control for how many incentives someone may pick.',
-      '1:15',
-      'One special can hold several gifts and concessions. This is the capability the project was for. A single special carries more than one incentive. Gifts stay short. A concession can stay collapsed until someone needs the pricing detail. Two gift rows and one concession. The concession is summarized as 3 Space Options. Price by Lease Term is on that row. Do not name the gifts as a product list. The selection control is not on this screen.',
-      'Do not say the selection count is visible here. It shows up when the space options are expanded.',
+    notes: notes(
+      [
+        'This is the capability the project was for.',
+        'Two gifts and one concession in a single special.',
+        'The concession stays collapsed as 3 Space Options until someone needs the detail.',
+      ],
+      'Advanced options.',
+      '0:55',
+      'The selection count isn’t on this screen.',
     ),
   },
   {
     id: 'pricing-space',
     layout: 'showcase',
     chapter: 'layers',
-    titleLead: 'Advanced:',
-    title: 'Space options',
+    title: 'Advanced options when you need them.',
+    body: 'Configure space-specific amounts without cluttering the common path.',
     images: [
       shot(
         'final-space-options.png',
@@ -811,11 +812,14 @@ export const billSlides: BillSlide[] = [
         'Each space can carry its own amount. The control at the bottom sets how many incentives a recipient may select. Here it is 2.',
       ),
     ],
-    notes: note(
-      'This is the compromise on screen. The detail is one click away, and the selection count lives with it.',
-      'Lease-term amounts, in their own dialog.',
+    notes: notes(
+      [
+        'Expanding shows a row per space: private room, private unit, and shared room.',
+        'This is also where you set how many incentives a recipient can pick. Here it’s 2.',
+        'This is the tradeoff on screen. The option stayed, one step off the common path.',
+      ],
+      'Lease-term pricing.',
       '0:55',
-      'Space-specific amounts open only when someone needs them. Expanding space options shows a row per space, in this case a private room, a private unit, and a shared room. This is also where you set how many incentives a recipient may select. Private Room, Private Unit, Shared Room. Selection count is 2. Say that this control is on this screen, because it was not on the previous one.',
       'If stacked dialogs come up, that was a component-library constraint.',
     ),
   },
@@ -823,8 +827,8 @@ export const billSlides: BillSlide[] = [
     id: 'pricing-lease',
     layout: 'showcase',
     chapter: 'layers',
-    titleLead: 'Advanced:',
-    title: 'Lease terms',
+    title: 'Lease-term pricing stays available.',
+    body: 'Detailed amounts open in a dedicated dialog.',
     images: [
       shot(
         'final-lease-term-rates.png',
@@ -832,57 +836,61 @@ export const billSlides: BillSlide[] = [
         'Each term has its own amount. The season names are this property’s lease terms, not a separate seasonal feature.',
       ),
     ],
-    notes: note(
-      'Say “lease term,” then immediately say why the rows look like seasons. Conventional properties use month counts.',
-      'What shipped, as adoption, kept separate from how many specials exist overall.',
+    notes: notes(
+      [
+        'Price by Lease Term opens this dialog, with one row per term.',
+        'This is a student property, so the terms are academic. Conventional properties list 6, 12, or 18 months.',
+        'Each term has an amount, tax, and total.',
+      ],
+      'The results.',
       '0:50',
-      'Lease-term amounts open in their own dialog. Price by Lease Term leaves the main step and opens a dialog, one row per term. This screenshot is a student property, so the rows are academic terms. A conventional property would list durations such as 6, 12, or 18 months. The dialog is amount, tax, and total per term. It opens from Price by Lease Term.',
-      'Do not describe these rows as seasons the product invented.',
+      'Don’t call these rows seasons.',
     ),
   },
   divider(
     'chapter-pricing-results',
     'chart-no-axes-column',
     'Results &\nTakeaways',
-    'Results and takeaways.',
-    'The adoption numbers.',
+    'Part four: results and takeaways.',
+    'How many specials used multiple incentives.',
   ),
   {
     id: 'pricing-results',
     layout: 'metrics',
     chapter: 'chart-no-axes-column',
     stage: 'After launch',
-    title: '162 specials used more than one incentive',
-    body: 'That is the new capability in use, across 38 clients. Lease-term limits, which we kept and moved off the common path, are on 8,290 specials across 278 clients. The release shipped with implementation issues. Engineering resolved them under the PM’s leadership.',
+    title: '162 specials used multiple incentives.',
+    metricsLead: true,
     metrics: [
-      { value: '162', label: 'Specials with more than one incentive, across 38 clients' },
-      { value: '8,290', label: 'Specials limited by lease term, across 278 clients' },
+      { value: '38', label: 'Clients adopted multi-incentive specials' },
+      { value: '8,290', label: 'Specials still used lease-term restrictions, across 278 clients' },
     ],
-    notes: note(
-      'Lead with 162 across 38. That is the new behavior. Then 8,290 across 278: specials limited to specific lease terms.',
-      'What you would set up before the next build.',
+    notes: notes(
+      [
+        'Lead with 162 specials across 38 clients. That’s the new capability in use.',
+        '8,290 specials across 278 clients used lease-term restrictions. Advanced pricing stayed relevant.',
+        'The release had implementation issues. Engineering resolved them before a relaunch.',
+      ],
+      'What I’d measure next time.',
       '0:55',
-      'Usage was collected after the launch issues were stabilized. If asked for one more cut, 1,563 specials across 155 clients are limited by move-in date. Do not use the older R1 2024 applicant-type count of 1,266. Do not read the other cuts unless asked. Do not volunteer the resume’s older 8,000 line.',
-      'Adoption only. Do not claim faster setup, fewer errors, or more revenue. You did not lead the bug fixes.',
+      'Adoption only. No claims about speed, errors, or revenue. If asked for one more cut, 1,563 specials across 155 clients are limited by move-in date.',
     ),
   },
   {
     id: 'pricing-lessons',
     layout: 'prose',
     chapter: 'chart-no-axes-column',
-    stage: 'What I would do again',
-    title: 'Three things I would set before the build',
-    bullets: [
-      'Stay consistent with the rest of the product. A new pattern in one workflow makes people learn it twice.',
-      'Keep the rare configuration available, and keep it off the path everyone walks.',
-      'Agree on the success metric before development. We could see adoption. We could not see time to create a special, errors, or which path people took.',
-    ],
-    notes: note(
-      'Consistency, progressive disclosure, and a metric chosen early enough to instrument. Then you are done with the project.',
-      'Thank them, and open for questions.',
-      '0:55',
-      'The metric gap is real. Adoption was visible. Speed, errors, and path were not.',
-      'Do not turn the lesson into a claim that the redesign saved time.',
+    stage: 'Reflection',
+    title: 'I wish we’d measured more than adoption.',
+    body: 'We could see that customers were using the functionality, but not whether the workflow was easier.',
+    notes: notes(
+      [
+        'We tracked adoption.',
+        'We hadn’t defined measures for time to create a special, configuration errors, or common versus advanced path usage.',
+        'Next time I’d set those with the PM and engineering before development starts.',
+      ],
+      'Thank them and open it up for questions.',
+      '0:45',
     ),
   },
   {
@@ -891,12 +899,14 @@ export const billSlides: BillSlide[] = [
     stage: 'Thank you',
     title: 'Happy to take questions',
     lead: 'Either project, or how the work was done.',
-    notes: note(
-      'Stop. Let them choose the thread.',
+    notes: notes(
+      [
+        'Stop and let them pick the thread.',
+        'Move-in didn’t launch. Pricing did.',
+        'AI is only documented on the move-in work.',
+      ],
       'Questions.',
       '0:30',
-      'Move-in did not launch. Pricing did. AI is documented on the move-in work only.',
-      'Do not close on a general statement about design or about AI.',
     ),
   },
 ];

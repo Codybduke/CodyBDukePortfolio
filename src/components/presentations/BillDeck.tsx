@@ -1,9 +1,10 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState, type ReactNode } from 'react';
 
 import {
   billSlides,
   type BillImage,
   type BillSlide,
+  type ChapterIcon,
   type GallerySlot,
   type ScreenLayout,
   type SpeakerNote,
@@ -19,6 +20,90 @@ type Props = {
 
 const RING_COLORS = ['#1c1c1a', '#8a8a82', '#d0d0c6'];
 const PROTOTYPE_TIMEOUT_MS = 12_000;
+
+/** Lucide outlines (ISC), inlined so the deck does not need the package. */
+const CHAPTER_PATHS: Record<ChapterIcon, ReactNode> = {
+  search: (
+    <>
+      <circle cx="11" cy="11" r="8" />
+      <path d="m21 21-4.34-4.34" />
+    </>
+  ),
+  'git-branch': (
+    <>
+      <line x1="6" x2="6" y1="3" y2="15" />
+      <circle cx="18" cy="6" r="3" />
+      <circle cx="6" cy="18" r="3" />
+      <path d="M18 9a9 9 0 0 1-9 9" />
+    </>
+  ),
+  smartphone: (
+    <>
+      <rect width="14" height="20" x="5" y="2" rx="2" ry="2" />
+      <path d="M12 18h.01" />
+    </>
+  ),
+  target: (
+    <>
+      <circle cx="12" cy="12" r="10" />
+      <circle cx="12" cy="12" r="6" />
+      <circle cx="12" cy="12" r="2" />
+    </>
+  ),
+  'list-tree': (
+    <>
+      <path d="M21 12h-8" />
+      <path d="M21 6H8" />
+      <path d="M21 18h-8" />
+      <path d="M3 6v4c0 1.1.9 2 2 2h3" />
+      <path d="M3 10v6c0 1.1.9 2 2 2h3" />
+    </>
+  ),
+  'pencil-ruler': (
+    <>
+      <path d="M13 7 8.7 2.7a2.41 2.41 0 0 0-3.4 0L2.7 5.3a2.41 2.41 0 0 0 0 3.4L7 13" />
+      <path d="m8 6 2-2" />
+      <path d="m18 16 2-2" />
+      <path d="m17 11 4.3 4.3c.94.94.94 2.46 0 3.4l-2.6 2.6c-.94.94-2.46.94-3.4 0L11 17" />
+      <path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z" />
+      <path d="m15 5 4 4" />
+    </>
+  ),
+  layers: (
+    <>
+      <path d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83z" />
+      <path d="M2 12a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 12" />
+      <path d="M2 17a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 17" />
+    </>
+  ),
+  'chart-no-axes-column': (
+    <>
+      <path d="M5 21v-6" />
+      <path d="M12 21V3" />
+      <path d="M19 21V9" />
+    </>
+  ),
+};
+
+function ChapterGlyph({ icon, className }: { icon: ChapterIcon; className: string }) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      {CHAPTER_PATHS[icon]}
+    </svg>
+  );
+}
+
+function ChapterMark({ slide }: { slide: BillSlide }) {
+  return slide.chapter ? <ChapterGlyph icon={slide.chapter} className="chapter-mark" /> : null;
+}
 
 function StageImage({ image }: { image: SlideImage }) {
   return <img className="deck-img" src={image.src} alt={image.alt} data-fit={image.fit ?? 'cover'} />;
@@ -121,7 +206,9 @@ function Screens({ images, layout }: { images: BillImage[]; layout: ScreenLayout
     <div className={`deck-screens deck-screens--${layout}`}>
       {images.map((image) => (
         <figure key={image.src}>
-          <img src={image.src} alt={image.alt} />
+          <div className="screen-frame">
+            <img src={image.src} alt={image.alt} />
+          </div>
           <figcaption>{image.caption}</figcaption>
         </figure>
       ))}
@@ -129,23 +216,43 @@ function Screens({ images, layout }: { images: BillImage[]; layout: ScreenLayout
   );
 }
 
-function GalleryPhoto({ item }: { item: GallerySlot }) {
+function TrackPhoto({ item, hidden }: { item: GallerySlot; hidden?: boolean }) {
   const [missing, setMissing] = useState(false);
 
   return (
-    <figure className={`gallery__item${item.wide ? ' gallery__item--wide' : ''}`}>
+    <figure className="intro-track__item">
       {missing ? (
         <div className="gallery__plate">
           <p>Photo needed</p>
         </div>
       ) : (
-        <img src={item.src} alt={item.alt} onError={() => setMissing(true)} />
+        <img src={item.src} alt={hidden ? '' : item.alt} onError={() => setMissing(true)} />
       )}
       <figcaption>
         <span>{item.caption}</span>
         {item.detail}
       </figcaption>
     </figure>
+  );
+}
+
+/** The duplicate set exists only so the loop is seamless. It enters from the right, inside the clip. */
+function IntroTrack({ photos }: { photos: GallerySlot[] }) {
+  return (
+    <div className="intro-track">
+      <div className="intro-track__rail">
+        <div className="intro-track__set">
+          {photos.map((item) => (
+            <TrackPhoto key={item.src} item={item} />
+          ))}
+        </div>
+        <div className="intro-track__set" aria-hidden="true">
+          {photos.map((item) => (
+            <TrackPhoto key={item.src} item={item} hidden />
+          ))}
+        </div>
+      </div>
+    </div>
   );
 }
 
@@ -174,19 +281,23 @@ function SlideContent({ slide }: { slide: BillSlide }) {
 
     case 'gallery':
       return (
-        <div className="slide slide--gallery">
-          <div className="slide__inner">
-            {slide.stage && <p className="slide__eyebrow">{slide.stage}</p>}
-            {slide.title && <h1 className="slide__title slide__title--md">{slide.title}</h1>}
-            {slide.body && <p className="slide__body">{slide.body}</p>}
-            {slide.gallery && (
-              <div className="gallery">
-                {slide.gallery.map((item) => (
-                  <GalleryPhoto key={item.src} item={item} />
-                ))}
-              </div>
-            )}
+        <div className="slide slide--intro">
+          {slide.gallery && <IntroTrack photos={slide.gallery} />}
+          <div className="intro-portrait">
+            {slide.portrait && <img src={slide.portrait.src} alt={slide.portrait.alt} />}
+            <div className="intro-portrait__copy">
+              {slide.title && <h1 className="intro-portrait__title">{slide.title}</h1>}
+              {slide.body && <p className="intro-portrait__body">{slide.body}</p>}
+            </div>
           </div>
+        </div>
+      );
+
+    case 'divider':
+      return (
+        <div className="slide slide--divider">
+          {slide.chapter && <ChapterGlyph icon={slide.chapter} className="divider__icon" />}
+          {slide.title && <h1 className="divider__label">{slide.title}</h1>}
         </div>
       );
 
@@ -210,6 +321,7 @@ function SlideContent({ slide }: { slide: BillSlide }) {
             {slide.title && <h1 className="slide__title slide__title--sm">{slide.title}</h1>}
             {slide.body && <p className="slide__body">{slide.body}</p>}
             {slide.caption && <p className="feature__caption">{slide.caption}</p>}
+            <ChapterMark slide={slide} />
           </div>
           {slide.image && (
             <figure className="feature__figure" data-fit={slide.image.fit ?? 'cover'}>
@@ -283,6 +395,7 @@ function SlideContent({ slide }: { slide: BillSlide }) {
             {slide.title && <h1 className="slide__title">{slide.title}</h1>}
             {slide.body && <p className="slide__body">{slide.body}</p>}
             {slide.images && <Screens images={slide.images} layout={slide.screenLayout ?? 'single'} />}
+            <ChapterMark slide={slide} />
           </div>
         </div>
       );
@@ -300,6 +413,7 @@ function SlideContent({ slide }: { slide: BillSlide }) {
                 <RingKey rings={slide.rings} />
               </div>
             )}
+            <ChapterMark slide={slide} />
           </div>
         </div>
       );
@@ -312,6 +426,7 @@ function SlideContent({ slide }: { slide: BillSlide }) {
             {slide.title && <h1 className="slide__title slide__title--md">{slide.title}</h1>}
             {slide.body && <p className="slide__body">{slide.body}</p>}
             {slide.metrics && <Metrics metrics={slide.metrics} />}
+            <ChapterMark slide={slide} />
           </div>
         </div>
       );
@@ -337,6 +452,7 @@ function SlideContent({ slide }: { slide: BillSlide }) {
             {slide.title && <h1 className="slide__title slide__title--md">{slide.title}</h1>}
             {slide.body && <p className="slide__body">{slide.body}</p>}
             {slide.bullets && <Bullets bullets={slide.bullets} />}
+            <ChapterMark slide={slide} />
           </div>
         </div>
       );
@@ -351,6 +467,7 @@ function SlideContent({ slide }: { slide: BillSlide }) {
             {slide.body && <p className="slide__body">{slide.body}</p>}
             {slide.metrics && <Metrics metrics={slide.metrics} />}
             {slide.bullets && <Bullets bullets={slide.bullets} />}
+            <ChapterMark slide={slide} />
           </div>
         </div>
       );

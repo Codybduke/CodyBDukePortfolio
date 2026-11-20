@@ -31,14 +31,28 @@ export type TimelineStop = {
   detail: string;
 };
 
+export type ChapterIcon =
+  | 'search'
+  | 'git-branch'
+  | 'smartphone'
+  | 'target'
+  | 'list-tree'
+  | 'pencil-ruler'
+  | 'layers'
+  | 'chart-no-axes-column';
+
 export type BillSlide = Omit<Slide, 'layout'> & {
-  layout: SlideLayout | 'opener' | 'gallery' | 'timeline' | 'feature' | 'screens' | 'close';
+  layout: SlideLayout | 'opener' | 'gallery' | 'timeline' | 'feature' | 'screens' | 'close' | 'divider';
   notes: SpeakerNote;
   images?: BillImage[];
   screenLayout?: ScreenLayout;
   caption?: string;
   gallery?: GallerySlot[];
+  /** Fixed on the left of the gallery. The photo track scrolls underneath it. */
+  portrait?: SlideImage;
   timeline?: TimelineStop[];
+  /** On a divider, the oversized icon. On a content slide, the small bottom-left indicator. */
+  chapter?: ChapterIcon;
   /** Shown over the prototype pane on split slides if the prototype does not load. */
   fallback?: SlideImage;
 };
@@ -67,6 +81,16 @@ function note(
   qualification?: string,
 ): SpeakerNote {
   return { point, next, time, evidence, qualification };
+}
+
+function divider(id: string, chapter: ChapterIcon, label: string, point: string, next: string): BillSlide {
+  return {
+    id,
+    layout: 'divider',
+    chapter,
+    title: label,
+    notes: note(point, next, '0:05', 'Chapter divider. The label is the only type on the slide.'),
+  };
 }
 
 const rings: RingSlice[] = [
@@ -114,9 +138,13 @@ export const billSlides: BillSlide[] = [
   {
     id: 'intro-gallery',
     layout: 'gallery',
-    stage: 'A short introduction',
-    title: 'Outside of work',
+    title: 'I’m Cody',
     body: 'I spend most of my time with my family, and the rest on a car and on small machines I build because I want to see if I can.',
+    portrait: {
+      src: withBase('/images/cody-duke.jpg'),
+      alt: 'Cody Duke.',
+      fit: 'cover',
+    },
     gallery: [
       {
         src: personal('family.png'),
@@ -126,16 +154,17 @@ export const billSlides: BillSlide[] = [
         wide: true,
       },
       {
-        src: personal('car.png'),
-        alt: "Cody's silver Subaru at night.",
-        caption: 'The car',
-        detail: 'A long-running personal project.',
-      },
-      {
         src: personal('button-board.png'),
         alt: 'A finished five-key button board Cody built for talking to AI.',
         caption: 'AI button board',
         detail: 'Hardware for a tool I use every day.',
+      },
+      {
+        src: personal('car.png'),
+        alt: "Cody's silver Subaru at night.",
+        caption: 'The car',
+        detail: 'A long-running personal project.',
+        wide: true,
       },
       {
         src: personal('retropie.png'),
@@ -154,8 +183,8 @@ export const billSlides: BillSlide[] = [
       'One sentence each. Family first, then the car, then the three builds: the button board, the RetroPie, and the calendar that lights up when you are on a call.',
       'Where the work has been, in three stops.',
       '1:10',
-      'Talk only about the photos that are actually on the slide.',
-      'Family is the cornfield. The car is the silver Subaru. The builds are the finished button board, the RetroPie handheld, and the white on-air box. Do not describe a photo that is not on the slide.',
+      'Talk only about the photos that are actually on the slide. The photos scroll past without captions: Family, the people I come home to. The car, a long-running personal project. The AI button board, hardware for a tool I use every day. The RetroPie handheld, a small computer built to be held. The on-air calendar, a motion sensor, a calendar, and a light that says I am in a meeting.',
+      'Family is the cornfield. The car is the silver Subaru. The builds are the finished button board, the RetroPie handheld, and the white on-air box. Do not describe a photo that is not on the slide. The portrait is a temporary headshot until the plaid portrait is in the repo.',
     ),
   },
   {
@@ -193,9 +222,17 @@ export const billSlides: BillSlide[] = [
     ),
   },
 
+  divider(
+    'chapter-move-problem',
+    'search',
+    'Understanding the Problem',
+    'Move-In, part one: understanding the problem.',
+    'What was happening at the leasing desk.',
+  ),
   {
     id: 'line-problem',
     layout: 'feature',
+    chapter: 'search',
     stage: 'Real-time move-ins',
     title: 'Keys went out before Entrata knew',
     body: 'On move-in day, a hundred to five hundred residents show up at a breezeway, an office, or a drive-through. Staff hand over the keys. The resident leaves finished. Often Entrata still has no record that they arrived.',
@@ -216,6 +253,7 @@ export const billSlides: BillSlide[] = [
   {
     id: 'line-spreadsheet',
     layout: 'feature',
+    chapter: 'search',
     stage: 'The workflow they trusted',
     title: 'The working system was a spreadsheet',
     body: 'Staff marked names on a sheet while the line moved, then someone retyped them into Entrata the next morning. At a 300-resident property that was about eight hours of overtime, in the busiest week of the year. Desktop bulk move-in, the tool built for processing many people at once, barely showed up in those weeks.',
@@ -236,6 +274,7 @@ export const billSlides: BillSlide[] = [
   {
     id: 'line-baseline',
     layout: 'rings',
+    chapter: 'search',
     stage: 'What the audit showed',
     title: 'Most move-ins were not written while the resident was still there',
     body: 'A May through August 2025 audit at a large student operator. These are the baseline the flow was designed against. They are not pilot results.',
@@ -248,9 +287,17 @@ export const billSlides: BillSlide[] = [
       'Do not say the pilot moved these numbers. It has not come back.',
     ),
   },
+  divider(
+    'chapter-move-approach',
+    'git-branch',
+    'Finding a Better Approach',
+    'Part two: finding a better approach.',
+    'My role on the project.',
+  ),
   {
     id: 'line-role',
     layout: 'prose',
+    chapter: 'git-branch',
     stage: 'My role',
     title: 'What I was responsible for',
     body: 'I was the product manager and the UX designer for this workflow. Another designer and I shared the component library the app is built from.',
@@ -269,6 +316,7 @@ export const billSlides: BillSlide[] = [
   {
     id: 'line-upload',
     layout: 'screens',
+    chapter: 'git-branch',
     screenLayout: 'single',
     stage: 'The first concept',
     title: 'Start with the file they already had',
@@ -291,22 +339,31 @@ export const billSlides: BillSlide[] = [
   {
     id: 'line-shift',
     layout: 'feature',
+    chapter: 'git-branch',
     stage: 'What the visits changed',
     title: 'The failure was happening in the line',
     body: 'A faster catch-up still left Entrata wrong while the keys were going out. Site visits and operator interviews moved the bet. Staff needed something they could use where they stood, including when the Wi-Fi dropped. The upload stayed as a next-day path for teams that kept the sheet. The table needed its own flow.',
-    image: phone('after-home-phone-sim-on.png', 'The staff app home screen on a phone, with Move-In as a Quick Action.'),
-    caption: 'Move-In sits on the home screen they already open, next to the other work of the day.',
+    image: phone('01-roster.png', 'Upcoming move-ins on a phone, with Ready, Optional, Required, and Blocked on the list.'),
+    caption: 'Ready, Optional, Required, and Blocked are visible before anyone is opened.',
     notes: note(
       'You changed direction after being on site. A nicer desktop screen of the old flow would still have left the day wrong.',
       'The shape of the phone flow, before you drive it.',
       '1:10',
       'Breezeway Wi-Fi failed often, and staff were on company iPads. The first spec had offline later. Visits pulled it into the first release.',
-      'Do not say the upload was thrown away. It was split off so the line did not have to wait. Neither one launched.',
+      'Do not say the upload was thrown away. It was split off so the line did not have to wait. Neither one launched. Move-In also sits on the home screen they already open. This still is the roster, not that home screen.',
     ),
   },
+  divider(
+    'chapter-move-experience',
+    'smartphone',
+    'Designing the Experience',
+    'Part three: designing the experience in the prototype.',
+    'The shape of the flow.',
+  ),
   {
     id: 'line-shape',
     layout: 'prose',
+    chapter: 'smartphone',
     stage: 'The flow',
     title: 'Search, then readiness, then confirm',
     body: 'Three steps, short enough for a line, and built to keep working when the network does not. I will drive the prototype on the next few slides. Stop me if you want to poke at a state.',
@@ -326,6 +383,7 @@ export const billSlides: BillSlide[] = [
   {
     id: 'search',
     layout: 'split',
+    chapter: 'smartphone',
     stage: 'Search',
     title: 'They type the name they just heard',
     bullets: [
@@ -344,6 +402,7 @@ export const billSlides: BillSlide[] = [
   {
     id: 'readiness',
     layout: 'split',
+    chapter: 'smartphone',
     stage: 'Readiness',
     title: 'You can see the state before you open anyone',
     bullets: [
@@ -362,6 +421,7 @@ export const billSlides: BillSlide[] = [
   {
     id: 'confirm',
     layout: 'split',
+    chapter: 'smartphone',
     stage: 'Confirm',
     title: 'Confirm is a checklist, an ID, and a yes',
     bullets: [
@@ -379,6 +439,7 @@ export const billSlides: BillSlide[] = [
   {
     id: 'optional',
     layout: 'split',
+    chapter: 'smartphone',
     stage: 'Optional',
     title: 'Optional items do not stop the person',
     bullets: [
@@ -400,6 +461,7 @@ export const billSlides: BillSlide[] = [
   {
     id: 'required',
     layout: 'split',
+    chapter: 'smartphone',
     stage: 'Required',
     title: 'Required items stop a normal move-in',
     bullets: [
@@ -422,6 +484,7 @@ export const billSlides: BillSlide[] = [
   {
     id: 'offline',
     layout: 'split',
+    chapter: 'smartphone',
     stage: 'Offline',
     title: 'A finished checklist can still be saved offline',
     bullets: [
@@ -438,9 +501,17 @@ export const billSlides: BillSlide[] = [
       'Reconnect is an attempt, not a guarantee. That review is not a manager PIN. The roster still searches while offline. Confirms wait for a network unless this path queued them.',
     ),
   },
+  divider(
+    'chapter-move-measure',
+    'target',
+    'Handoff & Measured Targets',
+    'Part four: the handoff and the targets we set.',
+    'Where AI fits, then the targets.',
+  ),
   {
     id: 'ai',
     layout: 'prose',
+    chapter: 'target',
     stage: 'How the work moved',
     title: 'AI shortened the path from research to something people could react to',
     body: 'I still start by writing the problem down. Interviews, site notes, and what we already knew from similar work went into one repo, and that is what I pointed the tools at.',
@@ -460,6 +531,7 @@ export const billSlides: BillSlide[] = [
   {
     id: 'targets',
     layout: 'metrics',
+    chapter: 'target',
     stage: 'Handoff',
     title: 'What I handed off, and what would have counted',
     body: 'What left my hands was a SwiftUI package the mobile team could drop into the staff app. In review they found five defects in about half an hour. The pilot has not come back, so these are targets. If same-day completion stayed near 21%, the phone had not replaced the spreadsheet.',
@@ -473,9 +545,17 @@ export const billSlides: BillSlide[] = [
     ),
   },
 
+  divider(
+    'chapter-pricing-problem',
+    'list-tree',
+    'The Problem',
+    'Second project, Pricing. Start with the problem.',
+    'The problem with specials.',
+  ),
   {
     id: 'pricing-problem',
     layout: 'prose',
+    chapter: 'list-tree',
     stage: 'Pricing Specials',
     title: 'A special could hold only one incentive',
     body: 'In Entrata Pricing, a special was a single offer. Customers needed several incentives in the same special, including a choice between a gift and a concession. Setup was also split across two tools. That was a real annoyance, and it was the smaller problem.',
@@ -490,6 +570,7 @@ export const billSlides: BillSlide[] = [
   {
     id: 'pricing-original',
     layout: 'screens',
+    chapter: 'list-tree',
     screenLayout: 'workflow',
     stage: 'The original path',
     title: 'Save the special, then open the pricing editor',
@@ -514,9 +595,17 @@ export const billSlides: BillSlide[] = [
       'Do not call the left image an add screen. Do not describe charge rows. The grid is empty. You designed the special, not the bulk editor. Do not use the file named Original add screen.',
     ),
   },
+  divider(
+    'chapter-pricing-explore',
+    'pencil-ruler',
+    'Exploration & Testing',
+    'Exploration and testing.',
+    'The design challenge.',
+  ),
   {
     id: 'pricing-challenge',
     layout: 'prose',
+    chapter: 'pencil-ruler',
     stage: 'The design problem',
     title: 'One special had to carry more than one offer',
     body: 'The limit was the product problem. A property wanted gifts and a concession together, and sometimes a choice between them, without creating a new special for each. I also wanted that configuration to live in the creation flow, in fields a pricing person could finish, instead of sending every incentive through the general editor.',
@@ -531,6 +620,7 @@ export const billSlides: BillSlide[] = [
   {
     id: 'pricing-v1',
     layout: 'screens',
+    chapter: 'pencil-ruler',
     screenLayout: 'single',
     stage: 'First exploration',
     title: 'The first pass was a name, a value, and a cap',
@@ -553,6 +643,7 @@ export const billSlides: BillSlide[] = [
   {
     id: 'pricing-v2',
     layout: 'screens',
+    chapter: 'pencil-ruler',
     screenLayout: 'pair',
     stage: 'The next pass',
     title: 'The rows had to know what kind of offer they were',
@@ -580,6 +671,7 @@ export const billSlides: BillSlide[] = [
   {
     id: 'pricing-testing',
     layout: 'prose',
+    chapter: 'pencil-ruler',
     stage: 'Usability testing',
     title: 'A new pattern in one workflow asked people to relearn Pricing',
     body: 'The wizard was meant to be simpler. Testing showed that people were already comfortable with the concession patterns used across Entrata. A different interaction model, in this workflow only, created relearning we did not need. The final design kept more of that existing language. Other changes along the way came from working through the requirements, not from the test.',
@@ -594,6 +686,7 @@ export const billSlides: BillSlide[] = [
   {
     id: 'pricing-tradeoff',
     layout: 'prose',
+    chapter: 'pencil-ruler',
     stage: 'A disagreement',
     title: 'We kept advanced pricing, and moved it off the common path',
     body: 'I wanted to remove lease-term pricing and space-option pricing. They added a lot of complexity, and most people creating a special did not need them on the way through. My PM pushed back. Important customers depended on those capabilities, and taking them out was outside the project’s scope. We kept both, and we put the detailed configuration where someone goes only when they need it.',
@@ -605,9 +698,17 @@ export const billSlides: BillSlide[] = [
       'No 1% figure. Do not say you led the team or that engineering was overruled. Do not call lease terms seasons.',
     ),
   },
+  divider(
+    'chapter-pricing-design',
+    'layers',
+    'The Final Design',
+    'The final design, one step at a time.',
+    'Step one, the special details.',
+  ),
   {
     id: 'pricing-details',
     layout: 'screens',
+    chapter: 'layers',
     screenLayout: 'single',
     stage: 'Shipped · Special Details',
     title: 'Start with what the special is',
@@ -629,6 +730,7 @@ export const billSlides: BillSlide[] = [
   {
     id: 'pricing-recipients',
     layout: 'screens',
+    chapter: 'layers',
     screenLayout: 'single',
     stage: 'Shipped · Recipients',
     title: 'Then decide who can receive it',
@@ -650,6 +752,7 @@ export const billSlides: BillSlide[] = [
   {
     id: 'pricing-incentives',
     layout: 'screens',
+    chapter: 'layers',
     screenLayout: 'single',
     stage: 'Shipped · Incentives',
     title: 'One special can hold several gifts and concessions',
@@ -657,7 +760,7 @@ export const billSlides: BillSlide[] = [
     images: [
       shot(
         'final-step-3-incentives.png',
-        'Add Special on Incentives, with an iPad, an Apple Watch, and a concession summarized as three space options.',
+        'Add Special on Incentives, with two gift rows and a concession summarized as three space options.',
         'Two gifts and a concession in one special. Space-level amounts stay collapsed on “3 Space Options.” Price by Lease Term sits on that row.',
       ),
     ],
@@ -665,13 +768,14 @@ export const billSlides: BillSlide[] = [
       'Point at the three incentives. This is the multiple-incentive special. The concession is summarized, not expanded.',
       'Where the advanced pricing went, and the control for how many incentives someone may pick.',
       '1:15',
-      'iPad, Apple Watch, and a concession. Price by Lease Term is on the row. The “how many may be selected” control is not on this screen.',
+      'Two gift rows and one concession. The concession is summarized as 3 Space Options. Price by Lease Term is on that row. Do not name the gifts as a product list. The selection control is not on this screen.',
       'Do not say the selection count is visible here. It shows up when the space options are expanded.',
     ),
   },
   {
     id: 'pricing-space',
     layout: 'screens',
+    chapter: 'layers',
     screenLayout: 'single',
     stage: 'Advanced pricing',
     title: 'Space-specific amounts open only when someone needs them',
@@ -694,6 +798,7 @@ export const billSlides: BillSlide[] = [
   {
     id: 'pricing-lease',
     layout: 'screens',
+    chapter: 'layers',
     screenLayout: 'single',
     stage: 'Advanced pricing',
     title: 'Lease-term amounts open in their own dialog',
@@ -713,9 +818,17 @@ export const billSlides: BillSlide[] = [
       'Do not describe these rows as seasons the product invented.',
     ),
   },
+  divider(
+    'chapter-pricing-results',
+    'chart-no-axes-column',
+    'Results & Takeaways',
+    'Results and takeaways.',
+    'The adoption numbers.',
+  ),
   {
     id: 'pricing-results',
     layout: 'metrics',
+    chapter: 'chart-no-axes-column',
     stage: 'After launch',
     title: '162 specials used more than one incentive',
     body: 'That is the new capability in use, across 38 clients. Lease-term limits, which we kept and moved off the common path, are on 8,290 specials across 278 clients. The release shipped with implementation issues. Engineering resolved them under the PM’s leadership.',
@@ -734,6 +847,7 @@ export const billSlides: BillSlide[] = [
   {
     id: 'pricing-lessons',
     layout: 'prose',
+    chapter: 'chart-no-axes-column',
     stage: 'What I would do again',
     title: 'Three things I would set before the build',
     bullets: [

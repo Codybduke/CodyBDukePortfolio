@@ -1148,7 +1148,7 @@
 
 .slide--feature {
   display: grid;
-  grid-template-columns: minmax(20rem, 36rem) minmax(0, 1fr);
+  grid-template-columns: clamp(20rem, 45vw, 52rem) minmax(0, 1fr);
   height: 100%;
   background: var(--bg);
 }
@@ -1194,20 +1194,20 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 1.25rem 1.25rem 4.25rem;
+  padding: clamp(1.25rem, 4vh, 3rem);
   background: #e7ecef;
 }
 
 .feature__figure[data-fit='contain'] img {
   width: auto;
   height: auto;
-  max-width: min(100%, 22rem);
+  max-width: 100%;
   max-height: 100%;
   object-fit: contain;
 }
 
 .slide--screens .slide__title {
-  font-size: clamp(1.4rem, 2.1vw, 2rem);
+  font-size: clamp(1.7rem, 2.5vw, 2.4rem);
 }
 
 .slide--screens .slide__body {
@@ -1283,5 +1283,248 @@
   .feature__figure {
     height: 100%;
     min-height: 14rem;
+  }
+}
+
+/* ---- Screenshot frame ------------------------------------------------- */
+
+.deck-screens {
+  grid-template-rows: minmax(0, 1fr);
+  align-items: stretch;
+}
+
+.deck-screens figure {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  container-type: size;
+}
+
+.screen-frame {
+  --frame-pad: clamp(1rem, 1.3vw, 1.5rem);
+  display: flex;
+  width: fit-content;
+  max-width: 100%;
+  padding: var(--frame-pad);
+  background: var(--bg-dark);
+  border-radius: 28px;
+}
+
+.deck-screens .screen-frame img {
+  width: auto;
+  height: auto;
+  max-width: calc(100cqw - 2 * var(--frame-pad));
+  max-height: min(calc(100dvh - 16rem), calc(100cqh - 2 * var(--frame-pad) - 3rem));
+  object-fit: contain;
+  border: 5px solid var(--bg);
+  border-radius: 14px;
+  background: #fff;
+}
+
+.slide--screens .slide__inner {
+  padding-bottom: 1.75rem;
+}
+
+.deck-screens figcaption {
+  margin-top: 0.6rem;
+}
+
+.deck-screens figure:last-child figcaption {
+  max-width: calc(100% - 11rem);
+}
+
+.slide--screens .slide__inner:has(> .chapter-mark) .deck-screens--single figcaption {
+  padding-left: 3rem;
+}
+
+.slide--screens .slide__inner:has(> .chapter-mark):not(:has(.deck-screens--single)) {
+  padding-bottom: 4.2rem;
+}
+
+/* ---- Chapter mark and divider ------------------------------------------ */
+
+.chapter-mark {
+  position: absolute;
+  left: var(--pad);
+  bottom: 1.45rem;
+  width: 2rem;
+  height: 2rem;
+  color: var(--ink-faint);
+  stroke-width: 1.6;
+  pointer-events: none;
+}
+
+.deck__copy,
+.slide--feature .slide__copy {
+  position: relative;
+}
+
+.deck__copy .chapter-mark {
+  left: 1.7rem;
+}
+
+.slide--feature .slide__copy .chapter-mark {
+  left: clamp(1.5rem, 3.2vw, 3rem);
+}
+
+.slide--divider {
+  background: var(--bg);
+}
+
+.divider__icon {
+  position: absolute;
+  top: -30vh;
+  right: -16vh;
+  width: 128vh;
+  height: 128vh;
+  color: #dfded4;
+  stroke-width: 1.2;
+}
+
+.divider__label {
+  position: absolute;
+  left: var(--pad);
+  bottom: 1.85rem;
+  margin: 0;
+  font-family: var(--font-ui);
+  font-size: clamp(1rem, 1.1vw, 1.25rem);
+  font-weight: 500;
+  letter-spacing: 0;
+  color: var(--ink);
+}
+
+/* ---- Introduction: fixed portrait over a left-moving photo track ------- */
+
+.slide--intro {
+  --intro-inset: clamp(1rem, 2.4vw, 2.25rem);
+  --intro-gap: clamp(0.9rem, 1.6vw, 1.4rem);
+  --portrait-w: clamp(17rem, 32vw, 38rem);
+  background: var(--bg);
+}
+
+.intro-portrait {
+  position: absolute;
+  z-index: 2;
+  top: var(--intro-inset);
+  bottom: var(--intro-inset);
+  left: var(--intro-inset);
+  width: var(--portrait-w);
+  background: var(--bg);
+}
+
+.intro-portrait img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 54% 40%;
+  border-radius: 28px;
+  filter: grayscale(1) contrast(1.05);
+}
+
+.intro-portrait__copy {
+  position: absolute;
+  inset: auto 0 0;
+  padding: 5rem clamp(1.25rem, 2.2vw, 2rem) clamp(1.25rem, 2.2vw, 2rem);
+  border-radius: 0 0 28px 28px;
+  background: linear-gradient(to top, rgba(10, 10, 9, 0.78), rgba(10, 10, 9, 0));
+  color: #fff;
+}
+
+.intro-portrait__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(2.4rem, 4.4vw, 4.4rem);
+  font-weight: 600;
+  line-height: 0.95;
+  letter-spacing: -0.01em;
+}
+
+.intro-portrait__body {
+  margin: 0.8rem 0 0;
+  max-width: 26rem;
+  font-family: var(--font-body);
+  font-size: clamp(0.95rem, 1.1vw, 1.25rem);
+  line-height: 1.45;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.intro-track {
+  position: absolute;
+  top: var(--intro-inset);
+  bottom: var(--intro-inset);
+  left: var(--intro-inset);
+  right: 0;
+  overflow: hidden;
+  border-radius: 28px 0 0 28px;
+  container-type: size;
+}
+
+.intro-track__rail {
+  display: flex;
+  width: max-content;
+  height: 100%;
+  margin-left: calc(var(--portrait-w) + var(--intro-gap));
+  animation: introTrack 80s linear infinite;
+}
+
+.intro-track__set {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--intro-gap);
+  height: 100%;
+  padding-right: var(--intro-gap);
+  padding-bottom: clamp(1.25rem, 2.2vw, 2.6rem);
+}
+
+.intro-track__item {
+  flex: none;
+  width: calc(62cqh * 4 / 3);
+  margin: 0;
+}
+
+.intro-track__item img,
+.intro-track__item .gallery__plate {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 20px;
+}
+
+.intro-track__item figcaption {
+  margin: 0.75rem 0 0;
+  font-family: var(--font-ui);
+  font-size: clamp(0.82rem, 0.95vw, 1rem);
+  line-height: 1.35;
+  color: var(--ink-muted);
+}
+
+.intro-track__item figcaption span {
+  display: block;
+  color: var(--ink);
+  font-weight: 600;
+}
+
+@keyframes introTrack {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .intro-track__rail {
+    animation: none;
+  }
+}
+
+@media (max-width: 960px) {
+  .slide--intro {
+    --portrait-w: 44vw;
   }
 }

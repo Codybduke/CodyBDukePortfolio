@@ -527,13 +527,15 @@ export const billSlides: BillSlide[] = [
     body: 'I still define the problem first. AI shortened the path from research to something people could react to.',
     notes: notes(
       [
-        'Interviews, site notes, and past work went into one repo that I pointed the tools at.',
-        'When something is off, I fix it in Figma and carry the fix back into the prototype.',
-        'Developers and stakeholders see it early. What’s ready to hand off stays my call.',
+        'I start with a researched, validated problem. People own the intent and the priorities.',
+        'With Cursor and reusable design skills, I turn research, requirements, initiatives, and epics into working high-fidelity prototypes.',
+        'I test the prototype with users and refine the experience.',
+        'For the handoff, an engineer built a workflow that translates prototype work into Swift.',
+        'I keep working with engineering through implementation and validation.',
       ],
       'The handoff and the targets.',
       '1:05',
-      'AI didn’t choose the problem, the offline rule, or the required-item exception. Don’t borrow this story for Pricing.',
+      'AI speeds up the making. It didn’t decide the problem, the offline rule, or the required-item exception.',
     ),
   },
   {

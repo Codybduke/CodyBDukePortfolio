@@ -1793,20 +1793,6 @@
   }
 }
 
-.deck-metrics--lead {
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  align-items: end;
-}
-
-.deck-metrics--lead .deck-metric + .deck-metric {
-  background: transparent;
-}
-
-.deck-metrics--lead .deck-metric + .deck-metric .deck-metric__value {
-  font-size: clamp(1.6rem, 2.4vw, 2.3rem);
-  color: var(--ink-muted);
-}
-
 /* ---- Finished screens: supporting statement under the headline ---------- */
 
 .slide--showcase .showcase__title {
@@ -1836,4 +1822,183 @@
 
 .deck__notes-points li + li {
   margin-top: 0.2rem;
+}
+
+/* ---- Screenshot cards ----------------------------------------------------
+   A thin rounded border around the screenshot, no dark frame. */
+
+.deck-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.deck .screen-frame,
+.screen-card {
+  margin: 0;
+  padding: calc(24 * var(--u)) calc(24 * var(--u)) calc(32 * var(--u));
+  background: transparent;
+  border: calc(4 * var(--u)) solid #979791;
+  border-radius: calc(32 * var(--u));
+  box-sizing: border-box;
+}
+
+.deck .deck-screens .screen-frame img {
+  max-width: calc(100cqw - 56 * var(--u));
+  max-height: min(calc(100dvh - 16rem), calc(100cqh - 64 * var(--u)));
+  border: 0;
+  border-radius: 0;
+}
+
+.screen-card img {
+  display: block;
+}
+
+/* Two screens joined by an arrow, at one shared height. */
+
+.screen-flow {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: calc(22 * var(--u));
+}
+
+.screen-flow .screen-card {
+  border-color: var(--project-bg);
+}
+
+.screen-flow .screen-card img {
+  width: auto;
+  height: calc(430 * var(--u));
+}
+
+.screen-flow__arrow {
+  flex: none;
+  width: calc(61 * var(--u));
+  height: calc(61 * var(--u));
+  color: var(--ink);
+}
+
+/* Explorations stacked on the 1440 x 997 frame, labels on the left. */
+
+.slide--passes {
+  background: var(--bg);
+}
+
+.passes-frame {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: flex;
+  flex-direction: column;
+  gap: calc(32 * var(--u));
+  width: calc(1440 * var(--u));
+  height: calc(997 * var(--u));
+  padding: calc(32 * var(--u)) calc(33 * var(--u)) 0 calc(52 * var(--u));
+  box-sizing: border-box;
+  transform: translate(-50%, -50%);
+}
+
+.pass {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) calc(918 * var(--u));
+  align-items: start;
+}
+
+.pass__copy {
+  padding-top: calc(33 * var(--u));
+}
+
+.pass__label {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: calc(46 * var(--u));
+  line-height: 1;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+
+.pass__detail {
+  max-width: calc(360 * var(--u));
+  margin: calc(18 * var(--u)) 0 0;
+  font-size: calc(22 * var(--u));
+  line-height: 1.38;
+  color: var(--ink-muted);
+}
+
+.pass__card img {
+  width: 100%;
+  height: auto;
+}
+
+/* Results: two labeled groups of equal cards. */
+
+.metric-groups {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(1.5rem, 3.4vw, 3rem);
+  margin-top: clamp(1.75rem, 4vw, 3rem);
+}
+
+.metric-group__label {
+  margin: 0 0 0.85rem;
+  padding-bottom: 0.7rem;
+  border-bottom: 1px solid var(--line);
+  font-family: var(--font-ui);
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+
+.metric-group .deck-metrics {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-top: 0;
+}
+
+.metric-group + .metric-group .deck-metric {
+  background: transparent;
+}
+
+@media (max-width: 960px) {
+  .metric-groups,
+  .screen-flow {
+    grid-template-columns: 1fr;
+    flex-direction: column;
+  }
+
+  .screen-flow .screen-card img {
+    width: 100%;
+    height: auto;
+  }
+
+  .screen-flow__arrow {
+    transform: rotate(90deg);
+  }
+
+  .passes-frame {
+    position: static;
+    width: auto;
+    height: auto;
+    padding: 1.5rem;
+    transform: none;
+  }
+
+  .pass {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}
+
+@media (min-width: 961px) {
+  .metric-group .deck-metric__value {
+    font-size: calc(60 * var(--u));
+  }
 }

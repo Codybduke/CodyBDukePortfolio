@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState, type CSSProperties, type PointerEvent as ReactPointerEvent, type ReactNode } from 'react';
+import { Fragment, useCallback, useEffect, useRef, useState, type CSSProperties, type PointerEvent as ReactPointerEvent, type ReactNode } from 'react';
 
 import {
   billSlides,
@@ -7,6 +7,7 @@ import {
   type ChapterIcon,
   type MotifIcon,
   type GallerySlot,
+  type MetricGroup,
   type ScreenLayout,
   type SpeakerNote,
   type TimelineStop,
@@ -196,9 +197,9 @@ function StageImage({ image }: { image: SlideImage }) {
   return <img className="deck-img" src={image.src} alt={image.alt} data-fit={image.fit ?? 'cover'} />;
 }
 
-function Metrics({ metrics, lead }: { metrics: SlideMetric[]; lead?: boolean }) {
+function Metrics({ metrics }: { metrics: SlideMetric[] }) {
   return (
-    <div className={`deck-metrics${lead ? ' deck-metrics--lead' : ''}`}>
+    <div className="deck-metrics">
       {metrics.map((metric) => (
         <div key={metric.label} className="deck-metric">
           <p className="deck-metric__value">{metric.value}</p>
@@ -288,16 +289,76 @@ function Pairs({ pairs }: { pairs: ComparePair[] }) {
   );
 }
 
+function FlowArrow() {
+  return (
+    <svg className="screen-flow__arrow" viewBox="5 5 14 14" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" overflow="visible">
+      <path d="M5 12h14" />
+      <path d="m12 5 7 7-7 7" />
+    </svg>
+  );
+}
+
 function Screens({ images, layout }: { images: BillImage[]; layout: ScreenLayout }) {
+  if (layout === 'flow') {
+    return (
+      <div className="screen-flow">
+        {images.map((image, index) => (
+          <Fragment key={image.src}>
+            {index > 0 && <FlowArrow />}
+            <figure className="screen-card">
+              <img src={image.src} alt={image.alt} />
+            </figure>
+          </Fragment>
+        ))}
+      </div>
+    );
+  }
+
   return (
     <div className={`deck-screens deck-screens--${layout}`}>
       {images.map((image) => (
         <figure key={image.src}>
           <div className="screen-frame">
-            <img src={image.src} alt={image.alt} />
+            <img
+              src={image.src}
+              alt={image.alt}
+              style={image.trimBottom ? { clipPath: `inset(0 0 ${image.trimBottom}% 0)` } : undefined}
+            />
           </div>
-          <figcaption>{image.caption}</figcaption>
+          {image.caption && <figcaption>{image.caption}</figcaption>}
         </figure>
+      ))}
+    </div>
+  );
+}
+
+/** Explorations stacked for comparison, each labeled on the left. */
+function Passes({ images }: { images: BillImage[] }) {
+  return (
+    <div className="passes-frame">
+      {images.map((image) => (
+        <div className="pass" key={image.src}>
+          <div className="pass__copy">
+            <h2 className="pass__label">{image.caption}</h2>
+            {image.detail && <p className="pass__detail">{image.detail}</p>}
+          </div>
+          <figure className="screen-card pass__card">
+            <img src={image.src} alt={image.alt} />
+          </figure>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function MetricGroups({ groups }: { groups: MetricGroup[] }) {
+  return (
+    <div className="metric-groups">
+      {groups.map((group) => (
+        <section className="metric-group" key={group.label}>
+          <h2 className="metric-group__label">{group.label}</h2>
+          <Metrics metrics={group.metrics} />
+        </section>
       ))}
     </div>
   );
@@ -581,6 +642,14 @@ function SlideContent({ slide }: { slide: BillSlide }) {
       );
 
     case 'screens':
+      if (slide.screenLayout === 'passes') {
+        return (
+          <div className="slide slide--passes">
+            {slide.title && <h1 className="deck-hidden">{slide.title}</h1>}
+            {slide.images && <Passes images={slide.images} />}
+          </div>
+        );
+      }
       return (
         <div className="slide slide--screens">
           <div className="slide__inner">
@@ -616,7 +685,8 @@ function SlideContent({ slide }: { slide: BillSlide }) {
             {slide.stage && <p className="slide__eyebrow">{slide.stage}</p>}
             {slide.title && <h1 className="slide__title slide__headline">{slide.title}</h1>}
             {slide.body && <p className="slide__body slide__support">{slide.body}</p>}
-            {slide.metrics && <Metrics metrics={slide.metrics} lead={slide.metricsLead} />}
+            {slide.metrics && <Metrics metrics={slide.metrics} />}
+            {slide.metricGroups && <MetricGroups groups={slide.metricGroups} />}
           </div>
         </div>
       );

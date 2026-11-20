@@ -11,9 +11,19 @@ export type SpeakerNote = {
 
 export type BillImage = SlideImage & {
   caption: string;
+  /** Passes layout: one supporting line under the label. */
+  detail?: string;
+  /** Hides a strip at the bottom of a capture, as a percentage of its height. */
+  trimBottom?: number;
 };
 
-export type ScreenLayout = 'single' | 'pair' | 'hero' | 'workflow';
+/** `flow` sets screens in a row joined by arrows. `passes` stacks labeled explorations. */
+export type ScreenLayout = 'single' | 'pair' | 'hero' | 'workflow' | 'flow' | 'passes';
+
+export type MetricGroup = {
+  label: string;
+  metrics: SlideMetric[];
+};
 
 export type GallerySlot = {
   src: string;
@@ -51,8 +61,8 @@ export type BillSlide = Omit<Slide, 'layout'> & {
   /** Project title slides: title beside the image, or title above it. */
   projectLayout?: 'side' | 'stacked';
   notes: SpeakerNote;
-  /** Metrics slides: the first metric leads and the rest read as supporting context. */
-  metricsLead?: boolean;
+  /** Metrics slides: labeled groups of equal cards, for numbers that should not be compared across groups. */
+  metricGroups?: MetricGroup[];
   images?: BillImage[];
   screenLayout?: ScreenLayout;
   caption?: string;
@@ -339,11 +349,14 @@ export const billSlides: BillSlide[] = [
     title: 'My first idea fixed the morning after.',
     body: 'Upload the spreadsheet, match each row to a lease, and review before anything is saved.',
     images: [
-      frame(
-        withBase('/work/csv-move-in-agent/01-preflight.png'),
-        'Bulk Move-In review with three buckets: 277 will be moved in, 30 have follow-up tasks, and 23 unresolved rows a person still has to resolve.',
-        'Rows sort into ready, needs a follow-up, and needs a person.',
-      ),
+      {
+        ...frame(
+          withBase('/work/csv-move-in-agent/01-preflight.png'),
+          'Bulk Move-In review with three buckets: 277 will be moved in, 30 have follow-up tasks, and 23 unresolved rows a person still has to resolve.',
+          '',
+        ),
+        trimBottom: 0.8,
+      },
     ],
     notes: notes(
       [
@@ -601,19 +614,19 @@ export const billSlides: BillSlide[] = [
     id: 'pricing-original',
     layout: 'screens',
     chapter: 'list-tree',
-    screenLayout: 'workflow',
+    screenLayout: 'flow',
     title: 'Setting up a special meant using two different workflows.',
     body: 'Save the special, then open the pricing editor.',
     images: [
       shot(
         'original-edit-special.png',
         'Edit Special, with fields for name, recipients, a single special type, dates, coupon, cap, and description.',
-        'First, the special, with a single type.',
+        '',
       ),
       shot(
         'original-bulk-pricing-editor.png',
         'Bulk Edit Pricing for prospect rents, with a toast that special settings were saved and an empty charge grid.',
-        'Then the general pricing editor.',
+        '',
       ),
     ],
     notes: notes(
@@ -645,7 +658,7 @@ export const billSlides: BillSlide[] = [
       shot(
         'wizard-v1-step-2.png',
         'An early Add Special step listing gifts and a rent discount, each with a name, a value, and a cap.',
-        'Several incentives in one special, added while creating it.',
+        '',
       ),
     ],
     notes: notes(
@@ -663,15 +676,21 @@ export const billSlides: BillSlide[] = [
     id: 'pricing-v2',
     layout: 'screens',
     chapter: 'pencil-ruler',
-    screenLayout: 'single',
+    screenLayout: 'passes',
     title: 'But different incentives needed different controls.',
-    body: 'Gifts and rent discounts weren’t interchangeable.',
     images: [
-      shot(
-        'wizard-v2-step-2.png',
-        'Later incentives table with a special type, an item, value fields, and an edit control on each row.',
-        'Each row got a type, and a rent discount could open more detail.',
-      ),
+      {
+        ...shot('wizard-v1-items.png', 'The first pass: rows of gifts and a rent discount, each with a name, a value, and a cap.', 'First Pass'),
+        detail: 'A name, a value, and a cap.',
+      },
+      {
+        ...shot(
+          'wizard-v2-items.png',
+          'The second pass: rows with a special type, an item, a value, and a cap, with an edit control and a rent discount that expands.',
+          'Second Pass',
+        ),
+        detail: 'Different incentives needed different controls.',
+      },
     ],
     notes: notes(
       [
@@ -862,37 +881,32 @@ export const billSlides: BillSlide[] = [
     chapter: 'chart-no-axes-column',
     stage: 'After launch',
     title: '162 specials used multiple incentives.',
-    metricsLead: true,
-    metrics: [
-      { value: '38', label: 'Clients adopted multi-incentive specials' },
-      { value: '8,290', label: 'Specials still used lease-term restrictions, across 278 clients' },
+    metricGroups: [
+      {
+        label: 'New capability adoption',
+        metrics: [
+          { value: '162', label: 'Multi-incentive specials created' },
+          { value: '38', label: 'Clients using the capability' },
+        ],
+      },
+      {
+        label: 'Advanced functionality retained',
+        metrics: [
+          { value: '8,290', label: 'Specials with lease-term restrictions' },
+          { value: '278', label: 'Clients using those restrictions' },
+        ],
+      },
     ],
     notes: notes(
       [
-        'Lead with 162 specials across 38 clients. That’s the new capability in use.',
-        '8,290 specials across 278 clients used lease-term restrictions. Advanced pricing stayed relevant.',
+        'Left is the new capability: 162 specials across 38 clients offer multiple incentives.',
+        'Right is the advanced pricing we kept: 8,290 specials across 278 clients use lease-term restrictions. Different questions, so don’t compare them.',
         'The release had implementation issues. Engineering resolved them before a relaunch.',
-      ],
-      'What I’d measure next time.',
-      '0:55',
-      'Adoption only. No claims about speed, errors, or revenue. If asked for one more cut, 1,563 specials across 155 clients are limited by move-in date.',
-    ),
-  },
-  {
-    id: 'pricing-lessons',
-    layout: 'prose',
-    chapter: 'chart-no-axes-column',
-    stage: 'Reflection',
-    title: 'I wish we’d measured more than adoption.',
-    body: 'We could see that customers were using the functionality, but not whether the workflow was easier.',
-    notes: notes(
-      [
-        'We tracked adoption.',
-        'We hadn’t defined measures for time to create a special, configuration errors, or common versus advanced path usage.',
-        'Next time I’d set those with the PM and engineering before development starts.',
+        'Reflection: we could measure adoption, but not configuration time, errors, or common versus advanced path usage. Next time I’d align on those metrics with the PM and engineering earlier.',
       ],
       'Thank them and open it up for questions.',
-      '0:45',
+      '1:10',
+      'Adoption only. No claims about speed, errors, or revenue. Other cuts if asked: 1,563 specials across 155 clients restrict by move-in date, and 245 across 12 restrict by space option.',
     ),
   },
   {

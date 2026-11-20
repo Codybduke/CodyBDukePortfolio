@@ -1374,6 +1374,13 @@
   right: 0;
   overflow: hidden;
   container-type: size;
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+}
+
+.photo-grid.is-dragging {
+  cursor: grabbing;
 }
 
 .photo-grid__rail {
@@ -1384,7 +1391,7 @@
   width: max-content;
   height: 100%;
   margin-left: calc(var(--portrait-w) + var(--gap));
-  animation: photoGrid 90s linear infinite;
+  will-change: transform;
 }
 
 .photo-grid__band {
@@ -1419,20 +1426,6 @@
   border-radius: var(--radius);
 }
 
-@keyframes photoGrid {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-50%);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .photo-grid__rail {
-    animation: none;
-  }
-}
 
 /* ---- The path here ------------------------------------------------------ */
 

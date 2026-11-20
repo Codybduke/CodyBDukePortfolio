@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState, type ReactNode } from 'react';
+import { useCallback, useEffect, useRef, useState, type PointerEvent as ReactPointerEvent, type ReactNode } from 'react';
 
 import {
   billSlides,
@@ -234,7 +234,7 @@ function gridColumns(band: GallerySlot[]): GridColumn[] {
 }
 
 function GridPhoto({ photo, hidden }: { photo: GallerySlot; hidden?: boolean }) {
-  return <img className="photo-grid__photo" src={photo.src} alt={hidden ? '' : photo.alt} />;
+  return <img className="photo-grid__photo" src={photo.src} alt={hidden ? '' : photo.alt} draggable={false} />;
 }
 
 function GridSet({ band, hidden }: { band: GallerySlot[]; hidden?: boolean }) {
@@ -257,11 +257,70 @@ function GridSet({ band, hidden }: { band: GallerySlot[]; hidden?: boolean }) {
   );
 }
 
-/** Each band repeats once so the loop is seamless. The copy enters from the right, inside the clip. */
+const GRID_LOOP_SECONDS = 90;
+
+/**
+ * Each band repeats once so the loop is seamless. The copy enters from the right, inside the clip.
+ * Position is kept as a fraction of one set so a drag or a resize never causes a jump.
+ */
 function PhotoGrid({ bands }: { bands: GallerySlot[][] }) {
+  const gridRef = useRef<HTMLDivElement>(null);
+  const railRef = useRef<HTMLDivElement>(null);
+  const progress = useRef(0);
+  const drag = useRef<{ id: number; x: number } | null>(null);
+  const [dragging, setDragging] = useState(false);
+
+  const setWidth = () => railRef.current?.querySelector<HTMLElement>('.photo-grid__set')?.offsetWidth ?? 0;
+
+  useEffect(() => {
+    const still = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let frame = 0;
+    let last = performance.now();
+    const tick = (now: number) => {
+      const dt = Math.min(now - last, 100) / 1000;
+      last = now;
+      if (!drag.current && !still.matches) progress.current = (progress.current + dt / GRID_LOOP_SECONDS) % 1;
+      const rail = railRef.current;
+      if (rail) rail.style.transform = `translate3d(${-progress.current * setWidth()}px, 0, 0)`;
+      frame = requestAnimationFrame(tick);
+    };
+    frame = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(frame);
+  }, []);
+
+  const onPointerDown = (event: ReactPointerEvent<HTMLDivElement>) => {
+    if (event.button !== 0) return;
+    drag.current = { id: event.pointerId, x: event.clientX };
+    gridRef.current?.setPointerCapture(event.pointerId);
+    setDragging(true);
+  };
+
+  const onPointerMove = (event: ReactPointerEvent<HTMLDivElement>) => {
+    const current = drag.current;
+    const width = setWidth();
+    if (!current || current.id !== event.pointerId || !width) return;
+    const dx = event.clientX - current.x;
+    current.x = event.clientX;
+    progress.current = (((progress.current - dx / width) % 1) + 1) % 1;
+  };
+
+  const onPointerEnd = (event: ReactPointerEvent<HTMLDivElement>) => {
+    if (drag.current?.id !== event.pointerId) return;
+    drag.current = null;
+    setDragging(false);
+  };
+
   return (
-    <div className="photo-grid">
-      <div className="photo-grid__rail">
+    <div
+      ref={gridRef}
+      className={`photo-grid${dragging ? ' is-dragging' : ''}`}
+      onPointerDown={onPointerDown}
+      onPointerMove={onPointerMove}
+      onPointerUp={onPointerEnd}
+      onPointerCancel={onPointerEnd}
+      onLostPointerCapture={onPointerEnd}
+    >
+      <div ref={railRef} className="photo-grid__rail">
         {bands.map((band, index) => (
           <div key={index} className="photo-grid__band">
             <GridSet band={band} />

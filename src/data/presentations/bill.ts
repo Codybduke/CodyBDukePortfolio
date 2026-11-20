@@ -19,8 +19,7 @@ export type ScreenLayout = 'single' | 'pair' | 'hero' | 'workflow';
 export type GallerySlot = {
   src: string;
   alt: string;
-  caption: string;
-  detail: string;
+  /** Spans both rows of a band. Other photos stack two to a column. */
   wide?: boolean;
 };
 
@@ -28,7 +27,7 @@ export type TimelineStop = {
   when: string;
   place: string;
   role: string;
-  detail: string;
+  image: SlideImage;
 };
 
 export type ChapterIcon =
@@ -47,7 +46,8 @@ export type BillSlide = Omit<Slide, 'layout'> & {
   images?: BillImage[];
   screenLayout?: ScreenLayout;
   caption?: string;
-  gallery?: GallerySlot[];
+  /** Two bands of the photo grid. Each band holds two wide photos and four small ones so the loop stays seamless. */
+  gallery?: [GallerySlot[], GallerySlot[]];
   /** Fixed on the left of the gallery. The photo track scrolls underneath it. */
   portrait?: SlideImage;
   timeline?: TimelineStop[];
@@ -124,9 +124,7 @@ export const billSlides: BillSlide[] = [
   {
     id: 'intro-title',
     layout: 'opener',
-    stage: 'Portfolio presentation',
-    title: 'Cody Duke',
-    lead: 'Prepared for BILL',
+    title: 'Hey Bill!',
     notes: note(
       'Say your name, that this is the portfolio presentation, and that you will walk two projects.',
       'A minute on life outside the work, then how the job changed.',
@@ -139,85 +137,72 @@ export const billSlides: BillSlide[] = [
     id: 'intro-gallery',
     layout: 'gallery',
     title: 'I’m Cody',
-    body: 'I spend most of my time with my family, and the rest on a car and on small machines I build because I want to see if I can.',
     portrait: {
-      src: withBase('/images/cody-duke.jpg'),
-      alt: 'Cody Duke.',
+      src: personal('cody-plaid.png'),
+      alt: 'Cody Duke in a plaid shirt, in black and white.',
       fit: 'cover',
     },
     gallery: [
-      {
-        src: personal('family.png'),
-        alt: 'Cody with his family in a cornfield.',
-        caption: 'Family',
-        detail: 'The people I come home to.',
-        wide: true,
-      },
-      {
-        src: personal('button-board.png'),
-        alt: 'A finished five-key button board Cody built for talking to AI.',
-        caption: 'AI button board',
-        detail: 'Hardware for a tool I use every day.',
-      },
-      {
-        src: personal('car.png'),
-        alt: "Cody's silver Subaru at night.",
-        caption: 'The car',
-        detail: 'A long-running personal project.',
-        wide: true,
-      },
-      {
-        src: personal('retropie.png'),
-        alt: 'A handheld RetroPie Cody built, showing a game menu.',
-        caption: 'RetroPie handheld',
-        detail: 'A small computer, built to be held.',
-      },
-      {
-        src: personal('on-air.png'),
-        alt: 'A white on-air box Cody built, with a motion sensor on the front.',
-        caption: 'On-air calendar',
-        detail: 'A motion sensor, a calendar, and a light that says I am in a meeting.',
-      },
+      [
+        { src: personal('car.png'), alt: "Cody's silver Subaru at night.", wide: true },
+        { src: personal('graduation.png'), alt: 'Cody and his family at a graduation.' },
+        { src: personal('button-board.png'), alt: 'A finished five-key button board on a desk.' },
+        { src: personal('halloween.png'), alt: 'Cody and his family in costume in front of a Stranger Things alphabet wall.', wide: true },
+        { src: personal('playing-cards.png'), alt: 'A stack of playing-card decks.' },
+        { src: personal('blue-led.png'), alt: 'A five-key button board lit blue in the dark.' },
+      ],
+      [
+        { src: personal('retropie.png'), alt: 'A handheld Raspberry Pi game console showing a Super Nintendo menu.' },
+        { src: personal('wiring.png'), alt: 'A button board in progress, wired up on a workbench.' },
+        { src: personal('family.png'), alt: 'Cody with his family in a cornfield.', wide: true },
+        { src: personal('on-air.png'), alt: 'A white on-air box with a motion sensor on the front.' },
+        { src: personal('porch.png'), alt: 'Cody and his family on a front porch.' },
+        { src: personal('batman-ferrari.png'), alt: 'A young boy in a Batman costume beside a black Ferrari.', wide: true },
+      ],
     ],
     notes: note(
-      'One sentence each. Family first, then the car, then the three builds: the button board, the RetroPie, and the calendar that lights up when you are on a call.',
-      'Where the work has been, in three stops.',
+      'I spend most of my time with my family, and the rest on a car and on small machines I build because I want to see if I can.',
+      'Where the work has been.',
       '1:10',
-      'Talk only about the photos that are actually on the slide. The photos scroll past without captions: Family, the people I come home to. The car, a long-running personal project. The AI button board, hardware for a tool I use every day. The RetroPie handheld, a small computer built to be held. The on-air calendar, a motion sensor, a calendar, and a light that says I am in a meeting.',
-      'Family is the cornfield. The car is the silver Subaru. The builds are the finished button board, the RetroPie handheld, and the white on-air box. Do not describe a photo that is not on the slide. The portrait is a temporary headshot until the plaid portrait is in the repo.',
+      'Family is the cornfield, the porch, the graduation, and Halloween. The car is the silver Subaru. The builds are the button board (wired up, finished, and lit blue), the RetroPie handheld, and the on-air box that lights up when you are in a meeting.',
+      'Talk only about the photos on the slide. The slide has no captions, so the names live here.',
     ),
   },
   {
     id: 'intro-timeline',
     layout: 'timeline',
-    stage: 'The path here',
-    title: 'From UX designer to product lead',
-    body: 'I started as a UX designer at FamilySearch. At Entrata I was a senior product designer, and for about the last year the role expanded into product lead. Discovery, prioritization, prototyping, and working with engineering through delivery became part of the job, along with the design.',
+    title: 'Where have I been all\nyour life',
     timeline: [
       {
-        when: '2017–2019',
+        when: '4 years',
+        place: 'BYU-Idaho',
+        role: 'Graphic Design',
+        image: { src: billFile('path/byu-idaho-play-labs.png'), alt: 'An invitation to Play Labs, a BFA exhibit at BYU-Idaho.' },
+      },
+      {
+        when: '3 years',
         place: 'FamilySearch',
         role: 'UX Designer',
-        detail: 'Experiences for people trying to find their family history.',
+        image: { src: billFile('path/familysearch.png'), alt: 'The FamilySearch logo.' },
       },
       {
-        when: '2019–2026',
+        when: '6 years',
         place: 'Entrata',
-        role: 'Senior Product Designer',
-        detail: 'Property-management workflows. Both projects today are from here.',
+        role: 'Sr. Product Designer',
+        image: { src: billFile('path/entrata.png'), alt: 'The Entrata logo.' },
       },
       {
-        when: 'About one year',
+        when: '1 year',
         place: 'Entrata',
         role: 'Product Lead',
-        detail: 'Same company. The scope added discovery, priority, prototypes, and delivery.',
+        image: { src: billFile('path/entrata.png'), alt: 'The Entrata logo.' },
       },
     ],
     notes: note(
-      'FamilySearch, then Entrata. The product-lead year is a wider scope, not a new employer and not an engineering organization.',
+      'Graphic design at BYU-Idaho, then FamilySearch, then Entrata. The product-lead year is a wider scope at the same company, not a new employer.',
       'The first project: move-in day, and why the record was late.',
       '1:20',
-      'Dates match the about page. Product lead was about a year inside the Entrata stretch.',
+      'At Entrata the senior product designer role grew into product lead for about the last year. Discovery, prioritization, prototyping, and working with engineering through delivery became part of the job, along with the design.',
       'Do not say you led engineering. Do not add a design-philosophy slide after this.',
     ),
   },
@@ -225,7 +210,7 @@ export const billSlides: BillSlide[] = [
   divider(
     'chapter-move-problem',
     'search',
-    'Understanding the Problem',
+    'Understanding\nThe Problem',
     'Move-In, part one: understanding the problem.',
     'What was happening at the leasing desk.',
   ),
@@ -290,7 +275,7 @@ export const billSlides: BillSlide[] = [
   divider(
     'chapter-move-approach',
     'git-branch',
-    'Finding a Better Approach',
+    'Finding a\nBetter Approach',
     'Part two: finding a better approach.',
     'My role on the project.',
   ),
@@ -343,7 +328,7 @@ export const billSlides: BillSlide[] = [
     stage: 'What the visits changed',
     title: 'The failure was happening in the line',
     body: 'A faster catch-up still left Entrata wrong while the keys were going out. Site visits and operator interviews moved the bet. Staff needed something they could use where they stood, including when the Wi-Fi dropped. The upload stayed as a next-day path for teams that kept the sheet. The table needed its own flow.',
-    image: phone('01-roster.png', 'Upcoming move-ins on a phone, with Ready, Optional, Required, and Blocked on the list.'),
+    image: { src: billFile('move-in-roster-phone.png'), alt: 'Upcoming move-ins on a tilted phone, with Ready, Optional, Required, and Blocked on the list.', fit: 'contain' },
     caption: 'Ready, Optional, Required, and Blocked are visible before anyone is opened.',
     notes: note(
       'You changed direction after being on site. A nicer desktop screen of the old flow would still have left the day wrong.',
@@ -356,7 +341,7 @@ export const billSlides: BillSlide[] = [
   divider(
     'chapter-move-experience',
     'smartphone',
-    'Designing the Experience',
+    'Designing\nThe Experience',
     'Part three: designing the experience in the prototype.',
     'The shape of the flow.',
   ),
@@ -504,7 +489,7 @@ export const billSlides: BillSlide[] = [
   divider(
     'chapter-move-measure',
     'target',
-    'Handoff & Measured Targets',
+    'Handoff &\nMeasured Targets',
     'Part four: the handoff and the targets we set.',
     'Where AI fits, then the targets.',
   ),
@@ -598,7 +583,7 @@ export const billSlides: BillSlide[] = [
   divider(
     'chapter-pricing-explore',
     'pencil-ruler',
-    'Exploration & Testing',
+    'Exploration\n& Testing',
     'Exploration and testing.',
     'The design challenge.',
   ),
@@ -701,7 +686,7 @@ export const billSlides: BillSlide[] = [
   divider(
     'chapter-pricing-design',
     'layers',
-    'The Final Design',
+    'The Final\nDesign',
     'The final design, one step at a time.',
     'Step one, the special details.',
   ),
@@ -821,7 +806,7 @@ export const billSlides: BillSlide[] = [
   divider(
     'chapter-pricing-results',
     'chart-no-axes-column',
-    'Results & Takeaways',
+    'Results &\nTakeaways',
     'Results and takeaways.',
     'The adoption numbers.',
   ),
